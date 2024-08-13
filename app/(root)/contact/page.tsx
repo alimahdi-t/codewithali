@@ -1,5 +1,5 @@
 const Contact = () => {
-  return <div>Contact</div>;
+  return <div>تماس با ما</div>;
 };
 
 export default Contact;
