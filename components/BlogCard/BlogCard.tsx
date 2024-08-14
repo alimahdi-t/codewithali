@@ -18,14 +18,14 @@ interface Props {
       imageUrl: string;
     };
   };
-  key?: number;
 }
 
-const BlogCard = ({ post, key }: Props) => {
+const BlogCard = ({ post }: Props) => {
   return (
     <article
       key={post.id}
-      className="flex flex-col items-start justify-between border-2 rounded-2xl shadow-md"
+      className="flex flex-col items-start justify-between border-2 rounded-2xl shadow-md
+      dark:bg-gray-900 dark:shadow-none dark:border-gray-800 dark:hover:border-brand-900"
     >
       {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">
@@ -34,7 +34,7 @@ const BlogCard = ({ post, key }: Props) => {
           height={20}
           src={post.imageUrl}
           alt=""
-          className="aspect-[16/9] w-full rounded-2xl bg-gray-100 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+          className="aspect-[16/9] w-full rounded-2xl bg-gray-100 dark:bg-slate-900 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
         />
         {/*<div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />*/}
       </div>
@@ -58,7 +58,10 @@ const BlogCard = ({ post, key }: Props) => {
 
         {/*--------------- Card Title and Description ---------------*/}
         <div className="group relative">
-          <h3 className="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+          <h3
+            className="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600
+          dark:text-gr"
+          >
             <a href={post.href}>
               <span className="absolute inset-0" />
               {post.title}

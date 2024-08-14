@@ -1,4 +1,4 @@
-import Card from "@/components/Card/Card";
+import BlogCard from "@/components/BlogCard/BlogCard";
 import Tag from "@/components/common/Tag";
 
 const posts = [
@@ -81,7 +81,7 @@ const posts = [
 ];
 const Courses = () => {
   return (
-    <div className="bg-white py-24 sm:py-32">
+    <div className="bg-white py-24 sm:py-32 dark:bg-gray-950">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -94,7 +94,7 @@ const Courses = () => {
         <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 lg:mx-0 lg:max-w-none lg:grid-cols-3 md:grid-cols-2">
           {/*  -----------------------------------------------------------*/}
           {posts.map((post) => (
-            <Card key={post.id} post={post} />
+            <BlogCard key={post.id} post={post} />
           ))}
         </div>
       </div>
