@@ -12,5 +12,11 @@
 /*  }*/
 /*}*/
 
+/*@layer utilities{*/
+/*    .back{*/
+/*        @apply bg-gray-100 text-black dark:bg-slate-900 dark:text-white*/
+/*    }*/
+/*}*/
+
 
 
