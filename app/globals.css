@@ -2,21 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities{
+  .background-dark950_light50{
+    @apply dark:bg-gray-950 bg-white
+  }
+
+  .background-dark900_light50{
+    @apply dark:bg-gray-900 bg-white
+  }
+
+  .border-dark800_light300{
+    @apply dark:border-gray-800 border-gray-300
+
+  }
+
+  .border-dark800_light200{
+    @apply dark:border-gray-800 border-gray-200
+  }
+
+  .border-dark800_light100{
+    @apply dark:border-gray-800 border-gray-100
+  }
+
+  .text-dark300_light950{
+    @apply dark:text-gray-300 text-black
+  }
 
 
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --foreground-rgb: 255, 255, 255;*/
-/*    --background-start-rgb: 0, 0, 0;*/
-/*    --background-end-rgb: 0, 0, 0;*/
-/*  }*/
-/*}*/
-
-/*@layer utilities{*/
-/*    .back{*/
-/*        @apply bg-gray-100 text-black dark:bg-slate-900 dark:text-white*/
-/*    }*/
-/*}*/
-
-
-
+}

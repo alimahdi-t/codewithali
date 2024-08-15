@@ -1,5 +1,8 @@
+"use client";
 import BlogCard from "@/components/BlogCard/BlogCard";
 import Tag from "@/components/common/Tag";
+import { useTheme } from "@/context/ThemeProvider";
+import Theme from "@/components/Navbar/Theme";
 
 const posts = [
   {
@@ -81,8 +84,9 @@ const posts = [
 ];
 const Courses = () => {
   return (
-    <div className="bg-white py-24 sm:py-32 dark:bg-gray-950">
+    <div className="py-24 sm:py-32 background-dark950_light50">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
+        <Theme />
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Blog

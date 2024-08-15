@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import localFont from "@next/font/local";
+import { ThemeProvider } from "@/context/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 const Yekan = localFont({
@@ -55,7 +56,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa">
-      <body className={Yekan.className}>{children}</body>
+      <body className={Yekan.className}>
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }

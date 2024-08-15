@@ -25,7 +25,7 @@ const BlogCard = ({ post }: Props) => {
     <article
       key={post.id}
       className="flex flex-col items-start justify-between border-2 rounded-2xl shadow-md
-      dark:bg-gray-900 dark:shadow-none dark:border-gray-800 dark:hover:border-brand-900"
+      background-dark900_light50 border-dark800_light200 dark:shadow-none dark:hover:border-brand-900"
     >
       {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">
