@@ -12,10 +12,10 @@ import { navLinks } from "@/constants";
 import Link from "next/link";
 import Theme from "@/components/Navbar/Theme";
 
-const MobileNav = () => {
+const MobileNav = ({ className }: { className?: string }) => {
   return (
     <Sheet>
-      <SheetTrigger asChild>
+      <SheetTrigger asChild className={className}>
         {/*<button variant="outline">Open</button>*/}
         <IconHamburgerMenu
           width={24}

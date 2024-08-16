@@ -6,8 +6,11 @@ import { usePathname } from "next/navigation";
 import MobileNav from "@/components/Navbar/MobileNav";
 import { navLinks } from "@/constants";
 import React from "react";
+import { signIn, useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
-const Nav = () => {
+const NavLinks = () => {
   const pathName = usePathname();
   return (
     <div className="flex gap-8 max-md:hidden text-black dark:text-white">
@@ -32,21 +35,17 @@ const Navbar = () => {
     <header className="flex justify-center sticky top-0 z-50">
       <nav className="py-6 w-full background-dark900_light50 border-b dark:border-gray-800 flex justify-center ">
         <div className="max-w-7xl w-full lg:px-12 px-6 flex justify-between items-center">
-          <div className="bg-gray-400 w-12 h-12 rounded-full md:hidden"></div>
-          <div className="flex gap-16">
-            <Link href="/" className="dark:text-white flex items-center gap-2 ">
-              <h3 className="text-xl font-bold font">Sparky</h3>
-            </Link>
-          </div>
-          <Nav />
+          <AuthUI className="md:hidden" />
+          <Link href="/" className="dark:text-white flex items-center gap-2 ">
+            <h3 className="text-xl font-bold font">
+              <Logo className="w-12 h-12" />
+            </h3>
+          </Link>
+          <NavLinks />
           <div className="flex gap-4 items-center">
-            <span className="max-md:hidden">
-              <Theme />
-            </span>
-            <span className="md:hidden">
-              <MobileNav />
-            </span>
-            <div className="bg-gray-400 w-12 h-12 rounded-full max-md:hidden"></div>
+            <Theme className="max-md:hidden" />
+            <MobileNav className="md:hidden" />
+            <AuthUI className="max-md:hidden" />
           </div>
         </div>
       </nav>
@@ -56,7 +55,27 @@ const Navbar = () => {
 
 export default Navbar;
 
-export function Logo() {
+const AuthUI = ({ className }: { className?: string }) => {
+  const { status, data } = useSession();
+  return (
+    <>
+      {status === "authenticated" ? (
+        <Avatar className={`w-12 h-12 ${className}`}>
+          <AvatarImage src={data?.user?.image!} />
+          <AvatarFallback>
+            {data?.user?.name?.charAt(0).toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+      ) : (
+        <Button onClick={() => signIn("google", { callbackUrl: "/" })}>
+          Sign-in
+        </Button>
+      )}
+    </>
+  );
+};
+
+export function Logo({ className }: { className?: string }) {
   return (
     <svg
       width="200"
@@ -64,7 +83,7 @@ export function Logo() {
       viewBox="0 0 200 200"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-14 h-14"
+      className={`${className}`}
     >
       <circle cx="100" cy="100" r="100" fill="#007AFF" />
       <path d="M100 10L177.942 145H22.0577L100 10Z" fill="white" />

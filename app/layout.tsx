@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/context/ThemeProvider";
+import AuthProvider from "@/app/auth/AuthProvider";
+import React from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 const Yekan = localFont({
@@ -57,7 +59,9 @@ export default function RootLayout({
   return (
     <html lang="fa">
       <body className={Yekan.className}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
