@@ -11,15 +11,18 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 
-const Theme = () => {
+const Theme = ({ className }: { className?: string }) => {
   const { mode, setMode } = useTheme();
 
   return (
-    <Menubar asChild className="relative border-none shadow-none p-2 ">
+    <Menubar
+      asChild
+      className={`relative border-none shadow-none p-2 ${className} `}
+    >
       <MenubarMenu>
-        <MenubarTrigger className="hover:bg-gray-100 cursor-pointer border-none rounded-md p-2 data-[state=open]:bg-gray-200 dark:focus:bg-dark-200 dark:data-[state=open]:bg-gray-800">
+        <MenubarTrigger className="hover:bg-gray-500/10 cursor-pointer border-none rounded-md p-2 data-[state=open]:bg-gray-200 dark:focus:bg-dark-200 dark:data-[state=open]:bg-gray-800">
           {mode === "light" ? (
-            <IconSun width={20} height={20} className="fill-black" />
+            <IconSun width={20} height={20} className="fill-yellow-500" />
           ) : (
             <IconMoon width={20} height={20} className="fill-white" />
           )}
