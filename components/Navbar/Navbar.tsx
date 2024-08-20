@@ -4,11 +4,20 @@ import Theme from "@/components/Navbar/Theme";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import MobileNav from "@/components/Navbar/MobileNav";
-import { navLinks } from "@/constants";
+import { navLinks, profileDropDownLinks } from "@/constants";
 import React from "react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarSeparator,
+  MenubarShortcut,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
 
 const NavLinks = () => {
   const pathName = usePathname();
@@ -58,20 +67,35 @@ export default Navbar;
 const AuthUI = ({ className }: { className?: string }) => {
   const { status, data } = useSession();
   return (
-    <>
+    <div className={className}>
       {status === "authenticated" ? (
-        <Avatar className={`w-12 h-12 ${className}`}>
-          <AvatarImage src={data?.user?.image!} />
-          <AvatarFallback>
-            {data?.user?.name?.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
+        <Menubar className={`p-0 m-0 rounded-full border-none ${className}`}>
+          <MenubarMenu>
+            <MenubarTrigger className="rounded-full p-0 cursor-pointer">
+              <Avatar className="w-12 h-12">
+                <AvatarImage src={data?.user?.image!} />
+                <AvatarFallback>
+                  {data?.user?.name?.charAt(0).toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+            </MenubarTrigger>
+            <MenubarContent className="max-md: relative left-5 px-0">
+              {profileDropDownLinks.map((value) => (
+                <MenubarItem className="cursor-pointer" key={value.label}>
+                  {value.label}
+                </MenubarItem>
+              ))}
+              <MenubarSeparator />
+              <MenubarItem onClick={() => signOut()}>Logout</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
       ) : (
         <Button onClick={() => signIn("google", { callbackUrl: "/" })}>
           Sign-in
         </Button>
       )}
-    </>
+    </div>
   );
 };
 
