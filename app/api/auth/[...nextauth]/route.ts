@@ -9,7 +9,8 @@ const handler = NextAuth({
     }),
   ],
   pages: {
-    // signIn: "/auth/sign-in",
+    signIn: "/auth/sign-in",
+    newUser: "auth/sing-up",
     // signOut: "/sign-out",
   },
 });

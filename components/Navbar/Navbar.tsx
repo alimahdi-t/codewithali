@@ -15,9 +15,9 @@ import {
   MenubarItem,
   MenubarMenu,
   MenubarSeparator,
-  MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { Logo } from "@/constants/Icons";
 
 const NavLinks = () => {
   const pathName = usePathname();
@@ -98,37 +98,3 @@ const AuthUI = ({ className }: { className?: string }) => {
     </div>
   );
 };
-
-export function Logo({ className }: { className?: string }) {
-  return (
-    <svg
-      width="200"
-      height="200"
-      viewBox="0 0 200 200"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={`${className}`}
-    >
-      <circle cx="100" cy="100" r="100" fill="#007AFF" />
-      <path d="M100 10L177.942 145H22.0577L100 10Z" fill="white" />
-      <path d="M100 60L134.641 120H65.359L100 60Z" fill="#007AFF" />
-      <rect x="121" y="100" width="50" height="20" fill="#007AFF" />
-      <rect
-        x="83.3507"
-        y="31"
-        width="50"
-        height="20"
-        transform="rotate(60.1736 83.3507 31)"
-        fill="#007AFF"
-      />
-      <rect
-        x="47"
-        y="151.059"
-        width="50"
-        height="20"
-        transform="rotate(-59.4485 47 151.059)"
-        fill="#007AFF"
-      />
-    </svg>
-  );
-}
