@@ -1,8 +1,13 @@
-"use client";
-import BlogCard from "@/components/BlogCard/BlogCard";
-import Tag from "@/components/common/Tag";
-import { useTheme } from "@/context/ThemeProvider";
-import Theme from "@/components/Navbar/Theme";
+import CourseCard from "@/components/CourseCard/CourseCard";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Switch } from "@/components/ui/switch";
+import { Label } from "@/components/ui/label";
+import BlogCardSideBar from "@/components/BlogCard/BlogCardSideBar";
 
 const posts = [
   {
@@ -82,30 +87,34 @@ const posts = [
     },
   },
 ];
+
 const Courses = () => {
   return (
-    <div className="py-24 sm:py-32 background-dark950_light50 flex justify-center">
-      <div className="max-w-7xl lg:px-12 px-6 flex flex-col">
-        <div className="mx-auto max-w-2xl text-center">
+    <div className="max-w-7xl lg:px-12 px-6 flex flex-col">
+      <div className="flex justify-between">
+        <div className="flex gap-2 items-center">
+          <div className="bg-brand-500 w-5 h-5 rounded"></div>
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Blog
+            Courses
           </h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
-            Learn how to grow your business with our expert advice.
-          </p>
         </div>
 
+        <p className="mt-2 text-lg leading-8 text-gray-600">17 courses</p>
+      </div>
+      <div className="flex gap-4 mt-16">
+        <BlogCardSideBar />
         <div
-          className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
-                    gap-4"
+          className="w-full  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+                    gap-4 "
         >
           {/*  -----------------------------------------------------------*/}
           {posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
+            <CourseCard key={post.id} post={post} />
           ))}
         </div>
-        <p className="text-black dark:text-white">Pagination</p>
       </div>
+
+      <p className="text-black dark:text-white">Pagination</p>
     </div>
   );
 };

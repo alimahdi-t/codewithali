@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Tag from "@/components/common/Tag";
 
 interface Props {
