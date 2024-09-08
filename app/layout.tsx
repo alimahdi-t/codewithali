@@ -58,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa">
-      <body className={Yekan.className}>
+      <body dir="rtl" className={Yekan.className}>
         <AuthProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </AuthProvider>

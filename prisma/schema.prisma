@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique @db.VarChar(64)
+  first_name String   @default("") @db.VarChar(32)
+  last_name  String?  @db.VarChar(32)
+  imageUrl   String?
+  email      String   @unique
+  role       Role     @default(USER)
+  joinedAt   DateTime @default(now())
+  bio        String?
+  Course     Course[]
+  Post       Post[]
+}
+
+model Course {
+  id          Int         @id @default(autoincrement())
+  title       String
+  description String
+  content     String
+  imageUrl    String?
+  tags        CourseTag[]
+  price       Int
+  createdAt   DateTime    @default(now())
+  updateAt    DateTime    @updatedAt
+  author      User        @relation(fields: [userId], references: [id])
+  userId      Int
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  title       String    @db.VarChar(255)
+  description String    @db.VarChar(250)
+  content     String    @default("")
+  tags        PostTag[]
+  imageUrl    String    @default("")
+  createAt    DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  author      User      @relation(fields: [userId], references: [id])
+  userId      Int       @default(1)
+}
+
+model CourseTag {
+  id          Int     @id @default(autoincrement())
+  title       String  @unique @db.VarChar(30)
+  description String  @unique
+  Course      Course? @relation(fields: [courseId], references: [id])
+  courseId    Int?
+  userId      Int
+}
+
+model PostTag {
+  id     Int    @id @default(autoincrement())
+  title  String @unique @db.VarChar(30)
+  Post   Post?  @relation(fields: [postId], references: [id])
+  postId Int?
+}
+
+enum Role {
+  USER
+  INSTRUCTOR
+  ADMIN
+}

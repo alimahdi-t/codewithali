@@ -6,7 +6,7 @@ interface Props {
   state?: "checked" | "unchecked";
 }
 
-const CustomCheckbox = ({ label, state = false }: Props) => {
+const CustomCheckbox = ({ label, state = "unchecked" }: Props) => {
   const [checked, setChecked] = useState(state === "checked");
   const onChange = () => {
     if (checked) {
