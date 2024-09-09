@@ -1,9 +1,9 @@
 "use client";
 
-import Theme from "@/components/Navbar/Theme";
+import Theme from "@/components/shared/Navbar/Theme";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import MobileNav from "@/components/Navbar/MobileNav";
+import MobileNav from "@/components/shared/Navbar/MobileNav";
 import { navLinks, profileDropDownLinks } from "@/constants";
 import React from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -45,7 +45,10 @@ const Navbar = () => {
       <nav className="py-6 w-full background-dark900_light50 border-b dark:border-gray-800 flex justify-center ">
         <div className="max-w-7xl w-full lg:px-12 px-6 flex justify-between items-center">
           <AuthUI className="md:hidden" />
-          <Link href="/" className="dark:text-white flex items-center gap-2 ">
+          <Link
+            href="/public"
+            className="dark:text-white flex items-center gap-2 "
+          >
             <h3 className="text-xl font-bold font">
               <Logo className="w-12 h-12" />
             </h3>

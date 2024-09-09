@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import { navLinks } from "@/constants";
 import Link from "next/link";
-import Theme from "@/components/Navbar/Theme";
+import Theme from "@/components/shared/Navbar/Theme";
 
 const MobileNav = ({ className }: { className?: string }) => {
   return (

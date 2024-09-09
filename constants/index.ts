@@ -1,8 +1,8 @@
 export const navLinks = [
-  { label: "Courses", href: "/courses" },
-  { label: "Blog", href: "/blog" },
-  { label: "Contact", href: "/contact" },
-  { label: "About", href: "/about" },
+  { label: "دوره ها", href: "/courses" },
+  { label: "وبلاگ", href: "/blog" },
+  { label: "تماس با ما", href: "/contact" },
+  { label: "درباره ما", href: "/about" },
 ];
 
 export const profileDropDownLinks = [

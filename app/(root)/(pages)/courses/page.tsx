@@ -1,35 +1,16 @@
 import CourseCard from "@/components/Course/CourseCard";
-import BlogCardSideBar from "@/components/BlogCard/BlogCardSideBar";
+
 import { getCourses } from "@/lib/actions/course.action";
 import { convertToPersianNumbers } from "@/utils";
 import CourseSortOptions from "@/components/Course/CourseSortOptions";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
-
-const posts = [
-  {
-    id: 1,
-    title: "Boost your conversion rate",
-    href: "#",
-    description:
-      "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80",
-    date: "Mar 16, 2020",
-    dateTime: "2020-03-16",
-    tags: [{ title: "Marketing", href: "#" }],
-    author: {
-      name: "Michael Foster",
-      role: "Co-Founder / CTO",
-      href: "#",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  },
-];
+import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
+import NoResult from "@/components/shared/NoResult";
+import { NoCourseFound } from "@/constants/Icons";
 
 const Courses = async () => {
-  const courses = await getCourses();
-  console.log(courses);
+  const courses = [];
+  const pageSize: number = 12;
 
   return (
     <div className="max-w-7xl lg:px-12 px-6 flex flex-col">
@@ -55,43 +36,27 @@ const Courses = async () => {
             <CourseFilterOption className="sm:hidden" />
             <CourseSortOptions />
           </div>
+
+          <NoResult
+            icon={<NoCourseFound />}
+            label="دوره‌‌ای با مشخصات مورد نظر پیدا نشد."
+            hiddenCondition={courses.length !== 0}
+          />
+
           <div
             className="w-full h-min grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
                     gap-4 "
           >
-            {/*  -----------------------------------------------------------*/}
-
             {courses.map((course) => (
-              <>
-                <span className="col-span-1">
-                  <CourseCard course={course} />
-                </span>
-                <span className="col-span-1">
-                  <CourseCard course={course} />
-                </span>
-                <span className="col-span-1">
-                  <CourseCard course={course} />
-                </span>
-                <span className="col-span-1">
-                  <CourseCard course={course} />
-                </span>
-                <span className="col-span-1">
-                  <CourseCard course={course} />
-                </span>
-                <span className="col-span-1">
-                  <CourseCard course={course} />
-                </span>
-                <span className="col-span-1">
-                  <CourseCard course={course} />
-                </span>
-                <span className="col-span-1">
-                  <CourseCard course={course} />
-                </span>
-              </>
+              <CourseCard
+                key={course.id}
+                course={course}
+                className="col-span-1"
+              />
             ))}
           </div>
           {/* TODO: Pagination*/}
-          <Pagination />
+          {courses.length > pageSize && <Pagination />}
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { HiOutlineUser, HiMiniStar, HiOutlineUsers } from "react-icons/hi2";
 import Link from "next/link";
 import { convertToPersianAndFormat, convertToPersianNumbers } from "@/utils";
-import TomanIcon from "@/components/TomanIcon";
+import TomanIcon from "@/components/common/TomanIcon";
 
 interface Props {
   course: {
@@ -15,14 +15,16 @@ interface Props {
     first_name: string;
     last_name: string;
   };
+  className?: string;
+  key?: string;
 }
 
-const CourseCard = ({ course }: Props) => {
+const CourseCard = ({ course, className }: Props) => {
   return (
     <article
       key={course.id}
-      className="flex flex-col items-start justify-between rounded-lg shadow-md 
-      bg-white h-min "
+      className={`flex flex-col items-start justify-between rounded-lg shadow-md
+        bg-white h-min ${className}`}
     >
       {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">

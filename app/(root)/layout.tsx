@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "@/components/Navbar/Navbar";
+import Navbar from "@/components/shared/Navbar/Navbar";
 import AuthProvider from "@/app/(auth)/AuthProvider";
-import Footer from "@/components/Footer/Footer";
+import Footer from "@/components/shared/Footer/Footer";
 import { ToastContainer } from "react-toastify";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
