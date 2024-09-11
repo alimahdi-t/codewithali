@@ -8,6 +8,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
+
       <main>
         <section className="bg-gray-50 py-24 sm:py-32 flex justify-center">
           {children}

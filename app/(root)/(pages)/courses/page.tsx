@@ -9,7 +9,7 @@ import NoResult from "@/components/shared/NoResult";
 import { NoCourseFound } from "@/constants/Icons";
 
 const Courses = async () => {
-  const courses = [];
+  const courses = await getCourses();
   const pageSize: number = 12;
 
   return (

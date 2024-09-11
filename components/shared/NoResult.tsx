@@ -1,4 +1,3 @@
-//TODO: Complete NoCourseFOUND
 import { ReactNode } from "react";
 
 const NoResult = ({
