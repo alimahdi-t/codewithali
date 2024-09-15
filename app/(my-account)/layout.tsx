@@ -6,9 +6,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <main className="flex">
       <Sidebar width={sidebarSize} />
-      <section
-        className={`w-full bg-gray-50 py-24 sm:py-32 px-16 mr-[${sidebarSize}]`}
-      >
+      <section className={`w-full bg-gray-50 py-24 sm:py-32 px-16 mr-[256px]`}>
         {children}
       </section>
     </main>

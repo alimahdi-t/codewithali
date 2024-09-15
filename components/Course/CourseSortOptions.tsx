@@ -1,6 +1,6 @@
 "use client";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { courseSortFilter } from "@/constants/filters";
 import {
   Sheet,
@@ -11,6 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { useRouter } from "next/navigation";
 
 interface SortOption {
   name: string;
@@ -18,14 +19,18 @@ interface SortOption {
 }
 
 const CourseSortOptions = () => {
+  const router = useRouter();
+
   const [selectedSortOption, setSelectedSortOption] = useState<SortOption>({
     name: "جدید ترین",
     value: "newest",
   });
 
-  const handleSort = useCallback((item: SortOption) => {
+  const handleSort = (item: SortOption) => {
     setSelectedSortOption({ name: item.name, value: item.value });
-  }, []);
+    const query = `?sortBy=${item.value}`;
+    router.push("/courses" + query);
+  };
 
   return (
     <>

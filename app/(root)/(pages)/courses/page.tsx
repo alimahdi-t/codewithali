@@ -1,15 +1,24 @@
 import CourseCard from "@/components/Course/CourseCard";
 
-import { getCourses } from "@/lib/actions/course.action";
+import { getAllCourses } from "@/lib/actions/course.action";
 import { convertToPersianNumbers } from "@/utils";
 import CourseSortOptions from "@/components/Course/CourseSortOptions";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
 import NoResult from "@/components/shared/NoResult";
 import { NoCourseFound } from "@/constants/Icons";
+import delay from "delay";
+import { GetAllCoursesParams } from "@/lib/actions/shared.types";
 
-const Courses = async () => {
-  const courses = await getCourses();
+interface Props {
+  searchParams: GetAllCoursesParams;
+}
+
+const Courses = async ({ searchParams }: Props) => {
+  console.log(searchParams);
+  const courses = await getAllCourses({ sortBy: searchParams.sortBy });
+  await delay(2000);
+  const number0fCourses = courses.length;
   const pageSize: number = 12;
 
   return (
@@ -23,7 +32,7 @@ const Courses = async () => {
         </div>
 
         <p className="mt-2 text-lg leading-8 text-gray-600">{`${convertToPersianNumbers(
-          36,
+          number0fCourses,
         )} عنوان آموزشی`}</p>
       </div>
       <div className="flex gap-4 mt-16">
@@ -56,7 +65,7 @@ const Courses = async () => {
             ))}
           </div>
           {/* TODO: Pagination*/}
-          {courses.length > pageSize && <Pagination />}
+          {/*{courses.length > pageSize && <Pagination />}*/}
         </div>
       </div>
     </div>
@@ -65,21 +74,21 @@ const Courses = async () => {
 
 export default Courses;
 
-const Pagination = () => {
-  return (
-    <div className="w-full flex gap-2 justify-center mt-4">
-      <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
-        1
-      </div>
-      <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
-        1
-      </div>
-      <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
-        1
-      </div>
-      <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
-        1
-      </div>
-    </div>
-  );
-};
+// const Pagination = () => {
+//   return (
+//     <div className="w-full flex gap-2 justify-center mt-4">
+//       <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
+//         1
+//       </div>
+//       <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
+//         1
+//       </div>
+//       <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
+//         1
+//       </div>
+//       <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
+//         1
+//       </div>
+//     </div>
+//   );
+// };

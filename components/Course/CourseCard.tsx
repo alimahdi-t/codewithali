@@ -47,8 +47,7 @@ const CourseCard = ({ course, className }: Props) => {
             className="font-semibold text-gray-900 group-hover:text-gray-600
           dark:text-gr"
           >
-            {/*TODO: set href*/}
-            <a href={"#"}>
+            <a href={`/courses/${course.id}`}>
               <h3 className="text-sm font-medium inset-0">{course.title}</h3>
             </a>
           </h3>
