@@ -23,8 +23,8 @@ const CourseCard = ({ course, className }: Props) => {
   return (
     <article
       key={course.id}
-      className={`flex flex-col items-start justify-between rounded-lg shadow-md
-        bg-white h-min ${className}`}
+      className={`flex flex-col h-full items-start justify-between rounded-lg shadow-md
+        bg-white  ${className}`}
     >
       {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">
@@ -38,7 +38,7 @@ const CourseCard = ({ course, className }: Props) => {
       </div>
 
       {/*--------------- Card Body ---------------*/}
-      <div className="max-w-xl px-4 py-4 flex flex-col gap-2">
+      <div className="w-full px-4 py-4 flex flex-col gap-2">
         {/*--------------- Card Tags ---------------*/}
 
         {/*--------------- Card Title and Description ---------------*/}
