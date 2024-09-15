@@ -11,7 +11,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface SortOption {
   name: string;
@@ -20,6 +20,7 @@ interface SortOption {
 
 const CourseSortOptions = () => {
   const router = useRouter();
+  const searchParams = useSearchParams().get("orderBy");
 
   const [selectedSortOption, setSelectedSortOption] = useState<SortOption>({
     name: "جدید ترین",
@@ -27,9 +28,22 @@ const CourseSortOptions = () => {
   });
 
   const handleSort = (item: SortOption) => {
-    setSelectedSortOption({ name: item.name, value: item.value });
-    const query = `?sortBy=${item.value}`;
-    router.push("/courses" + query);
+    const params = new URLSearchParams(window.location.search);
+
+    // Replace the existing 'orderBy' parameter or add a new one
+    if (item.value) {
+      params.set("orderBy", item.value);
+    }
+
+    // Generate the query string
+    const query = params.toString();
+    const queryString = query ? `?${query}` : "";
+
+    // Navigate to the new URL
+    router.push(`/courses${queryString}`);
+
+    // Update the selected sort option
+    setSelectedSortOption(item);
   };
 
   return (

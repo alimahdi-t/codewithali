@@ -3,7 +3,7 @@ export interface GetCourseByIdParams {
 }
 
 export interface GetAllCoursesParams {
-  sortBy?: "newest" | "oldest" | "cheapest" | "mostExpensive" | "mostPopular"; // Sorting options
+  orderBy?: "newest" | "oldest" | "cheapest" | "mostExpensive" | "mostPopular"; // Sorting options
   isFree?: boolean; // Filter for free courses
   isPreOrder?: boolean; // Filter for courses available for pre-order
   levels?: string[]; // Filter by course levels (e.g., "beginner", "advanced", "expert")

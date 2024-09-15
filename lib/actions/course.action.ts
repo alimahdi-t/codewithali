@@ -26,11 +26,16 @@ export async function getCourseById({ id }: GetCourseByIdParams) {
   }
 }
 
-export async function getAllCourses({ sortBy }: GetAllCoursesParams) {
+export async function getAllCourses({
+  orderBy,
+  isFree,
+  isPreOrder,
+  levels,
+}: GetAllCoursesParams) {
   try {
     // Build dynamic ORDER BY clause based on sortBy value
     let orderByClause = "";
-    switch (sortBy) {
+    switch (orderBy) {
       case "newest":
         orderByClause = "course.createdAt DESC"; // Sort by newest first
         break;
@@ -43,12 +48,32 @@ export async function getAllCourses({ sortBy }: GetAllCoursesParams) {
       case "mostExpensive":
         orderByClause = "course.price DESC"; // Sort by most expensive first
         break;
-      case "mostPopular":
-        orderByClause = "course.enrollments DESC"; // Assuming you have an enrollments field
-        break;
+      // case "mostPopular":
+      //   orderByClause = "course.enrollments DESC"; // Assuming you have an enrollments field
+      //   break;
       default:
         orderByClause = "course.createdAt DESC"; // Default to newest
     }
+
+    // Start building the dynamic WHERE clause
+    let whereClause = [];
+    if (isFree) {
+      whereClause.push("course.price = 0");
+    }
+    if (isPreOrder) {
+      whereClause.push("course.status = 'PREORDER'");
+    }
+    if (levels && Array.isArray(levels) && levels.length > 0) {
+      const levelsList = levels.map((level) => `'${level}'`).join(", ");
+      whereClause.push(`course.level IN (${levelsList})`); // Add level array check
+    } else if (typeof levels === "string") {
+      whereClause.push(`course.level = '${levels}'`);
+    }
+    console.log(levels);
+
+    // Combine conditions into a single WHERE clause, if any conditions exist
+    const whereCondition =
+      whereClause.length > 0 ? `WHERE ${whereClause.join(" AND ")}` : "";
 
     const courses = await prisma.$queryRawUnsafe(`
       SELECT 
@@ -65,15 +90,13 @@ export async function getAllCourses({ sortBy }: GetAllCoursesParams) {
         course
       JOIN 
         user ON course.userId = user.id
+      ${whereCondition}
       ORDER BY 
         ${orderByClause};
     `); // Use dynamic orderByClause
 
     return courses;
   } catch (error) {
-    console.log("Error while getting all courses.", error);
-    return false;
-  } finally {
-    console.log("Done");
+    throw new Error(`Error fetching courses: ${error.message}`);
   }
 }

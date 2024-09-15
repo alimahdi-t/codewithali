@@ -9,21 +9,28 @@ import NoResult from "@/components/shared/NoResult";
 import { NoCourseFound } from "@/constants/Icons";
 import delay from "delay";
 import { GetAllCoursesParams } from "@/lib/actions/shared.types";
+import Pagination from "@/components/shared/Pagination";
 
 interface Props {
   searchParams: GetAllCoursesParams;
 }
 
 const Courses = async ({ searchParams }: Props) => {
-  console.log(searchParams);
-  const courses = await getAllCourses({ sortBy: searchParams.sortBy });
+  const pageSize: number = 12;
+  const courses = await getAllCourses({
+    orderBy: searchParams.orderBy,
+    isFree: searchParams.isFree,
+    isPreOrder: searchParams.isPreOrder,
+    levels: searchParams.levels,
+    pageSize: pageSize,
+    categories: searchParams.categories,
+  });
   await delay(2000);
   const number0fCourses = courses.length;
-  const pageSize: number = 12;
 
   return (
-    <div className="max-w-7xl lg:px-12 px-6 flex flex-col">
-      <div className="flex justify-between">
+    <div className="w-full lg:px-12 px-6 flex flex-col">
+      <div className="w-full flex justify-between">
         <div className="flex gap-2 items-center">
           <div className="bg-brand-500 w-5 h-5 rounded"></div>
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
@@ -40,7 +47,7 @@ const Courses = async ({ searchParams }: Props) => {
           <BlogCardSideBar />
         </div>
 
-        <div className="flex flex-col gap-4">
+        <div className="w-full flex flex-col gap-4">
           <div className="w-full flex gap-4">
             <CourseFilterOption className="sm:hidden" />
             <CourseSortOptions />
@@ -65,7 +72,7 @@ const Courses = async ({ searchParams }: Props) => {
             ))}
           </div>
           {/* TODO: Pagination*/}
-          {/*{courses.length > pageSize && <Pagination />}*/}
+          {courses.length > pageSize && <Pagination />}
         </div>
       </div>
     </div>
@@ -73,22 +80,3 @@ const Courses = async ({ searchParams }: Props) => {
 };
 
 export default Courses;
-
-// const Pagination = () => {
-//   return (
-//     <div className="w-full flex gap-2 justify-center mt-4">
-//       <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
-//         1
-//       </div>
-//       <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
-//         1
-//       </div>
-//       <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
-//         1
-//       </div>
-//       <div className="w-4 h-4 p-4 bg-white shadow-lg rounded text-sm flex justify-center items-center">
-//         1
-//       </div>
-//     </div>
-//   );
-// };
