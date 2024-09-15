@@ -83,8 +83,14 @@ const CourseCard = ({ course, className }: Props) => {
           <div>
             {/*<p className="font-bold text-xs line-through">689</p>*/}
             <p className="font-extrabold text-sm text-brand-700 flex gap-1 items-center">
-              {convertToPersianAndFormat(course.price)}{" "}
-              <TomanIcon className=" stroke-gray-800" />
+              {course.price === 0 ? (
+                "رایگان!"
+              ) : (
+                <>
+                  {convertToPersianAndFormat(course.price)}
+                  <TomanIcon className=" stroke-gray-800" />
+                </>
+              )}
             </p>
           </div>
         </div>
