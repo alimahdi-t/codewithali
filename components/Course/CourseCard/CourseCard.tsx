@@ -1,7 +1,12 @@
 import { HiOutlineUser, HiMiniStar, HiOutlineUsers } from "react-icons/hi2";
 import Link from "next/link";
-import { convertToPersianAndFormat, convertToPersianNumbers } from "@/utils";
+import {
+  calculateDiscount,
+  convertToPersianAndFormat,
+  convertToPersianNumbers,
+} from "@/utils";
 import TomanIcon from "@/components/common/TomanIcon";
+import DiscountTag from "@/components/Course/CourseCard/DiscountTag";
 
 interface Props {
   course: {
@@ -17,9 +22,10 @@ interface Props {
   };
   className?: string;
   key?: string;
+  discount?: number;
 }
 
-const CourseCard = ({ course, className }: Props) => {
+const CourseCard = ({ course, className, discount = 100 }: Props) => {
   return (
     <article
       key={course.id}
@@ -27,6 +33,7 @@ const CourseCard = ({ course, className }: Props) => {
         bg-white  ${className}`}
     >
       {/*--------------- Card Header ---------------*/}
+      <DiscountTag discount={discount!} />
       <div className="relative w-full">
         <img
           width={20}
@@ -73,21 +80,29 @@ const CourseCard = ({ course, className }: Props) => {
 
         <hr />
 
-        <div className="text-gray-400 flex justify-between items-center text-xs">
-          <div className="flex items-center gap-x-1 ">
-            <HiOutlineUsers className="w-4 h-4" />
-            <p className="font-medium text-xs leading-6">
-              {convertToPersianNumbers(1245)}
-            </p>
-          </div>
-          <div>
-            {/*<p className="font-bold text-xs line-through">689</p>*/}
+        <div className="flex flex-col items-end">
+          <p className="font-bold text-xs line-through text-gray-400">
+            {convertToPersianAndFormat(course.price)}
+          </p>
+          <div className="w-full text-gray-400 flex justify-between items-center text-xs">
+            <div className="flex items-center gap-x-1 ">
+              <HiOutlineUsers className="w-4 h-4" />
+              <p className="font-medium text-xs leading-6">
+                {convertToPersianNumbers(1245)}
+              </p>
+            </div>
+
             <p className="font-extrabold text-sm text-brand-700 flex gap-1 items-center">
-              {course.price === 0 ? (
+              {course.price === 0 || discount === 100 ? (
                 "رایگان!"
               ) : (
                 <>
-                  {convertToPersianAndFormat(course.price)}
+                  {convertToPersianAndFormat(
+                    calculateDiscount(course.price, {
+                      amount: 0,
+                      percentage: discount,
+                    }),
+                  )}
                   <TomanIcon className=" stroke-gray-800" />
                 </>
               )}

@@ -16,3 +16,19 @@ export function convertToPersianAndFormat(number) {
 
   return persianNumber;
 }
+
+export function calculateDiscount(price, discount) {
+  const { percentage, amount } = discount;
+
+  if (percentage) {
+    // If a percentage is provided
+    const discountValue = (price * percentage) / 100;
+    return price - discountValue;
+  } else if (amount) {
+    // If a fixed amount is provided
+    return price - amount;
+  }
+
+  // If no discount is provided
+  return price;
+}

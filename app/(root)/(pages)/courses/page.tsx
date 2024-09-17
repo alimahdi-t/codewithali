@@ -1,4 +1,4 @@
-import CourseCard from "@/components/Course/CourseCard";
+import CourseCard from "@/components/Course/CourseCard/CourseCard";
 
 import { getAllCourses } from "@/lib/actions/course.action";
 import { convertToPersianNumbers } from "@/utils";
