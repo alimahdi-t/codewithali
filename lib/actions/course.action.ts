@@ -26,11 +26,54 @@ export async function getCourseById({ id }: GetCourseByIdParams) {
   }
 }
 
+export async function getCoursesCount({
+  isFree,
+  isPreOrder,
+  levels,
+}: GetAllCoursesParams) {
+  try {
+    // Start building the dynamic WHERE clause
+    let whereClause = [];
+    if (isFree) {
+      whereClause.push("course.price = 0");
+    }
+    if (isPreOrder) {
+      whereClause.push("course.status = 'PREORDER'");
+    }
+    if (levels && Array.isArray(levels) && levels.length > 0) {
+      const levelsList = levels.map((level) => `'${level}'`).join(", ");
+      whereClause.push(`course.level IN (${levelsList})`); // Add level array check
+    } else if (typeof levels === "string") {
+      whereClause.push(`course.level = '${levels}'`);
+    }
+
+    // Combine conditions into a single WHERE clause, if any conditions exist
+    const whereCondition =
+      whereClause.length > 0 ? `WHERE ${whereClause.join(" AND ")}` : "";
+
+    // Execute a COUNT query with Prisma's raw SQL
+    const countResult = await prisma.$queryRawUnsafe(`
+      SELECT 
+        COUNT(course.id) as totalCourses
+      FROM 
+        course
+      ${whereCondition};
+    `);
+
+    // Return the total count of courses
+    return countResult[0]?.totalCourses || 0;
+  } catch (error) {
+    throw new Error(`Error fetching course count: ${error.message}`);
+  }
+}
+
 export async function getAllCourses({
   orderBy,
   isFree,
   isPreOrder,
   levels,
+  page = 1,
+  pageSize = 12,
 }: GetAllCoursesParams) {
   try {
     // Build dynamic ORDER BY clause based on sortBy value
@@ -75,6 +118,9 @@ export async function getAllCourses({
     const whereCondition =
       whereClause.length > 0 ? `WHERE ${whereClause.join(" AND ")}` : "";
 
+    // Calculate OFFSET for pagination
+    const offset = (page - 1) * pageSize;
+
     const courses = await prisma.$queryRawUnsafe(`
       SELECT 
         course.id,
@@ -83,7 +129,7 @@ export async function getAllCourses({
         course.imageUrl,
         course.createdAt, 
         course.price, 
-        course.userId, 
+        course.userId,
         user.first_name, 
         user.last_name
       FROM 
@@ -92,7 +138,9 @@ export async function getAllCourses({
         user ON course.userId = user.id
       ${whereCondition}
       ORDER BY 
-        ${orderByClause};
+        ${orderByClause}
+      LIMIT ${pageSize}
+      OFFSET ${offset}
     `); // Use dynamic orderByClause
 
     return courses;

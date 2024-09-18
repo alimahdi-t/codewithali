@@ -25,7 +25,7 @@ interface Props {
   discount?: number;
 }
 
-const CourseCard = ({ course, className, discount = 100 }: Props) => {
+const CourseCard = ({ course, className, discount = 35 }: Props) => {
   return (
     <article
       key={course.id}

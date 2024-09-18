@@ -1,6 +1,6 @@
 import CourseCard from "@/components/Course/CourseCard/CourseCard";
 
-import { getAllCourses } from "@/lib/actions/course.action";
+import { getAllCourses, getCoursesCount } from "@/lib/actions/course.action";
 import { convertToPersianNumbers } from "@/utils";
 import CourseSortOptions from "@/components/Course/CourseSortOptions";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
@@ -16,17 +16,28 @@ interface Props {
 }
 
 const Courses = async ({ searchParams }: Props) => {
+  const page = parseInt(searchParams.page) || 1;
   const pageSize: number = 12;
+
+  // GET Courses from server
   const courses = await getAllCourses({
     orderBy: searchParams.orderBy,
     isFree: searchParams.isFree,
     isPreOrder: searchParams.isPreOrder,
     levels: searchParams.levels,
     pageSize: pageSize,
+    page: searchParams.page,
     categories: searchParams.categories,
   });
+
+  // GET total number of courses with same filter from server
+  const totalCourses = await getCoursesCount({
+    isFree: searchParams.isFree,
+    isPreOrder: searchParams.isPreOrder,
+    levels: searchParams.levels,
+  });
+
   await delay(2000);
-  const number0fCourses = courses.length;
 
   return (
     <div className="w-full lg:px-12 px-6 flex flex-col">
@@ -39,7 +50,7 @@ const Courses = async ({ searchParams }: Props) => {
         </div>
 
         <p className="mt-2 text-lg leading-8 text-gray-600">{`${convertToPersianNumbers(
-          number0fCourses,
+          totalCourses,
         )} عنوان آموزشی`}</p>
       </div>
       <div className="flex gap-4 mt-16">
@@ -71,8 +82,11 @@ const Courses = async ({ searchParams }: Props) => {
               />
             ))}
           </div>
-          {/* TODO: Pagination*/}
-          {courses.length > pageSize && <Pagination />}
+          <Pagination
+            itemCount={parseInt(totalCourses)}
+            pageSize={pageSize}
+            currentPage={page}
+          />
         </div>
       </div>
     </div>
