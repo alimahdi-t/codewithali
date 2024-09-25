@@ -20,6 +20,8 @@ import SideBar from "@/app/(root)/(pages)/courses/[id]/components/SideBar";
 import St from "@/app/(root)/(pages)/courses/[id]/components/St";
 import CourseContentHeader from "@/app/(root)/(pages)/courses/[id]/components/CourseContentHeader";
 import LessonDetails from "@/app/(root)/(pages)/courses/[id]/components/LessonDetails";
+import CourseTabs from "@/app/(root)/(pages)/courses/[id]/components/CourseTabs";
+import CourseMetrics from "@/app/(root)/(pages)/courses/[id]/components/CourseMetrics";
 interface Props {
   params: { id: string };
 }
@@ -154,6 +156,8 @@ const CoursePageHeader = ({ course }: { course }) => {
 const CoursePageBody = () => {
   return (
     <div className="flex-1 w-full flex flex-col gap-4">
+      <CourseMetrics />
+      <CourseTabs />
       <Container>
         <div className="flex items-center">
           <span
