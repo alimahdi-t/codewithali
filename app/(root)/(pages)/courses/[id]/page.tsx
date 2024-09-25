@@ -4,10 +4,94 @@ import { Button } from "@/components/ui/button";
 import Offer from "@/components/Offer";
 import InstructorInfo from "@/app/(root)/(pages)/courses/[id]/components/InstructorInfo";
 import CompletionProgress from "@/app/(root)/(pages)/courses/[id]/components/CompletionProgress";
-
+import Container from "@/app/(root)/(pages)/courses/[id]/components/Container";
+import {
+  HiDocumentText,
+  HiChatBubbleLeftRight,
+  HiAcademicCap,
+} from "react-icons/hi2";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import SideBar from "@/app/(root)/(pages)/courses/[id]/components/SideBar";
+import St from "@/app/(root)/(pages)/courses/[id]/components/St";
+import CourseContentHeader from "@/app/(root)/(pages)/courses/[id]/components/CourseContentHeader";
+import LessonDetails from "@/app/(root)/(pages)/courses/[id]/components/LessonDetails";
 interface Props {
   params: { id: string };
 }
+
+const CourseTopics = [
+  {
+    label: "مقدمه",
+    lesson: 7,
+    homework: 4,
+    hours: (Math.random() * 2 + 1).toFixed(1),
+  },
+  {
+    label: "متغیر و انواع داده",
+    lesson: 19,
+    homework: 7,
+    hours: (Math.random() * 3 + 1).toFixed(1),
+  },
+  {
+    label: "توابع آماده",
+    lesson: 9,
+    homework: 4,
+    hours: (Math.random() * 2 + 1).toFixed(1),
+  },
+  {
+    label: "پالت‌ها",
+    lesson: 12,
+    homework: 4,
+    hours: (Math.random() * 2 + 1).toFixed(1),
+  },
+  {
+    label: "وکتور و ماتریس",
+    lesson: 8,
+    homework: 8,
+    hours: (Math.random() * 3 + 1).toFixed(1),
+  },
+  {
+    label: "شرط",
+    lesson: 7,
+    homework: 4,
+    hours: (Math.random() * 2 + 1).toFixed(1),
+  },
+  {
+    label: "حلقه",
+    lesson: 9,
+    homework: 7,
+    hours: (Math.random() * 3 + 1).toFixed(1),
+  },
+  {
+    label: "تابع",
+    lesson: 11,
+    homework: 5,
+    hours: (Math.random() * 3 + 1).toFixed(1),
+  },
+  {
+    label: "باک و دیباک",
+    lesson: 4,
+    homework: 3,
+    hours: (Math.random() + 1).toFixed(1),
+  },
+  {
+    label: "کار با فایل",
+    lesson: 9,
+    homework: 2,
+    hours: (Math.random() * 2 + 1).toFixed(1),
+  },
+  {
+    label: "ریاضیات مهندسی",
+    lesson: 11,
+    homework: 0,
+    hours: (Math.random() * 3 + 1).toFixed(1),
+  },
+];
 
 const Course = async ({ params }: Props) => {
   const course = await getCourseById({ id: parseInt(params.id) });
@@ -19,8 +103,10 @@ const Course = async ({ params }: Props) => {
   return (
     <div className="w-full h-screen flex flex-col gap-8">
       <CoursePageHeader course={course} />
-      <CoursePageBody />
-      <CoursePageFooter />
+      <div className="w-full flex flex-row gap-4 flex-1 pb-12">
+        <CoursePageBody />
+        <SideBar />
+      </div>
     </div>
   );
 };
@@ -67,23 +153,69 @@ const CoursePageHeader = ({ course }: { course }) => {
 
 const CoursePageBody = () => {
   return (
-    <div className="w-full flex flex-row gap-4">
-      <div className="flex-1 bg-white shadow-lg p-4">محتوا</div>
-      <SideBar />
-    </div>
-  );
-};
+    <div className="flex-1 w-full flex flex-col gap-4">
+      <Container>
+        <div className="flex items-center">
+          <span
+            className={`w-1.5 h-10 rounded-r-sm relative left-6 bg-yellow-500`}
+          ></span>
+          {/* Render the icon component */}
+          <HiDocumentText className="w-10 h-10 text-yellow-500" />
+          <h3 className="text-2xl font-semibold mx-2">توضیحات</h3>
+        </div>
+      </Container>
 
-const CoursePageFooter = () => {
-  return <div className="w-full bg-white shadow-lg p-4">Footer</div>;
-};
+      <Container>
+        <div className="flex flex-1 items-center">
+          <div
+            className={`w-1.5 h-10 rounded-r-sm relative left-6 bg-brand-500`}
+          />
+          {/* Render the icon component */}
+          <HiAcademicCap className="w-10 h-10 text-brand-500" />
+          <h3 className="text-2xl font-semibold mx-2">سرفصل‌های دوره</h3>
+        </div>
+        <div className="px-2 my-4">
+          <Accordion type="single" collapsible className="border rounded-lg">
+            <CourseContentHeader
+              numberOfLessons={106}
+              numberOfVideos={38}
+              numberOfHomeworks={49}
+            />
 
-const SideBar = () => {
-  return (
-    <div className="w-96 flex flex-col gap-4">
-      <InstructorInfo />
-      <CompletionProgress progress={28} />
-      <Group />
+            {CourseTopics.map((courseTopic, index) => (
+              <AccordionItem
+                key={index}
+                value={`item-${index}`}
+                className="px-4 py-2"
+              >
+                <AccordionTrigger>
+                  <div className="w-full flex justify-between items-center px-2 border-gray-100">
+                    <h4>{courseTopic.label}</h4>
+                    <LessonDetails
+                      numberOfLessons={5}
+                      numberOfHomeworks={4}
+                      numberOfVideos={4}
+                    />
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  Yes. It adheres to the WAI-ARIA design pattern.
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </div>
+      </Container>
+      <Container>
+        <div className="flex items-center gap-x-2">
+          <span
+            className={`w-1.5 h-10 rounded-r-sm relative left-6 bg-red-500`}
+          ></span>
+          {/* Render the icon component */}
+          <HiChatBubbleLeftRight className="w-10 h-10 text-red-500" />
+          <h3 className="text-2xl font-semibold">نظرات</h3>
+        </div>
+      </Container>
     </div>
   );
 };

@@ -58,7 +58,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa">
-      <body dir="rtl" className={Yekan.className}>
+      <body dir="rtl" className={`${Yekan.className} scroll-container`}>
         <AuthProvider>
           <ThemeProvider>{children}</ThemeProvider>
         </AuthProvider>
