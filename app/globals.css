@@ -62,6 +62,18 @@
 
 
 @layer utilities{
+  .box-t {
+    @apply flex-1 p-4 bg-white rounded-lg shadow border border-gray-100 dark:text-white dark:bg-gray-900 dark:shadow-none dark:border-none
+  }
+
+  .text-main-t{
+    @apply dark:text-white text-black
+  }
+
+  .text-sub-t {
+    @apply dark:text-gray-400 text-gray-600
+  }
+
   .background-dark950_light50{
     @apply dark:bg-gray-950 bg-white
   }

@@ -37,12 +37,14 @@ const CourseMetrics = ({}: Props) => {
       {items.map((item, index) => (
         <div
           key={index}
-          className="bg-white py-3 px-5 flex gap-4 items-center grid-cols-1 rounded-lg shadow border border-gray-100"
+          className="py-3 px-5 flex gap-4 items-center grid-cols-1 box-t "
         >
-          <item.icon className="w-10 h-10 text-green-500" />
-          <div className="flex flex-col gap-2">
-            <p className="font-semibold text-sm">{item.label}</p>
-            <p className="text-xs">{item.value}</p>
+          <span className="p-4 bg-green-500/10 rounded-full">
+            <item.icon className="w-8 h-8 text-green-500" />
+          </span>
+          <div className="flex flex-col gap-2 text-t">
+            <p className="font-semibold text-sm text-t ">{item.label}</p>
+            <p className="text-xs text-sub-t font-medium">{item.value}</p>
           </div>
         </div>
       ))}
