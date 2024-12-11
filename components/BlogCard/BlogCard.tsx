@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Tag from "@/components/common/Tag";
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
     imageUrl: string;
     date: string;
     dateTime: string;
-    category: { title: string; href: string };
+    tags: { title: string; href: string }[];
     author: {
       name: string;
       role: string;
@@ -47,12 +46,15 @@ const BlogCard = ({ post }: Props) => {
           {/*</time>*/}
           {/* Badge*/}
           <div className="flex flex-wrap gap-1.5">
-            <Tag tagName={post.category.title} href={post.category.href} />
-            <Tag tagName={"React"} href={post.category.href} />
-            <Tag tagName={"Cyber Security"} href={post.category.href} />
-            <Tag tagName={"Android"} href={post.category.href} />
-            <Tag tagName={"Next JS"} href={post.category.href} />
-            <Tag tagName={"My SQL Database"} href={post.category.href} />
+            {post.tags.map((tag) => (
+              <Tag tagName={tag.title} href={tag.href} />
+            ))}
+            {/*<Tag tagName={post.tags.title} href={post.tags.href} />*/}
+            {/*<Tag tagName={"React"} href={post.tags.href} />*/}
+            {/*<Tag tagName={"Cyber Security"} href={post.tags.href} />*/}
+            {/*<Tag tagName={"Android"} href={post.tags.href} />*/}
+            {/*<Tag tagName={"Next JS"} href={post.tags.href} />*/}
+            {/*<Tag tagName={"My SQL Database"} href={post.tags.href} />*/}
           </div>
         </div>
 

@@ -1,0 +1,4 @@
+.link{
+    @apply p-3  border rounded-full border-gray-300
+    transition duration-500  hover:text-white fill-white text-gray-500 hover:border-white
+}

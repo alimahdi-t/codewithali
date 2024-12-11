@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique @db.VarChar(64)
+  first_name String   @default("") @db.VarChar(32)
+  last_name  String?  @db.VarChar(32)
+  imageUrl   String?
+  email      String   @unique
+  role       Role     @default(USER)
+  joinedAt   DateTime @default(now())
+  bio        String?
+  Course     Course[]
+  Post       Post[]
+}
+
+model Course {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String       @db.VarChar(2000)
+  content     String       @db.VarChar(500)
+  imageUrl    String?
+  level       Level
+  status      CourseStatus
+  discounts   Discount[]
+  price       Int
+  createdAt   DateTime     @default(now())
+  updateAt    DateTime     @updatedAt
+  author      User         @relation(fields: [userId], references: [id])
+  userId      Int
+  discountId  Int?
+  tags        Tag[]        @relation("CourseTags")
+}
+
+model Tag {
+  id      Int      @id @default(autoincrement())
+  name    String   @unique @db.VarChar(255)
+  courses Course[] @relation("CourseTags")
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  description String   @db.VarChar(250)
+  content     String   @default("")
+  imageUrl    String   @default("")
+  createAt    DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  author      User     @relation(fields: [userId], references: [id])
+  userId      Int      @default(1)
+}
+
+model Discount {
+  id         Int       @id @default(autoincrement())
+  percentage Int? // Percentage discount
+  amount     Int? // Fixed discount amount
+  validFrom  DateTime
+  validUntil DateTime?
+  course     Course    @relation(fields: [courseId], references: [id])
+  courseId   Int
+}
+
+enum Role {
+  USER
+  INSTRUCTOR
+  ADMIN
+}
+
+enum Level {
+  BEGINNER
+  ADVANCED
+  EXPERT
+}
+
+enum CourseStatus {
+  COMPLETED
+  PREORDER
+  ONGOING
+  CANCELLED
+  UPCOMING
+}
