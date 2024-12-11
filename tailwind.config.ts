@@ -18,6 +18,11 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        dana: ["var(--font-dana)"],
+        // dana: ["Dana", "sans-serif"], // Assuming Dana is a sans-serif font
+        // yekan: ["Yekan", "sans-serif"], // Assuming Yekan is a sans-serif font
+      },
       colors: {
         brand: {
           "25": "#FCFAFF",
