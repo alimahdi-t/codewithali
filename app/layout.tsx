@@ -6,7 +6,6 @@ import { ThemeProvider } from "@/context/ThemeProvider";
 import AuthProvider from "@/app/(auth)/AuthProvider";
 import React from "react";
 
-const inter = Inter({ subsets: ["latin"] });
 const Dana = localFont({
   variable: "--font-dana",
   src: [

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import React from "react";
-import { dashboardLink } from "@/constants";
+import { adminDashboardLinks } from "@/constants";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { usePathname } from "next/navigation";
 
@@ -23,14 +23,14 @@ const Sidebar = ({ width }: { width: string }) => {
         </div>
 
         <ul className="w-full  space-y-4">
-          {dashboardLink.map((item, i) => (
+          {adminDashboardLinks.map((item, i) => (
             <li
               key={i}
               className={`flex gap-2 items-center w-full px-2 py-3 text-gray-800 ${
                 pathname === item.path ? "text-blue-500" : ""
               } `}
             >
-              <item.icon className="w-6 h-6" />
+              {/*<item.icon className="w-6 h-6" />*/}
               <Link href={item.path} className="text-sm font-semibold">
                 {item.label}
               </Link>

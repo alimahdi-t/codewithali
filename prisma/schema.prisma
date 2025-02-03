@@ -10,8 +10,8 @@ datasource db {
 model User {
   id         Int      @id @default(autoincrement())
   username   String   @unique @db.VarChar(64)
-  first_name String   @default("") @db.VarChar(32)
-  last_name  String?  @db.VarChar(32)
+  firstName  String   @default("") @db.VarChar(32)
+  lastName   String?  @db.VarChar(32)
   imageUrl   String?
   email      String   @unique
   role       Role     @default(USER)
@@ -20,6 +20,8 @@ model User {
   Course     Course[]
   Post       Post[]
 }
+
+
 
 model Course {
   id          Int          @id @default(autoincrement())
@@ -38,6 +40,9 @@ model Course {
   discountId  Int?
   tags        Tag[]        @relation("CourseTags")
 }
+
+
+
 
 model Tag {
   id      Int      @id @default(autoincrement())
@@ -70,6 +75,8 @@ model Discount {
 enum Role {
   USER
   INSTRUCTOR
+  AUTHOR
+  INSTRUCOT_AUTHOR
   ADMIN
 }
 

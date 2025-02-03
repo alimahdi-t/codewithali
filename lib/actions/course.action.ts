@@ -145,6 +145,6 @@ export async function getAllCourses({
 
     return courses;
   } catch (error) {
-    throw new Error(`Error fetching courses: ${error.message}`);
+    throw new Error(`Error fetching courses: ${error}`);
   }
 }

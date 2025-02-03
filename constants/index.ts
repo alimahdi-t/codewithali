@@ -33,27 +33,34 @@ export const footerNavigation = [
 export const dashboardLink = [
   {
     label: "پیشخوان",
-    href: "/my-account",
+    path: "/my-account",
     icon: HiOutlineHome,
   },
   {
     label: "اطلاعات کاربری",
-    href: "/my-account/edit-account",
+    path: "/my-account/edit-account",
     icon: HiOutlineUser,
   },
   {
     label: "دوره های من",
-    href: "/edit-account",
+    path: "/edit-account",
     icon: HiOutlineAcademicCap,
   },
   {
     label: "خدمات پرداخت",
-    href: "/edit-account",
+    path: "/edit-account",
     icon: HiOutlineTicket,
   },
   {
     label: "خروج از حساب",
-    href: "/edit-account",
+    path: "/edit-account",
     icon: HiOutlineArrowRightStartOnRectangle,
   },
+];
+
+export const adminDashboardLinks = [
+  { label: "لیست دوره ها", path: "" },
+  { label: "لیست مدرس ها", path: "" },
+  { label: "لیست کاربران", path: "" },
+  { label: "لیست کاربران", path: "" },
 ];

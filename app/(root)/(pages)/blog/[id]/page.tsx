@@ -1,8 +1,9 @@
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-const BlogPost = ({ params }: Props) => {
+const BlogPost = async (props: Props) => {
+  const params = await props.params;
   return <div>Blog Post {params.id}</div>;
 };
 

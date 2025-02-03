@@ -26,7 +26,7 @@ import CoursePageHeader from "@/app/(root)/(pages)/courses/[id]/components/Heade
 import StateSection from "@/app/(root)/(pages)/courses/[id]/components/StateSection";
 import CoursePageBody from "@/app/(root)/(pages)/courses/[id]/components/body/CoursePageBody";
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 const CourseTopics = [
@@ -98,7 +98,8 @@ const CourseTopics = [
   },
 ];
 
-const Course = async ({ params }: Props) => {
+const Course = async (props: Props) => {
+  const params = await props.params;
   const course = await getCourseById({ id: parseInt(params.id) });
 
   if (!course) {

@@ -10,12 +10,14 @@ import { NoCourseFound } from "@/constants/Icons";
 import delay from "delay";
 import { GetAllCoursesParams } from "@/lib/actions/shared.types";
 import Pagination from "@/components/shared/Pagination";
+import { Course } from "@prisma/client";
 
 interface Props {
-  searchParams: GetAllCoursesParams;
+  searchParams: Promise<GetAllCoursesParams>;
 }
 
-const Courses = async ({ searchParams }: Props) => {
+const Courses = async (props: Props) => {
+  const searchParams = await props.searchParams;
   const page = parseInt(searchParams.page) || 1;
   const pageSize: number = 12;
 
@@ -37,7 +39,7 @@ const Courses = async ({ searchParams }: Props) => {
     levels: searchParams.levels,
   });
 
-  await delay(2000);
+  // await delay(2000);
 
   return (
     <div className="w-full lg:px-12 px-6 flex flex-col">
@@ -74,7 +76,7 @@ const Courses = async ({ searchParams }: Props) => {
             className="w-full h-min grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
                     gap-4 "
           >
-            {courses.map((course) => (
+            {courses.map((course: Course) => (
               <CourseCard
                 key={course.id}
                 course={course}
