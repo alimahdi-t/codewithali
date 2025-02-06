@@ -4,7 +4,24 @@ import {
   HiOutlineHome,
   HiOutlineTicket,
   HiOutlineUser,
+  HiOutlineUsers,
 } from "react-icons/hi2";
+
+import {
+  Mail01Icon,
+  UserMultipleIcon,
+  BookOpen01Icon,
+  TeacherIcon,
+  TaskEdit02Icon,
+  Task01Icon,
+  Comment02Icon,
+  DiscountIcon,
+  Tag01Icon,
+  CreditCardValidationIcon,
+  DashboardSquare02Icon,
+} from "@/public/assets/icons/hugeIcons";
+
+import React, { ReactElement } from "react";
 
 export const navLinks = [
   { label: "دوره ها", href: "/courses" },
@@ -58,9 +75,32 @@ export const dashboardLink = [
   },
 ];
 
-export const adminDashboardLinks = [
-  { label: "لیست دوره ها", path: "" },
-  { label: "لیست مدرس ها", path: "" },
-  { label: "لیست کاربران", path: "" },
-  { label: "لیست کاربران", path: "" },
+export const adminDashboardLinks: {
+  label: string;
+  path: string;
+  icon: React.ElementType;
+}[] = [
+  { label: "داشبورد", path: "/dashboard/admin", icon: DashboardSquare02Icon },
+  { label: "دوره‌ها", path: "/dashboard/admin/courses", icon: BookOpen01Icon },
+  { label: "پست‌ها", path: "/dashboard/admin/posts", icon: Task01Icon },
+  { label: "کاربران", path: "/dashboard/admin/users", icon: UserMultipleIcon },
+  {
+    label: "نویسندگان",
+    path: "/dashboard/admin/authors",
+    icon: TaskEdit02Icon,
+  },
+  { label: "مدرس‌ها", path: "/dashboard/admin/instructors", icon: TeacherIcon },
+  { label: "پیام", path: "/dashboard/admin/messages", icon: Mail01Icon },
+  { label: "کامنت ها", path: "/dashboard/admin/comments", icon: Comment02Icon },
+  {
+    label: "کدهای تخفیف",
+    path: "/dashboard/admin/discount-codes",
+    icon: DiscountIcon,
+  },
+  { label: "تگ‌ها", path: "/dashboard/admin/tags", icon: Tag01Icon },
+  {
+    label: "پرداخت‌ها",
+    path: "/admin/payments",
+    icon: CreditCardValidationIcon,
+  },
 ];
