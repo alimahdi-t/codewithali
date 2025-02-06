@@ -1,4 +1,3 @@
-"use client";
 import BlogCard from "@/components/BlogCard/BlogCard";
 import { getTopArticles } from "@/lib/actions/blog.action";
 import ArticleCard from "@/components/BlogCard/ArticleCard";
@@ -29,63 +28,6 @@ const posts = [
         "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     },
   },
-  // {
-  //   id: 2,
-  //   title: "Boost your conversion rate",
-  //   href: "#",
-  //   description:
-  //     "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-  //   imageUrl:
-  //     "https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80",
-  //   date: "Mar 16, 2020",
-  //   dateTime: "2020-03-16",
-  //   category: { title: "Marketing", href: "#" },
-  //   author: {
-  //     name: "Michael Foster",
-  //     role: "Co-Founder / CTO",
-  //     href: "#",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80",
-  //   },
-  // },
-  // {
-  //   id: 3,
-  //   title: "Boost your conversion rate",
-  //   href: "#",
-  //   description:
-  //     "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-  //   imageUrl:
-  //     "https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80",
-  //   date: "Mar 16, 2020",
-  //   dateTime: "2020-03-16",
-  //   category: { title: "Marketing", href: "#" },
-  //   author: {
-  //     name: "Ali Mahdi",
-  //     role: "Co-Founder / CTO",
-  //     href: "#",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  //   },
-  // },
-  // {
-  //   id: 4,
-  //   title: "Boost your conversion rate",
-  //   href: "#",
-  //   description:
-  //     "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-  //   imageUrl:
-  //     "https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80",
-  //   date: "Mar 16, 2020",
-  //   dateTime: "2020-03-16",
-  //   category: { title: "Marketing", href: "#" },
-  //   author: {
-  //     name: "Ali Mahdi",
-  //     role: "Co-Founder / CTO",
-  //     href: "#",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  //   },
-  // },
 ];
 const Blog = async () => {
   const topArticles = await getTopArticles();
@@ -116,8 +58,6 @@ const Blog = async () => {
               {posts.map((post) => (
                 <>
                   <BlogCard key={post.id} post={post} />
-                  <BlogCard key={post.id} post={post} />
-                  <BlogCard key={post.id} post={post} />
                 </>
               ))}
             </div>
@@ -131,7 +71,7 @@ const Blog = async () => {
             </h3>
             <div className="flex flex-col gap-4">
               {topArticles.map((article) => (
-                <ArticleCard article={article} />
+                <ArticleCard key={article.id} article={article} />
               ))}
             </div>
           </div>

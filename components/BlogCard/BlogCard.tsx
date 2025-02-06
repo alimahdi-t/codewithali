@@ -46,8 +46,8 @@ const BlogCard = ({ post }: Props) => {
           {/*</time>*/}
           {/* Badge*/}
           <div className="flex flex-wrap gap-1.5">
-            {post.tags.map((tag) => (
-              <Tag tagName={tag.title} href={tag.href} />
+            {post.tags.map((tag, index) => (
+              <Tag key={index} tagName={tag.title} href={tag.href} />
             ))}
             {/*<Tag tagName={post.tags.title} href={post.tags.href} />*/}
             {/*<Tag tagName={"React"} href={post.tags.href} />*/}
