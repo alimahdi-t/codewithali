@@ -4,7 +4,6 @@ import {
   HiOutlineHome,
   HiOutlineTicket,
   HiOutlineUser,
-  HiOutlineUsers,
 } from "react-icons/hi2";
 
 import {
@@ -100,7 +99,7 @@ export const adminDashboardLinks: {
   { label: "تگ‌ها", path: "/dashboard/admin/tags", icon: Tag01Icon },
   {
     label: "پرداخت‌ها",
-    path: "/admin/payments",
+    path: "/dashboard/admin/payments",
     icon: CreditCardValidationIcon,
   },
 ];

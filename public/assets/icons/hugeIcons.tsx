@@ -4,7 +4,6 @@ export const Mail01Icon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -29,7 +28,6 @@ export const UserMultipleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -58,7 +56,6 @@ export const BookOpen01Icon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -84,7 +81,6 @@ export const TeacherIcon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -123,7 +119,6 @@ export const TaskEdit02Icon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -160,7 +155,6 @@ export const Task01Icon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -190,7 +184,6 @@ export const Comment02Icon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -209,7 +202,6 @@ export const DiscountIcon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -241,7 +233,6 @@ export const Tag01Icon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -278,7 +269,6 @@ export const CreditCardValidationIcon = (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -331,7 +321,6 @@ export const DashboardSquare02Icon = (props: React.SVGProps<SVGSVGElement>) => (
     viewBox="0 0 24 24"
     width={24}
     height={24}
-    color={"#424750"}
     fill={"none"}
     {...props}
   >
@@ -354,6 +343,59 @@ export const DashboardSquare02Icon = (props: React.SVGProps<SVGSVGElement>) => (
       d="M14 5C14 4.06812 14 3.60218 14.1522 3.23463C14.3552 2.74458 14.7446 2.35523 15.2346 2.15224C15.6022 2 16.0681 2 17 2H19C19.9319 2 20.3978 2 20.7654 2.15224C21.2554 2.35523 21.6448 2.74458 21.8478 3.23463C22 3.60218 22 4.06812 22 5C22 5.93188 22 6.39782 21.8478 6.76537C21.6448 7.25542 21.2554 7.64477 20.7654 7.84776C20.3978 8 19.9319 8 19 8H17C16.0681 8 15.6022 8 15.2346 7.84776C14.7446 7.64477 14.3552 7.25542 14.1522 6.76537C14 6.39782 14 5.93188 14 5Z"
       stroke="currentColor"
       strokeWidth="1.5"
+    />
+  </svg>
+);
+
+export const Menu01Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={24}
+    height={24}
+    fill={"none"}
+    {...props}
+  >
+    <path
+      d="M4 5L20 5"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M4 12L20 12"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M4 19L20 19"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+export const ArrowLeft01Icon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={24}
+    height={24}
+    color={"#424750"}
+    fill={"none"}
+    {...props}
+  >
+    <path
+      d="M15 6C15 6 9.00001 10.4189 9 12C8.99999 13.5812 15 18 15 18"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
