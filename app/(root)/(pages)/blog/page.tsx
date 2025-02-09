@@ -70,9 +70,9 @@ const Blog = async () => {
               منتخب سردبیر
             </h3>
             <div className="flex flex-col gap-4">
-              {topArticles.map((article) => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
+              {/*{topArticles.map((article) => (*/}
+              {/*  <ArticleCard key={article.id} article={article} />*/}
+              {/*))}*/}
             </div>
           </div>
         </div>

@@ -18,7 +18,7 @@ const Theme = ({ className }: { className?: string }) => {
     <Menubar asChild className={`relative border-none shadow-none p-2 `}>
       <MenubarMenu>
         <MenubarTrigger
-          className={`${className} hover:bg-gray-500/10 cursor-pointer border-none rounded-md p-2 data-[state=open]:bg-gray-200 dark:focus:bg-dark-200 dark:data-[state=open]:bg-gray-800`}
+          className={`${className} hover:bg-brand-50 cursor-pointer border-none rounded-md p-2 data-[state=open]:bg-gray-200 dark:focus:bg-dark-200 dark:data-[state=open]:bg-gray-800`}
         >
           {mode === "light" ? (
             <IconSun width={20} height={20} className="fill-yellow-500" />
