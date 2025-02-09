@@ -17,7 +17,6 @@ const Navbar = () => {
           <MobileNav className="md:hidden" />
 
           <div className="flex flex-row items-center">
-            <AuthUI className="md:hidden" />
             <Link
               href="/public"
               className="dark:text-white flex items-center gap-2 "
@@ -28,9 +27,12 @@ const Navbar = () => {
             </Link>
             <NavLinks className="max-md:hidden" />
           </div>
+
+          {/*Show on Desktop*/}
+          <AuthUI className="md:hidden" />
           <div className="flex items-center max-md:hidden ">
             <Theme className="max-md:hidden" />
-            <AuthUI className="max-md:hidden" />
+            <AuthUI className="max-md:hidden mx-2" />
           </div>
         </div>
       </nav>
