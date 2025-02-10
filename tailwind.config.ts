@@ -20,22 +20,21 @@ const config = {
     extend: {
       fontFamily: {
         dana: ["var(--font-dana)"],
-        // dana: ["Dana", "sans-serif"], // Assuming Dana is a sans-serif font
-        // yekan: ["Yekan", "sans-serif"], // Assuming Yekan is a sans-serif font
       },
       colors: {
         brand: {
-          "50": "#eff8ff",
-          "100": "#dff0ff",
-          "200": "#b8e3ff",
-          "300": "#78ceff",
-          "400": "#49beff",
-          "500": "#069cf1",
-          "600": "#007cce",
-          "700": "#0063a7",
-          "800": "#02538a",
-          "900": "#084672",
-          "950": "#062c4b",
+          "25": "#FCFAFF",
+          "50": "#edfaff",
+          "100": "#d6f2ff",
+          "200": "#b5eaff",
+          "300": "#83dfff",
+          "400": "#48cbff",
+          "500": "#1eacff",
+          "600": "#068eff",
+          "700": "#007aff",
+          "800": "#085dc5",
+          "900": "#0d519b",
+          "950": "#0e315d",
         },
         gray: {
           "25": "#FCFCFD",
@@ -61,38 +60,45 @@ const config = {
           GitHub: "#333333",
           telegram: "#0088cc",
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
+        border: "var(--border)",
+        input: "var(--input)",
         ring: "var(--ring)",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
+        background: "var(--background)",
+        foreground: "var(--foreground)",
         primary: {
           DEFAULT: "var(--primary)",
           foreground: "var(--primary-foreground)",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+          DEFAULT: "var(--secondary)",
+          foreground: "var(--secondary-foreground)",
         },
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "var(--destructive)",
+          foreground: "var(--destructive-foreground)",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "var(--muted)",
+          foreground: "var(--muted-foreground)",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "var(--accent)",
+          foreground: "var(--accent-foreground)",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "var(--popover)",
+          foreground: "var(--popover-foreground)",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "var(--card)",
+          foreground: "var(--card-foreground)",
+        },
+        chart: {
+          "1": "var(--chart-1)",
+          "2": "var(--chart-2)",
+          "3": "var(--chart-3)",
+          "4": "var(--chart-4)",
+          "5": "var(--chart-5)",
         },
       },
       borderRadius: {
@@ -102,12 +108,20 @@ const config = {
       },
       keyframes: {
         "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+          from: {
+            height: "0",
+          },
+          to: {
+            height: "var(--radix-accordion-content-height)",
+          },
         },
         "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
+          from: {
+            height: "var(--radix-accordion-content-height)",
+          },
+          to: {
+            height: "0",
+          },
         },
       },
       animation: {

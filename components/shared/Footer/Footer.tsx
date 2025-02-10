@@ -1,6 +1,28 @@
-import { HiOutlinePhone, HiOutlineEnvelope } from "react-icons/hi2";
-import { Call02Icon, Mail01Icon, TelegramIcon } from "@/public/assets/icons";
+import {
+  Call02Icon,
+  Mail01Icon,
+  TelegramIcon,
+} from "@/public/assets/icons/hugeIcons";
 import Link from "next/link";
+import { Logo } from "@/components/Logo";
+import { convertToPersianNumbers } from "@/utils";
+
+const footerInfo = {
+  email: "seyyedalimehdi@gmail.com",
+  phoneNumber: "09030579074",
+  telegramId: "alimahdi_t@",
+  createdBy: { name: "سید علی مهدی", link: "#" },
+  socials: {
+    instagram: {
+      label: "instagram",
+      link: "https://www.instagram.com/alimahdi_t",
+    },
+    telegramId: {
+      label: "telegram",
+      link: "https://t.me/alimahdi_t",
+    },
+  },
+};
 
 const Footer = () => {
   return (
@@ -8,21 +30,14 @@ const Footer = () => {
       <div className="container">
         <div className="pb-5 mb-5 sm:pb-8 sm:mb-8 border-b border-b-neutral-200 dark:border-b-dark">
           <div className="flex items-center justify-between">
-            <a
-              href="https://sabzlearn.ir"
-              className="flex items-center gap-x-3.5"
-            >
-              <img
-                src="https://sabzlearn.ir/wp-content/themes/sabzlearn-theme/images/logo.webp"
-                className="h-8 sm:h-12"
-                loading="lazy"
-              />
+            <Link href="/" className="flex items-center gap-x-3.5">
+              <Logo className="w-16 h-16" />
               <svg className="w-[70px] sm:w-[104px] h-8 sm:h-12">
                 <use href="#logo-type"></use>
               </svg>
-            </a>
+            </Link>
             <div className="flex gap-x-2 sm:gap-x-3">
-              <a href="https://www.instagram.com/sabzlearn_" rel="nofollow">
+              <Link href={footerInfo.socials.instagram.link} rel="nofollow">
                 <svg
                   className="size-[30px] sm:size-[38px] text-neutral-300 dark:text-neutral-200 transition-colors hover:text-sky-500"
                   viewBox="0 0 38 38"
@@ -36,8 +51,8 @@ const Footer = () => {
                     fill="currentColor"
                   ></path>
                 </svg>
-              </a>
-              <a href="https://t.me/sabzlearn" rel="nofollow">
+              </Link>
+              <a href={footerInfo.socials.telegramId.link} rel="nofollow">
                 <svg
                   className="size-[30px] sm:size-[38px] text-neutral-300 dark:text-neutral-200 transition-colors hover:text-sky-500"
                   viewBox="0 0 38 38"
@@ -57,7 +72,7 @@ const Footer = () => {
             <div className="flex gap-2 justify-center items-center">
               <Call02Icon className="size-6" />
               <Link href="tel:09030579074" className="leading-7">
-                ۰۹۰۳۰۵۷۹۰۷۴
+                {convertToPersianNumbers(footerInfo.phoneNumber)}
               </Link>
             </div>
             <div className="flex gap-2 justify-center items-center">
@@ -66,13 +81,13 @@ const Footer = () => {
                 href="mailto:seyyedalimehdi@gmail.com"
                 className="leading-7"
               >
-                seyyedalimehdi@gmail.com
+                {footerInfo.email}
               </Link>
             </div>
             <div className="flex gap-2 justify-center items-center">
               <TelegramIcon className="size-6" />
               <Link href="https://t.me/alimehdi_t" className="leading-7">
-                alimahdi_t@
+                {footerInfo.telegramId}
               </Link>
             </div>
           </div>
@@ -97,23 +112,31 @@ const Footer = () => {
                 دسترسی سریع
               </h3>
               <div className="flex flex-col gap-4">
-                <p className="max-w-100 font-normal text-base">همه دوره ها</p>
-                <p className="max-w-100 font-normal text-base">وبلاگ</p>
-                <p className="max-w-100 font-normal text-base">تماس با ما</p>
-                <p className="max-w-100 font-normal text-base">درباره ما</p>
+                <Link href={"#"} className="max-w-100 font-normal text-base">
+                  همه دوره ها
+                </Link>
+                <Link href={"#"} className="max-w-100 font-normal text-base">
+                  وبلاگ
+                </Link>
+                <Link href={"#"} className="max-w-100 font-normal text-base">
+                  تماس با ما
+                </Link>
+                <Link href={"#"} className="max-w-100 font-normal text-base">
+                  درباره ما
+                </Link>
               </div>
             </div>
-            <div className="col-span-1">
-              <h3 className="inline-block sm:text-xl font-bold mb-3 sm:mb-4">
-                دسترسی سریع
-              </h3>
-              <div className="flex flex-col gap-4">
-                <p className="max-w-100 font-normal text-base">همه دوره ها</p>
-                <p className="max-w-100 font-normal text-base">وبلاگ</p>
-                <p className="max-w-100 font-normal text-base">تماس با ما</p>
-                <p className="max-w-100 font-normal text-base">درباره ما</p>
-              </div>
-            </div>
+            {/*<div className="col-span-1">*/}
+            {/*  <h3 className="inline-block sm:text-xl font-bold mb-3 sm:mb-4">*/}
+            {/*    دسترسی سریع*/}
+            {/*  </h3>*/}
+            {/*  <div className="flex flex-col gap-4">*/}
+            {/*    <p className="max-w-100 font-normal text-base">همه دوره ها</p>*/}
+            {/*    <p className="max-w-100 font-normal text-base">وبلاگ</p>*/}
+            {/*    <p className="max-w-100 font-normal text-base">تماس با ما</p>*/}
+            {/*    <p className="max-w-100 font-normal text-base">درباره ما</p>*/}
+            {/*  </div>*/}
+            {/*</div>*/}
           </div>
         </div>
 
@@ -123,9 +146,12 @@ const Footer = () => {
           </span>
           <span className="">
             ساخته شده با ❤️ توسط{" "}
-            <a className="font-medium hover:text-brand-500 transition hover:cursor-pointer">
-              سید علی مهدی
-            </a>
+            <Link
+              href={footerInfo.createdBy.link}
+              className="font-medium hover:text-brand-500 transition hover:cursor-pointer"
+            >
+              {footerInfo.createdBy.name}
+            </Link>
           </span>
         </div>
       </div>

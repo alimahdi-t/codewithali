@@ -12,14 +12,11 @@ import { profileDropDownLinks } from "@/constants";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import Link from "next/link";
 
 const AuthUI = ({ className }: { className?: string }) => {
   const { status, data } = useSession();
-  if (!data) {
-    return <Skeleton className="h-12 w-12 rounded-full" />;
-  }
 
-  console.log(data.user?.image);
   return (
     <div className={className}>
       {status === "authenticated" ? (
@@ -46,13 +43,14 @@ const AuthUI = ({ className }: { className?: string }) => {
           </MenubarMenu>
         </Menubar>
       ) : (
-        <Button
-          variant="ghost"
-          className={"text-blue-500 hover:bg-blue-50 hover:text-blue-500"}
-          onClick={() => signIn("google", { callbackUrl: "/" })}
-        >
-          ورود به حساب
-        </Button>
+        <Link href={"/auth/sign-in"}>
+          <Button
+            variant="ghost"
+            className={"text-blue-500 hover:bg-blue-50 hover:text-blue-500"}
+          >
+            ورود به حساب
+          </Button>
+        </Link>
       )}
     </div>
   );

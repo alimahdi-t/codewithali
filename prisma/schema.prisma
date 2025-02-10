@@ -10,13 +10,13 @@ datasource db {
 // ✅
 model User {
   id          Int      @id @default(autoincrement())
-  username    String   @unique @db.VarChar(64)
+  username    String?  @unique @db.VarChar(64)
   firstName   String   @db.VarChar(32)
   lastName    String   @db.VarChar(32)
   imageUrl    String?
   email       String   @unique
-  password    String
-  phoneNumber String
+  password    String?
+  phoneNumber String?
   role        Role     @default(USER)
   joinedAt    DateTime @default(now())
   updatedAt   DateTime @updatedAt
