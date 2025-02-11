@@ -13,7 +13,7 @@ import CourseLevel from "@/components/CourseLevel";
 import Link from "next/link";
 
 const CoursesListPage = async () => {
-  const courses = await getCourses();
+  const courses = await getCourses({});
   // TODO: Add Loading
   return (
     <div className="flex-1 px-4 sm:px-6 lg:px-8">
@@ -28,7 +28,15 @@ const CoursesListPage = async () => {
           </p>
         </div>
         <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <Button type="button">افزودن دوره</Button>
+          <Link href={"/dashboard/admin/courses/new"}>
+            <Button
+              variant="default"
+              size="sm"
+              className="text-xs hover:bg-brand-700 font-normal"
+            >
+              افزودن دوره
+            </Button>
+          </Link>
         </div>
       </div>
 

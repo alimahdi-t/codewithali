@@ -7,34 +7,33 @@ import {
 } from "@/utils";
 import TomanIcon from "@/components/common/TomanIcon";
 import DiscountTag from "@/components/Course/CourseCard/DiscountTag";
+import { Course, User } from "@prisma/client";
+import { cn } from "@/lib/utils";
+
+interface ExtendedCourse extends Course {
+  instructor: Pick<User, "firstName" | "lastName" | "imageUrl">;
+}
 
 interface Props {
-  course: {
-    id: number;
-    title: string;
-    content: string;
-    imageUrl: string;
-    createdAt: Date;
-    price: number;
-    userId: number;
-    first_name: string;
-    last_name: string;
-  };
+  course: ExtendedCourse;
   className?: string;
-  key?: string;
   discount?: number;
 }
 
-const CourseCard = ({ course, className, discount = 35 }: Props) => {
+const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
   return (
     <article
       key={course.id}
-      className={`flex flex-col h-full items-start justify-between rounded-lg shadow-md
-        bg-white  ${className}`}
+      className={cn(
+        "flex flex-col h-full items-start justify-between rounded-lg shadow-md bg-white",
+        className,
+      )}
+      {...props}
     >
       {/*--------------- Card Header ---------------*/}
       <DiscountTag discount={discount!} />
       <div className="relative w-full">
+        {/*TODO: Change img tag with Image of Next.js*/}
         <img
           width={20}
           height={20}
@@ -68,7 +67,7 @@ const CourseCard = ({ course, className, discount = 35 }: Props) => {
             <HiOutlineUser className="w-4 h-4" />
             <Link href={"#"}>
               <p className="font-medium text-xs leading-6">
-                {`${course.first_name} ${course.last_name}`}
+                {`${course.instructor.firstName} ${course.instructor.lastName}`}
               </p>
             </Link>
           </div>

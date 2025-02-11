@@ -91,9 +91,6 @@ export async function getAllCourses({
       case "mostExpensive":
         orderByClause = "course.price DESC"; // Sort by most expensive first
         break;
-      // case "mostPopular":
-      //   orderByClause = "course.enrollments DESC"; // Assuming you have an enrollments field
-      //   break;
       default:
         orderByClause = "course.createdAt DESC"; // Default to newest
     }

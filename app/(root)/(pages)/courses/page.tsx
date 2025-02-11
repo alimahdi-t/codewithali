@@ -9,18 +9,20 @@ import NoResult from "@/components/shared/NoResult";
 import { NoCourseFound } from "@/constants/Icons";
 import delay from "delay";
 import { GetAllCoursesParams } from "@/lib/actions/shared.types";
+
+import { Course, Post, Role } from "@prisma/client";
+import { getCourses } from "@/lib/actions/getCourses.action";
 import Pagination from "@/components/shared/Pagination";
-import { Course, Discount, Post, Role } from "@prisma/client";
 
 interface Props {
   searchParams: Promise<GetAllCoursesParams>;
 }
 
 const Courses = async (props: Props) => {
-  // const searchParams = await props.searchParams;
-  // const page = parseInt(searchParams.page) || 1;
-  // const pageSize: number = 12;
-  //
+  const searchParams = await props.searchParams;
+  const page = searchParams.page || 1;
+  const pageSize: number = 12;
+  console.log(searchParams);
   // // GET Courses from server
   // const courses = await getAllCourses({
   //   orderBy: searchParams.orderBy,
@@ -39,60 +41,70 @@ const Courses = async (props: Props) => {
   //   levels: searchParams.levels,
   // });
   //
-  // await delay(2000);
-  //
+  await delay(2000);
+
+  const courses = await getCourses({
+    isFree: searchParams.isFree,
+    searchQuery: searchParams.searchQuery,
+    orderBy: searchParams.orderBy,
+    levels: searchParams.levels,
+    isPreOrder: searchParams.isPreOrder,
+    page: searchParams.page,
+    categories: searchParams.categories,
+    pageSize: pageSize,
+  });
+  console.log(courses);
   return (
-    <div>hey</div>
-    // <div className="w-full lg:px-12 px-6 flex flex-col">
-    //   <div className="w-full flex justify-between">
-    //     <div className="flex gap-2 items-center">
-    //       <div className="bg-brand-500 w-5 h-5 rounded"></div>
-    //       <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-    //         دوره‌ها
-    //       </h2>
-    //     </div>
-    //
-    //     <p className="mt-2 text-lg leading-8 text-gray-600">{`${convertToPersianNumbers(
-    //       totalCourses,
-    //     )} عنوان آموزشی`}</p>
-    //   </div>
-    //   <div className="flex gap-4 mt-16">
-    //     <div className="max-lg:hidden">
-    //       <BlogCardSideBar />
-    //     </div>
-    //
-    //     <div className="w-full flex flex-col gap-4">
-    //       <div className="w-full flex gap-4">
-    //         <CourseFilterOption className="sm:hidden" />
-    //         <CourseSortOptions />
-    //       </div>
-    //
-    //       <NoResult
-    //         icon={<NoCourseFound />}
-    //         label="دوره‌‌ای با مشخصات مورد نظر پیدا نشد."
-    //         hiddenCondition={courses.length !== 0}
-    //       />
-    //
-    //       <div
-    //         className="w-full h-min grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
-    //                 gap-4 "
-    //       >
-    //         {courses.map((course: Course) => (
-    //           <CourseCard
-    //             key={course.id}
-    //             course={course}
-    //             className="col-span-1"
-    //           />
-    //         ))}
-    //       </div>
-    //       <Pagination
-    //         itemCount={parseInt(totalCourses)}
-    //         pageSize={pageSize}
-    //         currentPage={page}
-    //       />
-    //     </div>
-    //   </div>
-    // </div>
+    <div className="w-full lg:px-12 px-6 flex flex-col">
+      <div className="w-full flex justify-between">
+        <div className="flex gap-2 items-center">
+          <div className="bg-brand-500 w-5 h-5 rounded"></div>
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
+            دوره‌ها
+          </h2>
+        </div>
+
+        <p className="mt-2 text-lg leading-8 text-gray-600">{`${convertToPersianNumbers(
+          courses?.length,
+        )} عنوان آموزشی`}</p>
+      </div>
+      <div className="flex gap-4 mt-16">
+        <div className="max-lg:hidden">
+          <BlogCardSideBar />
+        </div>
+
+        <div className="w-full flex flex-col gap-4">
+          <div className="w-full flex gap-4">
+            <CourseFilterOption className="sm:hidden" />
+            <CourseSortOptions />
+          </div>
+
+          <NoResult
+            icon={<NoCourseFound />}
+            label="دوره‌‌ای با مشخصات مورد نظر پیدا نشد."
+            hiddenCondition={courses?.length !== 0}
+          />
+
+          <div
+            className="w-full h-min grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
+                    gap-4 "
+          >
+            {courses?.map((course) => (
+              <CourseCard
+                key={course.id}
+                course={course}
+                className="col-span-1"
+              />
+            ))}
+          </div>
+          <Pagination
+            itemCount={courses?.length}
+            pageSize={pageSize}
+            currentPage={page}
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 
