@@ -16,7 +16,6 @@ export async function getCourses(params: GetAllCoursesParams) {
       searchQuery,
     } = params;
 
-    // تنظیم نوع مرتب‌سازی
     const orderOptions: Record<string, any> = {
       newest: { createdAt: "desc" },
       oldest: { createdAt: "asc" },
@@ -24,7 +23,6 @@ export async function getCourses(params: GetAllCoursesParams) {
       mostExpensive: { price: "desc" },
     };
 
-    // فیلترهای داینامیک
     const filters: any = {};
 
     if (isFree) filters.price = 0;
@@ -44,8 +42,7 @@ export async function getCourses(params: GetAllCoursesParams) {
       ];
     }
 
-    // دریافت داده‌ها از دیتابیس
-    const courses = await prisma.course.findMany({
+    return await prisma.course.findMany({
       where: filters,
       orderBy: orderOptions[orderBy] || { createdAt: "desc" },
       include: {
@@ -55,8 +52,6 @@ export async function getCourses(params: GetAllCoursesParams) {
       skip: (page - 1) * pageSize,
       take: pageSize,
     });
-
-    return courses;
   } catch (error) {
     throw new Error(`Error fetching courses: ${error}`);
   }

@@ -1,6 +1,5 @@
 import CourseCard from "@/components/Course/CourseCard/CourseCard";
 
-import { getAllCourses, getCoursesCount } from "@/lib/actions/course.action";
 import { convertToPersianNumbers } from "@/utils";
 import CourseSortOptions from "@/components/Course/CourseSortOptions";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
@@ -10,7 +9,6 @@ import { NoCourseFound } from "@/constants/Icons";
 import delay from "delay";
 import { GetAllCoursesParams } from "@/lib/actions/shared.types";
 
-import { Course, Post, Role } from "@prisma/client";
 import { getCourses } from "@/lib/actions/getCourses.action";
 import Pagination from "@/components/shared/Pagination";
 
@@ -22,25 +20,7 @@ const Courses = async (props: Props) => {
   const searchParams = await props.searchParams;
   const page = searchParams.page || 1;
   const pageSize: number = 12;
-  console.log(searchParams);
-  // // GET Courses from server
-  // const courses = await getAllCourses({
-  //   orderBy: searchParams.orderBy,
-  //   isFree: searchParams.isFree,
-  //   isPreOrder: searchParams.isPreOrder,
-  //   levels: searchParams.levels,
-  //   pageSize: pageSize,
-  //   page: searchParams.page,
-  //   categories: searchParams.categories,
-  // });
-  //
-  // // GET total number of courses with same filter from server
-  // const totalCourses = await getCoursesCount({
-  //   isFree: searchParams.isFree,
-  //   isPreOrder: searchParams.isPreOrder,
-  //   levels: searchParams.levels,
-  // });
-  //
+
   await delay(2000);
 
   const courses = await getCourses({
