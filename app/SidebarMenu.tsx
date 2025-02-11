@@ -23,17 +23,17 @@ const SidebarMenu = () => {
 
       <ul className="w-full space-y-4">
         {adminDashboardLinks.map((item, i) => (
-          <Link href={item.path} key={i} className={`text-sm font-semibold`}>
+          <Link href={item.path} key={i} className={`text-sm`}>
             <li
-              className={`flex gap-6 items-center w-full px-6 py-3 text-gray-600 
-            hover:bg-blue-300 hover:text-white hover:w-full hover:cursor-pointer 
+              className={`flex gap-2 items-center w-full px-6 py-3 text-gray-900 
+            hover:bg-blue-300 hover:text-white  cursor-pointer 
             ${
               pathname === item.path
                 ? "bg-brand-100 border-l-4 border-brand-300"
                 : ""
             }`}
             >
-              <item.icon className={`w-6 h-6`} />
+              <item.icon className={`w-5 h-5 stroke-1`} />
               {item.label}
             </li>
           </Link>

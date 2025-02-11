@@ -4,9 +4,6 @@ import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-
-import { Checkbox } from "@/components/ui/checkbox";
 import { Logo } from "@/components/Logo";
 import {
   Form,
@@ -50,43 +47,6 @@ const SignUpPage = () => {
 
       <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-[480px] ">
         <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
-          {/*  <div className="flex flex-col gap-2 w-full">*/}
-          {/*    <Label*/}
-          {/*      htmlFor="email"*/}
-          {/*      className="block text-sm font-medium leading-6 text-gray-900"*/}
-          {/*    >*/}
-          {/*      First Name*/}
-          {/*    </Label>*/}
-
-          {/*    <Input*/}
-          {/*      id="email"*/}
-          {/*      name="email"*/}
-          {/*      type="email"*/}
-          {/*      autoComplete="email"*/}
-          {/*      required*/}
-          {/*      className="leading-6"*/}
-          {/*      // block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"*/}
-          {/*    />*/}
-          {/*  </div>*/}
-          {/*  <div className="flex flex-col gap-2 w-full">*/}
-          {/*    <Label*/}
-          {/*      htmlFor="email"*/}
-          {/*      className="block text-sm font-medium leading-6 text-gray-900"*/}
-          {/*    >*/}
-          {/*      Last name*/}
-          {/*    </Label>*/}
-
-          {/*    <Input*/}
-          {/*      id="email"*/}
-          {/*      name="email"*/}
-          {/*      type="email"*/}
-          {/*      autoComplete="email"*/}
-          {/*      required*/}
-          {/*      className="leading-6"*/}
-          {/*      // block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"*/}
-          {/*    />*/}
-          {/*  </div>*/}
-          {/*</div>*/}
           <Form {...form}>
             <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex gap-2">

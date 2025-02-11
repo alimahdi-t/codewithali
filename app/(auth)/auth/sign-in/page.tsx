@@ -4,7 +4,6 @@ import { signIn } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Logo } from "@/components/Logo";
 import { SignInSchema } from "@/schema";
 import { useForm } from "react-hook-form";

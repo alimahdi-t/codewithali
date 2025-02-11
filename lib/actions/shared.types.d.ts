@@ -1,3 +1,17 @@
+import { CourseStatus, Level } from "@prisma/client";
+
+export interface CreateCourseParams {
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  price: number;
+  instructorId: number;
+  imageUrl: string;
+  level: Level;
+  status: CourseStatus;
+}
+
 export interface GetCourseByIdParams {
   id: number;
 }

@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import AuthProvider from "@/app/(auth)/AuthProvider";
 import React from "react";
+import { Toaster } from "@/components/ui/toaster";
 
 const Dana = localFont({
   variable: "--font-dana",
@@ -71,6 +72,7 @@ export default function RootLayout({
       <body dir="rtl" className={`${Dana.className} scroll-container`}>
         <AuthProvider>
           <ThemeProvider>{children}</ThemeProvider>
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

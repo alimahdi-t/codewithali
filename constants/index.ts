@@ -20,7 +20,7 @@ import {
   DashboardSquare02Icon,
 } from "@/public/assets/icons/hugeIcons";
 
-import React, { ReactElement } from "react";
+import { Level, CourseStatus } from "@prisma/client";
 
 export const navLinks = [
   { label: "دوره ها", href: "/courses" },
@@ -44,6 +44,20 @@ export const footerNavigation = [
   { name: "Press", href: "#" },
   { name: "Accessibility", href: "#" },
   { name: "Partners", href: "#" },
+];
+
+export const CourseLevels: { value: Level; label: string }[] = [
+  { value: "BEGINNER", label: "مبتدی" },
+  { value: "ADVANCED", label: "پیشرفته" },
+  { value: "EXPERT", label: "تخصصی" },
+];
+
+export const CourseStatusValue: { value: CourseStatus; label: string }[] = [
+  { value: "COMPLETED", label: "تکمیل شده" },
+  { value: "PREORDER", label: "پیش ‌خرید" },
+  { value: "ONGOING", label: "در حال برگزاری" },
+  { value: "CANCELLED", label: "لغو شده" },
+  { value: "UPCOMING", label: "انتشار به زودی" },
 ];
 
 export const dashboardLink = [

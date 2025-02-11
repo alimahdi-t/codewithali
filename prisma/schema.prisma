@@ -47,8 +47,8 @@ model Course {
   id           Int          @id @default(autoincrement())
   slug         String       @unique
   title        String
-  description  String       @db.VarChar(2000)
-  content      String       @db.VarChar(500)
+  description  String       @db.VarChar(500)
+  content      String       @db.VarChar(10000)
   imageUrl     String
   level        Level
   status       CourseStatus
