@@ -27,6 +27,7 @@
     "clsx": "^2.1.1",
     "delay": "^6.0.0",
     "lucide-react": "^0.427.0",
+    "md-editor-rt": "^5.2.2",
     "mongodb": "^6.13.0",
     "mongoose": "^8.9.6",
     "next": "15.1.6",

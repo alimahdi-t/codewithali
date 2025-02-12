@@ -2,7 +2,7 @@
 import { NewCourseSchema } from "@/schema/newCourse.schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { number, z } from "zod";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -26,12 +26,15 @@ import {
 import { CourseLevels, CourseStatusValue } from "@/constants";
 import { createCourse } from "@/lib/actions/createCourse.action";
 import { useRouter } from "next/navigation";
-import { useToast } from "@/hooks/use-toast";
+
 import Loader from "@/components/common/Loader";
+import { useToast } from "@/hooks/use-toast";
+import Editor from "@/components/Editor/Editor";
 
 const NewCoursePage = () => {
-  const router = useRouter();
   const { toast } = useToast();
+  const router = useRouter();
+
   const FormSchema = NewCourseSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -51,6 +54,7 @@ const NewCoursePage = () => {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     try {
+      console.log(data);
       const course = await createCourse({
         title: data.title,
         slug: data.slug,
@@ -81,7 +85,7 @@ const NewCoursePage = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-3xl px-4">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <FormField
@@ -99,7 +103,6 @@ const NewCoursePage = () => {
                 </FormItem>
               )}
             />
-
             <FormField
               control={form.control}
               name="slug"
@@ -139,7 +142,7 @@ const NewCoursePage = () => {
                     محتوا
                   </FormLabel>
                   <FormControl>
-                    <Textarea {...field} />
+                    <Editor field={field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -208,6 +211,7 @@ const NewCoursePage = () => {
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="status"
@@ -257,7 +261,6 @@ const NewCoursePage = () => {
                 </FormItem>
               )}
             />
-
             <div>
               <Button
                 disabled={!form.formState.isValid}

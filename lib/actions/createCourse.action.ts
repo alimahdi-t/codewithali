@@ -40,8 +40,6 @@ export async function createCourse(params: CreateCourseParams) {
         instructorId: Number(instructorId),
       },
     });
-
-    console.log(course);
   } catch (error) {
     console.log("Error", error);
   }

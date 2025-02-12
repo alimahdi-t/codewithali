@@ -33,7 +33,6 @@ const Courses = async (props: Props) => {
     categories: searchParams.categories,
     pageSize: pageSize,
   });
-  console.log(courses);
   return (
     <div className="w-full lg:px-12 px-6 flex flex-col">
       <div className="w-full flex justify-between">

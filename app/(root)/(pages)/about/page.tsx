@@ -1,5 +1,7 @@
-const About = () => {
-  return <div>About</div>;
-};
-
-export default About;
+export default function Home() {
+  return (
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      {/*<Editor onChange={() => console.log()} />*/}s
+    </main>
+  );
+}
