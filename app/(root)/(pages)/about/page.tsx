@@ -196,7 +196,7 @@ export default function AboutPage() {
       </div>
 
       {/* بخش تماس با ما */}
-      <div className="relative mt-32 sm:mt-40  py-16 -ml-[50vw] -mr-[50vw] flex justify-center">
+      <div className="relative mt-32 sm:mt-40  -ml-[50vw] -mr-[50vw] flex justify-center">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center max-w-xl px-12">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
