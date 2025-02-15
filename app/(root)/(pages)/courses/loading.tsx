@@ -7,7 +7,7 @@ import CourseCardLoading from "@/app/(root)/(pages)/courses/CourseCardLoading";
 export default function LoadingCoursePage() {
   const courses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   return (
-    <div className="w-full lg:px-12 px-6 flex flex-col">
+    <div className="w-full flex flex-col">
       <div className="w-full flex justify-between">
         <div className="flex gap-2 items-center">
           <div className="bg-brand-500 w-5 h-5 rounded"></div>

@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import Editor from "@/components/Editor/Editor";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/common/Loader";

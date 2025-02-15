@@ -1,27 +1,5 @@
-import { getCourseById } from "@/lib/actions/course.action";
-import { convertToPersianAndFormat, convertToPersianNumbers } from "@/utils";
-import { Button } from "@/components/ui/button";
-import Offer from "@/components/Offer";
-import InstructorInfo from "@/app/(root)/(pages)/courses/[id]/components/InstructorInfo";
-import CompletionProgress from "@/app/(root)/(pages)/courses/[id]/components/CompletionProgress";
-import Container from "@/app/(root)/(pages)/courses/[id]/components/Container";
-import {
-  HiDocumentText,
-  HiChatBubbleLeftRight,
-  HiAcademicCap,
-} from "react-icons/hi2";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import SideBar from "@/app/(root)/(pages)/courses/[id]/components/SideBar";
-import St from "@/app/(root)/(pages)/courses/[id]/components/St";
-import CourseContentHeader from "@/app/(root)/(pages)/courses/[id]/components/CourseContentHeader";
-import LessonDetails from "@/app/(root)/(pages)/courses/[id]/components/LessonDetails";
-import CourseTabs from "@/app/(root)/(pages)/courses/[id]/components/CourseTabs";
-import CourseMetrics from "@/app/(root)/(pages)/courses/[id]/components/CourseMetrics";
+
 import CoursePageHeader from "@/app/(root)/(pages)/courses/[id]/components/Header/CoursePageHeader";
 import StateSection from "@/app/(root)/(pages)/courses/[id]/components/StateSection";
 import CoursePageBody from "@/app/(root)/(pages)/courses/[id]/components/body/CoursePageBody";
@@ -100,15 +78,15 @@ const CourseTopics = [
 
 const Course = async (props: Props) => {
   const params = await props.params;
-  const course = await getCourseById({ id: parseInt(params.id) });
+  // const course = await getCourseById({ id: parseInt(params.id) });
 
-  if (!course) {
-    return <div>Course not found</div>;
-  }
+  // if (!course) {
+  //   return <div>Course not found</div>;
+  // }
 
   return (
     <div className="w-full flex flex-col gap-8">
-      <CoursePageHeader course={course} />
+      {/*<CoursePageHeader course={course} />*/}
       <StateSection />
       <div className="w-full flex flex-row gap-4 flex-1 pb-12">
         <CoursePageBody CourseTopics={CourseTopics} />

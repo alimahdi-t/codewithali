@@ -45,7 +45,7 @@ const AuthUI = ({ className }: { className?: string }) => {
       ) : (
         <Link href={"/auth/sign-in"}>
           <Button
-            variant="ghost"
+            variant="secondary"
             className={"text-blue-500 hover:bg-blue-50 hover:text-blue-500"}
           >
             ورود به حساب

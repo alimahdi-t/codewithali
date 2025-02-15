@@ -69,7 +69,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa">
-      <body dir="rtl" className={`${Dana.className} scroll-container`}>
+      <body
+        dir="rtl"
+        className={`${Dana.className} scroll-container min-h-screen `}
+      >
         <AuthProvider>
           <ThemeProvider>{children}</ThemeProvider>
           <Toaster />

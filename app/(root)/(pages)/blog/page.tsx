@@ -32,8 +32,8 @@ const posts = [
 const Blog = async () => {
   const topArticles = await getTopArticles();
   return (
-    <div className="py-24 sm:py-32 flex justify-center">
-      <div className="max-w-7xl lg:px-12 px-6 flex flex-col gap-4">
+    <div className="w-full flex justify-center flex-col">
+      <div className="max-w-7xl flex flex-col gap-4">
         <div className="mx-auto max-w-2xl text-center">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             آخرین مطالب
