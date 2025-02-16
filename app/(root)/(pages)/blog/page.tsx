@@ -45,7 +45,7 @@ const Blog = async () => {
         <div className="w-full flex gap-4 flex-row mt-4">
           <div className="flex flex-col w-full gap-4">
             <div className="flex gap-4">
-              <div className="w-full h-12 bg-gray-900 rounded-lg bg-amber-300"></div>
+              <div className="w-full h-12 bg-gray-900 rounded-lg"></div>
               <div className="w-full h-12 bg-gray-900 rounded-lg"></div>
               <div className="w-full h-12 bg-gray-900 rounded-lg"></div>
               <div className="w-full h-12 bg-gray-900 rounded-lg"></div>
@@ -56,9 +56,7 @@ const Blog = async () => {
             >
               {/*  -----------------------------------------------------------*/}
               {posts.map((post) => (
-                <>
-                  <BlogCard key={post.id} post={post} />
-                </>
+                <>{/*<BlogCard key={post.id} post={post} />*/}</>
               ))}
             </div>
           </div>

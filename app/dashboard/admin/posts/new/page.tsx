@@ -18,6 +18,7 @@ import { CreatePostSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { createPost } from "@/lib/actions/createPost";
 
 const NewPostPage = () => {
   const { toast } = useToast();
@@ -39,6 +40,33 @@ const NewPostPage = () => {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     console.log(data);
+    try {
+      // TODO: Remember to add a select component to show only the authors, and the user will be able to select between them
+      const response = await createPost({
+        title: data.title,
+        slug: data.slug,
+        imageUrl: data.imageUrl,
+        content: data.content,
+        authorId: parseInt(data.authorId),
+      });
+
+      if ("error" in response) {
+        toast({
+          title: response.error,
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "پست با موفقیت ایجاد شد",
+          variant: "success",
+        });
+        router.push("/dashboard/admin/posts");
+      }
+    } catch (error) {
+      {
+        console.log(error);
+      }
+    }
   };
   return (
     <div className="flex justify-center">

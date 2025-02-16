@@ -3,6 +3,8 @@
 import { CreateCourseParams } from "@/lib/actions/shared.types";
 import prisma from "@/lib/prisma";
 
+//TODO: Add types
+
 export async function createCourse(params: CreateCourseParams) {
   try {
     const {

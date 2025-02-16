@@ -45,3 +45,12 @@ export interface UpdateCourseParams {
 export interface DeleteCourseParams {
   id: number | string;
 }
+
+export interface CreatePostParams {
+  slug: string;
+  title: string;
+  content: string;
+  imageUrl: string;
+  authorId: number;
+  tags?: [];
+}

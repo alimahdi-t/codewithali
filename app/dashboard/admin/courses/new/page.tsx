@@ -54,7 +54,6 @@ const NewCoursePage = () => {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     try {
-      console.log(data);
       const course = await createCourse({
         title: data.title,
         slug: data.slug,
