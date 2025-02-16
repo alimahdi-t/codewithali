@@ -7,7 +7,11 @@ import prisma from "@/lib/prisma";
 // TODO: handle advanced query
 export async function getPosts() {
   try {
-    const posts = await prisma.post.findMany({});
+    const posts = await prisma.post.findMany({
+      include: {
+        author: true,
+      },
+    });
     return posts;
   } catch (error) {
     console.log("Error fetching posts", error);

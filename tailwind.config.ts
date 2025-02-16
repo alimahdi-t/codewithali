@@ -36,6 +36,20 @@ const config = {
           "900": "#0d519b",
           "950": "#0e315d",
         },
+        action: {
+          success: "#31d9b3",
+          warnning: "#ffae1f",
+          error: "#fa896b",
+          info: "#539bff",
+        },
+
+        actionLight: {
+          success: "#e3fdf7",
+          warnning: "#fef5e5",
+          error: "#fdede8",
+          info: "#ebf3fe",
+        },
+
         gray: {
           "25": "#FCFCFD",
           "50": "#F9FAFB",

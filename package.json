@@ -26,6 +26,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "delay": "^6.0.0",
+    "jalali-moment": "^3.3.11",
     "lucide-react": "^0.427.0",
     "md-editor-rt": "^5.2.2",
     "mongodb": "^6.13.0",

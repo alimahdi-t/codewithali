@@ -10,7 +10,10 @@ export const CreatePostSchema = z.object({
     .string()
     .min(3, "عنوان باید حداقل ۳ کاراکتر باشد")
     .max(255, "عنوان نباید بیشتر از ۲۵۵ کاراکتر باشد"),
-  content: z.string().min(10, "محتوا باید حداقل ۱۰ کاراکتر باشد"),
+  content: z
+    .string()
+    .min(10, "محتوا باید حداقل ۱۰ کاراکتر باشد")
+    .max(10000, "محتوا باید حداقل ۱۰۰۰۰ کاراکتر باشد"),
   imageUrl: z.string().url("آدرس تصویر معتبر نیست"),
   authorId: z.string().min(1, "شناسه نویسنده باید عدد صحیح باشد"),
   tags: z.array(z.number().int().positive()).optional(),

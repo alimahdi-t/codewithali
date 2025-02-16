@@ -11,7 +11,7 @@ export const NewCourseSchema = z.object({
   content: z
     .string()
     .min(1, "محتوا نمی‌تواند خالی باشد.")
-    .max(10000, "محتوا نباید بیشتر از ۲۰۰۰ کاراکتر باشد."),
+    .max(10000, "محتوا نباید بیشتر از ۱۰۰۰۰ کاراکتر باشد."),
   imageUrl: z.string().url("لینک تصویر معتبر نیست."),
   level: z.nativeEnum(Level, {
     errorMap: () => ({ message: "سطح نامعتبر است." }),
