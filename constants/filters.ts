@@ -1,11 +1,11 @@
 import { Level } from "@prisma/client";
 
-export const courseSortFilter = [
+export const courseSortFilter: { name: string; value: string }[] = [
   { name: "جدید ترین", value: "newest" },
   { name: "قدیمی ترین", value: "oldest" },
   { name: "ارزان ترین", value: "cheapest" },
   { name: "گران ترین", value: "mostExpensive" },
-  { name: "پر مخاطب ترین", value: "mostPopular" },
+  // { name: "پر مخاطب ترین", value: "mostPopular" },
 ];
 
 export const courseLevelFilter: { value: Level; name: string }[] = [
@@ -20,4 +20,10 @@ export const courseGroupFilter = [
   { name: "پایتون", value: "python" },
   { name: "پایگاه داده", value: "database" },
   { name: "عمومی", value: "public" },
+];
+
+export const postSortFilter: { name: string; value: string }[] = [
+  { name: "جدید ترین", value: "newest" },
+  { name: "قدیمی ترین", value: "oldest" },
+  { name: "پر نظرترین", value: "mostViewed" },
 ];

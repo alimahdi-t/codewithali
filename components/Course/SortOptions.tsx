@@ -1,7 +1,6 @@
 "use client";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
 import { useState } from "react";
-import { courseSortFilter } from "@/constants/filters";
 import {
   Sheet,
   SheetClose,
@@ -18,14 +17,24 @@ interface SortOption {
   value: string;
 }
 
-const CourseSortOptions = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams().get("orderBy");
+interface SortOptionsProps {
+  filters: SortOption[];
+  queryParam?: string;
+  basePath: string;
+  defaultSort?: SortOption;
+}
 
-  const [selectedSortOption, setSelectedSortOption] = useState<SortOption>({
-    name: "جدید ترین",
-    value: "newest",
-  });
+const SortOptions = ({
+  defaultSort = { name: "جدید ترین", value: "newest" },
+  basePath,
+  filters,
+  queryParam = "orderBy",
+}: SortOptionsProps) => {
+  const router = useRouter();
+  const searchParams = useSearchParams().get(queryParam);
+
+  const [selectedSortOption, setSelectedSortOption] =
+    useState<SortOption>(defaultSort);
 
   const handleSort = (item: SortOption) => {
     const params = new URLSearchParams(window.location.search);
@@ -40,7 +49,7 @@ const CourseSortOptions = () => {
     const queryString = query ? `?${query}` : "";
 
     // Navigate to the new URL
-    router.push(`/courses${queryString}`);
+    router.push(`${basePath}${queryString}`);
 
     // Update the selected sort option
     setSelectedSortOption(item);
@@ -66,7 +75,7 @@ const CourseSortOptions = () => {
             <SheetDescription></SheetDescription>
           </SheetHeader>
           <ul className="list-none flex flex-col items-center">
-            {courseSortFilter.map((item, index) => (
+            {filters?.map((item, index) => (
               <SheetClose key={index} asChild>
                 <li
                   onClick={() => handleSort(item)}
@@ -90,7 +99,7 @@ const CourseSortOptions = () => {
           مرتب سازی بر اساس:
         </span>
         <ul className="list-none flex items-center gap-8">
-          {courseSortFilter.map((item, index) => (
+          {filters.map((item, index) => (
             <li
               key={index}
               onClick={() => handleSort(item)}
@@ -109,4 +118,4 @@ const CourseSortOptions = () => {
   );
 };
 
-export default CourseSortOptions;
+export default SortOptions;

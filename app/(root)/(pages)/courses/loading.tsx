@@ -1,6 +1,6 @@
 import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
-import CourseSortOptions from "@/components/Course/CourseSortOptions";
+import SortOptions from "@/components/Course/SortOptions";
 import { Skeleton } from "@/components/ui/skeleton";
 import CourseCardLoading from "@/app/(root)/(pages)/courses/CourseCardLoading";
 
@@ -25,7 +25,7 @@ export default function LoadingCoursePage() {
         <div className="w-full flex flex-col gap-4">
           <div className="w-full flex gap-4">
             <CourseFilterOption className="sm:hidden" />
-            <CourseSortOptions />
+            <SortOptions />
           </div>
 
           <div

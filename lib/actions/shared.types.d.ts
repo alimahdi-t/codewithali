@@ -52,5 +52,7 @@ export interface CreatePostParams {
   content: string;
   imageUrl: string;
   authorId: number;
-  tags?: [];
+  tags?: number[];
+  readingTime: number;
+  isEditorPick?: boolean;
 }

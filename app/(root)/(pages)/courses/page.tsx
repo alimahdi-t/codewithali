@@ -1,16 +1,16 @@
 import CourseCard from "@/components/Course/CourseCard/CourseCard";
-
 import { convertToPersianNumbers } from "@/utils";
-import CourseSortOptions from "@/components/Course/CourseSortOptions";
+import SortOptions from "@/components/Course/SortOptions";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
 import NoResult from "@/components/shared/NoResult";
 import { NoCourseFound } from "@/constants/Icons";
-import delay from "delay";
+
 import { GetAllCoursesParams } from "@/lib/actions/shared.types";
 
 import { getCourses } from "@/lib/actions/getCourses.action";
 import Pagination from "@/components/shared/Pagination";
+import { courseSortFilter } from "@/constants/filters";
 
 interface Props {
   searchParams: Promise<GetAllCoursesParams>;
@@ -20,8 +20,6 @@ const Courses = async (props: Props) => {
   const searchParams = await props.searchParams;
   const page = searchParams.page || 1;
   const pageSize: number = 12;
-
-  await delay(2000);
 
   const courses = await getCourses({
     isFree: searchParams.isFree,
@@ -55,7 +53,7 @@ const Courses = async (props: Props) => {
         <div className="w-full flex flex-col gap-4">
           <div className="w-full flex gap-4">
             <CourseFilterOption className="sm:hidden" />
-            <CourseSortOptions />
+            <SortOptions basePath="/courses" filters={courseSortFilter} />
           </div>
 
           <NoResult

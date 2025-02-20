@@ -7,7 +7,16 @@ import { Post } from "@prisma/client";
 export async function createPost(
   params: CreatePostParams,
 ): Promise<Post | { error: string }> {
-  const { title, slug, content, imageUrl, tags, authorId } = params;
+  const {
+    title,
+    slug,
+    content,
+    imageUrl,
+    tags,
+    authorId,
+    isEditorPick,
+    readingTime,
+  } = params;
   try {
     // First Check if the slug is already exists
     const doesSlugExists = await prisma.post.findFirst({
@@ -29,20 +38,16 @@ export async function createPost(
         content,
         imageUrl,
         authorId,
+        isEditorPick,
+        readingTime,
+        tags: {
+          connect: tags?.map((tagId) => ({ id: tagId })) ?? [],
+        },
+      },
+      include: {
+        tags: true,
       },
     });
-    // TODO: Add tags later
-    // // If there are tags, link them in the PostTag table
-    // if (tags?.length) {
-    //   const tagConnections = tags.map((tagId) => ({
-    //     post_id: post.id,
-    //     tag_id: tagId,
-    //   }));
-    //
-    //   await prisma.postTag.createMany({
-    //     data: tagConnections,
-    //   });
-    // }
   } catch (error) {
     console.log("An Error occurred while creating new post.", error);
     return {

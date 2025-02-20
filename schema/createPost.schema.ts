@@ -17,4 +17,9 @@ export const CreatePostSchema = z.object({
   imageUrl: z.string().url("آدرس تصویر معتبر نیست"),
   authorId: z.string().min(1, "شناسه نویسنده باید عدد صحیح باشد"),
   tags: z.array(z.number().int().positive()).optional(),
+  readingTime: z
+    .string()
+    .min(1, "زمان مطالیه نباید خالی باشد")
+    .regex(/^[0-9-]+$/, "فقط میتواند شامل اعداد باشد"),
+  isEditorPick: z.boolean().optional(),
 });

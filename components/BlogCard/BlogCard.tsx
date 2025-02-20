@@ -1,4 +1,4 @@
-import { Post, User } from "@prisma/client";
+import { Post, User, Tag as ITag } from "@prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { className } from "postcss-selector-parser";
@@ -10,6 +10,7 @@ import Tag from "@/components/common/Tag";
 
 interface ExtendedPost extends Post {
   author: Pick<User, "firstName" | "lastName" | "imageUrl">;
+  tags: ITag[];
 }
 
 interface Props {
@@ -31,6 +32,7 @@ const BlogCard = ({ post, ...props }: Props) => {
       {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">
         <Image
+          priority={false}
           style={{
             width: "100%",
             height: "auto",
@@ -43,20 +45,13 @@ const BlogCard = ({ post, ...props }: Props) => {
         />
       </div>
       {/*--------------- Card Body ---------------*/}
-      <div className="max-w-xl px-4 py-4 flex flex-col gap-3">
+      <div className="w-full max-w-xl px-4 py-4 flex flex-col gap-3">
         {/*--------------- Card Tags ---------------*/}
-        <div className="flex items-center justify-between gap-x-4 text-xs">
-          <time dateTime={post.createAt.toString()} className="text-gray-500">
-            {convertToPersianNumbers(m.format("DD MMM YYYY"))}
-          </time>
-          <div className="flex flex-wrap gap-1">
-            {/*{post.tags.map((tag, index) => (*/}
-            {/*  <Tag key={index} tagName={tag.title} href={tag.href} />*/}
-            {/*))}*/}
-
-            <Tag tagName={"React"} href={"#"} />
-            <Tag tagName={"Cyber Security"} href={"#"} />
-            <Tag tagName={"Android"} href={"#"} />
+        <div className="w-full flex items-center  gap-x-4 text-xs">
+          <div className="w-full flex flex-wrap line-clamp-1  gap-1">
+            {post.tags.map((tag) => (
+              <Tag key={tag.id} tagName={tag.name} href={"#"} />
+            ))}
           </div>
         </div>
 
@@ -76,19 +71,15 @@ const BlogCard = ({ post, ...props }: Props) => {
         </div>
 
         {/*--------------- Card Footer ---------------*/}
-        <div className="relative mt-4 flex items-center gap-x-4">
-          <Avatar>
-            <AvatarImage src={post.author.imageUrl as string} />
-            <AvatarFallback>{post.author.firstName.charAt(0)}</AvatarFallback>
-          </Avatar>
-
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <Link href={"#"}>
-                {post.author.firstName + " " + post.author.lastName}
-              </Link>
-            </p>
-          </div>
+        <div className="relative mt-4 flex justify-between items-center gap-x-4 text-xs leading-6">
+          <p className="font-semibold text-gray-900 hover:text-primary duration-500">
+            <Link href={"#"}>
+              {post.author.firstName + " " + post.author.lastName}
+            </Link>
+          </p>
+          <time dateTime={post.createAt.toString()} className="text-gray-500">
+            {convertToPersianNumbers(m.format("YYYY/MM/DD"))}
+          </time>
         </div>
       </div>
     </article>

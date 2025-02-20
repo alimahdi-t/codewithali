@@ -54,7 +54,9 @@ const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
           dark:text-gr"
           >
             <a href={`/courses/${course.id}`}>
-              <h3 className="text-sm font-medium inset-0">{course.title}</h3>
+              <h3 className="text-sm font-medium line-clamp-2 h-12 inset-0">
+                {course.title}
+              </h3>
             </a>
           </h3>
           <p className="mt-2  line-clamp-2 text-[10px] leading-6 text-gray-400">

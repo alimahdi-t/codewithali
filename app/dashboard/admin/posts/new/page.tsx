@@ -19,11 +19,23 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPost } from "@/lib/actions/createPost";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useEffect, useState } from "react";
+import { Tag } from "@prisma/client";
+import { MultiSelect } from "@/components/MultiSelect";
 
 const NewPostPage = () => {
   const { toast } = useToast();
   const router = useRouter();
-
+  const [tags, setTags] = useState<Tag[]>([]);
   const FormSchema = CreatePostSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -35,8 +47,19 @@ const NewPostPage = () => {
       content: "",
       tags: [],
       authorId: "",
+      readingTime: "",
+      isEditorPick: false,
     },
   });
+
+  useEffect(() => {
+    fetch("/api/tags")
+      .then((res) => res.json())
+      .then((data) => {
+        setTags(data);
+        // Todo: ADD error handling and loading
+      });
+  }, []);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     console.log(data);
@@ -48,6 +71,9 @@ const NewPostPage = () => {
         imageUrl: data.imageUrl,
         content: data.content,
         authorId: parseInt(data.authorId),
+        readingTime: parseInt(data.readingTime),
+        isEditorPick: false,
+        tags: data.tags,
       });
 
       if ("error" in response) {
@@ -134,39 +160,104 @@ const NewPostPage = () => {
                 </FormItem>
               )}
             />
-            {/*  TODO: Add functionality for tags*/}
-            {/*<FormField*/}
-            {/*  control={form.control}*/}
-            {/*  name="title"*/}
-            {/*  render={({ field }) => (*/}
-            {/*    <FormItem>*/}
-            {/*      <FormLabel className="block text-sm font-medium leading-6 text-gray-900">*/}
-            {/*        برچسپ*/}
-            {/*      </FormLabel>*/}
-            {/*      <FormControl>*/}
-            {/*        <Input type="text" className="leading-6" {...field} />*/}
-            {/*      </FormControl>*/}
-            {/*      <FormMessage />*/}
-            {/*    </FormItem>*/}
-            {/*  )}*/}
-            {/*/>*/}
 
-            {/*TODO: Make this A Select witch fetch the instructors*/}
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-4">
+              <FormField
+                control={form.control}
+                name="readingTime"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                      زمان مورد نیاز برای مطالعه
+                    </FormLabel>
+                    <FormControl>
+                      <Input type="text" className="leading-6" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="isEditorPick"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                      منتخب سردبیر
+                    </FormLabel>
+                    <FormControl>
+                      <Select
+                        dir="rtl"
+                        onValueChange={(value) =>
+                          field.onChange(value === "true")
+                        }
+                        value={field.value?.toString()}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="منتخب سردبیر" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            <SelectLabel>منتخب سردبیر</SelectLabel>
+                            <SelectItem value={"true"}>بله</SelectItem>
+                            <SelectItem value={"false"}>خیر</SelectItem>
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              {/*TODO: Make this A Select witch fetch the instructors*/}
+              <FormField
+                control={form.control}
+                name="authorId"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                      ایدی نویسنده
+                    </FormLabel>
+                    <FormControl>
+                      <Input type="text" className="leading-6" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={form.control}
-              name="authorId"
+              name="tags"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    ایدی نویسنده
+                    انتخاب برچسپ‌ها
                   </FormLabel>
                   <FormControl>
-                    <Input type="text" className="leading-6" {...field} />
+                    <MultiSelect
+                      options={tags.map((tag) => ({
+                        label: tag.name,
+                        value: tag.id.toString(),
+                      }))}
+                      onValueChange={(values) =>
+                        field.onChange(values.map((v) => parseInt(v)))
+                      }
+                      defaultValue={field.value?.map((v) => v.toString())}
+                      placeholder="انتخاب برپسپ"
+                      variant="inverted"
+                      animation={2}
+                      maxCount={3}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+
             <div>
               <Button
                 disabled={!form.formState.isValid}

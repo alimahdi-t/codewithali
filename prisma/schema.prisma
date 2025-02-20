@@ -73,31 +73,23 @@ model Post {
   createAt  DateTime @default(now())
   updatedAt DateTime @updatedAt
   authorId  Int
+  isEditorPick Boolean? @default(false)
+  readingTime Int
 
   // Relations
-  author User      @relation(fields: [authorId], references: [id])
-  tags   PostTag[]
+  author User @relation(fields: [authorId], references: [id])
+  tags   Tag[] // ✅ Many-to-many without a junction table
 }
 
 // ✅
 model Tag {
   id      Int         @id @default(autoincrement())
   name    String      @unique
-  posts   PostTag[]
+  posts   Post[]
   courses CourseTag[]
 }
 
-// ✅
-model PostTag {
-  post_id Int
-  tag_id  Int
-  // Relations
-  post    Post @relation(fields: [post_id], references: [id])
-  tag     Tag  @relation(fields: [tag_id], references: [id])
 
-  // Composite primary key
-  @@id([post_id, tag_id])
-}
 
 // ✅
 model CourseTag {
