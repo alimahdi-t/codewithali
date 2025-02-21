@@ -5,16 +5,10 @@ import {
   HiChatBubbleLeftRight,
   HiDocumentText,
 } from "react-icons/hi2";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
+import { Accordion } from "@/components/ui/accordion";
 import CourseContentHeader from "@/app/(root)/(pages)/courses/[id]/components/CourseContentHeader";
-import LessonDetails from "@/app/(root)/(pages)/courses/[id]/components/LessonDetails";
 
-const CoursePageBody = ({ CourseTopics }: { CourseTopics }) => {
+const CoursePageBody = () => {
   return (
     <div className="flex-1 w-full flex flex-col gap-4 dark:bg-gray-950">
       <CourseMetrics />
@@ -51,27 +45,27 @@ const CoursePageBody = ({ CourseTopics }: { CourseTopics }) => {
               numberOfHomeworks={49}
             />
 
-            {CourseTopics.map((courseTopic, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="px-4 py-2"
-              >
-                <AccordionTrigger>
-                  <div className="w-full flex justify-between items-center px-2 border-gray-100">
-                    <h4>{courseTopic.label}</h4>
-                    <LessonDetails
-                      numberOfLessons={5}
-                      numberOfHomeworks={4}
-                      numberOfVideos={4}
-                    />
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  Yes. It adheres to the WAI-ARIA design pattern.
-                </AccordionContent>
-              </AccordionItem>
-            ))}
+            {/*{CourseTopics.map((courseTopic, index) => (*/}
+            {/*  <AccordionItem*/}
+            {/*    key={index}*/}
+            {/*    value={`item-${index}`}*/}
+            {/*    className="px-4 py-2"*/}
+            {/*  >*/}
+            {/*    <AccordionTrigger>*/}
+            {/*      <div className="w-full flex justify-between items-center px-2 border-gray-100">*/}
+            {/*        <h4>{courseTopic.label}</h4>*/}
+            {/*        <LessonDetails*/}
+            {/*          numberOfLessons={5}*/}
+            {/*          numberOfHomeworks={4}*/}
+            {/*          numberOfVideos={4}*/}
+            {/*        />*/}
+            {/*      </div>*/}
+            {/*    </AccordionTrigger>*/}
+            {/*    <AccordionContent>*/}
+            {/*      Yes. It adheres to the WAI-ARIA design pattern.*/}
+            {/*    </AccordionContent>*/}
+            {/*  </AccordionItem>*/}
+            {/*))}*/}
           </Accordion>
         </div>
       </div>

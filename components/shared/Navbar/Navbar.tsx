@@ -17,7 +17,7 @@ const Navbar = () => {
           <MobileNav className="md:hidden" />
 
           <div className="flex flex-row items-center">
-            <Link href="/public" className="dark:text-white flex items-center">
+            <Link href="/" className="dark:text-white flex items-center">
               <h3 className="text-xl font-bold font">
                 <Logo className="w-16 h-16" />
               </h3>

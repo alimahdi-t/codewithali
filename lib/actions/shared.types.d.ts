@@ -12,8 +12,8 @@ export interface CreateCourseParams {
   status: CourseStatus;
 }
 
-export interface GetCourseByIdParams {
-  id: number;
+export interface GetCourseBySlugParams {
+  slug: string;
 }
 
 export interface GetAllCoursesParams {

@@ -1,5 +1,4 @@
-import { HiOutlineUser, HiMiniStar, HiOutlineUsers } from "react-icons/hi2";
-import Link from "next/link";
+import { HiMiniStar, HiOutlineUsers } from "react-icons/hi2";
 import {
   calculateDiscount,
   convertToPersianAndFormat,
@@ -9,9 +8,17 @@ import TomanIcon from "@/components/common/TomanIcon";
 import DiscountTag from "@/components/Course/CourseCard/DiscountTag";
 import { Course, User } from "@prisma/client";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
+import ILink from "@/components/common/ILink";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 
-interface ExtendedCourse extends Course {
-  instructor: Pick<User, "firstName" | "lastName" | "imageUrl">;
+interface ExtendedCourse
+  extends Omit<Course, "content" | "instructorId" | "createdAt" | "updateAt"> {
+  instructor: Pick<
+    User,
+    "id" | "firstName" | "lastName" | "imageUrl" | "username"
+  >;
 }
 
 interface Props {
@@ -33,10 +40,10 @@ const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
       {/*--------------- Card Header ---------------*/}
       <DiscountTag discount={discount!} />
       <div className="relative w-full">
-        {/*TODO: Change img tag with Image of Next.js*/}
-        <img
-          width={20}
-          height={20}
+        <Image
+          priority={true}
+          width={400}
+          height={200}
           src={course.imageUrl}
           alt=""
           className="aspect-[2/1] w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
@@ -49,29 +56,35 @@ const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
 
         {/*--------------- Card Title and Description ---------------*/}
         <div className="group relative">
-          <h3
-            className="font-semibold text-gray-900 group-hover:text-gray-600
-          dark:text-gr"
+          <ILink
+            href={`/courses/${course.slug}`}
+            className="text-sm font-medium line-clamp-2 h-12"
           >
-            <a href={`/courses/${course.id}`}>
-              <h3 className="text-sm font-medium line-clamp-2 h-12 inset-0">
-                {course.title}
-              </h3>
-            </a>
-          </h3>
+            <h3
+              className="font-semibold text-gray-900 group-hover:text-gray-600
+          dark:text-gr"
+            >
+              {course.title}
+            </h3>
+          </ILink>
           <p className="mt-2  line-clamp-2 text-[10px] leading-6 text-gray-400">
-            {course.content}
+            {course.description}
           </p>
         </div>
 
         <div className="flex justify-between items-center mt-4">
-          <div className="flex items-center gap-x-1 text-gray-400 hover:text-brand-700 cursor-pointer">
-            <HiOutlineUser className="w-4 h-4" />
-            <Link href={"#"}>
-              <p className="font-medium text-xs leading-6">
+          <div className="flex items-center gap-x-1 cursor-pointer">
+            <Avatar className="w-10 h-10">
+              <AvatarImage src={course.instructor?.imageUrl as string} />
+              <AvatarFallback>
+                {course.instructor.firstName.charAt(0)}
+              </AvatarFallback>
+            </Avatar>
+            <ILink href={course.instructor.username ?? "#"}>
+              <p className="font-medium text-xs leading-7">
                 {`${course.instructor.firstName} ${course.instructor.lastName}`}
               </p>
-            </Link>
+            </ILink>
           </div>
           <div className="flex items-center justify-center gap-1 text-sm text-yellow-500">
             <p>{convertToPersianNumbers("5.0")}</p>
@@ -93,7 +106,7 @@ const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
               </p>
             </div>
 
-            <p className="font-extrabold text-sm text-brand-700 flex gap-1 items-center">
+            <p className="font-extrabold text-base text-brand-700 flex gap-1 items-center">
               {course.price === 0 || discount === 100 ? (
                 "رایگان!"
               ) : (

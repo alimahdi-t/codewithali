@@ -1,7 +1,5 @@
 import React from "react";
-import Sidebar from "@/components/dashboard/Sidebar";
 import AdminSidebar from "@/app/dashboard/AdminSidebar";
-import Navbar from "@/components/shared/Navbar/Navbar";
 import {
   Sheet,
   SheetClose,
@@ -39,8 +37,8 @@ export default function AdminLayout({
                 <SheetHeader>
                   <SheetTitle>Edit profile</SheetTitle>
                   <SheetDescription>
-                    Make changes to your profile here. Click save when you're
-                    done.
+                    Make changes to your profile here. Click save when
+                    you&apos;re done.
                   </SheetDescription>
                 </SheetHeader>
 

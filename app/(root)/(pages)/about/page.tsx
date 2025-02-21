@@ -1,61 +1,48 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const people = [
   {
     name: "رضا مرادی",
     role: "توسعه‌دهنده بک‌اند",
-    imageUrl:
-      "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=1024&q=80",
-    xUrl: "#",
-    linkedinUrl: "#",
-  },
-  {
-    name: "الهام کریمی",
-    role: "طراح رابط کاربری",
-    imageUrl:
-      "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?w=1024&q=80",
+    imageUrl: "/images/team/member_01.jpg",
     xUrl: "#",
     linkedinUrl: "#",
   },
   {
     name: "محمد حسینی",
     role: "مهندس داده",
-    imageUrl:
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1024&q=80",
+    imageUrl: "/images/team/member_02.jpg",
     xUrl: "#",
     linkedinUrl: "#",
   },
   {
     name: "سارا احمدی",
     role: "مدیر محصول",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=1024&q=80",
+    imageUrl: "/images/team/member_03.jpg",
     xUrl: "#",
     linkedinUrl: "#",
   },
   {
     name: "کامران نوری",
     role: "برنامه‌نویس موبایل",
-    imageUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=1024&q=80",
+    imageUrl: "/images/team/member_04.jpg",
     xUrl: "#",
     linkedinUrl: "#",
   },
   {
     name: "نسترن رضایی",
     role: "تحلیل‌گر داده",
-    imageUrl:
-      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=1024&q=80",
+    imageUrl: "/images/team/member_05.jpg",
     xUrl: "#",
     linkedinUrl: "#",
   },
   {
     name: "بهنام فرهادی",
     role: "توسعه‌دهنده فول‌استک",
-    imageUrl:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=1024&q=80",
+    imageUrl: "/images/team/member_06.jpg",
     xUrl: "#",
     linkedinUrl: "#",
   },
@@ -116,14 +103,16 @@ export default function AboutPage() {
           role="list"
           className="mx-auto mt-20 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:grid-cols-2 lg:mx-0 lg:max-w-none lg:grid-cols-3"
         >
-          {people.map((person) => (
+          {people?.map((person) => (
             <li
               key={person.name}
               className="rounded-lg shadow-md bg-white flex flex-col items-center pb-8"
             >
-              {/* TODO: change img tag with Image*/}
-              <img
+              <Image
                 alt=""
+                priority={false}
+                width={400}
+                height={400}
                 src={person.imageUrl}
                 className="aspect-[3/2] w-full rounded-2xl object-cover"
               />
@@ -196,7 +185,7 @@ export default function AboutPage() {
       </div>
 
       {/* بخش تماس با ما */}
-      <div className="relative mt-32 sm:mt-40  -ml-[50vw] -mr-[50vw] flex justify-center">
+      <div className="relative mt-32 sm:mt-40 flex justify-center">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="text-center max-w-xl px-12">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">

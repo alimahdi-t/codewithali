@@ -1,5 +1,4 @@
 import { Post, User, Tag as ITag } from "@prisma/client";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { className } from "postcss-selector-parser";
 import Link from "next/link";
@@ -7,6 +6,7 @@ import moment from "jalali-moment";
 import { convertToPersianNumbers } from "@/utils";
 import Image from "next/image";
 import Tag from "@/components/common/Tag";
+import ILink from "@/components/common/ILink";
 
 interface ExtendedPost extends Post {
   author: Pick<User, "firstName" | "lastName" | "imageUrl">;
@@ -32,7 +32,7 @@ const BlogCard = ({ post, ...props }: Props) => {
       {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">
         <Image
-          priority={false}
+          loading={"eager"}
           style={{
             width: "100%",
             height: "auto",
@@ -72,11 +72,9 @@ const BlogCard = ({ post, ...props }: Props) => {
 
         {/*--------------- Card Footer ---------------*/}
         <div className="relative mt-4 flex justify-between items-center gap-x-4 text-xs leading-6">
-          <p className="font-semibold text-gray-900 hover:text-primary duration-500">
-            <Link href={"#"}>
-              {post.author.firstName + " " + post.author.lastName}
-            </Link>
-          </p>
+          <ILink href={"#"}>
+            <p>{post.author.firstName + " " + post.author.lastName}</p>
+          </ILink>
           <time dateTime={post.createAt.toString()} className="text-gray-500">
             {convertToPersianNumbers(m.format("YYYY/MM/DD"))}
           </time>

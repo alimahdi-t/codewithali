@@ -45,10 +45,26 @@ export async function getCourses(params: GetAllCoursesParams) {
     return await prisma.course.findMany({
       where: filters,
       orderBy: orderOptions[orderBy] || { createdAt: "desc" },
-      include: {
-        instructor: true,
-        tag: true,
+      select: {
+        id: true,
+        description: true,
+        slug: true,
+        title: true,
+        imageUrl: true,
+        level: true,
+        status: true,
+        price: true,
+        instructor: {
+          select: {
+            id: true,
+            firstName: true,
+            lastName: true,
+            username: true,
+            imageUrl: true,
+          },
+        },
       },
+
       skip: (page - 1) * pageSize,
       take: pageSize,
     });

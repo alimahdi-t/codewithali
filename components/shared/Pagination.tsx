@@ -2,7 +2,6 @@
 import { HiMiniChevronLeft, HiMiniChevronRight } from "react-icons/hi2";
 import { convertToPersianAndFormat } from "@/utils";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface Props {
@@ -19,7 +18,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
   if (pageCount <= 1) return null;
 
   const pageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams.toString()); // تبدیل searchParams به string
     params.set("page", page.toString());
     router.push("?" + params.toString());
   };
@@ -30,6 +29,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     if (currentPage !== 1) {
       pagesToShow.push(
         <Button
+          key="first"
           variant="ghost"
           className="w-4 h-4 p-4"
           onClick={() => pageChange(1)}
@@ -42,9 +42,8 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     if (currentPage - 2 > 2) {
       pagesToShow.push(
         <span
-          key={1}
-          variant="default"
-          className={`w-4 h-4 p-4 flex justify-center items-center`}
+          key="dots-left"
+          className="w-4 h-4 p-4 flex justify-center items-center"
         >
           ...
         </span>,
@@ -54,8 +53,9 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     if (currentPage > 3) {
       pagesToShow.push(
         <Button
+          key={currentPage - 2}
           variant="ghost"
-          className={`w-4 h-4 p-4`}
+          className="w-4 h-4 p-4"
           onClick={() => pageChange(currentPage - 2)}
         >
           {convertToPersianAndFormat(currentPage - 2)}
@@ -66,8 +66,9 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     if (currentPage > 2) {
       pagesToShow.push(
         <Button
+          key={currentPage - 1}
           variant="ghost"
-          className={`w-4 h-4 p-4`}
+          className="w-4 h-4 p-4"
           onClick={() => pageChange(currentPage - 1)}
         >
           {convertToPersianAndFormat(currentPage - 1)}
@@ -76,11 +77,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     }
 
     pagesToShow.push(
-      <Button
-        variant="default"
-        className={`w-4 h-4 p-4`}
-        onClick={() => pageChange(currentPage)}
-      >
+      <Button key="current" variant="default" className="w-4 h-4 p-4">
         {convertToPersianAndFormat(currentPage)}
       </Button>,
     );
@@ -88,8 +85,9 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     if (currentPage < pageCount - 1) {
       pagesToShow.push(
         <Button
+          key={currentPage + 1}
           variant="ghost"
-          className={`w-4 h-4 p-4`}
+          className="w-4 h-4 p-4"
           onClick={() => pageChange(currentPage + 1)}
         >
           {convertToPersianAndFormat(currentPage + 1)}
@@ -100,8 +98,9 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     if (currentPage < pageCount - 2) {
       pagesToShow.push(
         <Button
+          key={currentPage + 2}
           variant="ghost"
-          className={`w-4 h-4 p-4`}
+          className="w-4 h-4 p-4"
           onClick={() => pageChange(currentPage + 2)}
         >
           {convertToPersianAndFormat(currentPage + 2)}
@@ -111,7 +110,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
 
     if (currentPage + 2 < pageCount - 1) {
       pagesToShow.push(
-        <Button key={1} variant="ghost" className={`w-4 h-4 p-4`}>
+        <Button key="dots-right" variant="ghost" className="w-4 h-4 p-4">
           ...
         </Button>,
       );
@@ -120,6 +119,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
     if (currentPage !== pageCount) {
       pagesToShow.push(
         <Button
+          key="last"
           variant="ghost"
           className="w-4 h-4 p-4"
           onClick={() => pageChange(pageCount)}
@@ -128,6 +128,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
         </Button>,
       );
     }
+
     return pagesToShow;
   };
 
@@ -147,6 +148,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
       </Button>
 
       {renderPageNumbers()}
+
       <Button
         variant="ghost"
         className="p-0 flex items-center justify-center"

@@ -3,6 +3,7 @@ import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { Skeleton } from "@/components/ui/skeleton";
 import CourseCardLoading from "@/app/(root)/(pages)/courses/CourseCardLoading";
+import { courseSortFilter } from "@/constants/filters";
 
 export default function LoadingCoursePage() {
   const courses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -25,7 +26,7 @@ export default function LoadingCoursePage() {
         <div className="w-full flex flex-col gap-4">
           <div className="w-full flex gap-4">
             <CourseFilterOption className="sm:hidden" />
-            <SortOptions />
+            <SortOptions basePath="/courses" filters={courseSortFilter} />
           </div>
 
           <div

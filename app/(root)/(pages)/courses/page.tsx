@@ -5,9 +5,7 @@ import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
 import NoResult from "@/components/shared/NoResult";
 import { NoCourseFound } from "@/constants/Icons";
-
 import { GetAllCoursesParams } from "@/lib/actions/shared.types";
-
 import { getCourses } from "@/lib/actions/getCourses.action";
 import Pagination from "@/components/shared/Pagination";
 import { courseSortFilter } from "@/constants/filters";
@@ -16,7 +14,7 @@ interface Props {
   searchParams: Promise<GetAllCoursesParams>;
 }
 
-const Courses = async (props: Props) => {
+const CoursesPage = async (props: Props) => {
   const searchParams = await props.searchParams;
   const page = searchParams.page || 1;
   const pageSize: number = 12;
@@ -31,8 +29,14 @@ const Courses = async (props: Props) => {
     categories: searchParams.categories,
     pageSize: pageSize,
   });
+
+  if (!courses) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <div className="w-full flex flex-col">
+      {/* Page Header*/}
       <div className="w-full flex justify-between">
         <div className="flex gap-2 items-center">
           <div className="bg-brand-500 w-5 h-5 rounded"></div>
@@ -85,4 +89,4 @@ const Courses = async (props: Props) => {
   );
 };
 
-export default Courses;
+export default CoursesPage;

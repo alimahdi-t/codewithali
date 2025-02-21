@@ -22,13 +22,6 @@ import {
   Mail01Icon,
   MapsLocation01Icon,
 } from "@/public/assets/icons/hugeIcons";
-import { HiOutlinePhone } from "react-icons/hi2";
-
-const ContactInfo = {
-  pageTitle: "تماس با ما",
-  phoneNumber: "09030579074",
-  email: "seyyedalimehdi@gmail.com",
-};
 
 const Contact = () => {
   const FormSchema = ContactSchema;

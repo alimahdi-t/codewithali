@@ -27,7 +27,6 @@ export const navLinks = [
   { label: "وبلاگ", href: "/blog" },
   { label: "تماس با ما", href: "/contact" },
   { label: "درباره ما", href: "/about" },
-  { label: "داشبورد", href: "/my-account" },
 ];
 
 export const profileDropDownLinks = [

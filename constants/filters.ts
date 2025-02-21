@@ -5,7 +5,6 @@ export const courseSortFilter: { name: string; value: string }[] = [
   { name: "قدیمی ترین", value: "oldest" },
   { name: "ارزان ترین", value: "cheapest" },
   { name: "گران ترین", value: "mostExpensive" },
-  // { name: "پر مخاطب ترین", value: "mostPopular" },
 ];
 
 export const courseLevelFilter: { value: Level; name: string }[] = [

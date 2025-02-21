@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import CustomCheckbox from "@/components/CustomCheckbox";
+import CustomCheckbox from "@/components/common/CustomCheckbox";
 import { ReactNode } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 

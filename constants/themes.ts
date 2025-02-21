@@ -1,4 +1,3 @@
-import { Discount } from "@prisma/client";
 export const themes = [
   { value: "light", label: "Light" },
   { value: "dark", label: "Dark" },

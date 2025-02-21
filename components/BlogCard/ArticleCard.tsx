@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface Props {
   article: {
     id: number;
@@ -10,7 +12,9 @@ interface Props {
 const ArticleCard = ({ article, ...props }: Props) => {
   return (
     <div className="flex justify-center items-start gap-2" {...props}>
-      <img
+      <Image
+        width={400}
+        height={400}
         className="aspect-[3/2] w-24 rounded-lg"
         src={article.imageUrl}
         alt=""

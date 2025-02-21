@@ -1,11 +1,4 @@
-import SideBar from "@/app/(root)/(pages)/courses/[id]/components/SideBar";
-
-import CoursePageHeader from "@/app/(root)/(pages)/courses/[id]/components/Header/CoursePageHeader";
-import StateSection from "@/app/(root)/(pages)/courses/[id]/components/StateSection";
-import CoursePageBody from "@/app/(root)/(pages)/courses/[id]/components/body/CoursePageBody";
-interface Props {
-  params: Promise<{ id: string }>;
-}
+import { getCourseBySlug } from "@/lib/actions/getCourseBySlug.action";
 
 const CourseTopics = [
   {
@@ -76,27 +69,31 @@ const CourseTopics = [
   },
 ];
 
-const Course = async (props: Props) => {
-  const params = await props.params;
-  // const course = await getCourseById({ id: parseInt(params.id) });
+interface Props {
+  params: Promise<{ slug: string }>;
+}
 
+const CoursePage = async (props: Props) => {
+  const params = await props.params;
+  const course = await getCourseBySlug({ slug: params.slug });
+  if (!course) {
+    return <p>Loading...</p>;
+  }
+  console.log(course);
   // if (!course) {
   //   return <div>Course not found</div>;
   // }
 
   return (
     <div className="w-full flex flex-col gap-8">
-      {/*<CoursePageHeader course={course} />*/}
-      <StateSection />
       <div className="w-full flex flex-row gap-4 flex-1 pb-12">
-        <CoursePageBody CourseTopics={CourseTopics} />
-        <SideBar />
+        {course.title}
       </div>
     </div>
   );
 };
 
-export default Course;
+export default CoursePage;
 
 const Group = () => {
   return (
