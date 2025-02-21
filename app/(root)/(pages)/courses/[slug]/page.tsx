@@ -1,4 +1,5 @@
 import { getCourseBySlug } from "@/lib/actions/getCourseBySlug.action";
+import { notFound } from "next/navigation";
 
 const CourseTopics = [
   {
@@ -77,12 +78,8 @@ const CoursePage = async (props: Props) => {
   const params = await props.params;
   const course = await getCourseBySlug({ slug: params.slug });
   if (!course) {
-    return <p>Loading...</p>;
+    notFound();
   }
-  console.log(course);
-  // if (!course) {
-  //   return <div>Course not found</div>;
-  // }
 
   return (
     <div className="w-full flex flex-col gap-8">

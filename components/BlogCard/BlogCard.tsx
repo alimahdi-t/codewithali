@@ -9,7 +9,7 @@ import Tag from "@/components/common/Tag";
 import ILink from "@/components/common/ILink";
 
 interface ExtendedPost extends Post {
-  author: Pick<User, "firstName" | "lastName" | "imageUrl">;
+  author: Pick<User, "firstName" | "lastName" | "imageUrl" | "username">;
   tags: ITag[];
 }
 
@@ -32,7 +32,7 @@ const BlogCard = ({ post, ...props }: Props) => {
       {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">
         <Image
-          loading={"eager"}
+          priority={true}
           style={{
             width: "100%",
             height: "auto",
@@ -45,7 +45,7 @@ const BlogCard = ({ post, ...props }: Props) => {
         />
       </div>
       {/*--------------- Card Body ---------------*/}
-      <div className="w-full max-w-xl px-4 py-4 flex flex-col gap-3">
+      <div className="w-full px-4 py-4 flex flex-col gap-3">
         {/*--------------- Card Tags ---------------*/}
         <div className="w-full flex items-center  gap-x-4 text-xs">
           <div className="w-full flex flex-wrap line-clamp-1  gap-1">
@@ -61,7 +61,7 @@ const BlogCard = ({ post, ...props }: Props) => {
             className="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600
           dark:text-gr"
           >
-            <Link href={post.slug} className="line-clamp-2 h-12">
+            <Link href={`/blog/${post.slug}`} className="line-clamp-2 h-12">
               {post.title}
             </Link>
           </h3>
@@ -71,8 +71,8 @@ const BlogCard = ({ post, ...props }: Props) => {
         </div>
 
         {/*--------------- Card Footer ---------------*/}
-        <div className="relative mt-4 flex justify-between items-center gap-x-4 text-xs leading-6">
-          <ILink href={"#"}>
+        <div className="mt-4 flex justify-between items-center gap-x-4 text-xs leading-6">
+          <ILink href={post.author.username ?? "#"}>
             <p>{post.author.firstName + " " + post.author.lastName}</p>
           </ILink>
           <time dateTime={post.createAt.toString()} className="text-gray-500">

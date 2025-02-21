@@ -68,6 +68,7 @@ model Post {
   id        Int      @id @default(autoincrement())
   slug      String   @unique
   title     String   @db.VarChar(255)
+  overview  String   @db.VarChar(500) @default("")
   content   String   @db.VarChar(10000)
   imageUrl  String
   createAt  DateTime @default(now())

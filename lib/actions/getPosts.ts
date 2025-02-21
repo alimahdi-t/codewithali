@@ -10,9 +10,8 @@ export async function getPosts() {
     const posts = await prisma.post.findMany({
       include: {
         author: true,
-        tags: true
+        tags: true,
       },
-
     });
     return posts;
   } catch (error) {

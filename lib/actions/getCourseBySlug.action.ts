@@ -10,5 +10,6 @@ export async function getCourseBySlug({ slug }: GetCourseBySlugParams) {
     });
   } catch (error) {
     console.log(error);
+    return null;
   }
 }
