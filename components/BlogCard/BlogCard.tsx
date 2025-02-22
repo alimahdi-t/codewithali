@@ -1,95 +1,83 @@
+import { Post, User, Tag as ITag } from "@prisma/client";
+import { cn } from "@/lib/utils";
+import { className } from "postcss-selector-parser";
+import Link from "next/link";
+import moment from "jalali-moment";
+import { convertToPersianNumbers } from "@/utils";
+import Image from "next/image";
 import Tag from "@/components/common/Tag";
+import ILink from "@/components/common/ILink";
 
-interface Props {
-  post: {
-    id: number;
-    title: string;
-    href: string;
-    description: string;
-    imageUrl: string;
-    date: string;
-    dateTime: string;
-    tags: { title: string; href: string }[];
-    author: {
-      name: string;
-      role: string;
-      href: string;
-      imageUrl: string;
-    };
-  };
+interface ExtendedPost extends Post {
+  author: Pick<User, "firstName" | "lastName" | "imageUrl" | "username">;
+  tags: ITag[];
 }
 
-const BlogCard = ({ post }: Props) => {
+interface Props {
+  post: ExtendedPost;
+  className?: string;
+}
+
+const BlogCard = ({ post, ...props }: Props) => {
+  const m = moment(post.updatedAt).locale("fa");
   return (
     <article
-      key={post.id}
-      className="flex flex-col items-start justify-between border-2 rounded-2xl shadow-md
-      background-dark900_light50 border-dark800_light200 dark:shadow-none dark:hover:border-brand-900"
+      className={cn(
+        className,
+        "flex flex-col items-start justify-between rounded-2xl shadow-md " +
+          "background-dark900_light50 border-dark800_light200 dark:shadow-none dark:hover:border-brand-900",
+      )}
+      {...props}
     >
       {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">
-        <img
-          width={20}
-          height={20}
+        <Image
+          priority={true}
+          style={{
+            width: "100%",
+            height: "auto",
+          }}
+          width={500}
+          height={500}
           src={post.imageUrl}
           alt=""
-          className="aspect-[16/9] w-full rounded-2xl bg-gray-100 dark:bg-slate-900 object-cover sm:aspect-[2/1] lg:aspect-[3/2]"
+          className="aspect-[2/1]  w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
         />
-        {/*<div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />*/}
       </div>
       {/*--------------- Card Body ---------------*/}
-      <div className="max-w-xl px-4 py-4 flex flex-col gap-3">
+      <div className="w-full px-4 py-4 flex flex-col gap-3">
         {/*--------------- Card Tags ---------------*/}
-        <div className="flex items-center gap-x-4 text-xs">
-          {/*<time dateTime={post.datetime} className="text-gray-500">*/}
-          {/*  {post.date}*/}
-          {/*</time>*/}
-          {/* Badge*/}
-          <div className="flex flex-wrap gap-1.5">
+        <div className="w-full flex items-center  gap-x-4 text-xs">
+          <div className="w-full flex flex-wrap line-clamp-1  gap-1">
             {post.tags.map((tag) => (
-              <Tag tagName={tag.title} href={tag.href} />
+              <Tag key={tag.id} tagName={tag.name} href={"#"} />
             ))}
-            {/*<Tag tagName={post.tags.title} href={post.tags.href} />*/}
-            {/*<Tag tagName={"React"} href={post.tags.href} />*/}
-            {/*<Tag tagName={"Cyber Security"} href={post.tags.href} />*/}
-            {/*<Tag tagName={"Android"} href={post.tags.href} />*/}
-            {/*<Tag tagName={"Next JS"} href={post.tags.href} />*/}
-            {/*<Tag tagName={"My SQL Database"} href={post.tags.href} />*/}
           </div>
         </div>
 
         {/*--------------- Card Title and Description ---------------*/}
-        <div className="group relative">
+        <div className="group relative mt-2">
           <h3
             className="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600
           dark:text-gr"
           >
-            <a href={post.href}>
-              <span className="absolute inset-0" />
+            <Link href={`/blog/${post.slug}`} className="line-clamp-2 h-12">
               {post.title}
-            </a>
+            </Link>
           </h3>
           <p className="mt-3 line-clamp-3 text-sm leading-6 text-gray-600">
-            {post.description}
+            {post.content}
           </p>
         </div>
 
         {/*--------------- Card Footer ---------------*/}
-        <div className="relative mt-4 flex items-center gap-x-4">
-          <img
-            src={post.author.imageUrl}
-            alt=""
-            className="h-10 w-10 rounded-full bg-gray-100"
-          />
-          <div className="text-sm leading-6">
-            <p className="font-semibold text-gray-900">
-              <a href={post.author.href}>
-                <span className="absolute inset-0" />
-                {post.author.name}
-              </a>
-            </p>
-            <p className="text-gray-600">{post.author.role}</p>
-          </div>
+        <div className="mt-4 flex justify-between items-center gap-x-4 text-xs leading-6">
+          <ILink href={post.author.username ?? "#"}>
+            <p>{post.author.firstName + " " + post.author.lastName}</p>
+          </ILink>
+          <time dateTime={post.createAt.toString()} className="text-gray-500">
+            {convertToPersianNumbers(m.format("YYYY/MM/DD"))}
+          </time>
         </div>
       </div>
     </article>

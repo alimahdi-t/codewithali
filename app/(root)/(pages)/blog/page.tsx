@@ -1,121 +1,83 @@
-"use client";
 import BlogCard from "@/components/BlogCard/BlogCard";
+import { getPosts } from "@/lib/actions/getPosts";
+import CourseFilterOption from "@/components/Course/CourseFilterOption";
+import SortOptions from "@/components/Course/SortOptions";
+import { postSortFilter } from "@/constants/filters";
+import { convertToPersianNumbers } from "@/utils";
+import { HiMagnifyingGlass } from "react-icons/hi2";
+import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
 
-const posts = [
-  {
-    id: 1,
-    title: "Boost your conversion rate",
-    href: "#",
-    description:
-      "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-    imageUrl:
-      "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80",
-    date: "Mar 16, 2020",
-    dateTime: "2020-03-16",
-    tags: [{ title: "Marketing", href: "#" }],
-    author: {
-      name: "Michael Foster",
-      // role: "Co-Founder / CTO",
-      href: "#",
-      imageUrl:
-        "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    },
-  },
-  // {
-  //   id: 2,
-  //   title: "Boost your conversion rate",
-  //   href: "#",
-  //   description:
-  //     "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-  //   imageUrl:
-  //     "https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80",
-  //   date: "Mar 16, 2020",
-  //   dateTime: "2020-03-16",
-  //   category: { title: "Marketing", href: "#" },
-  //   author: {
-  //     name: "Michael Foster",
-  //     role: "Co-Founder / CTO",
-  //     href: "#",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1547586696-ea22b4d4235d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80",
-  //   },
-  // },
-  // {
-  //   id: 3,
-  //   title: "Boost your conversion rate",
-  //   href: "#",
-  //   description:
-  //     "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-  //   imageUrl:
-  //     "https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80",
-  //   date: "Mar 16, 2020",
-  //   dateTime: "2020-03-16",
-  //   category: { title: "Marketing", href: "#" },
-  //   author: {
-  //     name: "Ali Mahdi",
-  //     role: "Co-Founder / CTO",
-  //     href: "#",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  //   },
-  // },
-  // {
-  //   id: 4,
-  //   title: "Boost your conversion rate",
-  //   href: "#",
-  //   description:
-  //     "Illo sint voluptas. Error voluptates culpa eligendi. Hic vel totam vitae illo. Non aliquid explicabo necessitatibus unde. Sed exercitationem placeat consectetur nulla deserunt vel. Iusto corrupti dicta.",
-  //   imageUrl:
-  //     "https://images.unsplash.com/photo-1492724441997-5dc865305da7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3270&q=80",
-  //   date: "Mar 16, 2020",
-  //   dateTime: "2020-03-16",
-  //   category: { title: "Marketing", href: "#" },
-  //   author: {
-  //     name: "Ali Mahdi",
-  //     role: "Co-Founder / CTO",
-  //     href: "#",
-  //     imageUrl:
-  //       "https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  //   },
-  // },
-];
-const Blog = () => {
+const Blog = async () => {
+  const posts = await getPosts();
+  if (!posts) {
+    return <p>Loading...</p>;
+  }
+
   return (
-    <div className="py-24 sm:py-32 background-dark950_light50 flex justify-center">
-      <div className="max-w-7xl lg:px-12 px-6 flex flex-col gap-4">
-        <div className="mx-auto max-w-2xl text-center">
+    <div className="w-full flex flex-col">
+      <div className="w-full flex justify-between">
+        <div className="flex gap-2 items-center">
+          <div className="bg-green-500 w-5 h-5 rounded"></div>
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            Blog
+            آخرین مقالات
           </h2>
-          <p className="mt-2 text-lg leading-8 text-gray-600">
-            Learn how to grow your business with our expert advice.
-          </p>
         </div>
-        <div className="w-full flex gap-4 flex-row">
-          <div className="w-[300px] flex flex-col gap-4">
-            <div className="w-full h-64 bg-gray-900 rounded-lg"></div>
-            <div className="w-full h-64 bg-gray-900 rounded-lg"></div>
-            <div className="w-full h-64 bg-gray-900 rounded-lg"></div>
+
+        <p className="mt-2 text-lg leading-8 text-gray-600">{`${convertToPersianNumbers(
+          posts?.length,
+        )} مقاله`}</p>
+      </div>
+
+      <div className="flex gap-4 mt-16">
+        {/*TODO: Implement editor pick, searching, loading, no result, gird box for best posts*/}
+        {/*C1: Sidebar*/}
+        <div className="w-[350px] flex flex-col gap-4 max-lg:hidden">
+          <div
+            className="flex justify-center items-center background-dark900_light50 rounded-lg shadow-lg
+          border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 p-4 "
+          >
+            <input
+              placeholder={"جستجو بین مقالات"}
+              className="flex-1 border-none outline-none placeholder:text-gray-600"
+            />
+            <HiMagnifyingGlass className="w-6 h-6 text-gray-600" />
           </div>
-          <div className="flex flex-col w-full gap-4">
-            <div className="flex gap-4">
-              <div className="w-full h-12 bg-gray-900 rounded-lg"></div>
-              <div className="w-full h-12 bg-gray-900 rounded-lg"></div>
-              <div className="w-full h-12 bg-gray-900 rounded-lg"></div>
-              <div className="w-full h-12 bg-gray-900 rounded-lg"></div>
-            </div>
-            <div
-              className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3
-                    gap-4 col-span-3"
-            >
-              {/*  -----------------------------------------------------------*/}
-              {posts.map((post) => (
-                <BlogCard key={post.id} post={post} />
-              ))}
+          <div
+            className="background-dark900_light50 rounded-lg shadow-lg
+          border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 px-4 py-6"
+          >
+            <h3 className="font-dana font-medium text-lg leading-5">
+              منتخب سردبیر
+            </h3>
+            <div className="flex flex-col gap-4">
+              {/*{topArticles.map((article) => (*/}
+              {/*  <ArticleCard key={article.id} article={article} />*/}
+              {/*))}*/}
             </div>
           </div>
         </div>
-        <p className="text-black dark:text-white">Pagination</p>
+
+        {/*---*/}
+        <div className="flex flex-col w-full gap-4">
+          <div className="flex gap-4">
+            <CourseFilterOption className="sm:hidden" />
+            <SortOptions basePath="/blog" filters={postSortFilter} />
+          </div>
+          {posts?.length === 0 && (
+            <div className="mt-24">
+              <NoResult
+                label="مقاله‌ای یافت نشد."
+                hiddenCondition={posts?.length !== 0}
+              />
+            </div>
+          )}
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 col-span-3">
+            {posts?.map((post) => <BlogCard key={post.id} post={post} />)}
+          </div>
+          {/*<Pagination itemCount={64} pageSize={12} currentPage={1} />*/}
+          <p className="text-black dark:text-white">Pagination</p>
+        </div>
       </div>
     </div>
   );

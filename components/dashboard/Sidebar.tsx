@@ -27,11 +27,11 @@ const Sidebar = ({ width }: { width: string }) => {
             <li
               key={i}
               className={`flex gap-2 items-center w-full px-2 py-3 text-gray-800 ${
-                pathname === item.href ? "text-blue-500" : ""
+                pathname === item.path ? "text-blue-500" : ""
               } `}
             >
               <item.icon className="w-6 h-6" />
-              <Link href={item.href} className="text-sm font-semibold">
+              <Link href={item.path} className="text-sm font-semibold">
                 {item.label}
               </Link>
             </li>

@@ -7,78 +7,120 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ✅
 model User {
-  id         Int      @id @default(autoincrement())
-  username   String   @unique @db.VarChar(64)
-  first_name String   @default("") @db.VarChar(32)
-  last_name  String?  @db.VarChar(32)
-  imageUrl   String?
-  email      String   @unique
-  role       Role     @default(USER)
-  joinedAt   DateTime @default(now())
-  bio        String?
-  Course     Course[]
-  Post       Post[]
-}
-
-model Course {
-  id          Int          @id @default(autoincrement())
-  title       String
-  description String       @db.VarChar(2000)
-  content     String       @db.VarChar(500)
-  imageUrl    String?
-  level       Level
-  status      CourseStatus
-  discounts   Discount[]
-  price       Int
-  createdAt   DateTime     @default(now())
-  updateAt    DateTime     @updatedAt
-  author      User         @relation(fields: [userId], references: [id])
-  userId      Int
-  discountId  Int?
-  tags        Tag[]        @relation("CourseTags")
-}
-
-model Tag {
-  id      Int      @id @default(autoincrement())
-  name    String   @unique @db.VarChar(255)
-  courses Course[] @relation("CourseTags")
-}
-
-model Post {
   id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  description String   @db.VarChar(250)
-  content     String   @default("")
-  imageUrl    String   @default("")
-  createAt    DateTime @default(now())
+  username    String?  @unique @db.VarChar(64)
+  firstName   String   @db.VarChar(32)
+  lastName    String   @db.VarChar(32)
+  imageUrl    String?
+  email       String   @unique
+  password    String?
+  phoneNumber String?
+  role        Role     @default(USER)
+  joinedAt    DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  author      User     @relation(fields: [userId], references: [id])
-  userId      Int      @default(1)
+  bio         String?
+
+  // Relations
+  enrolment Enrolment[]
+  Course    Course[]
+  Post      Post[]
 }
 
-model Discount {
-  id         Int       @id @default(autoincrement())
-  percentage Int? // Percentage discount
-  amount     Int? // Fixed discount amount
-  validFrom  DateTime
-  validUntil DateTime?
-  course     Course    @relation(fields: [courseId], references: [id])
-  courseId   Int
+// ✅
+model Enrolment {
+  user_id       Int
+  course_id     Int
+  enrolmentDate DateTime @default(now())
+
+  //Relations
+  user   User   @relation(fields: [user_id], references: [id])
+  course Course @relation(fields: [course_id], references: [id])
+
+  // Composite primary key
+  @@id([user_id, course_id])
 }
 
+// ✅
+model Course {
+  id           Int          @id @default(autoincrement())
+  slug         String       @unique
+  title        String
+  description  String       @db.VarChar(500)
+  content      String       @db.VarChar(10000)
+  imageUrl     String
+  level        Level
+  status       CourseStatus
+  price        Int
+  createdAt    DateTime     @default(now())
+  updateAt     DateTime     @updatedAt
+  instructorId Int
+
+  //Relations
+  instructor User        @relation(fields: [instructorId], references: [id])
+  Enrolment  Enrolment[]
+  tag        CourseTag[]
+}
+
+// ✅
+model Post {
+  id        Int      @id @default(autoincrement())
+  slug      String   @unique
+  title     String   @db.VarChar(255)
+  overview  String   @db.VarChar(500) @default("")
+  content   String   @db.VarChar(10000)
+  imageUrl  String
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  authorId  Int
+  isEditorPick Boolean? @default(false)
+  readingTime Int
+
+  // Relations
+  author User @relation(fields: [authorId], references: [id])
+  tags   Tag[] // ✅ Many-to-many without a junction table
+}
+
+// ✅
+model Tag {
+  id      Int         @id @default(autoincrement())
+  name    String      @unique
+  posts   Post[]
+  courses CourseTag[]
+}
+
+
+
+// ✅
+model CourseTag {
+  course_id Int
+  tag_id    Int
+  // Relations
+  course    Course @relation(fields: [course_id], references: [id])
+  tag       Tag    @relation(fields: [tag_id], references: [id])
+
+  // Composite primary key
+  @@id([course_id, tag_id])
+}
+
+// ✅
 enum Role {
   USER
   INSTRUCTOR
+  AUTHOR
+  INSTRUCOT_AUTHOR
   ADMIN
 }
 
+// ✅
 enum Level {
   BEGINNER
   ADVANCED
   EXPERT
 }
 
+// ✅
 enum CourseStatus {
   COMPLETED
   PREORDER

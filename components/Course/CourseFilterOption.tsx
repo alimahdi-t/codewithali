@@ -1,5 +1,4 @@
 import { HiOutlineFunnel } from "react-icons/hi2";
-
 // TODO: Complete CourseFilterOption for mobile.
 const CourseFilterOption = ({ className }: { className?: string }) => {
   return (

@@ -1,6 +1,14 @@
 import { Button } from "@/components/ui/button";
 
-const InstructorInfo = ({ name, bio, imageUrl }: { name; bio; imageUrl }) => {
+const InstructorInfo = ({
+  name,
+  bio,
+  imageUrl,
+}: {
+  name: string;
+  bio: string;
+  imageUrl: string;
+}) => {
   return (
     <div className="w-full bg-white px-6 py-8 rounded-lg shadow border border-gray-100 flex flex-col gap-8">
       <div className="flex gap-2 items-center justify-start ">

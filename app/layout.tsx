@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import AuthProvider from "@/app/(auth)/AuthProvider";
 import React from "react";
+import { Toaster } from "@/components/ui/toaster";
 
-const inter = Inter({ subsets: ["latin"] });
 const Dana = localFont({
   variable: "--font-dana",
   src: [
@@ -70,9 +69,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fa">
-      <body dir="rtl" className={`${Dana.className} scroll-container`}>
+      <body
+        dir="rtl"
+        className={`${Dana.className} scroll-container min-h-screen `}
+      >
         <AuthProvider>
           <ThemeProvider>{children}</ThemeProvider>
+          {/*<Toaster />*/}
         </AuthProvider>
       </body>
     </html>

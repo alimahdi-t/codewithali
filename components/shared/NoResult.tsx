@@ -7,7 +7,7 @@ const NoResult = ({
 }: {
   hiddenCondition: boolean;
   label: string;
-  icon: ReactNode;
+  icon?: ReactNode;
 }) => {
   return (
     <div
@@ -16,7 +16,7 @@ const NoResult = ({
       }`}
     >
       {icon}
-      <p className="w-full font-semibold text-gray-700 text-sm sm:text-base">
+      <p className="w-full font-semibold text-gray-700 text-sm sm:text-base text-center">
         {label}
       </p>
     </div>

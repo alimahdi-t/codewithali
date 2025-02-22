@@ -1,5 +1,19 @@
-export interface GetCourseByIdParams {
-  id: number;
+import { CourseStatus, Level } from "@prisma/client";
+
+export interface CreateCourseParams {
+  title: string;
+  slug: string;
+  description: string;
+  content: string;
+  price: number;
+  instructorId: number;
+  imageUrl: string;
+  level: Level;
+  status: CourseStatus;
+}
+
+export interface GetCourseBySlugParams {
+  slug: string;
 }
 
 export interface GetAllCoursesParams {
@@ -30,4 +44,15 @@ export interface UpdateCourseParams {
 
 export interface DeleteCourseParams {
   id: number | string;
+}
+
+export interface CreatePostParams {
+  slug: string;
+  title: string;
+  content: string;
+  imageUrl: string;
+  authorId: number;
+  tags?: number[];
+  readingTime: number;
+  isEditorPick?: boolean;
 }

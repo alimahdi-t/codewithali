@@ -1,21 +1,16 @@
 import React from "react";
 import Navbar from "@/components/shared/Navbar/Navbar";
-import AuthProvider from "@/app/(auth)/AuthProvider";
 import Footer from "@/components/shared/Footer/Footer";
-import { ToastContainer } from "react-toastify";
-import BreadCrump from "@/components/shared/BreadCrump";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navbar />
-      {/*<BreadCrump />*/}
       <main className="w-full bg-gray-50 dark:bg-gray-950">
-        <section className="max-w-7xl py-24 sm:py-32 mx-auto font-dana">
+        <section className="max-w-7xl lg:px-12 py-24 sm:py-40 px-6 mx-auto font-dana">
           {children}
         </section>
-        {/*<Footer />*/}
-        <ToastContainer />
+        <Footer />
       </main>
     </>
   );
