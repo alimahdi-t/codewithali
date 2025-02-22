@@ -40,14 +40,16 @@ const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
       {/*--------------- Card Header ---------------*/}
       <DiscountTag discount={discount!} />
       <div className="relative w-full">
-        <Image
-          priority={true}
-          width={400}
-          height={200}
-          src={course.imageUrl}
-          alt=""
-          className="aspect-[2/1] w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
-        />
+        <Link href={`/courses/${course.slug}`}>
+          <Image
+            priority={true}
+            width={400}
+            height={200}
+            src={course.imageUrl}
+            alt=""
+            className="aspect-[2/1] w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
+          />
+        </Link>
       </div>
 
       {/*--------------- Card Body ---------------*/}
@@ -55,19 +57,16 @@ const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
         {/*--------------- Card Tags ---------------*/}
 
         {/*--------------- Card Title and Description ---------------*/}
-        <div className="group relative">
-          <ILink
-            href={`/courses/${course.slug}`}
-            className="text-sm font-medium line-clamp-2 h-12"
-          >
-            <h3
-              className="font-semibold text-gray-900 group-hover:text-gray-600
-          dark:text-gr"
+        <div className="group flex flex-col gap-3">
+          <h3 className="font-semibold text-lg leading-6">
+            <ILink
+              href={`/courses/${course.slug}`}
+              className="text-base font-medium line-clamp-2 h-12"
             >
               {course.title}
-            </h3>
-          </ILink>
-          <p className="mt-2  line-clamp-2 text-[10px] leading-6 text-gray-400">
+            </ILink>
+          </h3>
+          <p className="line-clamp-2 text-sm leading-6 text-gray-600">
             {course.description}
           </p>
         </div>
