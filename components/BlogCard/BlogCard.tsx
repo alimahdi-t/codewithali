@@ -1,6 +1,5 @@
 import { Post, User, Tag as ITag } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import { className } from "postcss-selector-parser";
 import Link from "next/link";
 import moment from "jalali-moment";
 import { convertToPersianNumbers } from "@/utils";
@@ -18,7 +17,7 @@ interface Props {
   className?: string;
 }
 
-const BlogCard = ({ post, ...props }: Props) => {
+const BlogCard = ({ post, className, ...props }: Props) => {
   const m = moment(post.updatedAt).locale("fa");
   return (
     <article

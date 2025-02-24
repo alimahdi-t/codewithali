@@ -29,7 +29,7 @@ import { useRouter } from "next/navigation";
 
 import Loader from "@/components/common/Loader";
 import { useToast } from "@/hooks/use-toast";
-import Editor from "@/components/Editor/Editor";
+import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
 
 const NewCoursePage = () => {
   const { toast } = useToast();
@@ -141,7 +141,12 @@ const NewCoursePage = () => {
                     محتوا
                   </FormLabel>
                   <FormControl>
-                    <Editor field={field} />
+                    <RichTextEditor
+                      content={field.value}
+                      onChangeAction={field.onChange}
+                      charCounterMode={"textSize"}
+                      charLimit={20000}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

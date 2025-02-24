@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { Level, CourseStatus } from "@prisma/client";
+import { extractTextFromHTML } from "@/utils";
 
 export const NewCourseSchema = z.object({
   slug: z.string().min(1, "اسلاگ نمی‌تواند خالی باشد."),
@@ -10,8 +11,22 @@ export const NewCourseSchema = z.object({
     .max(500, "توضیحات نباید بیشتر از ۵۰۰ کاراکتر باشد."),
   content: z
     .string()
-    .min(1, "محتوا نمی‌تواند خالی باشد.")
-    .max(10000, "محتوا نباید بیشتر از ۱۰۰۰۰ کاراکتر باشد."),
+    .refine(
+      (value) => {
+        return extractTextFromHTML(value).trim().length >= 10;
+      },
+      {
+        message: "محتوا باید حداقل ۱۰ کاراکتر باشد",
+      },
+    )
+    .refine(
+      (value) => {
+        return extractTextFromHTML(value).trim().length <= 20000;
+      },
+      {
+        message: "محتوا باید حداقل ۲۰۰۰۰ کاراکتر باشد",
+      },
+    ),
   imageUrl: z.string().url("لینک تصویر معتبر نیست."),
   level: z.nativeEnum(Level, {
     errorMap: () => ({ message: "سطح نامعتبر است." }),

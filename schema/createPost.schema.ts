@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { extractTextFromHTML } from "@/utils";
 
 export const CreatePostSchema = z.object({
   slug: z
@@ -12,8 +13,22 @@ export const CreatePostSchema = z.object({
     .max(255, "عنوان نباید بیشتر از ۲۵۵ کاراکتر باشد"),
   content: z
     .string()
-    .min(10, "محتوا باید حداقل ۱۰ کاراکتر باشد")
-    .max(10000, "محتوا باید حداقل ۱۰۰۰۰ کاراکتر باشد"),
+    .refine(
+      (value) => {
+        return extractTextFromHTML(value).trim().length >= 10;
+      },
+      {
+        message: "محتوا باید حداقل ۱۰ کاراکتر باشد",
+      },
+    )
+    .refine(
+      (value) => {
+        return extractTextFromHTML(value).trim().length <= 10000;
+      },
+      {
+        message: "محتوا باید حداقل ۱۰۰۰۰ کاراکتر باشد",
+      },
+    ),
   imageUrl: z.string().url("آدرس تصویر معتبر نیست"),
   authorId: z.string().min(1, "شناسه نویسنده باید عدد صحیح باشد"),
   tags: z.array(z.number().int().positive()).optional(),

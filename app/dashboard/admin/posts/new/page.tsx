@@ -9,7 +9,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import Editor from "@/components/Editor/Editor";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/common/Loader";
 import { useToast } from "@/hooks/use-toast";
@@ -31,6 +30,7 @@ import {
 import { useEffect, useState } from "react";
 import { Tag } from "@prisma/client";
 import { MultiSelect } from "@/components/MultiSelect";
+import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
 
 const NewPostPage = () => {
   const { toast } = useToast();
@@ -139,7 +139,12 @@ const NewPostPage = () => {
                     محتوا
                   </FormLabel>
                   <FormControl>
-                    <Editor field={field} />
+                    <RichTextEditor
+                      content={field.value}
+                      onChangeAction={field.onChange}
+                      charCounterMode={"textSize"}
+                      charLimit={10000}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

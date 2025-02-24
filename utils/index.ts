@@ -1,3 +1,9 @@
+export const extractTextFromHTML = (html: string) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(html, "text/html");
+  return doc.body.textContent?.trim() || "";
+};
+
 export const convertToPersianNumbers = (number: string | number): string => {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return number

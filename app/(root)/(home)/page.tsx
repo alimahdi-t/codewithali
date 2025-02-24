@@ -1,7 +1,3 @@
-import Image from "next/image";
-
 export default function Home() {
-  return (
-    <div>Home Page</div>
-  );
+  return <div className="max-w-5xl mx-auto py-5"></div>;
 }

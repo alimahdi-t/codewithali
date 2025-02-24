@@ -6,7 +6,6 @@ import { postSortFilter } from "@/constants/filters";
 import { convertToPersianNumbers } from "@/utils";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import NoResult from "@/components/shared/NoResult";
-import Pagination from "@/components/shared/Pagination";
 
 const Blog = async () => {
   const posts = await getPosts();
@@ -75,6 +74,7 @@ const Blog = async () => {
           <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 col-span-3">
             {posts?.map((post) => <BlogCard key={post.id} post={post} />)}
           </div>
+
           {/*<Pagination itemCount={64} pageSize={12} currentPage={1} />*/}
           <p className="text-black dark:text-white">Pagination</p>
         </div>
