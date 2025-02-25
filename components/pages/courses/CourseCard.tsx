@@ -5,7 +5,7 @@ import {
   convertToPersianNumbers,
 } from "@/utils";
 import TomanIcon from "@/components/common/TomanIcon";
-import DiscountTag from "@/components/Course/CourseCard/DiscountTag";
+import DiscountTag from "@/components/pages/courses/DiscountTag";
 import { Course, User } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
