@@ -1,7 +1,6 @@
 "use client";
 
 import Theme from "@/components/shared/Navbar/Theme";
-import Link from "next/link";
 import MobileNav from "@/components/shared/Navbar/MobileNav";
 import React from "react";
 
@@ -17,11 +16,8 @@ const Navbar = () => {
           <MobileNav className="md:hidden" />
 
           <div className="flex flex-row items-center">
-            <Link href="/" className="dark:text-white flex items-center">
-              <h3 className="text-xl font-bold font">
-                <Logo className="w-16 h-16" />
-              </h3>
-            </Link>
+            <Logo iconClassName="w-16 h-16" showText={false} />
+
             <NavLinks className="max-md:hidden" />
           </div>
 

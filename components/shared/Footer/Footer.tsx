@@ -26,16 +26,11 @@ const footerInfo = {
 
 const Footer = () => {
   return (
-    <footer className="bg-white shadow-lg dark:bg-darker py-8 md:pt-16 md:pb-10">
+    <footer className="bg-white shadow-lg dark:bg-darker py-8 pt-6">
       <div className="container">
         <div className="pb-5 mb-5 sm:pb-8 sm:mb-8 border-b border-b-neutral-200 dark:border-b-dark">
           <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center gap-x-3.5">
-              <Logo className="w-16 h-16" />
-              <svg className="w-[70px] sm:w-[104px] h-8 sm:h-12">
-                <use href="#logo-type"></use>
-              </svg>
-            </Link>
+            <Logo iconClassName="w-16 h-16" />
             <div className="flex gap-x-2 sm:gap-x-3">
               <Link href={footerInfo.socials.instagram.link} rel="nofollow">
                 <svg

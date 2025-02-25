@@ -39,7 +39,7 @@ const SignUpPage = () => {
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center py-12 sm:px-6 lg:px-8 bg-gray-25">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Logo className="mx-auto w-16 h-16" />
+        <Logo iconClassName="mx-auto w-16 h-16" showText={false} />
         <h2 className="mt-6 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">
           ساخت حساب کاربری
         </h2>

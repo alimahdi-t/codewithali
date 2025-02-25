@@ -1,4 +1,4 @@
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import {
   Menubar,
   MenubarContent,
@@ -11,7 +11,6 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { profileDropDownLinks } from "@/constants";
 import { Button } from "@/components/ui/button";
 import React from "react";
-import { Skeleton } from "@/components/ui/skeleton";
 import Link from "next/link";
 
 const AuthUI = ({ className }: { className?: string }) => {
@@ -45,7 +44,7 @@ const AuthUI = ({ className }: { className?: string }) => {
       ) : (
         <Link href={"/auth/sign-in"}>
           <Button
-            variant="secondary"
+            variant="ghost"
             className={"text-blue-500 hover:bg-blue-50 hover:text-blue-500"}
           >
             ورود به حساب

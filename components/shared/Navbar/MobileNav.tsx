@@ -2,7 +2,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -73,8 +72,6 @@ const MobileNav = ({ className }: { className?: string }) => {
 };
 
 export default MobileNav;
-
-// icon:hamburger-menu | Radix Icons https://icons.radix-ui.com/ | WorkOS
 import * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/Logo";
