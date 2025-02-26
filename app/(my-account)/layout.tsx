@@ -1,5 +1,5 @@
 import React from "react";
-import Sidebar from "@/components/dashboard/Sidebar";
+import Sidebar from "@/components/pages/dashboard/Sidebar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const sidebarSize = "256px";

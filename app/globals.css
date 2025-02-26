@@ -61,14 +61,45 @@
   }
 
 
+.app-box{
+  @apply text-white
+}
+
+.app-text-main{
+  @apply dark:text-white text-gray-900
+}
+
+.app-text-sub {
+  @apply dark:text-gray-400 text-gray-600
+}
+
+
 
 @layer utilities{
+
+  .scroll-thin {
+    @apply overflow-y-auto; /* Ensure it applies to scrollable elements */
+  }
+
+  .scroll-thin::-webkit-scrollbar {
+    width: 6px; /* Thin scrollbar */
+  }
+
+  .scroll-thin::-webkit-scrollbar-thumb {
+    background-color: #a0a0a0; /* Thumb color */
+    border-radius: 10px;
+  }
+
+  .scroll-thin::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Track color */
+  }
+
   .box-t {
     @apply flex-1 p-4 bg-white rounded-lg shadow border border-gray-100 dark:text-white dark:bg-gray-900 dark:shadow-none dark:border-none
   }
 
   .text-main-t{
-    @apply dark:text-white text-black
+    @apply dark:text-white text-gray-900
   }
 
   .text-sub-t {
@@ -138,7 +169,11 @@
     @apply bg-background text-foreground;
   }
 }
-
+@layer components {
+  .icon-sm { @apply inline-block w-2 h-2; }
+  .icon-md { @apply inline-block w-5 h-5; }
+  .icon-lg { @apply inline-block w-8 h-8; }
+}
 
 
 

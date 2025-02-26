@@ -17,6 +17,7 @@ const config = {
         "2xl": "1400px",
       },
     },
+
     extend: {
       fontFamily: {
         dana: ["var(--font-dana)"],

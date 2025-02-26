@@ -1,4 +1,4 @@
-import CourseCard from "@/components/Course/CourseCard/CourseCard";
+import CourseCard from "@/components/pages/courses/CourseCard";
 import { convertToPersianNumbers } from "@/utils";
 import SortOptions from "@/components/Course/SortOptions";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";

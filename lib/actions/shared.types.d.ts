@@ -12,6 +12,10 @@ export interface CreateCourseParams {
   status: CourseStatus;
 }
 
+export interface EditCourseParams extends CreateCourseParams {
+  id: int;
+}
+
 export interface GetCourseBySlugParams {
   slug: string;
 }
@@ -25,25 +29,6 @@ export interface GetAllCoursesParams {
   searchQuery?: string; // Search query for course titles or descriptions
   page?: number; // Pagination support
   pageSize?: number; // Number of courses per page
-}
-export interface CreateCourseParams {
-  title: string;
-  content: string;
-  description: string;
-}
-
-export interface UpdateCourseParams {
-  id: Number | string;
-  title?: string;
-  content?: string;
-  description?: string;
-  imageUrl?: string;
-  tags?: string[];
-  price?: number | string;
-}
-
-export interface DeleteCourseParams {
-  id: number | string;
 }
 
 export interface CreatePostParams {

@@ -10,7 +10,7 @@ const SidebarMenu = () => {
   console.log(pathname);
   return (
     <div>
-      <div className="flex flex-col items-center my-8 gap-4">
+      <div className="flex flex-col items-center my-8 gap-4 bg-brand-400 rounded-lg py-4">
         <Avatar className="w-16 h-16">
           <AvatarImage
             alt="alt"
@@ -18,22 +18,21 @@ const SidebarMenu = () => {
           />
           <AvatarFallback>A</AvatarFallback>
         </Avatar>
-        <p className="text-sm font-semibold">سید علی مهدی</p>
+        <p className="text-sm font-semibold text-white">سید علی مهدی</p>
       </div>
 
-      <ul className="w-full space-y-4">
+      <ul role="list" className="-mx-2 flex flex-col gap-0.5">
         {adminDashboardLinks.map((item, i) => (
-          <Link href={item.path} key={i} className={`text-sm`}>
+          <Link href={item.path} key={i}>
             <li
-              className={`flex gap-2 items-center w-full px-6 py-3 text-gray-900 
-            hover:bg-blue-300 hover:text-white  cursor-pointer 
+              className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6
             ${
               pathname === item.path
-                ? "bg-brand-100 border-l-4 border-brand-300"
-                : ""
+                ? "bg-gray-100 text-brand-600"
+                : "text-gray-700 hover:bg-gray-100 hover:text-brand-600"
             }`}
             >
-              <item.icon className={`w-5 h-5 stroke-1`} />
+              <item.icon className={`w-6 h-6`} />
               {item.label}
             </li>
           </Link>

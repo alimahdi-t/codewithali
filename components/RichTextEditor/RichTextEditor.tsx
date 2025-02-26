@@ -122,7 +122,7 @@ export default function RichTextEditor({
     : 0;
 
   return (
-    <div>
+    <>
       <ToolBar editor={editor} />
       <EditorContent editor={editor} {...props} spellCheck={false} />
       {/*C1: Character Counter UI*/}
@@ -154,6 +154,6 @@ export default function RichTextEditor({
       </div>
 
       {/*<div dangerouslySetInnerHTML={{ __html: editor.getHTML() }} />*/}
-    </div>
+    </>
   );
 }

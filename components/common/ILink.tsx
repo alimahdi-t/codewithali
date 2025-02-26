@@ -16,7 +16,7 @@ const ILink = ({
     <NextLink
       className={cn(
         className,
-        "font-semibold text-gray-900 hover:text-primary duration-500",
+        "font-semibold text-gray-900 ap-text-main hover:text-primary duration-500",
       )}
       href={href}
       {...props}
