@@ -1,6 +1,6 @@
 import { getCourseBySlug } from "@/lib/actions/getCourseBySlug.action";
 import { notFound } from "next/navigation";
-import CourseForm from "@/app/dashboard/admin/courses/CourseForm";
+import CourseForm from "@/components/forms/CourseForm";
 
 interface Props {
   params: Promise<{ slug: string }>;

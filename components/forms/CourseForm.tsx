@@ -63,8 +63,15 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     if (type === "edit") {
       try {
+        if (!initialData?.id) {
+          toast({
+            title: "خطا: شناسه دوره نامعتبر است",
+            variant: "destructive",
+          });
+          return;
+        }
         await editCourse({
-          id: initialData?.id,
+          id: initialData.id,
           title: data.title,
           slug: data.slug,
           description: data.description,

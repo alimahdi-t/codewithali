@@ -1,4 +1,4 @@
-import CourseForm from "@/app/dashboard/admin/courses/CourseForm";
+import CourseForm from "@/components/forms/CourseForm";
 
 const NewCoursePage = () => {
   return (
