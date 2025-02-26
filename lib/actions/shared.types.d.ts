@@ -13,7 +13,7 @@ export interface CreateCourseParams {
 }
 
 export interface EditCourseParams extends CreateCourseParams {
-  id: int;
+  id: number;
 }
 
 export interface GetCourseBySlugParams {
@@ -40,4 +40,12 @@ export interface CreatePostParams {
   tags?: number[];
   readingTime: number;
   isEditorPick?: boolean;
+}
+
+export interface UpdatePostParams extends CreatePostParams {
+  id: number;
+}
+
+export interface GetPostParams {
+  slug: string;
 }

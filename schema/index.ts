@@ -4,3 +4,4 @@ export * from "./newCourse.schema";
 export * from "./contact.schema";
 export * from "./createPost.schema";
 export * from "./editCourse.schema";
+export * from "./editPost.Schema";

@@ -1,11 +1,16 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-// TODO: Add params
-// TODO: Add fetching tags functionality
-// TODO: error handling
-// TODO: handle advanced query
-export async function getPosts() {
+import { Post, Tag, User } from "@prisma/client";
+
+type PostWithRelations = Post & {
+  author: User;
+  tags: Tag[];
+};
+
+type GetPostsResponse = PostWithRelations[] | { error: string };
+
+export async function getPosts(): Promise<GetPostsResponse> {
   try {
     const posts = await prisma.post.findMany({
       include: {
@@ -13,8 +18,13 @@ export async function getPosts() {
         tags: true,
       },
     });
-    return posts;
+    return posts; // حالا تایپ خروجی با `GetPostsResponse` هماهنگ است.
   } catch (error) {
-    console.log("Error fetching posts", error);
+    console.error("خطا در دریافت پست‌ها:", error);
+    if (error instanceof Error) {
+      return { error: `خطا در دریافت پست‌ها: ${error.message}` };
+    } else {
+      return { error: "خطای ناشناخته در دریافت پست‌ها" };
+    }
   }
 }

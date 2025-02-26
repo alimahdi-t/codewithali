@@ -36,5 +36,5 @@ export const CreatePostSchema = z.object({
     .string()
     .min(1, "زمان مطالیه نباید خالی باشد")
     .regex(/^[0-9-]+$/, "فقط میتواند شامل اعداد باشد"),
-  isEditorPick: z.boolean().optional(),
+  isEditorPick: z.boolean(),
 });
