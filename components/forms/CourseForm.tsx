@@ -29,7 +29,7 @@ import Loader from "@/components/common/Loader";
 import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
 import { createCourse } from "@/lib/actions/createCourse.action";
-import { EditCourseSchema, NewCourseSchema } from "@/schema";
+import { EditCourseSchema, CreateCourseSchema } from "@/schema";
 import { editCourse } from "@/lib/actions/editCourse.action";
 
 interface CourseFormProps {
@@ -43,7 +43,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
   const { toast } = useToast();
   const router = useRouter();
 
-  const FormSchema = type === "edit" ? EditCourseSchema : NewCourseSchema;
+  const FormSchema = type === "edit" ? EditCourseSchema : CreateCourseSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: "onTouched",

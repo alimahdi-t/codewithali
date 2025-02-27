@@ -2,8 +2,25 @@ import { z } from "zod";
 import { Level, CourseStatus } from "@prisma/client";
 import { extractTextFromHTML } from "@/utils";
 
-export const NewCourseSchema = z.object({
-  slug: z.string().min(1, "اسلاگ نمی‌تواند خالی باشد."),
+export const CreateCourseSchema = z.object({
+  slug: z
+    .string()
+    .min(5, "Slug باید حداقل ۵۳ کاراکتر باشد")
+    .max(100, "Slug نباید بیشتر از ۱۰۰ کاراکتر باشد")
+    .refine((value) => !/\s/.test(value), {
+      message: "اسلاگ نباید شامل فاصله باشد",
+    })
+    .refine((value) => /^[a-z0-9-]+$/.test(value), {
+      message:
+        "اسلاگ فقط می‌تواند شامل حروف کوچک انگلیسی، اعداد و خط تیره باشد",
+    })
+    .refine((value) => !value.startsWith("-") && !value.endsWith("-"), {
+      message: "اسلاگ نمی‌تواند با خط تیره شروع یا تمام شود",
+    })
+    .refine((value) => !value.includes("--"), {
+      message: "اسلاگ نمی‌تواند شامل دو خط تیره پشت سر هم باشد",
+    }),
+
   title: z.string().min(1, "عنوان نمی‌تواند خالی باشد."),
   description: z
     .string()

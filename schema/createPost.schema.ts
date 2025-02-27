@@ -4,9 +4,22 @@ import { extractTextFromHTML } from "@/utils";
 export const CreatePostSchema = z.object({
   slug: z
     .string()
-    .min(3, "Slug باید حداقل ۳ کاراکتر باشد")
+    .min(5, "Slug باید حداقل ۵۳ کاراکتر باشد")
     .max(100, "Slug نباید بیشتر از ۱۰۰ کاراکتر باشد")
-    .regex(/^[a-z0-9-]+$/, "Slug فقط می‌تواند شامل حروف کوچک، اعداد و - باشد"),
+    .refine((value) => !/\s/.test(value), {
+      message: "اسلاگ نباید شامل فاصله باشد",
+    })
+    .refine((value) => /^[a-z0-9-]+$/.test(value), {
+      message:
+        "اسلاگ فقط می‌تواند شامل حروف کوچک انگلیسی، اعداد و خط تیره باشد",
+    })
+    .refine((value) => !value.startsWith("-") && !value.endsWith("-"), {
+      message: "اسلاگ نمی‌تواند با خط تیره شروع یا تمام شود",
+    })
+    .refine((value) => !value.includes("--"), {
+      message: "اسلاگ نمی‌تواند شامل دو خط تیره پشت سر هم باشد",
+    }),
+
   title: z
     .string()
     .min(3, "عنوان باید حداقل ۳ کاراکتر باشد")

@@ -1,6 +1,6 @@
-import { NewCourseSchema } from "@/schema/newCourse.schema";
+import { CreateCourseSchema } from "@/schema/createCourse.schema";
 import { z } from "zod";
 
-export const EditCourseSchema = NewCourseSchema.extend({
+export const EditCourseSchema = CreateCourseSchema.extend({
   id: z.number(),
 });
