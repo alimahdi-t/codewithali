@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 
 const SidebarMenu = () => {
   const pathname = usePathname();
-  console.log(pathname);
   return (
     <div>
       <div className="flex flex-col items-center my-8 gap-4 bg-brand-400 rounded-lg py-4">

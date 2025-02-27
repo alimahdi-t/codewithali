@@ -42,6 +42,10 @@ export interface CreatePostParams {
   isEditorPick?: boolean;
 }
 
+export interface DeleteCourseParams {
+  id: number;
+}
+
 export interface UpdatePostParams extends CreatePostParams {
   id: number;
 }
