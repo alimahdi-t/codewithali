@@ -96,12 +96,12 @@ export const adminDashboardLinks: {
   { label: "دوره‌ها", path: "/dashboard/admin/courses", icon: BookOpen01Icon },
   { label: "پست‌ها", path: "/dashboard/admin/posts", icon: Task01Icon },
   { label: "کاربران", path: "/dashboard/admin/users", icon: UserMultipleIcon },
-  {
-    label: "نویسندگان",
-    path: "/dashboard/admin/authors",
-    icon: TaskEdit02Icon,
-  },
-  { label: "مدرس‌ها", path: "/dashboard/admin/instructors", icon: TeacherIcon },
+  // {
+  //   label: "نویسندگان",
+  //   path: "/dashboard/admin/authors",
+  //   icon: TaskEdit02Icon,
+  // },
+  // { label: "مدرس‌ها", path: "/dashboard/admin/instructors", icon: TeacherIcon },
   { label: "پیام", path: "/dashboard/admin/messages", icon: Mail01Icon },
   { label: "کامنت ها", path: "/dashboard/admin/comments", icon: Comment02Icon },
   {

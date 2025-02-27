@@ -21,7 +21,6 @@ import DeletePostButton from "@/app/dashboard/admin/posts/DeletePostButton";
 
 const PostsPage = async () => {
   const posts = await getPosts();
-  console.log(posts);
 
   if (!posts || "error" in posts || posts.length === 0) {
     return <p className="text-red-500">هیچ مقاله‌ای یافت نشد.</p>;

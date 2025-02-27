@@ -57,3 +57,8 @@ export interface GetPostParams {
 export interface DeletePostParams {
   id: number;
 }
+
+export type GetUserParams =
+  | { id: number; username?: never; email?: never }
+  | { id?: never; username: string; email?: never }
+  | { id?: never; username?: never; email: string };

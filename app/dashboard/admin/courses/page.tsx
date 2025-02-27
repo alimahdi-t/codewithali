@@ -20,7 +20,6 @@ import {
   MenubarContent,
   MenubarItem,
 } from "@/components/ui/menubar";
-import DeleteAlert from "@/components/common/DeleteAlert";
 import DeleteCourseButton from "@/app/dashboard/admin/courses/DeleteCourseButton";
 
 const CoursesListPage = async () => {

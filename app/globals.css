@@ -82,7 +82,7 @@
   }
 
   .scroll-thin::-webkit-scrollbar {
-    width: 6px; /* Thin scrollbar */
+    width: 2px; /* Thin scrollbar */
   }
 
   .scroll-thin::-webkit-scrollbar-thumb {

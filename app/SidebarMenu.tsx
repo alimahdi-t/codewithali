@@ -20,15 +20,15 @@ const SidebarMenu = () => {
         <p className="text-sm font-semibold text-white">سید علی مهدی</p>
       </div>
 
-      <ul role="list" className="-mx-2 flex flex-col gap-0.5">
+      <ul role="list" className="-mx-2  flex flex-col gap-0.5">
         {adminDashboardLinks.map((item, i) => (
           <Link href={item.path} key={i}>
             <li
-              className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6
+              className={`group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 gap-2 items-center w-full px-2 py-3
             ${
               pathname === item.path
                 ? "bg-gray-100 text-brand-600"
-                : "text-gray-700 hover:bg-gray-100 hover:text-brand-600"
+                : "text-gray-800 hover:bg-gray-100 hover:text-brand-600"
             }`}
             >
               <item.icon className={`w-6 h-6`} />

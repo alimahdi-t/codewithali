@@ -17,6 +17,8 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { mockProviders } from "next-auth/client/__tests__/helpers/mocks";
+import authorize = mockProviders.credentials.authorize;
 
 const SignInPage = () => {
   const FormSchema = SignInSchema;
@@ -31,6 +33,7 @@ const SignInPage = () => {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     console.log(data);
+    // const response = await authorize({});
   };
 
   return (
