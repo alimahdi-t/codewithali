@@ -1,12 +1,11 @@
 "use client";
-
-import { deleteCourse } from "@/lib/actions/deleteCourse";
 import DeleteAlert from "@/components/common/DeleteAlert";
+import { deletePost } from "@/lib/actions/deletePost";
 import { toast } from "@/hooks/use-toast";
 
-const DeleteCourseButton = ({ courseId }: { courseId: number }) => {
+const DeletePostButton = ({ postId }: { postId: number }) => {
   const handleDelete = async () => {
-    const response = await deleteCourse({ id: courseId });
+    const response = await deletePost({ id: postId });
     if (response.success) {
       toast({
         title: response.message,
@@ -22,4 +21,4 @@ const DeleteCourseButton = ({ courseId }: { courseId: number }) => {
   return <DeleteAlert onConfirm={handleDelete} />;
 };
 
-export default DeleteCourseButton;
+export default DeletePostButton;

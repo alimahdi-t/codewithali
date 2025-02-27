@@ -9,6 +9,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { convertToPersianNumbers } from "@/utils";
+import {
+  Menubar,
+  MenubarContent,
+  MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
+} from "@/components/ui/menubar";
+import { HiOutlineEllipsisVertical } from "react-icons/hi2";
+import DeletePostButton from "@/app/dashboard/admin/posts/DeletePostButton";
 
 const PostsPage = async () => {
   const posts = await getPosts();
@@ -76,10 +85,33 @@ const PostsPage = async () => {
                   <TableCell className="max-md:hidden">
                     {post.isEditorPick}
                   </TableCell>
-                  <TableCell className="text-primary cursor-pointer">
-                    <Link href={`/dashboard/admin/posts/edit/${post.slug}`}>
-                      ویرایش
-                    </Link>
+                  <TableCell className="text-gray-600 cursor-pointer">
+                    <Menubar
+                      dir="rtl"
+                      className="border-none bg-transparent justify-center px-0 py-0"
+                    >
+                      <MenubarMenu>
+                        <MenubarTrigger
+                          asChild
+                          className="bg-transparent p-0 border-none cursor-pointer remove-all"
+                        >
+                          <HiOutlineEllipsisVertical className="w-6 h-6" />
+                        </MenubarTrigger>
+                        <MenubarContent>
+                          <Link href={`/posts/${post.slug}`}>
+                            <MenubarItem>مشاهده</MenubarItem>
+                          </Link>
+                          <Link
+                            href={`/dashboard/admin/posts/edit/${post.slug}`}
+                          >
+                            <MenubarItem>ویرایش</MenubarItem>
+                          </Link>
+                          <MenubarItem asChild className="text-red-500">
+                            <DeletePostButton postId={post.id} />
+                          </MenubarItem>
+                        </MenubarContent>
+                      </MenubarMenu>
+                    </Menubar>
                   </TableCell>
                 </TableRow>
               ))}
