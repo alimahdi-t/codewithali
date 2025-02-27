@@ -53,3 +53,7 @@ export interface UpdatePostParams extends CreatePostParams {
 export interface GetPostParams {
   slug: string;
 }
+
+export interface DeletePostParams {
+  id: number;
+}

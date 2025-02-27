@@ -97,7 +97,7 @@ const CoursesListPage = async () => {
                   <TableCell className="max-md:hidden">
                     {course.status}
                   </TableCell>
-                  <TableCell className="text-primary cursor-pointer">
+                  <TableCell className="text-gray-600 cursor-pointer">
                     <Menubar
                       dir="rtl"
                       className="border-none bg-transparent justify-center px-0 py-0"
