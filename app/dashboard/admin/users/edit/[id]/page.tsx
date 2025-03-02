@@ -1,4 +1,4 @@
-import { getUser } from "@/lib/actions/getUser";
+import { getUser } from "@/actions/getUser";
 
 interface Props {
   params: Promise<{ id: string }>;

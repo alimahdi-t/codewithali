@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteCourse } from "@/lib/actions/deleteCourse";
+import { deleteCourse } from "@/actions/deleteCourse";
 import DeleteAlert from "@/components/common/DeleteAlert";
 import { toast } from "@/hooks/use-toast";
 

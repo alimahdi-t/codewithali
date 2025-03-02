@@ -1,4 +1,4 @@
-import { getCourseBySlug } from "@/lib/actions/getCourseBySlug.action";
+import { getCourseBySlug } from "@/actions/getCourseBySlug.action";
 import { notFound } from "next/navigation";
 
 const CourseTopics = [

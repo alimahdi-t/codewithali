@@ -1,6 +1,6 @@
 "use client";
 import DeleteAlert from "@/components/common/DeleteAlert";
-import { deletePost } from "@/lib/actions/deletePost";
+import { deletePost } from "@/actions/deletePost";
 import { toast } from "@/hooks/use-toast";
 
 const DeletePostButton = ({ postId }: { postId: number }) => {

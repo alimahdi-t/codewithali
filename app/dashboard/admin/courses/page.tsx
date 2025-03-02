@@ -7,18 +7,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Price from "@/components/common/Price";
-import { getCourses } from "@/lib/actions/getCourses.action";
+import { getCourses } from "@/actions/getCourses.action";
 import { convertToPersianNumbers } from "@/utils";
 import CourseLevel from "@/components/CourseLevel";
 import Link from "next/link";
 import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 
 import {
-  MenubarMenu,
   Menubar,
-  MenubarTrigger,
   MenubarContent,
   MenubarItem,
+  MenubarMenu,
+  MenubarTrigger,
 } from "@/components/ui/menubar";
 import DeleteCourseButton from "@/app/dashboard/admin/courses/DeleteCourseButton";
 

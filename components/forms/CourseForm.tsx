@@ -28,9 +28,9 @@ import { useRouter } from "next/navigation";
 import Loader from "@/components/common/Loader";
 import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
-import { createCourse } from "@/lib/actions/createCourse.action";
-import { EditCourseSchema, CreateCourseSchema } from "@/schema";
-import { editCourse } from "@/lib/actions/editCourse.action";
+import { createCourse } from "@/actions/createCourse.action";
+import { CreateCourseSchema, EditCourseSchema } from "@/schema";
+import { editCourse } from "@/actions/editCourse.action";
 
 interface CourseFormProps {
   initialData?: z.infer<typeof EditCourseSchema>; // For edit mode: data for pre-filling the form when editing an existing course

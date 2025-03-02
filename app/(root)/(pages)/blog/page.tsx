@@ -1,5 +1,5 @@
 import BlogCard from "@/components/pages/Blog/BlogCard";
-import { getPosts } from "@/lib/actions/getPosts";
+import { getPosts } from "@/actions/getPosts";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { postSortFilter } from "@/constants/filters";

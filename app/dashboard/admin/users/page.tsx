@@ -16,8 +16,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { HiOutlineEllipsisVertical } from "react-icons/hi2";
-import DeletePostButton from "@/app/dashboard/admin/posts/DeletePostButton";
-import { getUsers } from "@/lib/actions/getUsers";
+import { getUsers } from "@/actions/getUsers";
 
 const UsersList = async () => {
   const users = await getUsers();

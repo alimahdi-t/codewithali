@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { GetCourseBySlugParams } from "@/lib/actions/shared.types";
+import { GetCourseBySlugParams } from "@/actions/shared.types";
 
 export async function getCourseBySlug({ slug }: GetCourseBySlugParams) {
   try {

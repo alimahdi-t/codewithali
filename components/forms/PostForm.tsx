@@ -4,7 +4,7 @@ import { z } from "zod";
 import { CreatePostSchema, EditPostSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createPost } from "@/lib/actions/createPost";
+import { createPost } from "@/actions/createPost";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,7 +31,7 @@ import {
 import { MultiSelect } from "@/components/MultiSelect";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/common/Loader";
-import { updatePost } from "@/lib/actions/updatePost.action";
+import { updatePost } from "@/actions/updatePost.action";
 
 interface PostFormProps {
   initialData?: z.infer<typeof EditPostSchema>; // For edit mode: data for pre-filling the form when editing an existing post

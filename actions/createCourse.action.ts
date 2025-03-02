@@ -1,14 +1,13 @@
 "use server";
 
-import { EditCourseParams } from "@/lib/actions/shared.types";
+import { CreateCourseParams } from "@/actions/shared.types";
 import prisma from "@/lib/prisma";
 
 //TODO: Add types
 
-export async function editCourse(params: EditCourseParams) {
+export async function createCourse(params: CreateCourseParams) {
   try {
     const {
-      id,
       title,
       slug,
       description,
@@ -20,8 +19,17 @@ export async function editCourse(params: EditCourseParams) {
       instructorId,
     } = params;
 
-    return await prisma.course.update({
-      where: { id: id },
+    const existingCourse = await prisma.course.findUnique({
+      where: { slug: slug },
+    });
+
+    if (existingCourse) {
+      return {
+        error: "این Slug از قبل وجود دارد.",
+      };
+    }
+
+    const course = await prisma.course.create({
       data: {
         title: title,
         slug: slug,

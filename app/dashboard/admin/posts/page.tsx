@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getPosts } from "@/lib/actions/getPosts";
+import { getPosts } from "@/actions/getPosts";
 import {
   Table,
   TableBody,

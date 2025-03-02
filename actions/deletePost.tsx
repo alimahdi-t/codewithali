@@ -1,6 +1,6 @@
 "use server";
 
-import { DeletePostParams } from "@/lib/actions/shared.types";
+import { DeletePostParams } from "@/actions/shared.types";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 

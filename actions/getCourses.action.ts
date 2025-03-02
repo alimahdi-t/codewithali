@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { GetAllCoursesParams } from "@/lib/actions/shared.types";
+import { GetAllCoursesParams } from "@/actions/shared.types";
 
 export async function getCourses(params: GetAllCoursesParams) {
   try {

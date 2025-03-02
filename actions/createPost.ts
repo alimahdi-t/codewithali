@@ -1,6 +1,6 @@
 "use server";
 
-import { CreatePostParams } from "@/lib/actions/shared.types";
+import { CreatePostParams } from "@/actions/shared.types";
 import prisma from "@/lib/prisma";
 import { Post } from "@prisma/client";
 
