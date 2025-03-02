@@ -1,6 +1,8 @@
 import { z } from "zod";
 import { extractTextFromHTML } from "@/utils";
 
+// TODO add rule the slug can have question mark
+
 export const CreatePostSchema = z.object({
   slug: z
     .string()

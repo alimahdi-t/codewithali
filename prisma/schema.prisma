@@ -10,22 +10,49 @@ datasource db {
 // ✅
 model User {
   id          Int      @id @default(autoincrement())
-  username    String?  @unique @db.VarChar(64)
+  username    String?  @unique
   firstName   String   @db.VarChar(32)
   lastName    String   @db.VarChar(32)
   imageUrl    String?
-  email       String   @unique
+  email       String?         @unique
   password    String?
   phoneNumber String?
   role        Role     @default(USER)
-  joinedAt    DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   bio         String?
 
   // Relations
   enrolment Enrolment[]
   Course    Course[]
   Post      Post[]
+
+  emailVerified DateTime?
+  accounts      Account[]
+}
+
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   Int  @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String? @db.Text
+  access_token             String? @db.Text
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String? @db.Text
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 // ✅
