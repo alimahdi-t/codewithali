@@ -47,7 +47,7 @@ const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
             height={200}
             src={course.imageUrl}
             alt=""
-            className="aspect-[2/1] w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
+            className="aspect-2/1 w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
           />
         </Link>
       </div>

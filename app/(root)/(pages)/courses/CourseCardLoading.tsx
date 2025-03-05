@@ -10,7 +10,7 @@ const CourseCardLoading = ({ ...props }) => {
       {/*--------------- Card Header ---------------*/}
 
       <div className="relative w-full">
-        <Skeleton className="aspect-[2/1] w-full rounded-lg bg-gray-400" />
+        <Skeleton className="aspect-2/1 w-full rounded-lg bg-gray-400" />
       </div>
 
       {/*--------------- Card Body ---------------*/}

@@ -15,7 +15,7 @@ const ArticleCard = ({ article, ...props }: Props) => {
       <Image
         width={400}
         height={400}
-        className="aspect-[3/2] w-24 rounded-lg"
+        className="aspect-3/2 w-24 rounded-lg"
         src={article.imageUrl}
         alt=""
       />

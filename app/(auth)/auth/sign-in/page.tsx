@@ -35,7 +35,7 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="flex h-full w-[600px] flex-col justify-center py-12 sm:px-6 lg:px-8 shadow-sm">
+    <div className="flex h-full w-[600px] flex-col justify-center py-12 sm:px-6 lg:px-8 shadow-xs">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <Logo iconClassName="mx-auto w-16 h-16" showText={false} />
         <h2 className="mt-6 text-center text-xl font-bold leading-9 tracking-tight text-gray-900">
@@ -44,7 +44,7 @@ const SignInPage = () => {
       </div>
 
       <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-[480px] ">
-        <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+        <div className="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12">
           <Form {...form}>
             <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
               <FormField

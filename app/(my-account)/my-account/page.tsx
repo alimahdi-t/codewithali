@@ -1,7 +1,7 @@
 import {
-  HiOutlineCurrencyDollar,
-  HiOutlineCreditCard,
   HiOutlineBookOpen,
+  HiOutlineCreditCard,
+  HiOutlineCurrencyDollar,
 } from "react-icons/hi";
 import { convertToPersianNumbers } from "@/utils";
 
@@ -36,7 +36,7 @@ const Dashboard = () => {
         />
       </div>
       <h1 className="text-2xl font-bold leading-6">داشبورد</h1>
-      <div className="w-full bg-white h-[512px] px-4 rounded-2xl shadow"></div>
+      <div className="w-full bg-white h-[512px] px-4 rounded-2xl shadow-sm"></div>
     </div>
   );
 };
@@ -56,7 +56,7 @@ const OverviewBox = ({
 }) => {
   return (
     <div
-      className={`w-full h-min rounded-2xl shadow flex items-center gap-2 ${className}`}
+      className={`w-full h-min rounded-2xl shadow-sm flex items-center gap-2 ${className}`}
     >
       <Icon className="text-white w-20 h-20 p-4" />
       <div className="space-y-2">

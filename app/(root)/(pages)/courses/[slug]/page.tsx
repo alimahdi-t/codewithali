@@ -94,7 +94,7 @@ export default CoursePage;
 
 const Group = () => {
   return (
-    <div className="flex gap-2 items-center justify-start bg-white px-6 py-8 rounded-lg shadow">
+    <div className="flex gap-2 items-center justify-start bg-white px-6 py-8 rounded-lg shadow-sm">
       دسته بندی
     </div>
   );

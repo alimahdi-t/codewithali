@@ -114,7 +114,7 @@ export default function AboutPage() {
                 width={400}
                 height={400}
                 src={person.imageUrl}
-                className="aspect-[3/2] w-full rounded-2xl object-cover"
+                className="aspect-3/2 w-full rounded-2xl object-cover"
               />
               <h3 className="mt-6 text-lg font-semibold leading-8 tracking-tight text-gray-900">
                 {person.name}

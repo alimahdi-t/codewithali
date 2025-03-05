@@ -46,7 +46,7 @@ const SignUpPage = () => {
       </div>
 
       <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-[480px] ">
-        <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
+        <div className="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12">
           <Form {...form}>
             <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex gap-2">
