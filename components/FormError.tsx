@@ -11,7 +11,9 @@ const FormError = ({ message }: FormErrorProps) => {
 
   return (
     <div className="bg-destructive/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-destructive">
-      <HiOutlineExclamationTriangle className="w4 h-4" />
+      <span>
+        <HiOutlineExclamationTriangle className="w-5 h-5" />
+      </span>
       <p>{message}</p>
     </div>
   );

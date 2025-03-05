@@ -10,8 +10,10 @@ const FormSuccess = ({ message }: FormSuccessProps) => {
   }
 
   return (
-    <div className="bg-emerald-500/15 p-3 rounded-md flex items-center gap-x-2 text-sm text-emerald-500">
-      <HiOutlineCheckCircle className="w4 h-4" />
+    <div className="text-sm bg-emerald-500/15 p-3 rounded-md flex items-center gap-x-2 text-emerald-500">
+      <span>
+        <HiOutlineCheckCircle className="w-5 h-5" />
+      </span>
       <p>{message}</p>
     </div>
   );

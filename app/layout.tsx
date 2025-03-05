@@ -73,10 +73,7 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <html lang="fa">
-        <body
-          dir="rtl"
-          className={`${Dana.className} scroll-container min-h-screen `}
-        >
+        <body dir="rtl" className={`${Dana.className} scroll-container h-full`}>
           <ThemeProvider>{children}</ThemeProvider>
           <Toaster />
         </body>

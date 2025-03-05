@@ -6,6 +6,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
+
+html,
+body,
+:root {
+  height: 100%;
+}
+
 /*----------------------------*/
 
 @theme {
@@ -182,13 +189,6 @@
   @apply dark:text-gray-300 text-black;
 }
 
-@layer utilities {
-  html,
-  body,
-  :root {
-    height: 100%;
-  }
-}
 
 @layer base {
     :root {
