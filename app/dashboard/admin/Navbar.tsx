@@ -28,7 +28,7 @@ import { Logo } from "@/components/Logo";
 const DashboardNavbar = () => {
   return (
     <header className="sticky top-0 z-40 ">
-      <div className="flex h-16 items-center justify-between bg-white gap-x-4 border-b  px-4 sm:px-6 lg:px-8 shadow">
+      <div className="flex h-16 items-center justify-between bg-white gap-x-4 border-b  px-4 sm:px-6 lg:px-8 shadow-sm">
         <div className="lg:hidden">
           <Sheet>
             <SheetTrigger asChild>

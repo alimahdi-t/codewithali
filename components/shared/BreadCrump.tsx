@@ -1,6 +1,6 @@
 "use client";
 import { HiOutlineHome } from "react-icons/hi2";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const pages = [
   { name: "دوره ها", href: "#", current: false },
@@ -20,10 +20,7 @@ export default function BreadCrump() {
         <li className="flex">
           <div className="flex items-center">
             <a href="#" className="text-black hover:text-gray-500">
-              <HiOutlineHome
-                className="h-5 w-5 flex-shrink-0"
-                aria-hidden="true"
-              />
+              <HiOutlineHome className="h-5 w-5 shrink-0" aria-hidden="true" />
               <span className="sr-only">خانه</span>
             </a>
           </div>
@@ -32,7 +29,7 @@ export default function BreadCrump() {
           <li key={page.name} className="flex">
             <div className="flex items-center mx-4">
               <svg
-                className="h-full w-6 flex-shrink-0 text-gray-200"
+                className="h-full w-6 shrink-0 text-gray-200"
                 viewBox="0 0 24 44"
                 preserveAspectRatio="none"
                 fill="currentColor"

@@ -1,4 +1,4 @@
-import { Post, User, Tag as ITag } from "@prisma/client";
+import { Post, Tag as ITag, User } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import moment from "jalali-moment";
@@ -40,7 +40,7 @@ const BlogCard = ({ post, className, ...props }: Props) => {
           height={500}
           src={post.imageUrl}
           alt=""
-          className="aspect-[2/1]  w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
+          className="aspect-2/1  w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
         />
       </div>
       {/*--------------- Card Body ---------------*/}

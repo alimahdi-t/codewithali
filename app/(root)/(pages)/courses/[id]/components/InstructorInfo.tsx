@@ -10,7 +10,7 @@ const InstructorInfo = ({
   imageUrl: string;
 }) => {
   return (
-    <div className="w-full bg-white px-6 py-8 rounded-lg shadow border border-gray-100 flex flex-col gap-8">
+    <div className="w-full bg-white px-6 py-8 rounded-lg shadow-sm border border-gray-100 flex flex-col gap-8">
       <div className="flex gap-2 items-center justify-start ">
         <div className="bg-gray-400 rounded-full w-16 h-16" />
         <div className="flex flex-col gap-1">

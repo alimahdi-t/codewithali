@@ -38,7 +38,7 @@ const Blog = async () => {
           >
             <input
               placeholder={"جستجو بین مقالات"}
-              className="flex-1 border-none outline-none placeholder:text-gray-600"
+              className="flex-1 border-none outline-hidden placeholder:text-gray-600"
             />
             <HiMagnifyingGlass className="w-6 h-6 text-gray-600" />
           </div>

@@ -1,9 +1,193 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+/*
+  ---break---
+*/
+@plugin 'tailwindcss-animate';
 
-html, body, :root{
-  height: 100%;
+@custom-variant dark (&:is(.dark *));
+
+/*----------------------------*/
+
+@theme {
+  --font-dana: var(--font-dana);
+
+  --color-brand-25: #fcfaff;
+  --color-brand-50: #edfaff;
+  --color-brand-100: #d6f2ff;
+  --color-brand-200: #b5eaff;
+  --color-brand-300: #83dfff;
+  --color-brand-400: #48cbff;
+  --color-brand-500: #1eacff;
+  --color-brand-600: #068eff;
+  --color-brand-700: #007aff;
+  --color-brand-800: #085dc5;
+  --color-brand-900: #0d519b;
+  --color-brand-950: #0e315d;
+
+  --color-action-success: #31d9b3;
+  --color-action-warnning: #ffae1f;
+  --color-action-error: #fa896b;
+  --color-action-info: #539bff;
+
+  --color-action-light-success: #e3fdf7;
+  --color-action-light-warnning: #fef5e5;
+  --color-action-light-error: #fdede8;
+  --color-action-light-info: #ebf3fe;
+
+  --color-gray-25: #fcfcfd;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f2f4f7;
+  --color-gray-200: #e4e7ec;
+  --color-gray-300: #d0d5dd;
+  --color-gray-400: #98a2b3;
+  --color-gray-500: #667085;
+  --color-gray-600: #475467;
+  --color-gray-700: #344054;
+  --color-gray-800: #1d2939;
+  --color-gray-900: #101828;
+  --color-gray-950: #0c111d;
+
+  --color-social-facebook: #1877f2;
+  --color-social-twitter: #1da1f2;
+  --color-social-you-tube: #ff0000;
+  --color-social-linkedin: #0a66c2;
+  --color-social-instagram: #c32aa3;
+  --color-social-dribbble: #ea4c89;
+  --color-social-Git-hub: #333333;
+  --color-social-telegram: #0088cc;
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+}
+
+/*----------------------------*/
+/*--theme(--breakpoint-sm)*/
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= 640px) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
+
+@utility scroll-thin {
+  @apply overflow-y-auto; /* Ensure it applies to scrollable elements */
+
+  &::-webkit-scrollbar {
+    width: 2px; /* Thin scrollbar */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #a0a0a0; /* Thumb color */
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #f0f0f0; /* Track color */
+  }
+}
+
+@utility box-t {
+  @apply flex-1 p-4 bg-white rounded-lg shadow-sm border border-gray-100 dark:text-white dark:bg-gray-900 dark:shadow-none dark:border-none;
+}
+
+@utility text-main-t {
+  @apply dark:text-white text-gray-900;
+}
+
+@utility text-sub-t {
+  @apply dark:text-gray-400 text-gray-600;
+}
+
+@utility background-dark950_light50 {
+  @apply dark:bg-gray-950 bg-white;
+}
+
+@utility background-dark900_light50 {
+  @apply dark:bg-gray-900 bg-white;
+}
+
+@utility border-dark800_light300 {
+  @apply dark:border-gray-800 border-gray-300;
+}
+
+@utility border-dark800_light200 {
+  @apply dark:border-gray-800 border-gray-200;
+}
+
+@utility border-dark800_light100 {
+  @apply dark:border-gray-800 border-gray-100;
+}
+
+@utility text-dark300_light950 {
+  @apply dark:text-gray-300 text-black;
+}
+
+@layer utilities {
+  html,
+  body,
+  :root {
+    height: 100%;
+  }
 }
 
 @layer base {
@@ -64,110 +248,50 @@ html, body, :root{
 
   }
 
+@layer utilities {
+  .app-box {
+    @apply text-white;
+  }
 
-.app-box{
-  @apply text-white
+  .app-text-main {
+    @apply dark:text-white text-gray-900;
+  }
+
+  .app-text-sub {
+    @apply dark:text-gray-400 text-gray-600;
+  }
 }
 
-.app-text-main{
-  @apply dark:text-white text-gray-900
+@layer utilities {
+  .scroll-container {
+    height: 40px;
+    overflow-y: scroll;
+  }
+
+  .scroll-container::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .scroll-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb {
+    background: #83dfff;
+  }
+
+  .scroll-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .scroll-container::-webkit-scrollbar-button {
+    display: none;
+  }
 }
-
-.app-text-sub {
-  @apply dark:text-gray-400 text-gray-600
-}
-
-
-
-@layer utilities{
-
-  .scroll-thin {
-    @apply overflow-y-auto; /* Ensure it applies to scrollable elements */
-  }
-
-  .scroll-thin::-webkit-scrollbar {
-    width: 2px; /* Thin scrollbar */
-  }
-
-  .scroll-thin::-webkit-scrollbar-thumb {
-    background-color: #a0a0a0; /* Thumb color */
-    border-radius: 10px;
-  }
-
-  .scroll-thin::-webkit-scrollbar-track {
-    background: #f0f0f0; /* Track color */
-  }
-
-  .box-t {
-    @apply flex-1 p-4 bg-white rounded-lg shadow border border-gray-100 dark:text-white dark:bg-gray-900 dark:shadow-none dark:border-none
-  }
-
-  .text-main-t{
-    @apply dark:text-white text-gray-900
-  }
-
-  .text-sub-t {
-    @apply dark:text-gray-400 text-gray-600
-  }
-
-  .background-dark950_light50{
-    @apply dark:bg-gray-950 bg-white
-  }
-
-  .background-dark900_light50{
-    @apply dark:bg-gray-900 bg-white
-  }
-
-  .border-dark800_light300{
-    @apply dark:border-gray-800 border-gray-300
-
-  }
-
-  .border-dark800_light200{
-    @apply dark:border-gray-800 border-gray-200
-  }
-
-  .border-dark800_light100{
-    @apply dark:border-gray-800 border-gray-100
-  }
-
-  .text-dark300_light950{
-    @apply dark:text-gray-300 text-black
-  }
-
-
-}
-
-
-.scroll-container {
-  height: 40px;
-  overflow-y: scroll;
-}
-
-.scroll-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.scroll-container::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.scroll-container::-webkit-scrollbar-thumb {
-  background: #83dfff;
-}
-
-.scroll-container::-webkit-scrollbar-thumb:hover {
-  background: #555;
-}
-
-.scroll-container::-webkit-scrollbar-button {
-  display: none;
-}
-
 
 @layer base {
   * {
-    @apply border-border;
+    @apply border-border outline-ring/50;
   }
   body {
     @apply bg-background text-foreground;

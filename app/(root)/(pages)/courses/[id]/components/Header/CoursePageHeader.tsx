@@ -1,6 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { convertToPersianAndFormat } from "@/utils";
-
 const CoursePageHeader = () => {
   return (
     <div className="w-full  grid grid-cols-1  md:grid-cols-2 rounded-lg box-t">
@@ -33,7 +30,7 @@ const CoursePageHeader = () => {
       {/*  </div>*/}
       {/*</div>*/}
       {/*<div className="col-span-1 p-4">*/}
-      {/*  <img src={course.imageUrl} className="rounded-lg aspect-[16/9]" />*/}
+      {/*  <img src={course.imageUrl} className="rounded-lg aspect-16/9" />*/}
       {/*</div>*/}
     </div>
   );
