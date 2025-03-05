@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body, :root{
+  height: 100%;
+}
+
 @layer base {
     :root {
       --background: #ffffff;
@@ -169,25 +173,3 @@
     @apply bg-background text-foreground;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
