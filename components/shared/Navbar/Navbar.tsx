@@ -6,7 +6,7 @@ import React from "react";
 
 import { Logo } from "@/components/Logo";
 import NavLinks from "@/components/shared/Navbar/NavLinks";
-import AuthUI from "@/components/shared/Navbar/AuthUI";
+import { UserButton } from "@/components/auth/user-button";
 
 const Navbar = () => {
   return (
@@ -22,10 +22,15 @@ const Navbar = () => {
           </div>
 
           {/*Show on Desktop*/}
-          <AuthUI className="md:hidden" />
+          <span className="md:hidden">
+            <UserButton />
+          </span>
+
           <div className="flex items-center max-md:hidden ">
             <Theme className="max-md:hidden" />
-            <AuthUI className="max-md:hidden mx-2" />
+            <span className="max-md:hidden mx-2">
+              <UserButton />
+            </span>
           </div>
         </div>
       </nav>
