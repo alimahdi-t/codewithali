@@ -18,9 +18,13 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import FormSuccess from "@/components/FormSuccess";
 import FormError from "@/components/FormError";
+import { login } from "@/actions/auth/login-action";
+import Loader from "@/components/common/Loader";
+import { useTransition } from "react";
 
 export const LoginForm = () => {
   const { success, setSuccess, error, setError } = useFormStatus();
+  const [isPending, startTransition] = useTransition();
 
   const FormSchema = LoginSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -33,8 +37,19 @@ export const LoginForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
-    // const response = await authorize({});
+    setSuccess("");
+    setError("");
+    startTransition(() => {
+      login(data)
+        .then((response) => {
+          if (response?.error) {
+            setError(response.error);
+          }
+        })
+        .catch(() => {
+          setError("Something went wrong!");
+        });
+    });
   };
 
   return (
@@ -83,8 +98,6 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <FormSuccess message={success} />
-            <FormError message={error} />
           </div>
 
           <Button
@@ -105,7 +118,7 @@ export const LoginForm = () => {
             type="submit"
             className="w-full mt-4"
           >
-            ورود
+            {isPending ? <Loader /> : "ورود"}
           </Button>
         </form>
       </Form>

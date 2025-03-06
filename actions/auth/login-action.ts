@@ -1,5 +1,12 @@
+"use server";
+
 import { LoginSchema } from "@/schema";
 import { z } from "zod";
+import { getUserByEmail } from "@/data/user";
+import { comparePassword } from "@/utils/password";
+import { signIn } from "@/auth";
+import { DEFAULT_LOGIN_REDIRECT } from "@/route";
+import { AuthError } from "next-auth";
 
 export async function login(values: z.infer<typeof LoginSchema>) {
   const validatedFields = LoginSchema.safeParse(values);
@@ -9,4 +16,38 @@ export async function login(values: z.infer<typeof LoginSchema>) {
   }
 
   const { email, password } = validatedFields.data;
+
+  const existingUser = await getUserByEmail(email);
+
+  if (!existingUser || !existingUser.email || !existingUser.password) {
+    {
+      return { error: "کاربری با این ایمیل یافت نشد!" };
+    }
+  }
+
+  //TODO: if email not verified send verification token
+
+  const samePassword = await comparePassword(password, existingUser.password);
+
+  //TODO: if two factor confirmation is enabled, validate the confirmation
+
+  // TODO: Redirect user based of its type
+  try {
+    await signIn("credentials", {
+      email,
+      password,
+      redirectTo: DEFAULT_LOGIN_REDIRECT,
+    });
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case "CredentialsSignin":
+          return { error: "Invalid credentials!" };
+
+        default:
+          return { error: "Something went wrong!" };
+      }
+    }
+    throw error;
+  }
 }
