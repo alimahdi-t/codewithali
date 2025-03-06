@@ -1,19 +1,33 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { LogoutButton } from "@/components/auth/logout-button";
+import { HiOutlineBars3, HiPower } from "react-icons/hi2";
+import { Separator } from "@/components/ui/separator";
+import { UserProfileCard } from "@/components/auth/user-profile-card";
+import { adminDashboardLinks } from "@/constants";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
 
-import SidebarMenu from "@/app/SidebarMenu";
-
-const Sidebar = ({ width }: { width: string }) => {
+export const AdminSidebar = ({ width }: { width: string }) => {
   if (!width) {
     return null;
   }
   return (
     <aside
-      className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col border-l bg-white shadow-sm`}
+      className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col border-l bg-white shadow-sm`}
     >
       <div
-        className={`"flex grow flex-col gap-y-5 overflow-y-auto border-r scroll-thin border-gray-200 bg-white px-6 pb-4`}
+        className={`"w-full flex grow flex-col overflow-y-auto border-r scroll-thin border-gray-200 bg-white px-2 pb-4 py-4`}
       >
         <SidebarMenu />
       </div>
@@ -21,4 +35,92 @@ const Sidebar = ({ width }: { width: string }) => {
   );
 };
 
-export default Sidebar;
+export const SidebarMenu = () => {
+  const pathname = usePathname();
+
+  return (
+    <div className="bg-white">
+      <UserProfileCard />
+      <Separator className="my-4" />
+      <ul role="list" className="flex flex-col gap-0.5">
+        {adminDashboardLinks.map((item, i) => (
+          <Link href={item.path} key={i}>
+            <li
+              className={`group flex gap-x-3 rounded-md text-sm font-normal leading-6 gap-2 items-center w-full px-2 py-3
+            ${
+              pathname === item.path
+                ? "bg-gray-100 text-brand-600"
+                : "text-gray-800 hover:bg-gray-100 hover:text-brand-600"
+            }`}
+            >
+              <item.icon className={`w-5 h-5`} />
+              {item.label}
+            </li>
+          </Link>
+        ))}
+        <Separator className="" />
+
+        <LogoutButton>
+          <li className="text-gray-800 hover:bg-gray-100 hover:text-brand-600 group flex gap-x-3 rounded-md p-2 text-sm font-normal leading-6 gap-2 items-center w-full px-2 py-3">
+            <HiPower className={`w-5 h-5`} />
+            خروج از حساب
+          </li>
+        </LogoutButton>
+      </ul>
+    </div>
+  );
+};
+
+export const AdminMobileSideBar = () => {
+  const pathname = usePathname();
+  return (
+    <Sheet>
+      <SheetTrigger asChild>
+        <Button variant="ghost">
+          <HiOutlineBars3 className="size-6" />
+        </Button>
+      </SheetTrigger>
+      <SheetContent
+        side="right"
+        className="w-80 overflow-y-auto bg-white scroll-thin "
+      >
+        <SheetHeader>
+          <SheetTitle>
+            <UserProfileCard />
+          </SheetTitle>
+        </SheetHeader>
+        <div className="bg-white px-2">
+          <Separator />
+          <ul role="list" className="flex mt-1 flex-col gap-0.5">
+            {adminDashboardLinks.map((item, i) => (
+              <SheetClose asChild key={i}>
+                <Link href={item.path}>
+                  <li
+                    className={`group flex gap-x-3 rounded-md text-sm font-normal leading-6 gap-2 items-center w-full px-2 py-3
+            ${
+              pathname === item.path
+                ? "bg-gray-100 text-brand-600"
+                : "text-gray-800 hover:bg-gray-100 hover:text-brand-600"
+            }`}
+                  >
+                    <item.icon className={`w-5 h-5`} />
+                    {item.label}
+                  </li>
+                </Link>
+              </SheetClose>
+            ))}
+            <Separator className="" />
+            <SheetClose asChild>
+              <LogoutButton>
+                <li className="text-gray-800 hover:bg-gray-100 hover:text-brand-600 group flex gap-x-3 rounded-md p-2 text-sm font-normal leading-6 gap-2 items-center w-full px-2 py-3">
+                  <HiPower className={`w-5 h-5`} />
+                  خروج از حساب
+                </li>
+              </LogoutButton>
+            </SheetClose>
+          </ul>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+};

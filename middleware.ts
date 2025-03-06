@@ -12,9 +12,9 @@ export const { auth } = NextAuth(authConfig);
 //@ts-ignore
 export default auth((req) => {
   const { nextUrl } = req;
-  const isLoggedIn = !!req.auth;
+  const isLoggedIn = !!req.auth; // Returns true if user signed in
 
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
+  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix); // prefix of api for auth routes
   const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
@@ -29,6 +29,7 @@ export default auth((req) => {
     return null;
   }
 
+  // Redirect the user to login page if user not signed in and the route isn't public
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }

@@ -1,5 +1,5 @@
 import React from "react";
-import AdminSidebar from "@/app/dashboard/AdminSidebar";
+import { AdminSidebar } from "@/app/dashboard/AdminSidebar";
 import DashboardNavbar from "@/app/dashboard/admin/Navbar";
 
 export default function AdminLayout({
@@ -11,7 +11,7 @@ export default function AdminLayout({
   return (
     <>
       <AdminSidebar width={sidebarSize} />
-      <div className="lg:pr-72 min-h-full">
+      <div className="lg:pr-64 min-h-full">
         <DashboardNavbar />
         <main className="py-10 min-h-full bg-gray-50">
           <section

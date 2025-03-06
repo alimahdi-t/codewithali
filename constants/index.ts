@@ -7,20 +7,18 @@ import {
 } from "react-icons/hi2";
 
 import {
-  Mail01Icon,
-  UserMultipleIcon,
   BookOpen01Icon,
-  TeacherIcon,
-  TaskEdit02Icon,
-  Task01Icon,
   Comment02Icon,
-  DiscountIcon,
-  Tag01Icon,
   CreditCardValidationIcon,
   DashboardSquare02Icon,
+  DiscountIcon,
+  Mail01Icon,
+  Tag01Icon,
+  Task01Icon,
+  UserMultipleIcon,
 } from "@/public/assets/icons/hugeIcons";
 
-import { Level, CourseStatus } from "@prisma/client";
+import { CourseStatus, Level, Role } from "@prisma/client";
 
 export const navLinks = [
   { label: "دوره ها", href: "/courses" },
@@ -34,15 +32,6 @@ export const profileDropDownLinks = [
   { label: "Courses", href: "" },
   { label: "Profile", href: "" },
   { label: "Logout", href: "" },
-];
-
-export const footerNavigation = [
-  { name: "About", href: "#" },
-  { name: "Blog", href: "#" },
-  { name: "Jobs", href: "#" },
-  { name: "Press", href: "#" },
-  { name: "Accessibility", href: "#" },
-  { name: "Partners", href: "#" },
 ];
 
 export const CourseLevels: { value: Level; label: string }[] = [
@@ -96,12 +85,6 @@ export const adminDashboardLinks: {
   { label: "دوره‌ها", path: "/dashboard/admin/courses", icon: BookOpen01Icon },
   { label: "پست‌ها", path: "/dashboard/admin/posts", icon: Task01Icon },
   { label: "کاربران", path: "/dashboard/admin/users", icon: UserMultipleIcon },
-  // {
-  //   label: "نویسندگان",
-  //   path: "/dashboard/admin/authors",
-  //   icon: TaskEdit02Icon,
-  // },
-  // { label: "مدرس‌ها", path: "/dashboard/admin/instructors", icon: TeacherIcon },
   { label: "پیام", path: "/dashboard/admin/messages", icon: Mail01Icon },
   { label: "کامنت ها", path: "/dashboard/admin/comments", icon: Comment02Icon },
   {
@@ -116,3 +99,99 @@ export const adminDashboardLinks: {
     icon: CreditCardValidationIcon,
   },
 ];
+
+// Define all dashboard links
+const allDashboardLinks = [
+  // Common links (for normal users, writers, authors)
+  {
+    label: "پیشخوان",
+    path: "/my-account",
+    icon: HiOutlineHome,
+    roles: ["USER", "WRITER", "AUTHOR"],
+  },
+  {
+    label: "اطلاعات کاربری",
+    path: "/my-account/edit-account",
+    icon: HiOutlineUser,
+    roles: ["USER", "WRITER", "AUTHOR"],
+  },
+  {
+    label: "دوره های من",
+    path: "/my-account/courses",
+    icon: HiOutlineAcademicCap,
+    roles: ["USER", "WRITER", "AUTHOR"],
+  },
+  {
+    label: "خدمات پرداخت",
+    path: "/my-account/payments",
+    icon: HiOutlineTicket,
+    roles: ["USER", "WRITER", "AUTHOR"],
+  },
+  {
+    label: "خروج از حساب",
+    path: "/logout", // Handled separately
+    icon: HiOutlineArrowRightStartOnRectangle,
+    roles: ["USER", "WRITER", "AUTHOR", "ADMIN"],
+  },
+
+  // Admin-only links
+  {
+    label: "داشبورد",
+    path: "/dashboard/admin",
+    icon: DashboardSquare02Icon,
+    roles: ["ADMIN"],
+  },
+  {
+    label: "دوره‌ها",
+    path: "/dashboard/admin/courses",
+    icon: BookOpen01Icon,
+    roles: ["AUTHOR", "ADMIN"],
+  },
+  {
+    label: "پست‌ها",
+    path: "/dashboard/admin/posts",
+    icon: Task01Icon,
+    roles: ["WRITER", "AUTHOR", "ADMIN"],
+  },
+  {
+    label: "کاربران",
+    path: "/dashboard/admin/users",
+    icon: UserMultipleIcon,
+    roles: ["ADMIN"],
+  },
+  {
+    label: "پیام",
+    path: "/dashboard/admin/messages",
+    icon: Mail01Icon,
+    roles: ["ADMIN"],
+  },
+  {
+    label: "کامنت‌ها",
+    path: "/dashboard/admin/comments",
+    icon: Comment02Icon,
+    roles: ["ADMIN"],
+  },
+  {
+    label: "کدهای تخفیف",
+    path: "/dashboard/admin/discount-codes",
+    icon: DiscountIcon,
+    roles: ["ADMIN"],
+  },
+  {
+    label: "تگ‌ها",
+    path: "/dashboard/admin/tags",
+    icon: Tag01Icon,
+    roles: ["WRITER", "AUTHOR", "ADMIN"],
+  },
+  {
+    label: "پرداخت‌ها",
+    path: "/dashboard/admin/payments",
+    icon: CreditCardValidationIcon,
+    roles: ["ADMIN"],
+  },
+];
+
+// Function to get links based on user role
+export const getDashboardLinks = (role: Role) => {
+  return allDashboardLinks.filter((link) => link.roles.includes(role));
+};

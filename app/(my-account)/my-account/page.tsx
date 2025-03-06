@@ -9,7 +9,7 @@ import { IconType } from "react-icons";
 
 const Dashboard = () => {
   return (
-    <div className="space-y-8">
+    <div className="w-full bg-violet-500 space-y-8">
       <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
         <OverviewBox
           label="دوره های من"

@@ -10,6 +10,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
+import { Button } from "@/components/ui/button";
 
 const Theme = ({ className }: { className?: string }) => {
   const { mode, setMode } = useTheme();
@@ -17,21 +18,17 @@ const Theme = ({ className }: { className?: string }) => {
   return (
     <Menubar asChild className={`relative border-none shadow-none p-2 `}>
       <MenubarMenu>
-        <MenubarTrigger
-          className={`${className} hover:bg-brand-50 cursor-pointer border-none rounded-md p-2 data-[state=open]:bg-gray-200 dark:focus:bg-dark-200 dark:data-[state=open]:bg-gray-800`}
-        >
-          {mode === "light" ? (
-            <IconSun width={20} height={20} className="fill-yellow-500" />
-          ) : (
-            <IconMoon width={20} height={20} className="fill-white" />
-          )}
+        <MenubarTrigger asChild className={`${className} `}>
+          <Button variant="ghost" className="cursor-pointer">
+            {mode === "light" ? (
+              <IconSun width={20} height={20} className="fill-yellow-500" />
+            ) : (
+              <IconMoon width={20} height={20} className="fill-white" />
+            )}
+          </Button>
         </MenubarTrigger>
-        <MenubarContent
-          className="absolute py-2 right-[-3rem] mt-3 min-w-[120px] rounded border
-                     background-dark900_light50 border-dark800_light200"
-        >
+        <MenubarContent>
           {themes.map((item) => (
-            // @ts-ignore
             <MenubarItem
               key={item.value}
               className="flex items-center gap-4 px-2.5 py-2 cursor-pointer
