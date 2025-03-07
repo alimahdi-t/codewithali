@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { getPosts } from "@/actions/getPosts";
 import {
   Table,
   TableBody,
@@ -6,13 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Price from "@/components/common/Price";
-import { getCourses } from "@/actions/getCourses.action";
 import { convertToPersianNumbers } from "@/utils";
-import CourseLevel from "@/components/CourseLevel";
-import Link from "next/link";
-import { HiOutlineEllipsisVertical } from "react-icons/hi2";
-
 import {
   Menubar,
   MenubarContent,
@@ -20,81 +16,73 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import DeleteCourseButton from "@/app/dashboard/admin/courses/DeleteCourseButton";
+import { HiOutlineEllipsisVertical } from "react-icons/hi2";
+import DeletePostButton from "@/app/(dashboards)/dashboard/admin/posts/DeletePostButton";
 
-const CoursesListPage = async () => {
-  const courses = await getCourses({});
+const PostsPage = async () => {
+  const posts = await getPosts();
 
+  if (!posts || "error" in posts || posts.length === 0) {
+    return <p className="text-red-500">هیچ مقاله‌ای یافت نشد.</p>;
+  }
+  //TODO: Handle if not found, also handle for courses page
   return (
     <div className="w-full">
       {/* ✅ Page Header */}
       <div className="flex flex-row justify-between">
         <div>
           <h1 className="text-2xl font-bold leading-6 text-gray-900">
-            لیست دوره‌ها
+            لیست مقاله‌ها
           </h1>
           <p className="mt-2 text-base text-gray-900">
-            لیست تمام دوره‌ها، برای مشاهده مشخصات آنها با کلیک بر روی آن وارد
-            صحفه آن دوره شوید.
+            لیست تمام مقاله‌ها، برای مشاهده مشخصات آنها با کلیک بر روی آن وارد
+            صحفه آن مقاله شوید.
           </p>
         </div>
-        <Link href="/dashboard/admin/courses/new">
+        <Link href="/dashboard/admin/posts/new">
           <Button
             variant="default"
             size="sm"
             className="text-xs hover:bg-brand-700 font-normal"
           >
-            افزودن دوره
+            افزودن مقاله
           </Button>
         </Link>
       </div>
-
-      {/* ✅ Courses Table */}
       <div className="mt-8 flow-root">
         <div className="inline-block min-w-full py-2 align-middle">
           <Table>
             <TableHeader>
               <TableRow className="font-semibold select-none text-base text-gray-900">
                 <TableCell></TableCell>
-                <TableCell>دوره</TableCell>
-                <TableCell>مدرس</TableCell>
-                <TableCell>قیمت</TableCell>
-                <TableCell className="max-md:hidden">سطح دوره</TableCell>
-                <TableCell className="max-md:hidden">وضعیت دوره</TableCell>
+                <TableCell>عنوان</TableCell>
+                <TableCell>نویسنده</TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHeader>
             <TableBody className="text-sm">
-              {courses.map((course, index) => (
+              {posts.map((post, index) => (
                 <TableRow
-                  key={course.id}
+                  key={post.id}
                   className="border-gray-200/50 h-12 hover:bg-gray-100"
                 >
-                  <TableCell>{convertToPersianNumbers(index)}</TableCell>
+                  <TableCell>{convertToPersianNumbers(index + 1)}</TableCell>
                   <TableCell>
                     <Link
-                      href={`/courses/${course.slug}`}
+                      href={`/courses/${post.slug}`}
                       className="hover:text-brand-700"
                     >
-                      {course.title}
+                      {post.title}
                     </Link>
                   </TableCell>
                   <TableCell>
                     <Link href="#" className="hover:text-brand-700">
-                      {`${course.instructor.firstName} ${course.instructor.lastName}`}
+                      {`${post.author.firstName} ${post.author.lastName}`}
                     </Link>
                   </TableCell>
-                  <TableCell>
-                    <Price
-                      price={course.price}
-                      classname="text-xs font-semibold"
-                    />
-                  </TableCell>
+
                   <TableCell className="max-md:hidden">
-                    <CourseLevel value={course.level} />
-                  </TableCell>
-                  <TableCell className="max-md:hidden">
-                    {course.status}
+                    {post.isEditorPick}
                   </TableCell>
                   <TableCell className="text-gray-600 cursor-pointer">
                     <Menubar
@@ -109,16 +97,16 @@ const CoursesListPage = async () => {
                           <HiOutlineEllipsisVertical className="w-6 h-6" />
                         </MenubarTrigger>
                         <MenubarContent>
-                          <Link href={`/courses/${course.slug}`}>
+                          <Link href={`/posts/${post.slug}`}>
                             <MenubarItem>مشاهده</MenubarItem>
                           </Link>
                           <Link
-                            href={`/dashboard/admin/courses/edit/${course.slug}`}
+                            href={`/dashboard/admin/posts/edit/${post.slug}`}
                           >
                             <MenubarItem>ویرایش</MenubarItem>
                           </Link>
                           <MenubarItem asChild className="text-red-500">
-                            <DeleteCourseButton courseId={course.id} />
+                            <DeletePostButton postId={post.id} />
                           </MenubarItem>
                         </MenubarContent>
                       </MenubarMenu>
@@ -134,4 +122,4 @@ const CoursesListPage = async () => {
   );
 };
 
-export default CoursesListPage;
+export default PostsPage;

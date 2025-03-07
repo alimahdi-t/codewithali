@@ -1,6 +1,6 @@
 import React from "react";
-import { AdminSidebar } from "@/app/dashboard/AdminSidebar";
-import DashboardNavbar from "@/app/dashboard/admin/Navbar";
+import { AdminSidebar } from "@/app/(dashboards)/_components/AdminSidebar";
+import DashboardNavbar from "@/app/(dashboards)/_components/Navbar";
 
 export default function AdminLayout({
   children,

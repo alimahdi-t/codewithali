@@ -2,7 +2,7 @@ import Theme from "@/components/shared/Navbar/Theme";
 import ShowDate from "@/components/common/ShowDate";
 import { Logo } from "@/components/Logo";
 import React from "react";
-import { AdminMobileSideBar } from "@/app/dashboard/AdminSidebar";
+import { AdminMobileSideBar } from "@/app/(dashboards)/_components/AdminSidebar";
 
 const DashboardNavbar = () => {
   return (
