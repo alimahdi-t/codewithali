@@ -24,7 +24,7 @@ const BlogCard = ({ post, className, ...props }: Props) => {
       className={cn(
         className,
         "flex flex-col items-start justify-between rounded-2xl shadow-md " +
-          "background-dark900_light50 border-dark800_light200 dark:shadow-none dark:hover:border-brand-900",
+          "background-dark900_light50 border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 c-card-animation",
       )}
       {...props}
     >
