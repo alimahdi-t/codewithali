@@ -1,6 +1,6 @@
 import {
   HiOutlineAcademicCap,
-  HiOutlineArrowRightStartOnRectangle,
+  HiOutlineCog8Tooth,
   HiOutlineHome,
   HiOutlineTicket,
   HiOutlineUser,
@@ -18,7 +18,7 @@ import {
   UserMultipleIcon,
 } from "@/public/assets/icons/hugeIcons";
 
-import { CourseStatus, Level, Role } from "@prisma/client";
+import { CourseStatus, Level } from "@prisma/client";
 
 export const navLinks = [
   { label: "دوره ها", href: "/courses" },
@@ -48,31 +48,53 @@ export const CourseStatusValue: { value: CourseStatus; label: string }[] = [
   { value: "UPCOMING", label: "انتشار به زودی" },
 ];
 
-export const dashboardLink = [
+export const userDashboardLink: {
+  label: string;
+  path: string;
+  icon: React.ElementType;
+}[] = [
   {
-    label: "پیشخوان",
+    label: "پنل کابری",
     path: "/my-account",
     icon: HiOutlineHome,
   },
   {
-    label: "اطلاعات کاربری",
-    path: "/my-account/edit-account",
-    icon: HiOutlineUser,
-  },
-  {
     label: "دوره های من",
-    path: "/edit-account",
+    path: "/my-account/my-courses",
     icon: HiOutlineAcademicCap,
   },
   {
     label: "خدمات پرداخت",
-    path: "/edit-account",
+    path: "/edit-account/payments",
     icon: HiOutlineTicket,
   },
   {
-    label: "خروج از حساب",
-    path: "/edit-account",
-    icon: HiOutlineArrowRightStartOnRectangle,
+    label: "ویرایش حساب",
+    path: "/my-account/edit-account",
+    icon: HiOutlineUser,
+  },
+];
+
+export const authorDashboardLinks: {
+  label: string;
+  path: string;
+  icon: React.ElementType;
+}[] = [
+  { label: "داشبورد", path: "/dashboard/admin", icon: DashboardSquare02Icon },
+  {
+    label: "دوره های من",
+    path: "/my-account/my-courses",
+    icon: HiOutlineAcademicCap,
+  },
+  {
+    label: "خدمات پرداخت",
+    path: "/edit-account/payments",
+    icon: HiOutlineTicket,
+  },
+  {
+    label: "ویرایش حساب",
+    path: "/my-account/edit-account",
+    icon: HiOutlineUser,
   },
 ];
 
@@ -98,100 +120,9 @@ export const adminDashboardLinks: {
     path: "/dashboard/admin/payments",
     icon: CreditCardValidationIcon,
   },
-];
-
-// Define all dashboard links
-const allDashboardLinks = [
-  // Common links (for normal users, writers, authors)
   {
-    label: "پیشخوان",
-    path: "/my-account",
-    icon: HiOutlineHome,
-    roles: ["USER", "WRITER", "AUTHOR"],
-  },
-  {
-    label: "اطلاعات کاربری",
-    path: "/my-account/edit-account",
-    icon: HiOutlineUser,
-    roles: ["USER", "WRITER", "AUTHOR"],
-  },
-  {
-    label: "دوره های من",
-    path: "/my-account/courses",
-    icon: HiOutlineAcademicCap,
-    roles: ["USER", "WRITER", "AUTHOR"],
-  },
-  {
-    label: "خدمات پرداخت",
-    path: "/my-account/payments",
-    icon: HiOutlineTicket,
-    roles: ["USER", "WRITER", "AUTHOR"],
-  },
-  {
-    label: "خروج از حساب",
-    path: "/logout", // Handled separately
-    icon: HiOutlineArrowRightStartOnRectangle,
-    roles: ["USER", "WRITER", "AUTHOR", "ADMIN"],
-  },
-
-  // Admin-only links
-  {
-    label: "داشبورد",
-    path: "/dashboard/admin",
-    icon: DashboardSquare02Icon,
-    roles: ["ADMIN"],
-  },
-  {
-    label: "دوره‌ها",
-    path: "/dashboard/admin/courses",
-    icon: BookOpen01Icon,
-    roles: ["AUTHOR", "ADMIN"],
-  },
-  {
-    label: "پست‌ها",
-    path: "/dashboard/admin/posts",
-    icon: Task01Icon,
-    roles: ["WRITER", "AUTHOR", "ADMIN"],
-  },
-  {
-    label: "کاربران",
-    path: "/dashboard/admin/users",
-    icon: UserMultipleIcon,
-    roles: ["ADMIN"],
-  },
-  {
-    label: "پیام",
-    path: "/dashboard/admin/messages",
-    icon: Mail01Icon,
-    roles: ["ADMIN"],
-  },
-  {
-    label: "کامنت‌ها",
-    path: "/dashboard/admin/comments",
-    icon: Comment02Icon,
-    roles: ["ADMIN"],
-  },
-  {
-    label: "کدهای تخفیف",
-    path: "/dashboard/admin/discount-codes",
-    icon: DiscountIcon,
-    roles: ["ADMIN"],
-  },
-  {
-    label: "تگ‌ها",
-    path: "/dashboard/admin/tags",
-    icon: Tag01Icon,
-    roles: ["WRITER", "AUTHOR", "ADMIN"],
-  },
-  {
-    label: "پرداخت‌ها",
-    path: "/dashboard/admin/payments",
-    icon: CreditCardValidationIcon,
-    roles: ["ADMIN"],
+    label: "تنظیمات حساب",
+    path: "/dashboard/admin/settings",
+    icon: HiOutlineCog8Tooth,
   },
 ];
-
-// Function to get links based on user role
-export const getDashboardLinks = (role: Role) => {
-  return allDashboardLinks.filter((link) => link.roles.includes(role));
-};

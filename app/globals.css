@@ -12,6 +12,10 @@
   @apply relative transition-all duration-500 hover:shadow-brand-500/15 hover:-translate-y-2
 }
 
+@utility c-form-label{
+  @apply font-normal leading-6 text-gray-900 dark:text-gray-200
+}
+
 html,
 body,
 :root {
