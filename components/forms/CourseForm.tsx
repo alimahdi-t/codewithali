@@ -26,11 +26,11 @@ import {
 import { CourseLevels, CourseStatusValue } from "@/constants";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/common/Loader";
-import { useToast } from "@/hooks/use-toast";
 import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
 import { createCourse } from "@/actions/createCourse.action";
 import { CreateCourseSchema, EditCourseSchema } from "@/schema";
 import { editCourse } from "@/actions/editCourse.action";
+import { toast } from "sonner";
 
 interface CourseFormProps {
   initialData?: z.infer<typeof EditCourseSchema>; // For edit mode: data for pre-filling the form when editing an existing course
@@ -40,7 +40,6 @@ interface CourseFormProps {
 }
 
 const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
-  const { toast } = useToast();
   const router = useRouter();
 
   const FormSchema = type === "edit" ? EditCourseSchema : CreateCourseSchema;
@@ -64,10 +63,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
     if (type === "edit") {
       try {
         if (!initialData?.id) {
-          toast({
-            title: "خطا: شناسه دوره نامعتبر است",
-            variant: "destructive",
-          });
+          toast.error("خطا: شناسه دوره نامعتبر است");
           return;
         }
         await editCourse({
@@ -82,16 +78,10 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
           price: parseInt(data.price),
           instructorId: parseInt(data.instructorId),
         });
-        toast({
-          title: "دوره با موفقیت ایجاد شد",
-          variant: "success",
-        });
+        toast.success("دوره با موفقیت ایجاد شد");
         router.push(path);
       } catch (error) {
-        toast({
-          title: "خطا در ویرایش دوره",
-          variant: "destructive",
-        });
+        toast.error("خطا در ویرایش دوره");
       }
       console.log(data);
     } else {
@@ -109,22 +99,13 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
         });
 
         if (course?.error) {
-          toast({
-            title: course.error,
-            variant: "destructive",
-          });
+          toast.error(course.error);
         } else {
-          toast({
-            title: "دوره با موفقیت ایجاد شد",
-            variant: "success",
-          });
+          toast.success("دوره با موفقیت ایجاد شد");
           router.push(path);
         }
       } catch (error) {
-        toast({
-          title: "خطا در ایجاد دوره",
-          variant: "destructive",
-        });
+        toast.error("خطا در ایجاد دوره");
       }
     }
   };

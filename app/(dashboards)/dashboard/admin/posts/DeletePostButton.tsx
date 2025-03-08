@@ -1,20 +1,15 @@
 "use client";
 import DeleteAlert from "@/components/common/DeleteAlert";
 import { deletePost } from "@/actions/deletePost";
-import { toast } from "@/hooks/use-toast";
+import { toast } from "sonner";
 
 const DeletePostButton = ({ postId }: { postId: number }) => {
   const handleDelete = async () => {
     const response = await deletePost({ id: postId });
     if (response.success) {
-      toast({
-        title: response.message,
-      });
+      toast.success(response.message);
     } else {
-      toast({
-        title: response.message,
-        variant: "destructive",
-      });
+      toast.error(response.message);
     }
   };
 

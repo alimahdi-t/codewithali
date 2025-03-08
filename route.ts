@@ -3,7 +3,15 @@
  * These routes do not require authentication
  * @types {string[]}
  */
-export const publicRoutes = ["/", "/auth/new-verification"];
+export const publicRoutes = [
+  "/", // Home page
+  "/courses", // Course listing (details might be gated)
+  "/courses/[slug]", // Individual course page (details public, content locked)
+  "/blog", // Blog listing
+  "/blog/[slug]", // Individual blog post
+  "/about",
+  "/contact",
+];
 
 /**
  * An array of routes that are used for authentication
@@ -24,3 +32,21 @@ export const apiAuthPrefix = "/api/auth";
  * @type {string}
  */
 export const DEFAULT_LOGIN_REDIRECT = "/my-account";
+
+/**
+ * The default redirect path after logging in for admin
+ * @type {string}
+ */
+export const ADMIN_DEFAULT_LOGIN_REDIRECT = "/dashboard/admin";
+
+/**
+ * The default redirect path after logging in for instructor
+ * @type {string}
+ */
+export const INSTRUCTOR_DEFAULT_LOGIN_REDIRECT = "/dashboard/instructor";
+
+/**
+ * The default redirect path after logging in for author
+ * @type {string}
+ */
+export const AUTHOR_DEFAULT_LOGIN_REDIRECT = "/dashboard/author";
