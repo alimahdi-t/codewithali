@@ -21,6 +21,7 @@ import FormError from "@/components/FormError";
 import { login } from "@/actions/auth/login-action";
 import Loader from "@/components/common/Loader";
 import { useTransition } from "react";
+import { toast } from "sonner";
 
 export const LoginForm = () => {
   const { success, setSuccess, error, setError } = useFormStatus();
@@ -44,6 +45,9 @@ export const LoginForm = () => {
         .then((response) => {
           if (response?.error) {
             setError(response.error);
+          }
+          if (response.success) {
+            toast.success(response.success);
           }
         })
         .catch(() => {

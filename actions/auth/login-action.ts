@@ -29,6 +29,10 @@ export async function login(values: z.infer<typeof LoginSchema>) {
 
   const samePassword = await comparePassword(password, existingUser.password);
 
+  if (!samePassword) {
+    return { error: "ایمیل یا رمز عبور نادرست است" };
+  }
+
   //TODO: if two factor confirmation is enabled, validate the confirmation
 
   // TODO: Redirect user based of its type
@@ -38,8 +42,14 @@ export async function login(values: z.infer<typeof LoginSchema>) {
       password,
       redirectTo: DEFAULT_LOGIN_REDIRECT,
     });
+    return {
+      success: `${
+        existingUser.firstName + " " + existingUser.lastName + " "
+      }عزیز، با موفقیت وارد شدید. `,
+    };
   } catch (error) {
     if (error instanceof AuthError) {
+      //@ts-ignore
       switch (error.type) {
         case "CredentialsSignin":
           return { error: "Invalid credentials!" };
