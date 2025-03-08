@@ -18,10 +18,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 
-export const AdminSidebar = ({ width }: { width: string }) => {
-  if (!width) {
-    return null;
-  }
+export const AdminSidebar = () => {
   return (
     <aside
       className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col border-l bg-white shadow-sm`}
@@ -36,30 +33,15 @@ export const AdminSidebar = ({ width }: { width: string }) => {
 };
 
 export const SidebarMenu = () => {
-  const pathname = usePathname();
-
   return (
     <div className="bg-white">
       <UserProfileCard />
       <Separator className="my-4" />
       <ul role="list" className="flex flex-col gap-0.5">
         {adminDashboardLinks.map((item, i) => (
-          <Link href={item.path} key={i}>
-            <li
-              className={`group flex gap-x-3 rounded-md text-sm font-normal leading-6 gap-2 items-center w-full px-2 py-3
-            ${
-              pathname === item.path
-                ? "bg-gray-100 text-brand-600"
-                : "text-gray-800 hover:bg-gray-100 hover:text-brand-600"
-            }`}
-            >
-              <item.icon className={`w-5 h-5`} />
-              {item.label}
-            </li>
-          </Link>
+          <MenuItem item={item} key={i} />
         ))}
         <Separator className="" />
-
         <LogoutButton>
           <li className="text-gray-800 hover:bg-gray-100 hover:text-brand-600 group flex gap-x-3 rounded-md p-2 text-sm font-normal leading-6 gap-2 items-center w-full px-2 py-3">
             <HiPower className={`w-5 h-5`} />
@@ -68,6 +50,26 @@ export const SidebarMenu = () => {
         </LogoutButton>
       </ul>
     </div>
+  );
+};
+
+const MenuItem = ({ item, ...props }: { item: any }) => {
+  const pathname = usePathname();
+
+  return (
+    <Link href={item.path} {...props}>
+      <li
+        className={`group flex gap-x-3 rounded-md text-sm font-normal leading-6 gap-2 items-center w-full px-2 py-3
+            ${
+              pathname === item.path
+                ? "bg-gray-100 text-brand-600"
+                : "text-gray-800 hover:bg-gray-100 hover:text-brand-600"
+            }`}
+      >
+        <item.icon className={`w-5 h-5`} />
+        {item.label}
+      </li>
+    </Link>
   );
 };
 

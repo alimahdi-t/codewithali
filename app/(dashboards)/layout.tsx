@@ -7,10 +7,9 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const sidebarSize = "256px";
   return (
     <>
-      <AdminSidebar width={sidebarSize} />
+      <AdminSidebar />
       <div className="lg:pr-64 min-h-full">
         <DashboardNavbar />
         <main className="py-10 min-h-full bg-gray-50">
