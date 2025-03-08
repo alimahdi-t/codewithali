@@ -5,7 +5,6 @@ import { CreatePostSchema, EditPostSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPost } from "@/actions/createPost";
-import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Tag } from "@prisma/client";
@@ -32,6 +31,7 @@ import { MultiSelect } from "@/components/MultiSelect";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/common/Loader";
 import { updatePost } from "@/actions/updatePost.action";
+import { toast } from "sonner";
 
 interface PostFormProps {
   initialData?: z.infer<typeof EditPostSchema>; // For edit mode: data for pre-filling the form when editing an existing post
@@ -46,7 +46,6 @@ export default function PostForm({
   role,
   path,
 }: PostFormProps) {
-  const { toast } = useToast();
   const router = useRouter();
   const [tags, setTags] = useState<Tag[]>([]);
 
@@ -70,10 +69,7 @@ export default function PostForm({
     console.log(data);
     if (type === "edit") {
       if (!initialData?.id) {
-        toast({
-          title: "خطا: شناسه مقاله نامعتبر است",
-          variant: "destructive",
-        });
+        toast.error("خطا: شناسه مقاله نامعتبر است");
         return;
       }
       const response = await updatePost({
@@ -89,15 +85,9 @@ export default function PostForm({
       });
 
       if ("error" in response) {
-        toast({
-          title: response.error,
-          variant: "destructive",
-        });
+        toast.error("response.error");
       } else {
-        toast({
-          title: "پست با موفقیت ویرایش شد",
-          variant: "success",
-        });
+        toast.success("پست با موفقیت ویرایش شد");
         router.push(path);
       }
     } else {
@@ -115,15 +105,9 @@ export default function PostForm({
         });
 
         if ("error" in response) {
-          toast({
-            title: response.error,
-            variant: "destructive",
-          });
+          toast.error(response.error);
         } else {
-          toast({
-            title: "پست با موفقیت ایجاد شد",
-            variant: "success",
-          });
+          toast.success("پست با موفقیت ایجاد شد");
           router.push(path);
         }
       } catch (error) {
