@@ -5,3 +5,4 @@ export * from "./contact.schema";
 export * from "./createPost.schema";
 export * from "./editCourse.schema";
 export * from "./editPost.Schema";
+export * from "./change-password.schema";
