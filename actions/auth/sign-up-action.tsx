@@ -13,10 +13,6 @@ export async function signUp(values: z.infer<typeof SignUpSchema>) {
     return { error: "ورودی نامعتبر هست!" };
   }
 
-  for (let i = 0; i < 100000; i++) {
-    const x = 1;
-  }
-
   const { firstName, lastName, email, password, retypePassword } =
     validatedFields.data;
 

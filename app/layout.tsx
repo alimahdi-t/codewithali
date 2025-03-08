@@ -3,7 +3,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import { ThemeProvider } from "@/context/ThemeProvider";
 import React from "react";
-import { Toaster } from "@/components/ui/toaster";
+import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
 
@@ -75,7 +75,7 @@ export default async function RootLayout({
       <html lang="fa">
         <body dir="rtl" className={`${Dana.className} scroll-container h-full`}>
           <ThemeProvider>{children}</ThemeProvider>
-          <Toaster />
+          <Toaster dir="rtl" theme="light" richColors />
         </body>
       </html>
     </SessionProvider>

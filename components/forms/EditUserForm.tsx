@@ -3,7 +3,6 @@ import { EditUserSchema } from "@/schema/editUser.schema";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 import {
   Form,
   FormControl,
@@ -15,25 +14,49 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useCurrentRole } from "@/hooks/use-cuurent-role";
+import { useTransition } from "react";
+import Loader from "@/components/common/Loader";
+import { editUser } from "@/actions/editUser";
+import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
-export const EditUserForm = () => {
+interface EditUserFormProps {
+  initialData?: z.infer<typeof EditUserSchema>;
+}
+
+export const EditUserForm = ({ initialData }: EditUserFormProps) => {
+  const [isPending, startTransition] = useTransition();
+  const role = useCurrentRole();
+  const { update } = useSession();
+
   const FormSchema = EditUserSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    mode: "onTouched",
-    defaultValues: {
+    mode: "onChange",
+    defaultValues: initialData || {
       username: "",
       firstName: "",
       lastName: "",
       imageUrl: "",
-      phoneNumber: "",
       email: "",
+      phoneNumber: "",
       bio: "",
     },
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
+    startTransition(() => {
+      editUser(data).then((response) => {
+        if (response.error) {
+          toast.error(response.error);
+        }
+        if (response.success) {
+          toast.success(response.success);
+          update();
+        }
+      });
+    });
   };
 
   return (
@@ -41,7 +64,7 @@ export const EditUserForm = () => {
       <div className="w-full">
         <Form {...form}>
           <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid md:grid-cols-3 grid-cols-2 gap-x-4 gap-y-6">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-4 gap-y-6">
               <FormField
                 control={form.control}
                 name="firstName"
@@ -85,19 +108,22 @@ export const EditUserForm = () => {
                   </FormItem>
                 )}
               />
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="c-form-label!">نام کابری</FormLabel>
-                    <FormControl>
-                      <Input type="text" className="leading-6" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+              {role !== "USER" && (
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="c-form-label!">نام کابری</FormLabel>
+                      <FormControl>
+                        <Input type="text" className="leading-6" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              )}
+
               <FormField
                 control={form.control}
                 name="email"
@@ -105,7 +131,12 @@ export const EditUserForm = () => {
                   <FormItem>
                     <FormLabel className="c-form-label!">ایمیل</FormLabel>
                     <FormControl>
-                      <Input type="email" className="leading-6" {...field} />
+                      <Input
+                        disabled={true}
+                        type="email"
+                        className="leading-6"
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -113,22 +144,31 @@ export const EditUserForm = () => {
               />
             </div>
 
-            <FormField
-              control={form.control}
-              name="bio"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="c-form-label!">بیو</FormLabel>
-                  <FormControl>
-                    <Textarea className="leading-6 min-h-28" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {role !== "USER" && (
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="c-form-label!">بیو</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        className="leading-6 min-h-28 max-h-48"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
             <div>
-              <Button type="submit" className="flex justify-self-end">
-                ویرایش
+              <Button
+                type="submit"
+                // disabled={!form.formState.isValid}
+                className="flex justify-self-end"
+              >
+                {isPending ? <Loader /> : "ویرایش"}
               </Button>
             </div>
           </form>
