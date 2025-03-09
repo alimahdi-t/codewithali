@@ -3,6 +3,7 @@
 import {
   Card,
   CardContent,
+  CardDescription,
   CardFooter,
   CardHeader,
 } from "@/components/ui/card";
@@ -17,6 +18,7 @@ interface CardWrapperProps {
   backButtonHref: string;
   showSocial?: boolean;
   showLogo?: boolean;
+  description?: string;
 }
 
 export const CardWrapper = ({
@@ -26,12 +28,18 @@ export const CardWrapper = ({
   children,
   showSocial,
   showLogo,
+  description,
 }: CardWrapperProps) => {
   return (
     <Card className="w-[420px] shadow-md">
       <CardHeader className="text-center font-semibold text-xl flex flex-col justify-center items-center gap-y-4">
         {showLogo && <Logo />}
         {headerLabel}
+        {description && (
+          <CardDescription className="text-center font-normal text-sm mx-4 mb-6 text-gray-500">
+            {description}
+          </CardDescription>
+        )}
       </CardHeader>
       <CardContent>{children}</CardContent>
       {showSocial && (
