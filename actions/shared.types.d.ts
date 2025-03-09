@@ -1,4 +1,4 @@
-import { CourseStatus, Level } from "@prisma/client";
+import { CourseStatus, Level, MessageStatus } from "@prisma/client";
 
 export interface CreateCourseParams {
   title: string;
@@ -29,6 +29,12 @@ export interface GetAllCoursesParams {
   searchQuery?: string; // Search query for course titles or descriptions
   page?: number; // Pagination support
   pageSize?: number; // Number of courses per page
+}
+
+export interface GetContactMessages {
+  page?: number;
+  pageSize?: number;
+  status: MessageStatus;
 }
 
 export interface CreatePostParams {

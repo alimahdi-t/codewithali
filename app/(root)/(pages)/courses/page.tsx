@@ -75,11 +75,7 @@ const CoursesPage = async (props: Props) => {
               />
             ))}
           </div>
-          <Pagination
-            itemCount={courses?.length}
-            pageSize={pageSize}
-            currentPage={page}
-          />
+          <Pagination itemCount={courses?.length} pageSize={pageSize} />
         </div>
       </div>
     </div>

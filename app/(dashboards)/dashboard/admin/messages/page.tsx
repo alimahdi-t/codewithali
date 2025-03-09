@@ -10,47 +10,64 @@ import {
 import moment from "jalali-moment";
 import { MessageStatus } from "@/app/(dashboards)/dashboard/admin/messages/MessageStatus";
 import { ActionGroup } from "@/app/(dashboards)/dashboard/admin/messages/ActionGroup";
-import prisma from "@/lib/prisma";
 import Pagination from "@/components/shared/Pagination";
+import { getContactMessages } from "@/actions/getContactMessages.action";
+import { toast } from "sonner";
+import { StatisticsCard } from "@/app/(dashboards)/dashboard/admin/messages/_components/StatisticsCard";
+import { GetContactMessages } from "@/actions/shared.types";
 
-const MessagesPage = async () => {
-  const messages = await prisma.contactMessage.findMany();
+interface Props {
+  searchParams: Promise<GetContactMessages>;
+}
 
-  if (!messages) {
+const MessagesPage = async (props: Props) => {
+  const searchParams = await props.searchParams;
+  const pageSize = 4;
+  const response = await getContactMessages({
+    page: searchParams.page,
+    pageSize: pageSize,
+    status: searchParams.status,
+  });
+  if (response.error) {
+    toast.error(response.error);
     return null;
   }
+  if (!response) {
+    return;
+  }
+
+  const { messages, statusCountMap, totalMessages, filteredMessagesCount } =
+    await response;
 
   return (
     <div className="rounded-xl p-4 bg-white shadow-sm">
       <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6">
-        <div className="text-action-info bg-action-light-info c-stat-card c-scale-animation">
-          <h3 className="font-bold text-2xl leading-7">
-            {convertToPersianNumbers(8)}
-          </h3>
-          <p className="text-base font-medium ">همه پیام ها</p>
-        </div>
-        <div className="text-action-warning bg-action-light-warning c-stat-card c-scale-animation">
-          <h3 className="font-bold text-2xl leading-7">
-            {convertToPersianNumbers(8)}
-          </h3>
-          <p className="text-base font-medium ">پیام‌های در انتظار رسیدگی</p>
-        </div>
-        <div className="text-action-success bg-action-light-success c-stat-card c-scale-animation">
-          <h3 className="font-bold text-2xl leading-7">
-            {convertToPersianNumbers(8)}
-          </h3>
-          <p className="text-base font-medium ">پیام‌های در حال بررسی</p>
-        </div>
-        <div className="text-action-error bg-action-light-error c-stat-card c-scale-animation">
-          <h3 className="font-bold text-2xl leading-7">
-            {convertToPersianNumbers(8)}
-          </h3>
-          <p className="text-base font-medium ">پیام‌های بسته ‌شده</p>
-        </div>
+        <StatisticsCard
+          count={totalMessages ?? ""}
+          label="همه پیام ها"
+          variant="info"
+        />
+        <StatisticsCard
+          count={statusCountMap?.PENDING ?? ""}
+          label="پیام‌های در انتظار رسیدگی"
+          variant="warning"
+          status="PENDING"
+        />
+        <StatisticsCard
+          count={statusCountMap?.IN_PROGRESS ?? ""}
+          label="پیام‌های در حال بررسی"
+          variant="success"
+          status="IN_PROGRESS"
+        />
+        <StatisticsCard
+          count={statusCountMap?.RESOLVED ?? ""}
+          label="پیام‌های بسته ‌شده"
+          variant="error"
+          status="RESOLVED"
+        />
       </div>
       <div className="mt-12">
         <Table>
-          {/*<TableCaption>A list of your recent invoices.</TableCaption>*/}
           <TableHeader className="align-middle">
             <TableRow className="text-start">
               <TableHead className="w-24 text-start">ردیف</TableHead>
@@ -62,7 +79,7 @@ const MessagesPage = async () => {
             </TableRow>
           </TableHeader>
           <TableBody className="text[#5A6A85]">
-            {messages.map((message, index) => (
+            {messages?.map((message, index) => (
               <TableRow key={index} className="h-[72px] text[#5A6A85] text-sm">
                 <TableCell>{convertToPersianNumbers(index)}</TableCell>
                 <TableCell>{message.title}</TableCell>
@@ -84,7 +101,12 @@ const MessagesPage = async () => {
             ))}
           </TableBody>
         </Table>
-        <Pagination currentPage={1} pageSize={4} itemCount={20} />
+        <div>
+          <Pagination
+            pageSize={pageSize}
+            itemCount={filteredMessagesCount ?? 0}
+          />
+        </div>
       </div>
     </div>
   );

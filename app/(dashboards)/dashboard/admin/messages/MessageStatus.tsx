@@ -24,7 +24,7 @@ export const MessageStatus = ({ status }: MessageStatusProps) => {
 
   return (
     <span
-      className={`${variant.className} px-2 py-1 rounded-xl text-xs font-light leading-5 `}
+      className={`${variant.className} px-2 inline-block py-1 rounded-xl text-xs font-light leading-5 text-center`}
     >
       {variant.text}
     </span>
