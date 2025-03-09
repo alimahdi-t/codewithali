@@ -16,6 +16,14 @@
   @apply font-normal leading-6 text-gray-900 dark:text-gray-200
 }
 
+@utility c-stat-card {
+  @apply  h-32 rounded-lg flex flex-col justify-center items-center gap-y-1 cursor-pointer
+}
+
+@utility c-scale-animation {
+  @apply hover:scale-105 transition-transform duration-100 ease-in
+}
+
 html,
 body,
 :root {
@@ -41,12 +49,12 @@ body,
   --color-brand-950: #0e315d;
 
   --color-action-success: #31d9b3;
-  --color-action-warnning: #ffae1f;
+  --color-action-warning: #ffae1f;
   --color-action-error: #fa896b;
   --color-action-info: #539bff;
 
   --color-action-light-success: #e3fdf7;
-  --color-action-light-warnning: #fef5e5;
+  --color-action-light-warning: #fef5e5;
   --color-action-light-error: #fdede8;
   --color-action-light-info: #ebf3fe;
 

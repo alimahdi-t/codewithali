@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ContactSchema } from "@/schema";
+import { ContactMessageSchema } from "@/schema";
 import Loader from "@/components/common/Loader";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,24 +22,38 @@ import {
   Mail01Icon,
   MapsLocation01Icon,
 } from "@/public/assets/icons/hugeIcons";
+import { useTransition } from "react";
+import { createContactMessage } from "@/actions/createContactMessage.action";
+import { toast } from "sonner";
 
 const Contact = () => {
-  const FormSchema = ContactSchema;
+  const [isPending, startTransition] = useTransition();
+  const FormSchema = ContactMessageSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: "onTouched",
     defaultValues: {
-      name: "",
+      fullName: "",
       phone: "",
       email: "",
-      subject: "",
+      title: "",
       message: "",
     },
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    // TODO: To be completed
-    console.log(data);
+    startTransition(() => {
+      createContactMessage(data).then((response) => {
+        if (response.error) {
+          toast.error(response.error);
+        }
+
+        if (response.success) {
+          form.reset();
+          toast.success(response.success);
+        }
+      });
+    });
   };
 
   return (
@@ -115,7 +129,7 @@ const Contact = () => {
             <div className="grid md:grid-cols-2 gap-8">
               <FormField
                 control={form.control}
-                name="name"
+                name="fullName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
@@ -163,7 +177,7 @@ const Contact = () => {
             />
             <FormField
               control={form.control}
-              name="subject"
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
@@ -194,14 +208,8 @@ const Contact = () => {
               )}
             />
 
-            <Button
-              disabled={!form.formState.isValid}
-              type="submit"
-              className="flex justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm
-                  text-white bg-brand-500 hover:bg-brand-600
-                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
-            >
-              {form.formState.isSubmitting ? <Loader /> : "ارسال پیام"}
+            <Button disabled={!form.formState.isValid} type="submit">
+              {isPending ? <Loader /> : "ارسال پیام"}
             </Button>
           </form>
         </Form>

@@ -130,6 +130,24 @@ model CourseTag {
   @@id([course_id, tag_id])
 }
 
+model ContactMessage {
+  id          String   @id @default(cuid())
+  fullName    String
+  email       String
+  phone       String?
+  title       String
+  message     String
+  status      MessageStatus   @default(PENDING)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+enum MessageStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+}
+
 // ✅
 enum Role {
   USER
