@@ -81,7 +81,9 @@ const MessagesPage = async (props: Props) => {
           <TableBody className="text[#5A6A85]">
             {messages?.map((message, index) => (
               <TableRow key={index} className="h-[72px] text[#5A6A85] text-sm">
-                <TableCell>{convertToPersianNumbers(index + 1)}</TableCell>
+                <TableCell className="text-xs font-normal">
+                  {convertToPersianNumbers(index + 1)}
+                </TableCell>
                 <TableCell>{message.title}</TableCell>
                 <TableCell className="font-sans text-gray-600">
                   {message.email}

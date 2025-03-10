@@ -15,6 +15,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { TooltipWrapper } from "@/components/common/TooltipWrapper";
 
 interface ActionGroupProps {
   onEdit?: () => void;
@@ -43,32 +44,39 @@ export const ActionGroup = ({
   return (
     <span className="flex items-center gap-x-1">
       {/* Edit Action */}
+
       {onEdit && (
-        <span
-          className="cursor-pointer text-action-success hover:text-white hover:bg-action-success p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center"
-          onClick={onEdit}
-        >
-          <HiOutlinePencilSquare className="size-5" />
-        </span>
+        <TooltipWrapper label="ویرایش">
+          <span
+            className="cursor-pointer text-action-success hover:text-white hover:bg-action-success p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center"
+            onClick={onEdit}
+          >
+            <HiOutlinePencilSquare className="size-5" />
+          </span>
+        </TooltipWrapper>
       )}
 
       {/* View Action */}
       {onView && (
-        <span
-          className="cursor-pointer text-action-info hover:text-white hover:bg-action-info p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center"
-          onClick={onView}
-        >
-          <HiOutlineEye className="size-5" />
-        </span>
+        <TooltipWrapper label="مشاهده">
+          <span
+            className="cursor-pointer text-action-info hover:text-white hover:bg-action-info p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center"
+            onClick={onView}
+          >
+            <HiOutlineEye className="size-5" />
+          </span>
+        </TooltipWrapper>
       )}
 
       {/* Delete Action */}
       {onDelete && (
         <AlertDialog>
           <AlertDialogTrigger>
-            <span className="cursor-pointer text-action-error hover:text-white hover:bg-action-error p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center">
-              <HiOutlineTrash className="size-5" />
-            </span>
+            <TooltipWrapper label="حدف">
+              <span className="cursor-pointer text-action-error hover:text-white hover:bg-action-error p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center">
+                <HiOutlineTrash className="size-5" />
+              </span>
+            </TooltipWrapper>
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
