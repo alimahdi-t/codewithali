@@ -1,7 +1,7 @@
 "use client";
 
 import "./styles.css"; // Styles for code editor
-import { useEditor, EditorContent, Editor } from "@tiptap/react";
+import { Editor, EditorContent, useEditor } from "@tiptap/react";
 import Typography from "@tiptap/extension-typography";
 import StarterKit from "@tiptap/starter-kit";
 import Superscript from "@tiptap/extension-superscript";

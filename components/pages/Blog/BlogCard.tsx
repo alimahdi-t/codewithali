@@ -2,7 +2,7 @@ import { Post, Tag as ITag, User } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import moment from "jalali-moment";
-import { convertToPersianNumbers } from "@/utils";
+import { convertToPersianNumbers, extractTextFromHTML } from "@/utils";
 import Image from "next/image";
 import Tag from "@/components/common/Tag";
 import ILink from "@/components/common/ILink";
@@ -65,7 +65,7 @@ const BlogCard = ({ post, className, ...props }: Props) => {
             </Link>
           </h3>
           <p className="mt-3 line-clamp-3 text-sm leading-6 text-gray-600">
-            {post.content}
+            {extractTextFromHTML(post.content)}
           </p>
         </div>
 

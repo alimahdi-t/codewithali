@@ -2,13 +2,15 @@
 
 import { GetPostParams } from "@/actions/shared.types";
 import prisma from "@/lib/prisma";
-import { Post } from "@prisma/client";
 
-export async function getPost({ slug }: GetPostParams): Promise<Post | null> {
+export async function getPost({ slug }: GetPostParams) {
   try {
     return await prisma.post.findFirst({
       where: {
         slug,
+      },
+      include: {
+        author: true,
       },
     });
   } catch (error) {
