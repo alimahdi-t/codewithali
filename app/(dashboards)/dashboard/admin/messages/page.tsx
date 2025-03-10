@@ -9,12 +9,12 @@ import {
 } from "@/components/ui/table";
 import moment from "jalali-moment";
 import { MessageStatus } from "@/app/(dashboards)/dashboard/admin/messages/MessageStatus";
-import { ActionGroup } from "@/app/(dashboards)/dashboard/admin/messages/ActionGroup";
 import Pagination from "@/components/shared/Pagination";
 import { getContactMessages } from "@/actions/getContactMessages.action";
 import { toast } from "sonner";
 import { StatisticsCard } from "@/app/(dashboards)/dashboard/admin/messages/_components/StatisticsCard";
 import { GetContactMessages } from "@/actions/shared.types";
+import { MessageActions } from "@/app/(dashboards)/dashboard/admin/messages/[id]/MessageActions";
 
 interface Props {
   searchParams: Promise<GetContactMessages>;
@@ -95,7 +95,7 @@ const MessagesPage = async (props: Props) => {
                   )}
                 </TableCell>
                 <TableCell>
-                  <ActionGroup />
+                  <MessageActions message={message} />
                 </TableCell>
               </TableRow>
             ))}

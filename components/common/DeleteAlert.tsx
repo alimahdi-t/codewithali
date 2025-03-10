@@ -29,7 +29,7 @@ const DeleteAlert = ({
   onConfirm,
   triggerText = "حذف",
   triggerClassName = "w-full text-start rounded-sm px-2 py-1.5 text-sm outline-hidden hover:bg-red-500/10 text-red-500",
-  confirmClassName = "bg-red-500",
+  confirmClassName = "bg-red-500 hover:bg-red-400",
 }: DeleteAlertProps) => {
   return (
     <AlertDialog>
