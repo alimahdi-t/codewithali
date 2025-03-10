@@ -20,7 +20,6 @@ const BlogPost = async (props: Props) => {
   if (!post) {
     return null;
   }
-  console.log(post);
   const m = moment(post.createAt).locale("fa");
   return (
     <div className="max-w-5xl mx-auto bg-white shadow rounded-lg">
