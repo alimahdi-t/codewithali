@@ -8,13 +8,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import moment from "jalali-moment";
-import { MessageStatus } from "@/app/(dashboards)/dashboard/admin/messages/MessageStatus";
+import { MessageStatus } from "@/app/(dashboards)/dashboard/admin/messages/_components/MessageStatus";
 import Pagination from "@/components/shared/Pagination";
 import { getContactMessages } from "@/actions/getContactMessages.action";
 import { toast } from "sonner";
 import { StatisticsCard } from "@/app/(dashboards)/dashboard/admin/messages/_components/StatisticsCard";
 import { GetContactMessages } from "@/actions/shared.types";
-import { MessageActions } from "@/app/(dashboards)/dashboard/admin/messages/[id]/MessageActions";
+import { MessageActions } from "@/app/(dashboards)/dashboard/admin/messages/_components/MessageActions";
 
 interface Props {
   searchParams: Promise<GetContactMessages>;
@@ -37,7 +37,7 @@ const MessagesPage = async (props: Props) => {
   }
 
   const { messages, statusCountMap, totalMessages, filteredMessagesCount } =
-    await response;
+    response;
 
   return (
     <div className="rounded-xl p-4 bg-white shadow-sm">
@@ -81,7 +81,7 @@ const MessagesPage = async (props: Props) => {
           <TableBody className="text[#5A6A85]">
             {messages?.map((message, index) => (
               <TableRow key={index} className="h-[72px] text[#5A6A85] text-sm">
-                <TableCell>{convertToPersianNumbers(index)}</TableCell>
+                <TableCell>{convertToPersianNumbers(index + 1)}</TableCell>
                 <TableCell>{message.title}</TableCell>
                 <TableCell className="font-sans text-gray-600">
                   {message.email}

@@ -1,5 +1,5 @@
 "use client";
-import { ActionGroup } from "@/app/(dashboards)/dashboard/admin/messages/ActionGroup";
+import { ActionGroup } from "@/components/common/ActionGroup";
 import { ContactMessage } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";

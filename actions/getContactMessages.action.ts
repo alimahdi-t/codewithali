@@ -6,7 +6,7 @@ import { GetContactMessages } from "@/actions/shared.types";
 
 export async function getContactMessages(params: GetContactMessages) {
   const { pageSize = 12, page = 1, status } = params;
-
+  //TODO: add sort filters
   try {
     // Get the total number of messages (regardless of filter)
     const totalMessages = await prisma.contactMessage.count();
@@ -25,6 +25,9 @@ export async function getContactMessages(params: GetContactMessages) {
       },
       skip: (page - 1) * pageSize,
       take: pageSize,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
 
     // Get the count of each status
