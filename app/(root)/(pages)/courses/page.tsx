@@ -6,7 +6,7 @@ import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
 import NoResult from "@/components/shared/NoResult";
 import { NoCourseFound } from "@/constants/Icons";
 import { GetAllCoursesParams } from "@/actions/shared.types";
-import { getCourses } from "@/actions/getCourses.action";
+import { getCourses } from "@/actions/courses/get-courses.action";
 import Pagination from "@/components/shared/Pagination";
 import { courseSortFilter } from "@/constants/filters";
 

@@ -1,13 +1,13 @@
 "use server";
 
-import { ContactMessageSchema } from "@/schema";
+import { CreateContactMessageSchema } from "@/schema";
 import { z } from "zod";
 import prisma from "@/lib/prisma";
 
 export async function createContactMessage(
-  values: z.infer<typeof ContactMessageSchema>,
+  values: z.infer<typeof CreateContactMessageSchema>,
 ) {
-  const validateFields = ContactMessageSchema.safeParse(values);
+  const validateFields = CreateContactMessageSchema.safeParse(values);
 
   if (!validateFields.success) {
     return { error: "ورودی نامعتبر هست!" };

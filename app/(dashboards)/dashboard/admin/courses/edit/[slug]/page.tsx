@@ -1,4 +1,4 @@
-import { getCourseBySlug } from "@/actions/getCourseBySlug.action";
+import { getCourseBySlug } from "@/actions/courses/get-course-by-slug.action";
 import { notFound } from "next/navigation";
 import CourseForm from "@/components/forms/CourseForm";
 

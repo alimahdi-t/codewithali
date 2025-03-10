@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { EditUserSchema } from "@/schema/editUser.schema";
+import { EditUserSchema } from "@/schema/edit-user.schema";
 
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { getPosts } from "@/actions/getPosts";
+import { getPostsAction } from "@/actions/posts/get-posts.action";
 import {
   Table,
   TableBody,
@@ -20,7 +20,7 @@ import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import DeletePostButton from "@/app/(dashboards)/dashboard/admin/posts/DeletePostButton";
 
 const PostsPage = async () => {
-  const posts = await getPosts();
+  const posts = await getPostsAction();
 
   if (!posts || "error" in posts || posts.length === 0) {
     return <p className="text-red-500">هیچ مقاله‌ای یافت نشد.</p>;

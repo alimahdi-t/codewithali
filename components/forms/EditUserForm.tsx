@@ -1,5 +1,5 @@
 "use client";
-import { EditUserSchema } from "@/schema/editUser.schema";
+import { EditUserSchema } from "@/schema/edit-user.schema";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";

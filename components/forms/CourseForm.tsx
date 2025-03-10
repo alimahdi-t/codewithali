@@ -27,9 +27,9 @@ import { CourseLevels, CourseStatusValue } from "@/constants";
 import { useRouter } from "next/navigation";
 import Loader from "@/components/common/Loader";
 import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
-import { createCourse } from "@/actions/createCourse.action";
+import { createCourse } from "@/actions/courses/create-course.action";
 import { CreateCourseSchema, EditCourseSchema } from "@/schema";
-import { editCourse } from "@/actions/editCourse.action";
+import { editCourse } from "@/actions/courses/edit-course.action";
 import { toast } from "sonner";
 
 interface CourseFormProps {

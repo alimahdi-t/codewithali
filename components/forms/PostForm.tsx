@@ -4,7 +4,7 @@ import { z } from "zod";
 import { CreatePostSchema, EditPostSchema } from "@/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createPost } from "@/actions/createPost";
+import { createPostAction } from "@/actions/posts/create-post.action";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Tag } from "@prisma/client";
@@ -93,7 +93,7 @@ export default function PostForm({
     } else {
       try {
         // TODO: Remember to add a select component to show only the authors, and the user will be able to select between them
-        const response = await createPost({
+        const response = await createPostAction({
           title: data.title,
           slug: data.slug,
           imageUrl: data.imageUrl,

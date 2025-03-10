@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ContactMessageSchema } from "@/schema";
+import { CreateContactMessageSchema } from "@/schema";
 import Loader from "@/components/common/Loader";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -28,7 +28,7 @@ import { toast } from "sonner";
 
 const Contact = () => {
   const [isPending, startTransition] = useTransition();
-  const FormSchema = ContactMessageSchema;
+  const FormSchema = CreateContactMessageSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: "onTouched",

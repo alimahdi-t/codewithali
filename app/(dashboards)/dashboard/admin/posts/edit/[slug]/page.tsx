@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { getPost } from "@/actions/getPost.action";
+import { getPost } from "@/actions/posts/getPost.action";
 import PostForm from "@/components/forms/PostForm";
 
 interface Props {

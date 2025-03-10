@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const ContactMessageSchema = z.object({
+export const CreateContactMessageSchema = z.object({
   fullName: z
     .string()
     .min(3, "نام باید حداقل ۳ کاراکتر باشد")

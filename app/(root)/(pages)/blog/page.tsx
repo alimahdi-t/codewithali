@@ -1,5 +1,5 @@
 import BlogCard from "@/components/pages/Blog/BlogCard";
-import { getPosts } from "@/actions/getPosts";
+import { getPostsAction } from "@/actions/posts/get-posts.action";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { postSortFilter } from "@/constants/filters";
@@ -8,7 +8,7 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import NoResult from "@/components/shared/NoResult";
 
 const Blog = async () => {
-  const posts = await getPosts();
+  const posts = await getPostsAction();
   if (!posts) {
     return <p>Loading...</p>;
   }

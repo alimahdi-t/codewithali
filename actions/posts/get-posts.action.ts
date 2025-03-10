@@ -10,7 +10,7 @@ type PostWithRelations = Post & {
 
 type GetPostsResponse = PostWithRelations[] | null;
 
-export async function getPosts(): Promise<GetPostsResponse> {
+export async function getPostsAction(): Promise<GetPostsResponse> {
   try {
     const posts = await prisma.post.findMany({
       include: {
