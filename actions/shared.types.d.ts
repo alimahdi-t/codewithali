@@ -68,6 +68,10 @@ export interface DeleteContactMessageParams {
   id: string;
 }
 
+export interface GetContactMessageParams {
+  id: string;
+}
+
 export type GetUserParams =
   | { id: number; username?: never; email?: never }
   | { id?: never; username: string; email?: never }

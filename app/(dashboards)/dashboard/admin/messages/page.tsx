@@ -10,7 +10,7 @@ import {
 import moment from "jalali-moment";
 import { MessageStatus } from "@/app/(dashboards)/dashboard/admin/messages/_components/MessageStatus";
 import Pagination from "@/components/shared/Pagination";
-import { getContactMessages } from "@/actions/getContactMessages.action";
+import { getContactMessages } from "@/actions/messages/get-contact-messages.action";
 import { toast } from "sonner";
 import { StatisticsCard } from "@/app/(dashboards)/dashboard/admin/messages/_components/StatisticsCard";
 import { GetContactMessages } from "@/actions/shared.types";

@@ -4,7 +4,9 @@ import prisma from "@/lib/prisma";
 import { DeleteContactMessageParams } from "@/actions/shared.types";
 import { revalidatePath } from "next/cache";
 
-export async function deleteContactMessage({ id }: DeleteContactMessageParams) {
+export async function deleteContactMessageAction({
+  id,
+}: DeleteContactMessageParams) {
   try {
     await prisma.contactMessage.delete({
       where: {

@@ -7,3 +7,4 @@ export * from "./editCourse.schema";
 export * from "./editPost.Schema";
 export * from "./change-password.schema";
 export * from "./reset.schema";
+export * from "./send-message-answer.schema";

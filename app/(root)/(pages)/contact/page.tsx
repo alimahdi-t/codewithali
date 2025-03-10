@@ -23,7 +23,7 @@ import {
   MapsLocation01Icon,
 } from "@/public/assets/icons/hugeIcons";
 import { useTransition } from "react";
-import { createContactMessage } from "@/actions/createContactMessage.action";
+import { createContactMessage } from "@/actions/messages/create-contact-message.action";
 import { toast } from "sonner";
 
 const Contact = () => {
