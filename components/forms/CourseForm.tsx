@@ -31,6 +31,9 @@ import { createCourse } from "@/actions/courses/create-course.action";
 import { CreateCourseSchema, EditCourseSchema } from "@/schema";
 import { editCourse } from "@/actions/courses/edit-course.action";
 import { toast } from "sonner";
+import { useEffect, useState } from "react";
+import { User } from "@prisma/client";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface CourseFormProps {
   initialData?: z.infer<typeof EditCourseSchema>; // For edit mode: data for pre-filling the form when editing an existing course
@@ -41,6 +44,17 @@ interface CourseFormProps {
 
 const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
   const router = useRouter();
+  const [instructors, setInstructors] = useState<undefined | User[]>();
+  const currentUser = useCurrentUser();
+
+  useEffect(() => {
+    fetch("/api/users")
+      .then((res) => res.json())
+      .then((data) => {
+        setInstructors(data);
+        console.log(data);
+      });
+  }, []);
 
   const FormSchema = type === "edit" ? EditCourseSchema : CreateCourseSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -55,7 +69,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
       status: "ONGOING",
       level: "BEGINNER",
       price: "",
-      instructorId: "",
+      instructorId: currentUser?.id,
     },
   });
 
@@ -284,8 +298,6 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
                 )}
               />
             </div>
-            {/*TODO: Make this A Select witch fetch the instructors*/}
-            {/*Todo: If instructor, id will set automatically */}
             {role === "admin" && (
               <FormField
                 control={form.control}
@@ -293,10 +305,35 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      ایدی مدرس
+                      انتخاب مدرس
                     </FormLabel>
                     <FormControl>
-                      <Input type="text" className="leading-6" {...field} />
+                      <Select
+                        onValueChange={(value) =>
+                          form.setValue("instructorId", value)
+                        }
+                        defaultValue={currentUser?.id as string}
+                        value={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="انتخاب مدرس" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectGroup>
+                            {instructors?.map((instructor) => (
+                              <SelectItem
+                                key={instructor.id}
+                                value={instructor.id.toString()}
+                              >
+                                {instructor.firstName.concat(
+                                  " ",
+                                  instructor.lastName,
+                                )}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        </SelectContent>
+                      </Select>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -305,13 +342,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
             )}
 
             <div>
-              <Button
-                disabled={!form.formState.isValid}
-                type="submit"
-                className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm
-                  text-white bg-brand-500 hover:bg-brand-600
-                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
-              >
+              <Button disabled={!form.formState.isValid} type="submit">
                 {form.formState.isSubmitting ? (
                   <Loader />
                 ) : type === "edit" ? (

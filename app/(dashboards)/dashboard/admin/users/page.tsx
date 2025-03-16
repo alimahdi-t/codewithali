@@ -19,7 +19,7 @@ import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import { getUsers } from "@/actions/getUsers";
 
 const UsersList = async () => {
-  const users = await getUsers();
+  const users = await getUsers({});
 
   return (
     <div className="w-full">
