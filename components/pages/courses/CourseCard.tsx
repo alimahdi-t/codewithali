@@ -6,28 +6,27 @@ import {
 } from "@/utils";
 import TomanIcon from "@/components/common/TomanIcon";
 import DiscountTag from "@/components/pages/courses/DiscountTag";
-import { Course, User } from "@prisma/client";
+import { Course, Discount, User } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import ILink from "@/components/common/ILink";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 
-interface ExtendedCourse
-  extends Omit<Course, "content" | "instructorId" | "createdAt" | "updateAt"> {
+interface ExtendedCourse extends Course {
   instructor: Pick<
     User,
     "id" | "firstName" | "lastName" | "imageUrl" | "username"
   >;
+  discount: Discount | null;
 }
 
 interface Props {
   course: ExtendedCourse;
   className?: string;
-  discount?: number;
 }
 
-const CourseCard = ({ course, className, discount = 0, ...props }: Props) => {
+const CourseCard = ({ course, className, ...props }: Props) => {
   return (
     <article
       key={course.id}
@@ -38,7 +37,7 @@ const CourseCard = ({ course, className, discount = 0, ...props }: Props) => {
       {...props}
     >
       {/*--------------- Card Header ---------------*/}
-      <DiscountTag discount={discount!} />
+      <DiscountTag discount={course.discount?.percentage} />
       <div className="relative w-full">
         <Link href={`/courses/${course.slug}`}>
           <Image
@@ -95,7 +94,7 @@ const CourseCard = ({ course, className, discount = 0, ...props }: Props) => {
 
         <div className="flex flex-col items-end">
           <p className="font-bold text-xs line-through text-gray-400">
-            {course.price !== 0 && discount !== 0
+            {course.price !== 0 && course.discount?.percentage !== 0
               ? convertToPersianAndFormat(course.price)
               : " "}
           </p>
@@ -108,14 +107,14 @@ const CourseCard = ({ course, className, discount = 0, ...props }: Props) => {
             </div>
 
             <p className="font-extrabold text-base text-brand-700 flex gap-1 items-center">
-              {course.price === 0 || discount === 100 ? (
+              {course.price === 0 || course.discount?.percentage === 100 ? (
                 "رایگان!"
               ) : (
                 <>
                   {convertToPersianAndFormat(
                     calculateDiscount(course.price, {
                       amount: 0,
-                      percentage: discount,
+                      percentage: course.discount?.percentage,
                     }),
                   )}
                   <TomanIcon className=" stroke-gray-800" />

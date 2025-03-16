@@ -16,11 +16,13 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { TooltipWrapper } from "@/components/common/TooltipWrapper";
+import { DiscountIcon } from "@/public/assets/icons/hugeIcons";
 
 interface ActionGroupProps {
   onEdit?: () => void;
   onView?: () => void;
   onDelete?: () => void;
+  onAddDiscount?: () => void;
   deleteAlertProps: {
     title?: string;
     description?: string;
@@ -33,6 +35,7 @@ export const ActionGroup = ({
   onEdit,
   onView,
   onDelete,
+  onAddDiscount,
   deleteAlertProps,
 }: ActionGroupProps) => {
   const {
@@ -52,6 +55,19 @@ export const ActionGroup = ({
             onClick={onEdit}
           >
             <HiOutlinePencilSquare className="size-5" />
+          </span>
+        </TooltipWrapper>
+      )}
+
+      {/* add Discount Action */}
+
+      {onEdit && (
+        <TooltipWrapper label="افزودن تخفیف">
+          <span
+            className="cursor-pointer text-action-warning hover:text-white hover:bg-action-warning p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center"
+            onClick={onAddDiscount}
+          >
+            <DiscountIcon className="size-5" />
           </span>
         </TooltipWrapper>
       )}

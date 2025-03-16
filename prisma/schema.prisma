@@ -16,7 +16,7 @@ model User {
   imageUrl    String?
   email       String?  @unique
   password    String?
-  phoneNumber String?
+  phoneNumber String?  @unique
   role        Role     @default(USER)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -143,7 +143,6 @@ model ContactMessage {
 model Discount {
   id         String    @id @default(cuid())
   percentage Int
-  startsAt   DateTime  @default(now())
   expiresAt  DateTime?
   createdAt  DateTime  @default(now())
   Course     Course[]

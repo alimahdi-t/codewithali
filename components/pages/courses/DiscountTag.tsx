@@ -1,6 +1,6 @@
 import { convertToPersianAndFormat } from "@/utils";
 
-const DiscountTag = ({ discount = 0 }: { discount: number }) => {
+const DiscountTag = ({ discount = 0 }: { discount: number | undefined }) => {
   if (discount === 0) return null;
   return (
     <div className="absolute">

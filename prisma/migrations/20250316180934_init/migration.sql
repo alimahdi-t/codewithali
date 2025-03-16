@@ -113,7 +113,6 @@ CREATE TABLE "ContactMessage" (
 CREATE TABLE "Discount" (
     "id" TEXT NOT NULL PRIMARY KEY,
     "percentage" INTEGER NOT NULL,
-    "startsAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "expiresAt" DATETIME,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -131,6 +130,9 @@ CREATE UNIQUE INDEX "User_username_key" ON "User"("username");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_phoneNumber_key" ON "User"("phoneNumber");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_userId_key" ON "Account"("userId");

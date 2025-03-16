@@ -12,5 +12,5 @@ export async function GET(request: NextRequest) {
     (user) => user.role === "ADMIN" || user.role === "INSTRUCTOR",
   );
 
-  return NextResponse.json(users);
+  return NextResponse.json(filteredUsers);
 }

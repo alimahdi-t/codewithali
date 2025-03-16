@@ -31,6 +31,17 @@ export const editUser = async (values: z.infer<typeof EditUserSchema>) => {
       }
     }
 
+    const existingPhoneNumber = await prisma.user.findFirst({
+      where: {
+        phoneNumber: validatedFields.data.phoneNumber,
+        email: { not: validatedFields.data.email },
+      },
+    });
+
+    if (existingPhoneNumber) {
+      return { error: "این شماره موبایل از قبل وجود دارد!" };
+    }
+
     const updatedUser = await prisma.user.update({
       where: { id: parseInt(user.id) },
       data: validatedFields.data, // فقط فیلدهای معتبر به‌روزرسانی می‌شوند

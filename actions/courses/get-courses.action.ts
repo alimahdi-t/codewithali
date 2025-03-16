@@ -45,15 +45,7 @@ export async function getCourses(params: GetAllCoursesParams) {
     return await prisma.course.findMany({
       where: filters,
       orderBy: orderOptions[orderBy] || { createdAt: "desc" },
-      select: {
-        id: true,
-        description: true,
-        slug: true,
-        title: true,
-        imageUrl: true,
-        level: true,
-        status: true,
-        price: true,
+      include: {
         instructor: {
           select: {
             id: true,
@@ -61,6 +53,14 @@ export async function getCourses(params: GetAllCoursesParams) {
             lastName: true,
             username: true,
             imageUrl: true,
+          },
+        },
+        discount: {
+          where: {
+            OR: [
+              { expiresAt: null }, // تخفیف بدون تاریخ انقضا
+              { expiresAt: { gte: new Date() } }, // تخفیف هنوز منقضی نشده
+            ],
           },
         },
       },

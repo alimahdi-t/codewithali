@@ -7,9 +7,11 @@ import { deleteCourseAction } from "@/actions/courses/delete-course.action";
 
 export const CourseActions = ({ courseSlug }: { courseSlug: string }) => {
   const router = useRouter();
+
   const onView = () => {
     router.push(`/courses/${courseSlug}`);
   };
+
   const onDelete = async () => {
     await deleteCourseAction({ slug: courseSlug }).then((response) => {
       if (response.success) {
@@ -25,11 +27,16 @@ export const CourseActions = ({ courseSlug }: { courseSlug: string }) => {
     router.push(`/dashboard/admin/courses/edit/${courseSlug}`);
   };
 
+  const onAddDiscount = () => {
+    //TODO
+  };
+
   return (
     <ActionGroup
       onView={onView}
       onDelete={onDelete}
       onEdit={onEdit}
+      onAddDiscount={onAddDiscount}
       deleteAlertProps={{}}
     />
   );
