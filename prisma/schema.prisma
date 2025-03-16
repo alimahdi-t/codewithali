@@ -3,16 +3,16 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 // ✅
 model User {
   id          Int      @id @default(autoincrement())
   username    String?  @unique
-  firstName   String   @db.VarChar(32)
-  lastName    String   @db.VarChar(32)
+  firstName   String
+  lastName    String
   imageUrl    String?
   email       String?  @unique
   password    String?
@@ -37,12 +37,12 @@ model Account {
   type                     String
   provider                 String
   providerAccountId        String
-  refresh_token            String? @db.Text
-  access_token             String? @db.Text
+  refresh_token            String?
+  access_token             String?
   expires_at               Int?
   token_type               String?
   scope                    String?
-  id_token                 String? @db.Text
+  id_token                 String?
   session_state            String?
   refresh_token_expires_in Int?
   user                     User?   @relation(fields: [userId], references: [id])
@@ -73,8 +73,8 @@ model Course {
   id           Int          @id @default(autoincrement())
   slug         String       @unique
   title        String
-  description  String       @db.VarChar(500)
-  content      String       @db.Text
+  description  String
+  content      String
   imageUrl     String
   level        Level
   status       CourseStatus
@@ -94,8 +94,8 @@ model Course {
 model Post {
   id           Int      @id @default(autoincrement())
   slug         String   @unique
-  title        String   @db.VarChar(255)
-  content      String   @db.Text
+  title        String
+  content      String
   imageUrl     String
   createAt     DateTime @default(now())
   updatedAt    DateTime @updatedAt
