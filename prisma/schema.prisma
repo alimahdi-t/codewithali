@@ -14,12 +14,12 @@ model User {
   firstName   String   @db.VarChar(32)
   lastName    String   @db.VarChar(32)
   imageUrl    String?
-  email       String?         @unique
+  email       String?  @unique
   password    String?
   phoneNumber String?
   role        Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   bio         String?
 
   // Relations
@@ -31,10 +31,9 @@ model User {
   accounts      Account[]
 }
 
-
 model Account {
   id                       String  @id @default(cuid())
-  userId                   Int  @unique
+  userId                   Int     @unique
   type                     String
   provider                 String
   providerAccountId        String
@@ -83,28 +82,29 @@ model Course {
   createdAt    DateTime     @default(now())
   updateAt     DateTime     @updatedAt
   instructorId Int
-
+  discountId   String
   //Relations
-  instructor User        @relation(fields: [instructorId], references: [id])
-  Enrolment  Enrolment[]
-  tag        CourseTag[]
+  discount     Discount     @relation(fields: [discountId], references: [id], onDelete: Cascade)
+  instructor   User         @relation(fields: [instructorId], references: [id])
+  Enrolment    Enrolment[]
+  tag          CourseTag[]
 }
 
 // ✅
 model Post {
-  id        Int      @id @default(autoincrement())
-  slug      String   @unique
-  title     String   @db.VarChar(255)
-  content   String   @db.Text
-  imageUrl  String
-  createAt  DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  authorId  Int
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique
+  title        String   @db.VarChar(255)
+  content      String   @db.Text
+  imageUrl     String
+  createAt     DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  authorId     Int
   isEditorPick Boolean? @default(false)
-  readingTime Int
+  readingTime  Int
 
   // Relations
-  author User @relation(fields: [authorId], references: [id])
+  author User  @relation(fields: [authorId], references: [id])
   tags   Tag[] // ✅ Many-to-many without a junction table
 }
 
@@ -115,8 +115,6 @@ model Tag {
   posts   Post[]
   courses CourseTag[]
 }
-
-
 
 // ✅
 model CourseTag {
@@ -131,15 +129,23 @@ model CourseTag {
 }
 
 model ContactMessage {
-  id          String   @id @default(cuid())
-  fullName    String
-  email       String
-  phone       String?
-  title       String
-  message     String
-  status      MessageStatus   @default(PENDING)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String        @id @default(cuid())
+  fullName  String
+  email     String
+  phone     String?
+  title     String
+  message   String
+  status    MessageStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Discount {
+  id         String    @id @default(cuid())
+  percentage Int
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
+  Course Course[]
 }
 
 enum MessageStatus {
