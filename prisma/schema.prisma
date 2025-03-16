@@ -82,9 +82,9 @@ model Course {
   createdAt    DateTime     @default(now())
   updateAt     DateTime     @updatedAt
   instructorId Int
-  discountId   String
+  discountId   String?
   //Relations
-  discount     Discount     @relation(fields: [discountId], references: [id], onDelete: Cascade)
+  discount     Discount?     @relation(fields: [discountId], references: [id], onDelete: Cascade)
   instructor   User         @relation(fields: [instructorId], references: [id])
   Enrolment    Enrolment[]
   tag          CourseTag[]
@@ -143,9 +143,10 @@ model ContactMessage {
 model Discount {
   id         String    @id @default(cuid())
   percentage Int
+  startsAt   DateTime  @default(now())
   expiresAt  DateTime?
   createdAt  DateTime  @default(now())
-  Course Course[]
+  Course     Course[]
 }
 
 enum MessageStatus {

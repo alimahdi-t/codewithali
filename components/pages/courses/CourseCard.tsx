@@ -27,7 +27,7 @@ interface Props {
   discount?: number;
 }
 
-const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
+const CourseCard = ({ course, className, discount = 0, ...props }: Props) => {
   return (
     <article
       key={course.id}
@@ -95,7 +95,9 @@ const CourseCard = ({ course, className, discount = 35, ...props }: Props) => {
 
         <div className="flex flex-col items-end">
           <p className="font-bold text-xs line-through text-gray-400">
-            {convertToPersianAndFormat(course.price)}
+            {course.price !== 0 && discount !== 0
+              ? convertToPersianAndFormat(course.price)
+              : " "}
           </p>
           <div className="w-full text-gray-400 flex justify-between items-center text-xs">
             <div className="flex items-center gap-x-1 ">
