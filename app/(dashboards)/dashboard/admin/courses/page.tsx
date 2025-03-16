@@ -2,6 +2,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
@@ -10,16 +11,6 @@ import { getCourses } from "@/actions/courses/get-courses.action";
 import { convertToPersianNumbers } from "@/utils";
 import CourseLevel from "@/components/CourseLevel";
 import Link from "next/link";
-import { HiOutlineEllipsisVertical } from "react-icons/hi2";
-
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarTrigger,
-} from "@/components/ui/menubar";
-import DeleteCourseButton from "@/app/(dashboards)/dashboard/admin/courses/DeleteCourseButton";
 import {
   Select,
   SelectContent,
@@ -28,6 +19,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { CourseActions } from "@/app/(dashboards)/dashboard/admin/courses/_components/CourseAction";
 
 const CoursesListPage = async () => {
   const courses = await getCourses({});
@@ -49,25 +41,6 @@ const CoursesListPage = async () => {
       </div>
 
       {/* ✅ Courses Table */}
-      {/*<Card>*/}
-      {/*  <CardHeader>*/}
-      {/*    <CardTitle>لیست دوره‌ها</CardTitle>*/}
-      {/*    <div className="flex items-center justify-between">*/}
-      {/*      <CardDescription>*/}
-      {/*        لیست تمام دوره‌ها، برای مشاهده مشخصات آنها با کلیک بر روی آن وارد*/}
-      {/*        صحفه آن دوره شوید.*/}
-      {/*      </CardDescription>*/}
-      {/*      <Button*/}
-      {/*        variant="default"*/}
-      {/*        size="sm"*/}
-      {/*        className="flex items-center gap-x-1.5 leading-5 text-sm font-normal"*/}
-      {/*      >*/}
-      {/*        <HiOutlinePlus className="size-4 text-white" />*/}
-      {/*        <span> افزودن دوره</span>*/}
-      {/*      </Button>*/}
-      {/*    </div>*/}
-      {/*  </CardHeader>*/}
-      {/*  <CardContent>*/}
       <div className="mt-8 flex flex-col gap-y-4">
         <div className="flex gap-x-4">
           <Select dir="rtl">
@@ -95,24 +68,30 @@ const CoursesListPage = async () => {
         <div className="flow-root px-4 py-4 bg-white shadow  rounded-lg">
           <div className="inline-block min-w-full py-2 align-middle">
             <Table>
-              <TableHeader>
+              <TableHeader className="align-middle">
                 <TableRow className="font-semibold select-none text-sm text-gray-900">
-                  <TableCell></TableCell>
-                  <TableCell>دوره</TableCell>
-                  <TableCell>مدرس</TableCell>
-                  <TableCell>قیمت</TableCell>
-                  <TableCell className="max-md:hidden">سطح دوره</TableCell>
-                  <TableCell className="max-md:hidden">وضعیت دوره</TableCell>
-                  <TableCell></TableCell>
+                  <TableHead className="w-24 text-start">ردیف</TableHead>
+                  <TableHead className="text-start">عنوان</TableHead>
+                  <TableHead className="text-start">مدرس</TableHead>
+                  <TableHead className="text-start">قیمت</TableHead>
+                  <TableHead className="max-md:hidden text-start">
+                    سطح دوره
+                  </TableHead>
+                  <TableHead className="max-md:hidden text-start">
+                    وضعیت دوره
+                  </TableHead>
+                  <TableHead className="text-start">عملیات</TableHead>
                 </TableRow>
               </TableHeader>
-              <TableBody className="text-sm font-normal">
+              <TableBody className="text[#5A6A85]">
                 {courses.map((course, index) => (
                   <TableRow
                     key={course.id}
-                    className="border-gray-200/50 h-12 hover:bg-gray-100"
+                    className="h-[72px] text[#5A6A85] text-sm"
                   >
-                    <TableCell>{convertToPersianNumbers(index)}</TableCell>
+                    <TableCell className="text-xs font-normal">
+                      {convertToPersianNumbers(index + 1)}
+                    </TableCell>
                     <TableCell>
                       <Link
                         href={`/courses/${course.slug}`}
@@ -139,32 +118,7 @@ const CoursesListPage = async () => {
                       {course.status}
                     </TableCell>
                     <TableCell className="text-gray-600 cursor-pointer">
-                      <Menubar
-                        dir="rtl"
-                        className="border-none bg-transparent justify-center px-0 py-0"
-                      >
-                        <MenubarMenu>
-                          <MenubarTrigger
-                            asChild
-                            className="bg-transparent p-0 border-none cursor-pointer remove-all"
-                          >
-                            <HiOutlineEllipsisVertical className="w-6 h-6" />
-                          </MenubarTrigger>
-                          <MenubarContent>
-                            <Link href={`/courses/${course.slug}`}>
-                              <MenubarItem>مشاهده</MenubarItem>
-                            </Link>
-                            <Link
-                              href={`/dashboard/admin/courses/edit/${course.slug}`}
-                            >
-                              <MenubarItem>ویرایش</MenubarItem>
-                            </Link>
-                            <MenubarItem asChild className="text-red-500">
-                              <DeleteCourseButton courseId={course.id} />
-                            </MenubarItem>
-                          </MenubarContent>
-                        </MenubarMenu>
-                      </Menubar>
+                      <CourseActions courseSlug={course.slug} />
                     </TableCell>
                   </TableRow>
                 ))}

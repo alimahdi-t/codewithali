@@ -49,7 +49,7 @@ export interface CreatePostParams {
 }
 
 export interface DeleteCourseParams {
-  id: number;
+  slug: string;
 }
 
 export interface UpdatePostParams extends CreatePostParams {
