@@ -11,8 +11,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import {
   HiOutlineBookOpen,
+  HiOutlineCog6Tooth,
+  HiOutlineEnvelope,
   HiOutlineHome,
+  HiOutlineNewspaper,
+  HiOutlineSquares2X2,
   HiOutlineUser,
+  HiOutlineUserGroup,
   HiPower,
 } from "react-icons/hi2";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -33,12 +38,44 @@ export const UserButton = () => {
       </Link>
     );
   }
+
+  const adminNavs = [
+    { label: "داشبورد", path: "/dashboard/admin", icon: HiOutlineSquares2X2 },
+    {
+      label: "دروه ها",
+      path: "/dashboard/admin/courses",
+      icon: HiOutlineBookOpen,
+    },
+    {
+      label: "مقالات",
+      path: "/dashboard/admin/posts",
+      icon: HiOutlineNewspaper,
+    },
+    {
+      label: "کاربران",
+      path: "/dashboard/admin/users",
+      icon: HiOutlineUserGroup,
+    },
+    {
+      label: "پیام ها",
+      path: "/dashboard/admin/messages",
+      icon: HiOutlineEnvelope,
+    },
+    {
+      label: "تنظیمات حساب",
+      path: "/dashboard/admin/settings",
+      icon: HiOutlineCog6Tooth,
+    },
+  ];
+
   //TODO: Change the paths
-  const navs = [
+  const userNavs = [
     { label: "پروفایل", path: "/my-account", icon: HiOutlineHome },
     { label: "دوره‌های من", path: "/my-account", icon: HiOutlineBookOpen },
     { label: "جزئیات حساب", path: "/my-account", icon: HiOutlineUser },
   ];
+
+  const navs = user.role === "ADMIN" ? adminNavs : userNavs;
 
   return (
     <div>

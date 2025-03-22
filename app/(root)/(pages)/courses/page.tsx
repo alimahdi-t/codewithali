@@ -38,7 +38,7 @@ const CoursesPage = async (props: Props) => {
     <div className="w-full flex flex-col">
       <div className="w-full flex justify-between">
         <div className="flex gap-2 items-center">
-          <div className="bg-brand-500 w-5 h-5 rounded"></div>
+          <div className="bg-primary w-5 h-5 rounded"></div>
           <h2 className="c-text-h2">دوره‌ها</h2>
         </div>
 

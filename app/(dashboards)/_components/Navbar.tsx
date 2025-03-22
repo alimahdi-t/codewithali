@@ -1,4 +1,4 @@
-import Theme from "@/components/shared/Navbar/Theme";
+import ThemeButton from "@/components/common/ThemeButton";
 import ShowDate from "@/components/common/ShowDate";
 import { Logo } from "@/components/Logo";
 import React from "react";
@@ -29,7 +29,7 @@ const DashboardNavbar = () => {
               <span className="sr-only">View notifications</span>
             </button>
 
-            <Theme />
+            <ThemeButton />
             <span className="lg:hidden">
               <AdminMobileSideBar />
             </span>

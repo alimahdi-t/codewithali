@@ -9,7 +9,10 @@ import {
 } from "@/components/ui/sheet";
 import { navLinks } from "@/constants";
 import Link from "next/link";
-import Theme from "@/components/shared/Navbar/Theme";
+import ThemeButton from "@/components/common/ThemeButton";
+import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { Logo } from "@/components/Logo";
 
 const MobileNav = ({ className }: { className?: string }) => {
   return (
@@ -42,7 +45,7 @@ const MobileNav = ({ className }: { className?: string }) => {
                     Sparky
                   </h3>
                 </Link>
-                <Theme />
+                <ThemeButton />
               </div>
             </SheetTitle>
           </div>
@@ -72,9 +75,6 @@ const MobileNav = ({ className }: { className?: string }) => {
 };
 
 export default MobileNav;
-import * as React from "react";
-import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/Logo";
 
 function IconHamburgerMenu(props: React.SVGProps<SVGSVGElement>) {
   return (

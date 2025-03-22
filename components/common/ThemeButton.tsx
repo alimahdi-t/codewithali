@@ -11,19 +11,27 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Button } from "@/components/ui/button";
+import { Moon, Sun } from "lucide-react";
 
-const Theme = ({ className }: { className?: string }) => {
+const ThemeButton = ({ className }: { className?: string }) => {
   const { mode, setMode } = useTheme();
 
   return (
-    <Menubar asChild className={`relative border-none shadow-none p-2 `}>
+    <Menubar
+      asChild
+      className={`relative border-none shadow-none p-2 `}
+      dir="rtl"
+    >
       <MenubarMenu>
         <MenubarTrigger asChild className={`${className} `}>
-          <Button variant="ghost" className="cursor-pointer">
+          <Button
+            variant="ghost"
+            className="cursor-pointer p-0 rounded-full size-10"
+          >
             {mode === "light" ? (
-              <IconSun width={20} height={20} className="fill-yellow-500" />
+              <Sun className="size-5" />
             ) : (
-              <IconMoon width={20} height={20} className="fill-white" />
+              <Moon className="size-5" />
             )}
           </Button>
         </MenubarTrigger>
@@ -31,8 +39,7 @@ const Theme = ({ className }: { className?: string }) => {
           {themes.map((item) => (
             <MenubarItem
               key={item.value}
-              className="flex items-center gap-4 px-2.5 py-2 cursor-pointer
-                         focus:bg-brand-700/10 text-dark300_light950"
+              className="flex items-center gap-1 px-2.5 py-2 cursor-pointer"
               onClick={() => {
                 setMode(item.value);
                 if (item.value !== "system") {
@@ -42,9 +49,10 @@ const Theme = ({ className }: { className?: string }) => {
                 }
               }}
             >
+              <item.icon className="size-5" />
               <p
-                className={`body-semibold  ${
-                  mode === item.value ? "text-brand-500" : ""
+                className={`leading-5 ${
+                  mode === item.value ? "text-primary" : ""
                 }`}
               >
                 {item.label}
@@ -57,7 +65,7 @@ const Theme = ({ className }: { className?: string }) => {
   );
 };
 
-export default Theme;
+export default ThemeButton;
 
 function IconSun(props: React.SVGProps<SVGSVGElement>) {
   return (

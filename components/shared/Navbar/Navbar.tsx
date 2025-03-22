@@ -1,6 +1,6 @@
 "use client";
 
-import Theme from "@/components/shared/Navbar/Theme";
+import ThemeButton from "@/components/common/ThemeButton";
 import MobileNav from "@/components/shared/Navbar/MobileNav";
 import React from "react";
 
@@ -27,7 +27,7 @@ const Navbar = () => {
           </span>
 
           <div className="flex items-center max-md:hidden ">
-            <Theme className="max-md:hidden" />
+            <ThemeButton className="max-md:hidden" />
             <span className="max-md:hidden mx-2">
               <UserButton />
             </span>
