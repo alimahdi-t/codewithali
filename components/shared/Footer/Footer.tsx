@@ -11,7 +11,7 @@ const footerInfo = {
   email: "seyyedalimehdi@gmail.com",
   phoneNumber: "09030579074",
   telegramId: "alimahdi_t@",
-  createdBy: { name: "سید علی مهدی", link: "#" },
+  createdBy: { name: "Ali Mahdi", link: "https://github.com/alimahdi-t" },
   socials: {
     instagram: {
       label: "instagram",
@@ -26,8 +26,8 @@ const footerInfo = {
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-gray-900 shadow-lg dark:bg-darker py-8 pt-6">
-      <div className="container">
+    <footer className="w-full bg-white dark:bg-gray-900 shadow-lg dark:shadow-none pt-6 ">
+      <div className="w-full max-w-7xl lg:px-12 px-6 mx-auto">
         <div className="pb-5 mb-5 sm:pb-8 sm:mb-8 border-b c-border">
           <div className="flex items-center justify-between">
             <Logo iconClassName="w-16 h-16" />
@@ -47,7 +47,7 @@ const Footer = () => {
                   ></path>
                 </svg>
               </Link>
-              <a href={footerInfo.socials.telegramId.link} rel="nofollow">
+              <a href={footerInfo.socials.telegramId.link}>
                 <svg
                   className="size-[30px] sm:size-[38px] text-neutral-300 dark:text-neutral-200 transition-colors hover:text-sky-500"
                   viewBox="0 0 38 38"
@@ -63,25 +63,28 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <div className="flex items-center flex-wrap gap-y-4  gap-x-12 mt-10 sm:mt-8">
+          <div className="flex items-center flex-wrap gap-y-4  gap-x-6 mt-8">
             <div className="flex gap-2 justify-center items-center">
-              <Call02Icon className="size-6" />
-              <Link href="tel:09030579074" className="leading-7">
+              <Call02Icon className="size-5" />
+              <Link href="tel:09030579074" className="leading-5">
                 {convertToPersianNumbers(footerInfo.phoneNumber)}
               </Link>
             </div>
             <div className="flex gap-2 justify-center items-center">
-              <Mail01Icon className="size-6" />
+              <Mail01Icon className="size-5" />
               <Link
                 href="mailto:seyyedalimehdi@gmail.com"
-                className="leading-7"
+                className="leading-5 font-sans"
               >
                 {footerInfo.email}
               </Link>
             </div>
             <div className="flex gap-2 justify-center items-center">
-              <TelegramIcon className="size-6" />
-              <Link href="https://t.me/alimehdi_t" className="leading-7">
+              <TelegramIcon className="size-5" />
+              <Link
+                href="https://t.me/alimehdi_t"
+                className="leading-5 font-sans"
+              >
                 {footerInfo.telegramId}
               </Link>
             </div>
@@ -103,53 +106,65 @@ const Footer = () => {
 
           <div className="col-span-1 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div className="col-span-1">
-              <h3 className="inline-block sm:text-xl font-bold mb-3 sm:mb-4">
+              <h3 className="inline-block font-semibold mb-3 sm:mb-4">
                 دسترسی سریع
               </h3>
-              <div className="flex flex-col gap-4">
-                <Link href={"#"} className="max-w-100 font-normal text-base">
+              <div className="flex flex-col gap-4 text-sm font-normal">
+                <Link href={"#"} className="max-w-100 ">
                   همه دوره ها
                 </Link>
-                <Link href={"#"} className="max-w-100 font-normal text-base">
+                <Link href={"#"} className="max-w-100">
                   وبلاگ
                 </Link>
-                <Link href={"#"} className="max-w-100 font-normal text-base">
+                <Link href={"#"} className="max-w-100">
                   تماس با ما
                 </Link>
-                <Link href={"#"} className="max-w-100 font-normal text-base">
+                <Link href={"#"} className="max-w-100">
                   درباره ما
                 </Link>
               </div>
             </div>
-            {/*<div className="col-span-1">*/}
-            {/*  <h3 className="inline-block sm:text-xl font-bold mb-3 sm:mb-4">*/}
-            {/*    دسترسی سریع*/}
-            {/*  </h3>*/}
-            {/*  <div className="flex flex-col gap-4">*/}
-            {/*    <p className="max-w-100 font-normal text-base">همه دوره ها</p>*/}
-            {/*    <p className="max-w-100 font-normal text-base">وبلاگ</p>*/}
-            {/*    <p className="max-w-100 font-normal text-base">تماس با ما</p>*/}
-            {/*    <p className="max-w-100 font-normal text-base">درباره ما</p>*/}
-            {/*  </div>*/}
-            {/*</div>*/}
+            <div className="col-span-1">
+              <h3 className="inline-block font-semibold mb-3 sm:mb-4">
+                دسترسی سریع
+              </h3>
+              <div className="flex flex-col gap-4 text-sm font-normal">
+                <Link href={"#"} className="max-w-100 ">
+                  همه دوره ها
+                </Link>
+                <Link href={"#"} className="max-w-100">
+                  وبلاگ
+                </Link>
+                <Link href={"#"} className="max-w-100">
+                  تماس با ما
+                </Link>
+                <Link href={"#"} className="max-w-100">
+                  درباره ما
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div className="text-sm font-light select-none flex items-center justify-center text-center sm:text-right sm:justify-between flex-wrap gap-y-2 gap-x-4 mt-8 sm:mt-10 dark:text-neutral-300">
+      </div>
+      {/*---------------------------------------------------------------------------------*/}
+      <div className="w-full border-t c-border  py-8 text-xs mt-10 dark:text-neutral-300 flex justify-center">
+        <div className="w-full max-w-7xl lg:px-12 px-6 flex max-sm:flex-col max-sm:justify-center justify-between gap-y-1 items-center">
           <span>
             کلیه حقوق مادی و معنوی این سایت برای توسعه دهنده محفوظ است.
           </span>
           <span className="">
-            ساخته شده با ❤️ توسط{" "}
+            ساخته شده توسط{" "}
             <Link
               href={footerInfo.createdBy.link}
-              className="font-medium hover:text-brand-500 transition hover:cursor-pointer"
+              target="_blank"
+              className="font-medium hover:text-brand-600 tracking-wider dark:hover:text-brand-400 transition hover:cursor-pointer font-sans"
             >
               {footerInfo.createdBy.name}
             </Link>
           </span>
         </div>
       </div>
+      {/*---------------------------------------------------------------------------------*/}
     </footer>
   );
 };

@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     <>
       <Navbar />
       <main className="w-full bg-gray-50 dark:bg-gray-950">
-        <section className="max-w-7xl lg:px-12 py-24 sm:py-40 px-6 mx-auto font-dana">
+        <section className="max-w-7xl lg:px-12 px-6 py-24 sm:py-40 mx-auto font-dana">
           {children}
         </section>
         <Footer />

@@ -9,7 +9,7 @@ const NavLinks = ({ className }: { className?: string }) => {
     <div className={`flex text-gray-900 dark:text-gray-200 ${className}`}>
       {navLinks.map((navLink) => (
         <Link
-          className={`hover:bg-brand-50/5 blur-0 px-4 py-2 rounded-lg cursor-pointer text-sm
+          className={`hover:bg-brand-600/5 dark:hover:bg-brand-50/5 blur-0 px-4 py-2 rounded-lg cursor-pointer text-sm
           
           ${
             pathName === navLink.href
