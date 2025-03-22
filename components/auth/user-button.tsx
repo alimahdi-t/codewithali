@@ -82,7 +82,7 @@ export const UserButton = () => {
             ))}
           </DropdownMenuGroup>
           <LogoutButton>
-            <DropdownMenuItem className="py-3 text-sm leading-5 focus:bg-red-500/15 ">
+            <DropdownMenuItem className="py-3 text-sm leading-5">
               <HiPower className="size-5 text-accent-foreground" />
               خروج
             </DropdownMenuItem>

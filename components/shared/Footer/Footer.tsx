@@ -26,9 +26,9 @@ const footerInfo = {
 
 const Footer = () => {
   return (
-    <footer className="bg-white shadow-lg dark:bg-darker py-8 pt-6">
+    <footer className="bg-white dark:bg-gray-900 shadow-lg dark:bg-darker py-8 pt-6">
       <div className="container">
-        <div className="pb-5 mb-5 sm:pb-8 sm:mb-8 border-b border-b-neutral-200 dark:border-b-dark">
+        <div className="pb-5 mb-5 sm:pb-8 sm:mb-8 border-b c-border">
           <div className="flex items-center justify-between">
             <Logo iconClassName="w-16 h-16" />
             <div className="flex gap-x-2 sm:gap-x-3">

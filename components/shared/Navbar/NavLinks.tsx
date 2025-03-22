@@ -6,15 +6,15 @@ import React from "react";
 const NavLinks = ({ className }: { className?: string }) => {
   const pathName = usePathname();
   return (
-    <div className={`flex text-black dark:text-white ${className}`}>
+    <div className={`flex text-gray-900 dark:text-gray-200 ${className}`}>
       {navLinks.map((navLink) => (
         <Link
-          className={`hover:bg-brand-50 blur-0 px-4 py-2 rounded-lg cursor-pointer text-sm font-semibold
+          className={`hover:bg-brand-50/5 blur-0 px-4 py-2 rounded-lg cursor-pointer text-sm
           
           ${
             pathName === navLink.href
-              ? "dark:text-blue-500 text-blue-500"
-              : "hover:text-brand-900"
+              ? "text-primary"
+              : "hover:text-brand-900 dark:hover:text-brand-600"
           }`}
           key={navLink.label}
           href={navLink.href}

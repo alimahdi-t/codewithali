@@ -11,7 +11,7 @@ import { UserButton } from "@/components/auth/user-button";
 const Navbar = () => {
   return (
     <header className="flex justify-center w-full fixed top-0 left-0 z-50">
-      <nav className="w-full bg-white/30 backdrop-blur-md  border-b dark:border-gray-800 flex justify-center ">
+      <nav className="w-full  backdrop-blur-md border-b c-border flex justify-center dark:bg-gray-900">
         <div className="max-w-7xl w-full lg:px-8 px-2 flex justify-between items-center">
           <MobileNav className="md:hidden" />
 

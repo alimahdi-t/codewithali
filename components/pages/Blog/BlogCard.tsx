@@ -3,9 +3,9 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import moment from "jalali-moment";
 import { convertToPersianNumbers, extractTextFromHTML } from "@/utils";
-import Image from "next/image";
 import Tag from "@/components/common/Tag";
 import ILink from "@/components/common/ILink";
+import { ImageCard } from "@/components/common/card/ImageCard";
 
 interface ExtendedPost extends Post {
   author: Pick<User, "firstName" | "lastName" | "imageUrl" | "username">;
@@ -23,29 +23,15 @@ const BlogCard = ({ post, className, ...props }: Props) => {
     <article
       className={cn(
         className,
-        "flex flex-col items-start justify-between rounded-2xl shadow-md " +
-          "background-dark900_light50 border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 c-card-animation",
+        "flex flex-col h-full items-start justify-between c-card c-card-animation",
       )}
       {...props}
     >
-      {/*--------------- Card Header ---------------*/}
       <div className="relative w-full">
-        <Image
-          priority={true}
-          style={{
-            width: "100%",
-            height: "auto",
-          }}
-          width={500}
-          height={500}
-          src={post.imageUrl}
-          alt=""
-          className="aspect-2/1  w-full rounded-lg bg-gray-100 dark:bg-slate-900 object-cover"
-        />
+        <ImageCard url={post.imageUrl} />
       </div>
-      {/*--------------- Card Body ---------------*/}
+
       <div className="w-full px-4 py-4 flex flex-col gap-3">
-        {/*--------------- Card Tags ---------------*/}
         <div className="w-full flex items-center  gap-x-4 text-xs">
           <div className="w-full flex flex-wrap line-clamp-1  gap-1">
             {post.tags.map((tag) => (
@@ -54,27 +40,30 @@ const BlogCard = ({ post, className, ...props }: Props) => {
           </div>
         </div>
 
-        {/*--------------- Card Title and Description ---------------*/}
         <div className="group relative mt-2">
           <h3
             className="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600
           dark:text-gr"
           >
-            <Link href={`/blog/${post.slug}`} className="line-clamp-2 h-12">
+            <Link
+              href={`/blog/${post.slug}`}
+              className="line-clamp-2 h-12 c-card-title"
+            >
               {post.title}
             </Link>
           </h3>
-          <p className="mt-3 line-clamp-3 text-sm leading-6 text-gray-600">
+          <p className="mt-3 line-clamp-3 leading-6 c-card-description">
             {extractTextFromHTML(post.content)}
           </p>
         </div>
 
-        {/*--------------- Card Footer ---------------*/}
-        <div className="mt-4 flex justify-between items-center gap-x-4 text-xs leading-6">
+        <div className="mt-4 flex justify-between items-center gap-x-4 text-xs leading-6 text-gray-800 dark:text-gray-300">
           <ILink href={post.author.username ?? "#"}>
-            <p>{post.author.firstName + " " + post.author.lastName}</p>
+            <p className="dark:text-gray-300 font-semibold">
+              {post.author.firstName + " " + post.author.lastName}
+            </p>
           </ILink>
-          <time dateTime={post.createAt.toString()} className="text-gray-500">
+          <time dateTime={post.createAt.toString()} className="font-medium">
             {convertToPersianNumbers(m.format("YYYY/MM/DD"))}
           </time>
         </div>

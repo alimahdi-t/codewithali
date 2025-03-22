@@ -1,6 +1,6 @@
 "use client";
 import { HiOutlineArrowsUpDown } from "react-icons/hi2";
-import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Sheet,
   SheetClose,
@@ -84,8 +84,9 @@ const SortOptions = ({
         </SheetContent>
       </Sheet>
 
-      <div className="w-full bg-white shadow-md rounded-lg px-8 flex items-center gap-6 max-sm:hidden">
-        <span className="font-bold text-sm py-4 flex items-center gap-1">
+      <div className="w-full px-8 flex items-center gap-6 max-sm:hidden c-card ">
+        <span className="font-bold text-sm py-4 flex items-center gap-1 dark:text-gray-200">
+          <HiOutlineArrowsUpDown className="w-5 h-5" />
           مرتب سازی بر اساس:
         </span>
         <ul className="list-none flex items-center gap-8">
@@ -95,8 +96,8 @@ const SortOptions = ({
               onClick={() => handleSort(item)}
               className={`font-semibold text-sm py-4 cursor-pointer ${
                 item.value === selectedSortOption.value
-                  ? "text-blue-400 border-y-2 border-y-blue-400"
-                  : "text-gray-600"
+                  ? "text-blue-400 border-y-2 border-y-blue-400 dark:text-blue-300 dark:border-y-blue-300"
+                  : "text-gray-600 dark:text-gray-400"
               }`}
             >
               <span className="flex items-center gap-1">{item.name}</span>

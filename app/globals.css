@@ -8,6 +8,39 @@
 
 
 /* C1:My Classes*/
+
+
+
+@utility c-text-h1{
+  @apply text-5xl font-bold tracking-tight text-gray-900 dark:text-white
+}
+
+@utility c-text-h2{
+  @apply text-4xl font-bold tracking-tight text-gray-900 dark:text-white
+}
+
+@utility c-border{
+  @apply border-gray-200 dark:border-gray-800
+}
+
+
+@utility c-card {
+  @apply bg-white dark:bg-gray-900 shadow-md dark:shadow-none rounded-lg overflow-hidden
+}
+
+@utility c-card-title {
+  @apply text-gray-900 dark:text-gray-100 font-medium
+}
+
+@utility c-card-description {
+  @apply text-gray-600 dark:text-gray-400 text-sm
+}
+
+@utility c-card-meta {
+  @apply text-gray-800 dark:text-gray-300
+}
+
+
 @utility c-card-animation{
   @apply relative transition-all duration-500 hover:shadow-brand-500/15 hover:-translate-y-2
 }
@@ -50,7 +83,7 @@ body,
 
   --color-action-success: #31d9b3;
   --color-action-warning: #ffae1f;
-  --color-action-error: #fa896b;
+  --color-action-error: #f23c0b;
   --color-action-info: #539bff;
 
   --color-action-light-success: #e3fdf7;
@@ -208,62 +241,62 @@ body,
 
 
 @layer base {
-    :root {
-      --background: #ffffff;
-      --foreground: #0a0a0a;
-      --card: #ffffff;
-      --card-foreground: #0a0a0a;
-      --popover: #ffffff;
-      --popover-foreground: #0a0a0a;
-      --primary: #068eff; /* brand-600 */
-      --primary-foreground: #ffffff;
-      --secondary: #f5f5f5;
-      --secondary-foreground: #1a1a1a;
-      --muted: #f5f5f5;
-      --muted-foreground: #737373;
-      --accent: #f5f5f5;
-      --accent-foreground: #1a1a1a;
-      --destructive: #d72638;
-      --destructive-foreground: #fafafa;
-      --border: #e5e5e5;
-      --input: #e5e5e5;
-      --ring: #007aff; /* brand-700 */
-      --radius: 0.5rem;
-      --chart-1: #e87d28;
-      --chart-2: #199e84;
-      --chart-3: #16435c;
-      --chart-4: #f0c800;
-      --chart-5: #fca047;
-    }
-
-    .dark {
-      --background: #0a0a0a;
-      --foreground: #fafafa;
-      --card: #0a0a0a;
-      --card-foreground: #fafafa;
-      --popover: #0a0a0a;
-      --popover-foreground: #fafafa;
-      --primary: #fafafa;
-      --primary-foreground: #1a1a1a;
-      --secondary: #262626;
-      --secondary-foreground: #fafafa;
-      --muted: #262626;
-      --muted-foreground: #a3a3a3;
-      --accent: #262626;
-      --accent-foreground: #fafafa;
-      --destructive: #851717;
-      --destructive-foreground: #fafafa;
-      --border: #262626;
-      --input: #262626;
-      --ring: #d4d4d4;
-      --chart-1: #3366cc;
-      --chart-2: #26a69a;
-      --chart-3: #ff9900;
-      --chart-4: #aa00ff;
-      --chart-5: #ff007f;
-    }
-
+  :root {
+    --background: #ffffff;
+    --foreground: #0a0a0a;
+    --card: #ffffff;
+    --card-foreground: #0a0a0a;
+    --popover: #ffffff;
+    --popover-foreground: #0a0a0a;
+    --primary: #068eff; /* brand-600 */
+    --primary-foreground: #ffffff;
+    --secondary: #f5f5f5;
+    --secondary-foreground: #1a1a1a;
+    --muted: #f5f5f5;
+    --muted-foreground: #737373;
+    --accent: var(--color-gray-100);
+    --accent-foreground: #1a1a1a;
+    --destructive: var(--color-action-error);
+    --destructive-foreground: #fafafa;
+    --border: #e5e5e5;
+    --input: #e5e5e5;
+    --ring: #007aff; /* brand-700 */
+    --radius: 0.5rem;
+    --chart-1: #e87d28;
+    --chart-2: #199e84;
+    --chart-3: #16435c;
+    --chart-4: #f0c800;
+    --chart-5: #fca047;
   }
+
+  .dark {
+    --background: var(--color-gray-900);
+    --foreground: #fafafa;
+    --card: var(--color-gray-900);
+    --card-foreground: #fafafa;
+    --popover: var(--color-gray-900);
+    --popover-foreground: #fafafa;
+    --primary: var(--color-brand-400);
+    --primary-foreground: #1a1a1a;
+    --secondary: #262626;
+    --secondary-foreground: #fafafa;
+    --muted: var(--color-gray-800);
+    --muted-foreground: #a3a3a3;
+    --accent: var(--color-gray-800);
+    --accent-foreground: #fafafa;
+    --destructive: var(--color-action-error);
+    --destructive-foreground: #fafafa;
+    --border: var(--color-gray-800);
+    --input: var(--color-gray-800);
+    --ring: #d4d4d4;
+    --chart-1: #3366cc;
+    --chart-2: #26a69a;
+    --chart-3: #ff9900;
+    --chart-4: #aa00ff;
+    --chart-5: #ff007f;
+  }
+
+}
 
 @layer utilities {
   .app-box {

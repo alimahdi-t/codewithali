@@ -58,14 +58,12 @@ const Contact = () => {
 
   return (
     <div
-      className="px-12 py-20 rounded-lg md:shadow-md bg-white mx-auto
+      className="px-12 py-20 c-card mx-auto
       grid max-w-7xl grid-cols-1 lg:grid-cols-3 gap-12"
     >
       <div className="col-span-1">
         <div className=" max-w-xl lg:mx-0 lg:max-w-lg">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-            تماس با ما
-          </h2>
+          <h2 className="c-text-h2">تماس با ما</h2>
           <p className="mt-6 leading-8 text-gray-600">
             اگر سوال، پیشنهاد یا مشکلی دارید، تیم ما آماده‌ی پاسخگویی به شماست.
             از طریق فرم زیر پیام خود را ارسال کنید یا با اطلاعات تماس ما در
@@ -132,9 +130,9 @@ const Contact = () => {
                 name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                    <FormLabel className="block text-sm font-medium leading-6">
                       نام و نام‌خانوادگی
-                      <span className="text-red-500 px-1">*</span>
+                      <span className="text-action-error px-1">*</span>
                     </FormLabel>
                     <FormControl>
                       <Input type="text" className="leading-6" {...field} />
@@ -148,7 +146,7 @@ const Contact = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                    <FormLabel className="block text-sm font-medium leading-6">
                       شماره تماس
                     </FormLabel>
                     <FormControl>
@@ -164,9 +162,9 @@ const Contact = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                  <FormLabel className="block text-sm font-medium leading-6">
                     ایمیل
-                    <span className="text-red-500 px-1">*</span>
+                    <span className="text-action-error px-1">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input type="text" className="leading-6" {...field} />
@@ -180,9 +178,9 @@ const Contact = () => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                  <FormLabel className="block text-sm font-medium leading-6">
                     عنوان
-                    <span className="text-red-500 px-1">*</span>
+                    <span className="text-action-error px-1">*</span>
                   </FormLabel>
                   <FormControl>
                     <Input type="text" className="leading-6" {...field} />
@@ -196,9 +194,9 @@ const Contact = () => {
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                  <FormLabel className="block text-sm font-medium leading-6">
                     توضیحات
-                    <span className="text-red-500 px-1">*</span>
+                    <span className="text-action-error px-1">*</span>
                   </FormLabel>
                   <FormControl>
                     <Textarea {...field} className="h-40" />

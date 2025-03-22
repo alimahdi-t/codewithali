@@ -18,9 +18,7 @@ const Blog = async () => {
       <div className="w-full flex justify-between">
         <div className="flex gap-2 items-center">
           <div className="bg-green-500 w-5 h-5 rounded"></div>
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-            آخرین مقالات
-          </h2>
+          <h2 className="c-text-h2">آخرین مقالات</h2>
         </div>
 
         <p className="mt-2 text-lg leading-8 text-gray-600">{`${convertToPersianNumbers(
