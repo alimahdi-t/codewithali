@@ -130,7 +130,7 @@ const Contact = () => {
                 name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6">
+                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
                       نام و نام‌خانوادگی
                       <span className="text-action-error px-1">*</span>
                     </FormLabel>
@@ -146,7 +146,7 @@ const Contact = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6">
+                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
                       شماره تماس
                     </FormLabel>
                     <FormControl>
@@ -162,7 +162,7 @@ const Contact = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6">
+                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
                     ایمیل
                     <span className="text-action-error px-1">*</span>
                   </FormLabel>
@@ -178,7 +178,7 @@ const Contact = () => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6">
+                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
                     عنوان
                     <span className="text-action-error px-1">*</span>
                   </FormLabel>
@@ -194,7 +194,7 @@ const Contact = () => {
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6">
+                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
                     توضیحات
                     <span className="text-action-error px-1">*</span>
                   </FormLabel>

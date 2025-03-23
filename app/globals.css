@@ -85,7 +85,7 @@ body,
 
   --color-action-success: #31d9b3;
   --color-action-warning: #ffae1f;
-  --color-action-error: #f23c0b;
+  --color-action-error: #e57050;
   --color-action-info: #539bff;
 
   --color-action-light-success: #e3fdf7;
@@ -288,9 +288,9 @@ body,
     --accent-foreground: #fafafa;
     --destructive: var(--color-action-error);
     --destructive-foreground: #fafafa;
-    --border: var(--color-gray-800);
-    --input: var(--color-gray-800);
-    --ring: #d4d4d4;
+    --border: var(--color-gray-700);
+    --input: var(--color-gray-700);
+    --ring: var(--color-brand-400);
     --chart-1: #3366cc;
     --chart-2: #26a69a;
     --chart-3: #ff9900;
