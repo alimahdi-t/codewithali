@@ -4,7 +4,6 @@ import Link from "next/link";
 import moment from "jalali-moment";
 import { convertToPersianNumbers, extractTextFromHTML } from "@/utils";
 import Tag from "@/components/common/Tag";
-import ILink from "@/components/common/ILink";
 import { ImageCard } from "@/components/common/card/ImageCard";
 
 interface ExtendedPost extends Post {
@@ -58,11 +57,14 @@ const BlogCard = ({ post, className, ...props }: Props) => {
         </div>
 
         <div className="mt-4 flex justify-between items-center gap-x-4 text-xs leading-6 text-gray-800 dark:text-gray-300">
-          <ILink href={post.author.username ?? "#"}>
+          <Link
+            href={post.author.username ?? "#"}
+            className="font-semibold text-gray-900 ap-text-main hover:text-primary duration-500"
+          >
             <p className="dark:text-gray-300 font-semibold">
               {post.author.firstName + " " + post.author.lastName}
             </p>
-          </ILink>
+          </Link>
           <time dateTime={post.createAt.toString()} className="font-medium">
             {convertToPersianNumbers(m.format("YYYY/MM/DD"))}
           </time>

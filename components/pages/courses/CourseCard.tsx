@@ -8,7 +8,6 @@ import TomanIcon from "@/components/common/TomanIcon";
 import DiscountTag from "@/components/pages/courses/DiscountTag";
 import { Course, Discount, User } from "@prisma/client";
 import { cn } from "@/lib/utils";
-import ILink from "@/components/common/ILink";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { ImageCard } from "@/components/common/card/ImageCard";
@@ -66,11 +65,14 @@ const CourseCard = ({ course, className, ...props }: Props) => {
                 {course.instructor.firstName.charAt(0)}
               </AvatarFallback>
             </Avatar>
-            <ILink href={course.instructor.username ?? "#"}>
+            <Link
+              href={course.instructor.username ?? "#"}
+              className="font-semibold text-gray-900 ap-text-main hover:text-primary duration-500"
+            >
               <p className="font-medium text-xs leading-7 dark:text-gray-200">
                 {`${course.instructor.firstName} ${course.instructor.lastName}`}
               </p>
-            </ILink>
+            </Link>
           </div>
           <div className="flex items-center justify-center gap-1 text-sm text-yellow-500">
             <p>{convertToPersianNumbers("5.0")}</p>
