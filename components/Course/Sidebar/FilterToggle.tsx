@@ -37,10 +37,10 @@ const FilterToggle = ({ label, filterParam }: Props) => {
   };
 
   return (
-    <div className="w-full bg-white shadow-md rounded-lg flex items-center justify-between p-4">
+    <div className="w-full c-card flex items-center justify-between p-4">
       <Label
         htmlFor={`switch-${filterParam}`}
-        className="font-semibold text-sm text-slate-900"
+        className="font-semibold text-sm text-gray-900 dark:text-gray-100"
       >
         {label}
       </Label>

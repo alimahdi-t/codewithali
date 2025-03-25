@@ -25,13 +25,15 @@ const CustomCheckbox = ({ label, state = "unchecked", onChange }: Props) => {
     >
       <div
         className={`w-4 h-4 ${
-          checked ? "bg-brand-500" : "bg-gray-200"
+          checked
+            ? "bg-brand-500 dark:bg-brand-400"
+            : "bg-gray-200 dark:bg-gray-700"
         } rounded`}
       >
         {" "}
       </div>
       <span>
-        <p className="text-sm font-bold text-gray-800 hover:text-gray-500">
+        <p className="text-sm font-bold text-gray-800 hover:text-gray-500 dark:text-gray-400 dark:hover:text-gray-100">
           {label}
         </p>
       </span>

@@ -7,7 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import CustomCheckbox from "@/components/common/CustomCheckbox";
 import { ReactNode } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Props {
   label: string;
@@ -50,7 +50,7 @@ const CategoryFilter = ({ label, icon, tags, filterParam }: Props) => {
   };
 
   return (
-    <div className="w-full bg-white shadow-md rounded-md flex items-center justify-between p-4">
+    <div className="w-full c-card rounded-md flex items-center justify-between p-4">
       <Accordion
         type="single"
         collapsible={true}
@@ -58,14 +58,14 @@ const CategoryFilter = ({ label, icon, tags, filterParam }: Props) => {
         defaultValue="item-1"
       >
         <AccordionItem value="item-1" className="border-none">
-          <AccordionTrigger className="text-xs text-slate-900 p-0">
+          <AccordionTrigger className="text-xs text-gray-900 dark:text-gray-100 p-0">
             <div className="flex items-center text-base font gap-2">
               {icon && <span className="text-xl">{icon}</span>}
 
               <span>{label}</span>
             </div>
           </AccordionTrigger>
-          <AccordionContent className="border-t border-gray-200 my-4 py-4 flex flex-col gap-4">
+          <AccordionContent className="border-t border-gray-200 dark:border-b-gray-800 my-4 py-4 flex flex-col gap-4">
             {tags.map((tag) => (
               <CustomCheckbox
                 key={tag.value}
