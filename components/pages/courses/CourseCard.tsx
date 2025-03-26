@@ -96,7 +96,7 @@ const CourseCard = ({ course, className, ...props }: Props) => {
               </p>
             </div>
 
-            <p className="font-extrabold text-base text-brand-700 flex gap-1 items-center">
+            <p className="font-extrabold text-lg text-primary flex gap-1 items-center">
               {course.price === 0 || course.discount?.percentage === 100 ? (
                 "رایگان!"
               ) : (
@@ -107,7 +107,7 @@ const CourseCard = ({ course, className, ...props }: Props) => {
                       percentage: course.discount?.percentage,
                     }),
                   )}
-                  <TomanIcon className=" stroke-gray-800" />
+                  <TomanIcon className=" stroke-gray-800 dark:stroke-gray-200" />
                 </>
               )}
             </p>
