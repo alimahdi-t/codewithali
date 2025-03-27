@@ -98,8 +98,12 @@ export const UserButton = () => {
                 </AvatarFallback>
               </Avatar>
               <div className="">
-                <p className="text-sm font-semibold">{user?.name}</p>
-                <p className="text-xs font-sans text-gray-500">{user?.email}</p>
+                <p className="text-sm font-semibold text-secondary">
+                  {user?.name}
+                </p>
+                <p className="text-xs font-sans text-muted-foreground">
+                  {user?.email}
+                </p>
               </div>
             </div>
           </DropdownMenuLabel>

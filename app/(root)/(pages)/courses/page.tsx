@@ -42,7 +42,7 @@ const CoursesPage = async (props: Props) => {
           <h2 className="c-text-h2">دوره‌ها</h2>
         </div>
 
-        <p className="mt-2 text-lg leading-8 text-gray-600">{`${convertToPersianNumbers(
+        <p className="mt-2 text-lg leading-8 text-secondary">{`${convertToPersianNumbers(
           courses?.length,
         )} عنوان آموزشی`}</p>
       </div>

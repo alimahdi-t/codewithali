@@ -246,13 +246,13 @@ body,
   :root {
     --background: #ffffff;
     --foreground: #0a0a0a;
-    --card: #ffffff;
+    --card: var(--color-white);
     --card-foreground: #0a0a0a;
     --popover: #ffffff;
     --popover-foreground: #0a0a0a;
     --primary: #068eff; /* brand-600 */
     --primary-foreground: #ffffff;
-    --secondary: #f5f5f5;
+    --secondary: var(--color-gray-800);
     --secondary-foreground: #1a1a1a;
     --muted: #f5f5f5;
     --muted-foreground: #737373;
@@ -262,7 +262,7 @@ body,
     --destructive-foreground: #fafafa;
     --border: #e5e5e5;
     --input: #e5e5e5;
-    --ring: #007aff; /* brand-700 */
+    --ring: var(--color-brand-700);
     --radius: 0.5rem;
     --chart-1: #e87d28;
     --chart-2: #199e84;
@@ -280,10 +280,10 @@ body,
     --popover-foreground: #fafafa;
     --primary: var(--color-brand-400);
     --primary-foreground: #1a1a1a;
-    --secondary: #262626;
+    --secondary: var(--color-gray-100);
     --secondary-foreground: #fafafa;
     --muted: var(--color-gray-800);
-    --muted-foreground: #a3a3a3;
+    --muted-foreground: var(--color-gray-400);
     --accent: var(--color-gray-800);
     --accent-foreground: #fafafa;
     --destructive: var(--color-action-error);
@@ -300,19 +300,7 @@ body,
 
 }
 
-@layer utilities {
-  .app-box {
-    @apply text-white;
-  }
 
-  .app-text-main {
-    @apply dark:text-white text-gray-900;
-  }
-
-  .app-text-sub {
-    @apply dark:text-gray-400 text-gray-600;
-  }
-}
 
 @layer utilities {
   .scroll-container {

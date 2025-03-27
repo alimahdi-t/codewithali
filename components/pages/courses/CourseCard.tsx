@@ -61,7 +61,7 @@ const CourseCard = ({ course, className, ...props }: Props) => {
           <div className="flex items-center gap-x-1 cursor-pointer">
             <Avatar className="w-10 h-10">
               <AvatarImage src={course.instructor?.imageUrl as string} />
-              <AvatarFallback className="dark:bg-gray-800 text-gray-400">
+              <AvatarFallback>
                 {course.instructor.firstName.charAt(0)}
               </AvatarFallback>
             </Avatar>
@@ -69,14 +69,14 @@ const CourseCard = ({ course, className, ...props }: Props) => {
               href={course.instructor.username ?? "#"}
               className="font-semibold text-gray-900 ap-text-main hover:text-primary duration-500"
             >
-              <p className="font-medium text-xs leading-7 dark:text-gray-200">
+              <p className="font-medium text-xs leading-5 dark:text-gray-200">
                 {`${course.instructor.firstName} ${course.instructor.lastName}`}
               </p>
             </Link>
           </div>
-          <div className="flex items-center justify-center gap-1 text-sm text-yellow-500">
-            <p>{convertToPersianNumbers("5.0")}</p>
-            <HiMiniStar className="text-yellow-500" />
+          <div className="flex items-center justify-center gap-1 text-sm text-yellow-500 leading-5 dark:text-yellow-400">
+            <p className="">{convertToPersianNumbers("5.0")}</p>
+            <HiMiniStar className="size-4" />
           </div>
         </div>
 

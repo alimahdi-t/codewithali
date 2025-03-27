@@ -21,7 +21,7 @@ const Blog = async () => {
           <h2 className="c-text-h2">آخرین مقالات</h2>
         </div>
 
-        <p className="mt-2 text-lg leading-8 text-gray-600">{`${convertToPersianNumbers(
+        <p className="mt-2 text-lg leading-8 text-secondary">{`${convertToPersianNumbers(
           posts?.length,
         )} مقاله`}</p>
       </div>
