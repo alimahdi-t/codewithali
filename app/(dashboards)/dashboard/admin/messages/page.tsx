@@ -40,7 +40,7 @@ const MessagesPage = async (props: Props) => {
     response;
 
   return (
-    <div className="rounded-xl p-4 bg-white shadow-sm">
+    <div className="rounded-xl p-4 bg-background shadow-sm">
       <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6">
         <StatisticsCard
           count={totalMessages ?? ""}

@@ -12,9 +12,9 @@ export default function AdminLayout({
       <AdminSidebar />
       <div className="lg:pr-64 min-h-full">
         <DashboardNavbar />
-        <main className="py-10 min-h-full bg-white">
+        <main className="py-10 min-h-full bg-background">
           <section
-            className={`w-full min-h-full  px-4 sm:px-6 lg:px-8 bg-white`}
+            className={`w-full min-h-full  px-4 sm:px-6 lg:px-8 bg-background`}
           >
             {children}
           </section>
