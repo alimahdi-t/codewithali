@@ -1,15 +1,15 @@
 import { calculateDiscount, convertToPersianAndFormat } from "@/utils";
 import TomanIcon from "@/components/common/TomanIcon";
-import { number } from "zod";
 import { cn } from "@/lib/utils";
 
 interface Props {
   price: number;
   discount?: number;
   classname?: string;
+  iconClassName?: string;
 }
 
-const Price = ({ price, discount, classname }: Props) => {
+const Price = ({ price, discount, classname, iconClassName }: Props) => {
   return (
     <p className={cn("`text-sm font-semibold flex gap-1`", classname)}>
       {price === 0 || discount === 100 ? (
@@ -22,7 +22,12 @@ const Price = ({ price, discount, classname }: Props) => {
               percentage: discount,
             }),
           )}
-          <TomanIcon className=" stroke-gray-800" />
+          <TomanIcon
+            className={cn(
+              "dark:stroke-gray-100 stroke-gray-800",
+              iconClassName,
+            )}
+          />
         </>
       )}
     </p>
