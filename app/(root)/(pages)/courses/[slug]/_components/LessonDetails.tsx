@@ -1,8 +1,3 @@
-import {
-  HiOutlineBookOpen,
-  HiOutlineCodeBracket,
-  HiOutlinePlayCircle,
-} from "react-icons/hi2";
 import { convertToPersianNumbers } from "@/utils";
 
 interface Props {

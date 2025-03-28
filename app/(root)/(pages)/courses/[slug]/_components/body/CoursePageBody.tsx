@@ -1,12 +1,12 @@
-import CourseMetrics from "@/app/(root)/(pages)/courses/[id]/components/CourseMetrics";
-import CourseTabs from "@/app/(root)/(pages)/courses/[id]/components/CourseTabs";
+import CourseMetrics from "@/app/(root)/(pages)/courses/[slug]/_components/CourseMetrics";
+import CourseTabs from "@/app/(root)/(pages)/courses/[slug]/_components/CourseTabs";
 import {
   HiAcademicCap,
   HiChatBubbleLeftRight,
   HiDocumentText,
 } from "react-icons/hi2";
 import { Accordion } from "@/components/ui/accordion";
-import CourseContentHeader from "@/app/(root)/(pages)/courses/[id]/components/CourseContentHeader";
+import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
 
 const CoursePageBody = () => {
   return (

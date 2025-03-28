@@ -1,4 +1,4 @@
-import CompletionProgress from "@/app/(root)/(pages)/courses/[id]/components/CompletionProgress";
+import CompletionProgress from "@/app/(root)/(pages)/courses/[slug]/_components/CompletionProgress";
 import { Group } from "lucide-react";
 
 const SideBar = () => {

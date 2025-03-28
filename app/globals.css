@@ -14,11 +14,15 @@
 
 
 @utility c-text-h1{
-  @apply text-5xl font-bold tracking-tight text-gray-900 dark:text-white
+  @apply text-4xl font-bold tracking-tight text-gray-900 dark:text-white
 }
 
 @utility c-text-h2{
-  @apply text-4xl font-bold tracking-tight text-gray-900 dark:text-white
+  @apply text-3xl font-bold tracking-tight text-gray-900 dark:text-white
+}
+
+@utility c-text-h3{
+  @apply text-2xl font-bold tracking-tight text-gray-900 dark:text-white
 }
 
 @utility c-border{
@@ -251,7 +255,7 @@ body,
     --popover: #ffffff;
     --popover-foreground: #0a0a0a;
     --primary: #068eff; /* brand-600 */
-    --primary-foreground: #ffffff;
+    --primary-foreground: var(--color-white);
     --secondary: var(--color-gray-800);
     --secondary-foreground: #1a1a1a;
     --muted: #f5f5f5;
@@ -279,7 +283,7 @@ body,
     --popover: var(--color-gray-900);
     --popover-foreground: #fafafa;
     --primary: var(--color-brand-400);
-    --primary-foreground: #1a1a1a;
+    --primary-foreground: var(--color-white);
     --secondary: var(--color-gray-100);
     --secondary-foreground: #fafafa;
     --muted: var(--color-gray-800);

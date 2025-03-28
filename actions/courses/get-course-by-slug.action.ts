@@ -7,6 +7,9 @@ export async function getCourseBySlug({ slug }: GetCourseBySlugParams) {
       where: {
         slug: slug,
       },
+      include: {
+        instructor: true,
+      },
     });
   } catch (error) {
     console.log(error);
