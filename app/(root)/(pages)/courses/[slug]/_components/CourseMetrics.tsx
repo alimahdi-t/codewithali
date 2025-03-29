@@ -17,12 +17,12 @@ const CourseMetrics = ({}: Props) => {
       icon: HiOutlineInformationCircle,
     },
     {
-      label: "مدت زمان دوره",
+      label: "مدت زمان",
       value: `${convertToPersianNumbers(32)} ساعت`,
       icon: HiOutlineClock,
     },
     {
-      label: "تعداد دانشجو",
+      label: "اخرین به روزرسانی",
       value: convertToPersianNumbers(1276),
       icon: HiOutlineUsers,
     },
@@ -33,14 +33,14 @@ const CourseMetrics = ({}: Props) => {
     },
   ];
   return (
-    <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-4">
+    <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
       {items.map((item, index) => (
         <div
           key={index}
-          className="py-3 px-5 flex gap-4 items-center grid-cols-1 box-t "
+          className="py-3 px-5 flex gap-4 items-center grid-cols-1 c-card"
         >
-          <span className="p-4 bg-green-500/10 rounded-full">
-            <item.icon className="w-8 h-8 text-green-500" />
+          <span className="p-4 bg-primary/10 rounded-full">
+            <item.icon className="w-8 h-8 text-primary" />
           </span>
           <div className="flex flex-col gap-2 text-t">
             <p className="font-semibold text-sm text-t ">{item.label}</p>

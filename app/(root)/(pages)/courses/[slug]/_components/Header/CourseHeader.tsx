@@ -1,4 +1,4 @@
-import { AddToCartButton } from "@/app/(root)/(pages)/courses/[slug]/AddToCartButton";
+import { AddToCartButton } from "@/app/(root)/(pages)/courses/[slug]/_components/AddToCartButton";
 import Price from "@/components/common/Price";
 import Image from "next/image";
 

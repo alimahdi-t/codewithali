@@ -2,9 +2,13 @@ import { getCourseBySlug } from "@/actions/courses/get-course-by-slug.action";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import ReadOnly from "@/components/RichTextEditor/ReadOnly";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import InstructorInfo from "@/app/(root)/(pages)/courses/[slug]/InstructorInfo";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import InstructorInfo from "@/app/(root)/(pages)/courses/[slug]/_components/InstructorInfo";
 import { CourseHeader } from "@/app/(root)/(pages)/courses/[slug]/_components/Header/CourseHeader";
+import CourseMetrics from "@/app/(root)/(pages)/courses/[slug]/_components/CourseMetrics";
+import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
+import CompletionProgress from "@/app/(root)/(pages)/courses/[slug]/_components/CompletionProgress";
+import CourseTabs from "@/app/(root)/(pages)/courses/[slug]/_components/CourseTabs";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -29,6 +33,8 @@ const CoursePage = async (props: Props) => {
       />
       <div className="w-full flex flex-row gap-4 flex-1 pb-12">
         <div className="flex flex-col gap-4">
+          <CourseTabs />
+          <CourseMetrics />
           <Card className="flex-1">
             <CardContent>
               <Image src={imageUrl} width={1200} height={1200} alt={""} />
@@ -37,6 +43,16 @@ const CoursePage = async (props: Props) => {
               </div>
             </CardContent>
           </Card>
+          {/*<LessonDetails*/}
+          {/*  numberOfLessons={3}*/}
+          {/*  numberOfHomeworks={5}*/}
+          {/*  numberOfVideos={6}*/}
+          {/*/>*/}
+          <CourseContentHeader
+            numberOfHomeworks={5}
+            numberOfLessons={4}
+            numberOfVideos={3}
+          />
           <Card>
             <CardHeader>نظرات</CardHeader>
           </Card>
@@ -44,11 +60,7 @@ const CoursePage = async (props: Props) => {
 
         {/* TODO: this must be fixed while its above div scroll*/}
         <div className="w-[480px] flex flex-col gap-4">
-          <Card className="w-full">
-            <CardHeader>
-              <CardTitle>{title}</CardTitle>
-            </CardHeader>
-          </Card>
+          <CompletionProgress progress={100} />
           <InstructorInfo instructor={instructor} />
         </div>
       </div>
