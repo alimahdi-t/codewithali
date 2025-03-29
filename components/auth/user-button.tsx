@@ -80,7 +80,7 @@ export const UserButton = () => {
   return (
     <div>
       <DropdownMenu dir="rtl">
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger className="cursor-pointer">
           <Avatar className="w-10 h-10">
             <AvatarImage src={user?.image || ""} />
             <AvatarFallback className="border">

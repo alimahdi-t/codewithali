@@ -6,8 +6,9 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import InstructorInfo from "@/app/(root)/(pages)/courses/[slug]/_components/InstructorInfo";
 import { CourseHeader } from "@/app/(root)/(pages)/courses/[slug]/_components/Header/CourseHeader";
 import CourseMetrics from "@/app/(root)/(pages)/courses/[slug]/_components/CourseMetrics";
-import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
 import CompletionProgress from "@/app/(root)/(pages)/courses/[slug]/_components/CompletionProgress";
+import { Button } from "@/components/ui/button";
+import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
 import CourseTabs from "@/app/(root)/(pages)/courses/[slug]/_components/CourseTabs";
 
 interface Props {
@@ -35,7 +36,10 @@ const CoursePage = async (props: Props) => {
         <div className="flex flex-col gap-4">
           <CourseTabs />
           <CourseMetrics />
-          <Card className="flex-1">
+          <Card id="additional-info" className="flex-1">
+            <CardHeader>
+              <h3 className="text-lg font-medium">توضیحات</h3>
+            </CardHeader>
             <CardContent>
               <Image src={imageUrl} width={1200} height={1200} alt={""} />
               <div className="px-2 py-6 leading-7 text-justify">
@@ -43,18 +47,39 @@ const CoursePage = async (props: Props) => {
               </div>
             </CardContent>
           </Card>
-          {/*<LessonDetails*/}
-          {/*  numberOfLessons={3}*/}
-          {/*  numberOfHomeworks={5}*/}
-          {/*  numberOfVideos={6}*/}
-          {/*/>*/}
-          <CourseContentHeader
-            numberOfHomeworks={5}
-            numberOfLessons={4}
-            numberOfVideos={3}
-          />
-          <Card>
-            <CardHeader>نظرات</CardHeader>
+
+          <Card id="syllabus">
+            <CardHeader>
+              <h3 className="text-lg font-medium">سرفصل‌ها</h3>
+            </CardHeader>
+            {/*<LessonDetails*/}
+            {/*  numberOfLessons={3}*/}
+            {/*  numberOfHomeworks={5}*/}
+            {/*  numberOfVideos={6}*/}
+            {/*/>*/}
+            <CardContent>
+              <CourseContentHeader
+                numberOfHomeworks={5}
+                numberOfLessons={4}
+                numberOfVideos={3}
+              />
+            </CardContent>
+          </Card>
+
+          <Card id="comments">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-medium">نظرات</h3>
+                <Button size="sm">ثبت نظر</Button>
+              </div>
+            </CardHeader>
+          </Card>
+          <Card id="faq">
+            <CardHeader>
+              <div className="flex justify-between items-center">
+                <h3 className="text-lg font-medium">سوالات متداول</h3>
+              </div>
+            </CardHeader>
           </Card>
         </div>
 
