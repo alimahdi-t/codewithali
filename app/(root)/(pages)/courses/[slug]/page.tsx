@@ -32,7 +32,7 @@ const CoursePage = async (props: Props) => {
         imageUrl={imageUrl}
         price={price}
       />
-      <div className="w-full flex flex-row gap-4 flex-1 pb-12">
+      <div className="w-full flex flex-row gap-4 flex-1 pb-12 mt-12 relative">
         <div className="flex flex-col gap-4">
           <CourseTabs />
           <CourseMetrics />
@@ -84,7 +84,7 @@ const CoursePage = async (props: Props) => {
         </div>
 
         {/* TODO: this must be fixed while its above div scroll*/}
-        <div className="w-[480px] flex flex-col gap-4">
+        <div className="w-[480px] flex flex-col gap-4 h-full sticky top-10">
           <CompletionProgress progress={100} />
           <InstructorInfo instructor={instructor} />
         </div>
