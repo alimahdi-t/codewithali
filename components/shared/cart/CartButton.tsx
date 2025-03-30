@@ -7,6 +7,7 @@ import Link from "next/link";
 
 export const CartButton = () => {
   const { cart } = useCart();
+
   return (
     <Link href="/checkout">
       <Button size="icon" variant="ghost" className="rounded-full relative">

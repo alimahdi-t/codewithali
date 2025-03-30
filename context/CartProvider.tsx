@@ -12,33 +12,38 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useState<string[]>(() => {
-    if (typeof window !== "undefined") {
+  const [cart, setCart] = useState<string[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
+
+  // Ensure we only access localStorage after the component has mounted
+  useEffect(() => {
+    const savedCart = localStorage.getItem("cart");
+
+    if (savedCart) {
       try {
-        const savedCart = localStorage.getItem("cart");
-        const parsedCart = savedCart ? JSON.parse(savedCart) : [];
-
-        // **Validation: Ensure it's an array of strings**
+        const parsedCart = JSON.parse(savedCart);
         if (
-          !Array.isArray(parsedCart) ||
-          !parsedCart.every((id) => typeof id === "string")
+          Array.isArray(parsedCart) &&
+          parsedCart.every((id) => typeof id === "string")
         ) {
+          setCart(parsedCart);
+        } else {
           localStorage.removeItem("cart"); // Clear invalid data
-          return [];
         }
-
-        return parsedCart;
       } catch (error) {
-        localStorage.removeItem("cart"); // Clear storage if JSON parsing fails
-        return [];
+        console.error("Error parsing cart from localStorage:", error);
+        localStorage.removeItem("cart"); // Clear storage on error
       }
     }
-    return [];
-  });
+    setIsMounted(true); // Set mounted state to true when ready
+  }, []);
 
+  // Update localStorage when cart changes
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    if (isMounted) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart, isMounted]);
 
   const addToCart = (id: string) => {
     setCart((prevCart) => {
@@ -57,8 +62,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const clearCart = () => {
     setCart([]);
-    localStorage.removeItem("cart"); // Clear storage completely
   };
+
+  // Don't render until the component is mounted (to avoid SSR mismatch)
+  if (!isMounted) {
+    return null; // Prevent server-side mismatch
+  }
 
   return (
     <CartContext.Provider

@@ -18,7 +18,6 @@ const Checkout = () => {
     useState<
       { id: number; title: string; imageUrl: string; price: number }[]
     >();
-  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
     const getCart = async () => {
@@ -33,11 +32,8 @@ const Checkout = () => {
     };
 
     getCart();
-
-    setIsMounted(true);
   }, [cart]);
 
-  if (!isMounted) return null; // از رندر در سرور جلوگیری می‌کند
   const length = cart.length;
 
   if (length < 1)
@@ -88,11 +84,12 @@ const Checkout = () => {
                     <div className="flex-1 flex justify-between items-center">
                       <div className="flex items-center space-x-2">
                         <Image
-                          width={80}
-                          height={40}
+                          width={120}
+                          height={60}
                           src={cartItem.imageUrl}
                           alt={"item image"}
                           className="rounded"
+                          loading="eager"
                         />
                         <p className="text-sm font-light">{cartItem.title}</p>
                       </div>
@@ -126,7 +123,6 @@ const Checkout = () => {
             </CardHeader>
             <CardContent>
               <div className="relative w-full max-w-[325px] group border py-4 flex items-center rounded-2xl">
-                <input className="outline-none group-hover:bg-red-500" />
                 <button
                   className="flex items-center rounded-lg top-1 left-1 !h-10 w-[118px]
                 disabled:cursor-not-allowed focus:outline-none bg-none justify-center
