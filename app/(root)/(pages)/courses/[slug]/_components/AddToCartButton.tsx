@@ -15,7 +15,7 @@ export const AddToCartButton = ({ courseId }: Props) => {
     <Button
       size="lg"
       className="text-sm font-semibold dark:text-white flex items-center"
-      onClick={() => addToCart({ id: courseId })}
+      onClick={() => addToCart(courseId)}
     >
       <HiShoppingCart className="size-4.5 ml-1" />
       <p>افزودن به سبد خرید</p>

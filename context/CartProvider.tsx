@@ -1,13 +1,10 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
-
-interface CartItem {
-  id: string;
-}
+import { toast } from "sonner";
 
 interface CartContextType {
-  cart: CartItem[];
-  addToCart: (course: CartItem) => void;
+  cart: string[];
+  addToCart: (id: string) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
 }
@@ -15,42 +12,52 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  // Initialize the Cart State:
-  // cart holds an array of cart items.
-  // It initializes from localStorage, ensuring cart data persists after page reloads.
-  // typeof window !== "undefined" prevents errors when running on the server.
-  const [cart, setCart] = useState<CartItem[]>(() => {
+  const [cart, setCart] = useState<string[]>(() => {
     if (typeof window !== "undefined") {
-      const savedCart = localStorage.getItem("cart");
-      return savedCart ? JSON.parse(savedCart) : [];
+      try {
+        const savedCart = localStorage.getItem("cart");
+        const parsedCart = savedCart ? JSON.parse(savedCart) : [];
+
+        // **Validation: Ensure it's an array of strings**
+        if (
+          !Array.isArray(parsedCart) ||
+          !parsedCart.every((id) => typeof id === "string")
+        ) {
+          localStorage.removeItem("cart"); // Clear invalid data
+          return [];
+        }
+
+        return parsedCart;
+      } catch (error) {
+        localStorage.removeItem("cart"); // Clear storage if JSON parsing fails
+        return [];
+      }
     }
     return [];
   });
 
-  // Runs every time cart updates.
-  // Saves the cart to localStorage so the cart persists across sessions.
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
-  const addToCart = (course: CartItem) => {
+  const addToCart = (id: string) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((item) => item.id === course.id);
-      if (existingItem) {
-        return prevCart; // Do nothing if the item is already in the cart
+      if (prevCart.includes(id)) {
+        toast.error("این دوره قبلا به سبد خرید اضافه شده است!");
+        return prevCart;
       }
-      return [...prevCart, course]; // Add the course if it's not already in the cart
+      toast.success("دوره با موفقیت با سبد خرید اضافه شد!");
+      return [...prevCart, id];
     });
   };
 
-  // Filters out the item with the given id, removing it from the cart.
   const removeFromCart = (id: string) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+    setCart((prevCart) => prevCart.filter((item) => item !== id));
   };
 
-  // Clears all items from the cart.
   const clearCart = () => {
     setCart([]);
+    localStorage.removeItem("cart"); // Clear storage completely
   };
 
   return (
@@ -62,7 +69,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// A custom hook to access the cart context
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
