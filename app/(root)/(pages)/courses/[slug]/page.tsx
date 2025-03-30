@@ -22,11 +22,13 @@ const CoursePage = async (props: Props) => {
     notFound();
   }
 
-  const { instructor, price, imageUrl, description, content, title } = course;
+  const { id, instructor, price, imageUrl, description, content, title } =
+    course;
 
   return (
     <div className="w-full flex flex-col gap-8">
       <CourseHeader
+        id={id.toString()}
         title={title}
         description={description}
         imageUrl={imageUrl}

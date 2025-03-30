@@ -6,6 +6,7 @@ import React from "react";
 import { Toaster } from "@/components/ui/sonner";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "@/auth";
+import { CartProvider } from "@/context/CartProvider";
 
 const Dana = localFont({
   variable: "--font-dana",
@@ -74,7 +75,9 @@ export default async function RootLayout({
     <SessionProvider session={session}>
       <html lang="fa">
         <body dir="rtl" className={`${Dana.className} scroll-container h-full`}>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <CartProvider>{children}</CartProvider>
+          </ThemeProvider>
           <Toaster dir="rtl" theme="light" richColors />
         </body>
       </html>

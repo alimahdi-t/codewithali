@@ -3,6 +3,7 @@ import Price from "@/components/common/Price";
 import Image from "next/image";
 
 interface Props {
+  id: string;
   title: string;
   description: string;
   imageUrl: string;
@@ -11,7 +12,7 @@ interface Props {
 }
 
 export const CourseHeader = (props: Props) => {
-  const { title, description, imageUrl, price, discount } = props;
+  const { id, title, description, imageUrl, price, discount } = props;
   return (
     <div className="grid grid-cols-7 gap-4 max-lg:grid-cols-1">
       <div className="lg:col-span-4 flex flex-col justify-between max-lg:order-2 overflow-hidden max-lg:mt-3">
@@ -22,7 +23,7 @@ export const CourseHeader = (props: Props) => {
           </p>
         </div>
         <div className="flex justify-between items-center">
-          <AddToCartButton />
+          <AddToCartButton courseId={id} />
           <Price
             price={price}
             classname="text-2xl font-bold"
