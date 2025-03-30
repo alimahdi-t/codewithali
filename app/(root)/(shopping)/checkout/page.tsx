@@ -2,15 +2,22 @@
 import { useCart } from "@/context/CartProvider";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { convertToPersianAndFormat, convertToPersianNumbers } from "@/utils";
+import {
+  calculatePayableAmount,
+  calculateTotalDiscount,
+  calculateTotalPrice,
+  convertToPersianAndFormat,
+  convertToPersianNumbers,
+} from "@/utils";
 import Price from "@/components/common/Price";
-import { HiOutlineGift, HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineGift } from "react-icons/hi2";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { getCartItems } from "@/actions/cart/get-cart-items.action";
 import { toast } from "sonner";
+import { CourseItem } from "@/app/(root)/(shopping)/checkout/_components/CourseItem";
 
 const Checkout = () => {
   const { cart, removeFromCart } = useCart();
@@ -39,11 +46,11 @@ const Checkout = () => {
   if (length < 1)
     return (
       <div className="w-full flex flex-col">
-        <div className="flex justify-center flex-col items-center relative bottom-16">
+        <div className="flex justify-center flex-col items-center">
           <Image
             src={"svg/empty-cart.svg"}
-            width={320}
-            height={320}
+            width={400}
+            height={400}
             alt={""}
             className="object-contain aspect-2/1"
           />
@@ -62,12 +69,12 @@ const Checkout = () => {
         </div>
       </div>
     );
-
+  if (!serverCart) return null;
   return (
     <div className="w-full flex flex-col">
       <h2 className="c-text-h3">ثبت سفارش</h2>
-      <div className="flex flex-row gap-8 mt-4 max-lg:flex-wrap">
-        <div className="flex-1 flex flex-col gap-4">
+      <div className="grid md:grid-cols-12 grid-cols-1 gap-8 mt-4 max-lg:flex-wrap">
+        <div className="md:col-span-8 col-span-1 flex flex-col gap-4">
           <Card className="flex">
             <CardHeader>
               <CardTitle>
@@ -77,41 +84,19 @@ const Checkout = () => {
             <CardContent>
               <div className="w-full overflow-hidden space-y-4">
                 {serverCart?.map((cartItem) => (
-                  <div
+                  <CourseItem
                     key={cartItem.id}
-                    className="flex justify-between items-center"
-                  >
-                    <div className="flex-1 flex justify-between items-center">
-                      <div className="flex items-center space-x-2">
-                        <Image
-                          width={120}
-                          height={60}
-                          src={cartItem.imageUrl}
-                          alt={"item image"}
-                          className="rounded"
-                          loading="eager"
-                        />
-                        <p className="text-sm font-light">{cartItem.title}</p>
-                      </div>
-                      <div>
-                        <p className="text-sm">
-                          {`${convertToPersianAndFormat(cartItem.price)} تومان`}
-                        </p>
-                      </div>
-                    </div>
-                    <Button
-                      size="icon"
-                      variant="ghost"
-                      className="rounded-full mr-2"
-                      onClick={() => removeFromCart(cartItem.id.toString())}
-                    >
-                      <HiOutlineXMark className="size-5" />
-                    </Button>
-                  </div>
+                    title={cartItem.title}
+                    imageUrl={cartItem.imageUrl}
+                    price={cartItem.price}
+                    discountPercent={35}
+                    onClick={() => removeFromCart(cartItem.id.toString())}
+                  />
                 ))}
               </div>
             </CardContent>
           </Card>
+          {/*TODO: complete discount section*/}
           <Card className="flex">
             <CardHeader>
               <div className="flex items-center gap-1 text-gray-600">
@@ -134,7 +119,7 @@ const Checkout = () => {
             </CardContent>
           </Card>
         </div>
-        <Card className="w-[360px] flex flex-col gap-4 c-card">
+        <Card className="md:col-span-4 col-span-1 flex flex-col gap-4 sticky top-4 h-min">
           <CardHeader>
             <CardTitle>سفارش شما</CardTitle>
           </CardHeader>
@@ -143,23 +128,38 @@ const Checkout = () => {
               <div className="flex items-center justify-between text-sm font-medium">
                 <p>مبلغ کل</p>
                 <Price
-                  price={2400000}
-                  classname="font-normal text-base gap-1"
+                  price={calculateTotalPrice(serverCart || [])}
+                  classname="font-normal text-sm gap-1"
                 />
               </div>
-              <div className="mt-2 flex items-center justify-between text-action-error">
+              <div className="mt-4 flex items-center justify-between text-action-error">
                 <p>تخفیف</p>
-                <Price price={800000} classname="font-normal text-base gap-1" />
+                <p className="font-normal text-sm gap-1">
+                  {`${convertToPersianAndFormat(
+                    calculateTotalDiscount(serverCart || []),
+                  )} تومان`}
+                </p>
               </div>
-              <Separator className="my-3" />
-              <div className="flex items-center justify-between text-sm font-medium">
-                <p>مبلغ قابل پرداخت</p>
-                <Price
-                  price={2400000}
-                  classname="font-normal text-base gap-1"
-                />
+              <Separator className="mt-4" />
+              <div className="mt-6 flex items-center justify-between text-sm font-medium">
+                <p className="font-bold">مبلغ قابل پرداخت</p>
+                <p className="font-bold gap-1">
+                  {`${convertToPersianAndFormat(
+                    calculatePayableAmount(serverCart || []),
+                  )} تومان`}
+                </p>
               </div>
-              <Button className="w-full mt-4">پرداخت</Button>
+              <Button className="w-full mt-8 text-base font-medium">
+                پرداخت
+              </Button>
+              <p className="text-xs font-normal mt-2.5 text-muted-foreground">
+                پرداخت و ثبت سفارش، به منزله مطالعه و پذیرفتن
+                <Link className="text-primary" href="#">
+                  {" "}
+                  قوانین و مقررات
+                </Link>{" "}
+                استفاده از خدمات فرادرس است.
+              </p>
             </div>
           </CardContent>
         </Card>
