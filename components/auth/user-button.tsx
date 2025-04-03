@@ -32,7 +32,7 @@ export const UserButton = () => {
   if (!user) {
     return (
       <Link href="/auth/sign-in">
-        <Button variant="outline" className="text-sm">
+        <Button variant="outline" className="text-sm font-normal">
           ورود | ثبت‌نام
         </Button>
       </Link>
