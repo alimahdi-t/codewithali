@@ -15,7 +15,15 @@ export default auth((req) => {
   const isLoggedIn = !!req.auth; // Returns true if user signed in
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix); // prefix of api for auth routes
-  const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
+  const isPublicRoute = publicRoutes.some((route) => {
+    // Check if route is a dynamic route (like /courses/[slug], /blog/[slug], /profile/[userId])
+    const dynamicSegmentRegex = /\[([^\]]+)\]/; // Matches any dynamic segment, e.g., [slug], [id], [userId], etc.
+    if (dynamicSegmentRegex.test(route)) {
+      const baseRoute = route.split(dynamicSegmentRegex)[0]; // Get the base route before the dynamic segment (e.g., "/courses", "/blog", "/profile")
+      return nextUrl.pathname.startsWith(baseRoute); // Match base route
+    }
+    return route === nextUrl.pathname; // Exact match for static routes
+  });
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
   if (isApiAuthRoute) {
