@@ -10,6 +10,7 @@ import CompletionProgress from "@/app/(root)/(pages)/courses/[slug]/_components/
 import { Button } from "@/components/ui/button";
 import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
 import CourseTabs from "@/app/(root)/(pages)/courses/[slug]/_components/CourseTabs";
+import { CourseCommentSection } from "@/app/(root)/(pages)/courses/[slug]/_components/CourseCommentSection";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -74,6 +75,7 @@ const CoursePage = async (props: Props) => {
                 <h3 className="text-lg font-medium">نظرات</h3>
                 <Button size="sm">ثبت نظر</Button>
               </div>
+              <CourseCommentSection />
             </CardHeader>
           </Card>
           <Card id="faq">

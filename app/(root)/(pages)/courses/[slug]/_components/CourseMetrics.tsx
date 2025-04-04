@@ -31,6 +31,16 @@ const CourseMetrics = ({}: Props) => {
       value: convertToPersianNumbers(1276),
       icon: HiOutlineUsers,
     },
+    {
+      label: "تعداد دانشجو",
+      value: convertToPersianNumbers(1276),
+      icon: HiOutlineUsers,
+    },
+    {
+      label: "تعداد دانشجو",
+      value: convertToPersianNumbers(1276),
+      icon: HiOutlineUsers,
+    },
   ];
   return (
     <div className="w-full grid grid-cols-2 md:grid-cols-3 gap-4">
