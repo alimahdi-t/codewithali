@@ -21,10 +21,10 @@ import { Button } from "@/components/ui/button";
 export const AdminSidebar = () => {
   return (
     <aside
-      className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col border-l bg-white shadow-sm`}
+      className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col border-l c-border bg-card shadow-sm`}
     >
       <div
-        className={`"w-full flex grow flex-col overflow-y-auto border-r scroll-thin border-gray-200 bg-white px-2 pb-4 py-4`}
+        className={`"w-full flex grow flex-col overflow-y-auto scroll-thin px-2 pb-4 py-4`}
       >
         <SidebarMenu />
       </div>
@@ -34,7 +34,7 @@ export const AdminSidebar = () => {
 
 export const SidebarMenu = () => {
   return (
-    <div className="bg-white">
+    <div className="">
       <UserProfileCard />
       <Separator className="my-4" />
       <ul role="list" className="flex flex-col gap-0.5">
@@ -78,7 +78,7 @@ export const AdminMobileSideBar = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" className="rounded-full" size="icon">
           <HiOutlineBars3 className="size-6" />
         </Button>
       </SheetTrigger>

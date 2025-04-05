@@ -12,7 +12,7 @@ import { CartButton } from "@/components/shared/cart/CartButton";
 const Navbar = () => {
   return (
     <header className="flex justify-center w-full">
-      <nav className="w-full  backdrop-blur-md border-b c-border flex justify-center dark:bg-gray-900">
+      <nav className="w-full border-b c-border border-r flex justify-center dark:bg-gray-900 ">
         <div className="max-w-7xl w-full lg:px-8 px-2 flex justify-between items-center">
           <MobileNav className="md:hidden" />
 
