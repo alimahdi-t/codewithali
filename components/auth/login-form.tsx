@@ -72,7 +72,7 @@ export const LoginForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                  <FormLabel className="block text-sm font-medium leading-6">
                     ایمیل
                   </FormLabel>
                   <FormControl>
@@ -88,7 +88,7 @@ export const LoginForm = () => {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+                  <FormLabel className="block text-sm font-medium leading-6">
                     رمز عبور
                   </FormLabel>
                   <FormControl>

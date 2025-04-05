@@ -69,7 +69,7 @@ const CoursePageBody = () => {
           </Accordion>
         </div>
       </div>
-      <div className="box-t">
+      <div className="">
         <div className="flex items-center gap-x-2">
           <span
             className={`w-1.5 h-10 rounded-r-sm relative left-6 bg-red-500`}

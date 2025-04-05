@@ -14,8 +14,17 @@ html{
   scroll-behavior: smooth;
 }
 
+/*-----------------------------------------------*/
 
+@utility text-dark-900_light-200{
+  @apply dark:text-gray-200  text-gray-900
+}
 
+@utility border-dark800_light200 {
+  @apply dark:border-gray-800 border-gray-200;
+}
+
+/*-----------------------------------------------*/
 
 @utility c-text-h1{
   @apply text-4xl font-bold tracking-tight text-gray-900 dark:text-white
@@ -55,16 +64,44 @@ html{
   @apply relative transition-all duration-500 hover:shadow-brand-500/15 hover:-translate-y-2
 }
 
-@utility c-form-label{
-  @apply font-normal leading-6 text-gray-900 dark:text-gray-200
-}
-
 @utility c-stat-card {
   @apply  h-32 rounded-lg flex flex-col justify-center items-center gap-y-1 cursor-pointer
 }
 
 @utility c-scale-animation {
   @apply hover:scale-105 transition-transform duration-100 ease-in
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px white inset; /* Change 'white' to your desired background */
+  box-shadow: 0 0 0 1000px white inset;
+  /*-webkit-text-fill-color: #000 ; !* Optional: to set text color *!*/
+  transition: background-color 5000s ease-in-out 0s; /* Prevents quick flash */
+}
+
+.dark {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  textarea:-webkit-autofill:hover,
+  textarea:-webkit-autofill:focus,
+  select:-webkit-autofill,
+  select:-webkit-autofill:hover,
+  select:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px var(--color-gray-950) inset; /* Change 'white' to your desired background */
+    box-shadow: 0 0  1000px var(--color-gray-950) inset;
+    -webkit-text-fill-color: white ; /* Optional: to set text color */
+    transition: background-color 5000s ease-in-out 0s; /* Prevents quick flash */
+  }
 }
 
 html,
@@ -213,9 +250,6 @@ body,
   }
 }
 
-@utility box-t {
-  @apply flex-1 p-4 bg-white rounded-lg shadow-sm border border-gray-100 dark:text-white dark:bg-gray-900 dark:shadow-none dark:border-none;
-}
 
 @utility text-main-t {
   @apply dark:text-white text-gray-900;
@@ -233,21 +267,11 @@ body,
   @apply dark:bg-gray-900 bg-white;
 }
 
-@utility border-dark800_light300 {
-  @apply dark:border-gray-800 border-gray-300;
-}
 
-@utility border-dark800_light200 {
-  @apply dark:border-gray-800 border-gray-200;
-}
 
-@utility border-dark800_light100 {
-  @apply dark:border-gray-800 border-gray-100;
-}
 
-@utility text-dark300_light950 {
-  @apply dark:text-gray-300 text-black;
-}
+
+
 
 
 @layer base {

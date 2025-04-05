@@ -61,9 +61,7 @@ export const ChangePasswordForm = () => {
                 render={({ field }) => (
                   //TODO: hide this if user doesn't have a password at first because he\she used a OAuth provider
                   <FormItem>
-                    <FormLabel className="c-form-label!">
-                      رمزعبور فعلی
-                    </FormLabel>
+                    <FormLabel>رمزعبور فعلی</FormLabel>
                     <FormControl>
                       <Input type="password" className="leading-6" {...field} />
                     </FormControl>
@@ -76,9 +74,7 @@ export const ChangePasswordForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="c-form-label!">
-                      رمز عبور جدید
-                    </FormLabel>
+                    <FormLabel>رمز عبور جدید</FormLabel>
                     <FormControl>
                       <Input type="password" className="leading-6" {...field} />
                     </FormControl>
@@ -91,9 +87,7 @@ export const ChangePasswordForm = () => {
                 name="retypePassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="c-form-label!">
-                      تایید رمز عبور
-                    </FormLabel>
+                    <FormLabel>تایید رمز عبور</FormLabel>
                     <FormControl>
                       <Input type="password" className="leading-6" {...field} />
                     </FormControl>

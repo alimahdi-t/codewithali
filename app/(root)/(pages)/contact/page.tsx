@@ -130,7 +130,7 @@ const Contact = () => {
                 name="fullName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
+                    <FormLabel>
                       نام و نام‌خانوادگی
                       <span className="text-action-error px-1">*</span>
                     </FormLabel>
@@ -146,9 +146,7 @@ const Contact = () => {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900 dark:text-gray-100">
-                      شماره تماس
-                    </FormLabel>
+                    <FormLabel>شماره تماس</FormLabel>
                     <FormControl>
                       <Input type="text" className="leading-6" {...field} />
                     </FormControl>

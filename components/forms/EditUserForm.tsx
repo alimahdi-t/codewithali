@@ -70,7 +70,7 @@ export const EditUserForm = ({ initialData }: EditUserFormProps) => {
                 name="firstName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="c-form-label!">نام</FormLabel>
+                    <FormLabel>نام</FormLabel>
                     <FormControl>
                       <Input type="text" className="leading-6" {...field} />
                     </FormControl>
@@ -83,9 +83,7 @@ export const EditUserForm = ({ initialData }: EditUserFormProps) => {
                 name="lastName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="c-form-label!">
-                      نام‌خانوادگی
-                    </FormLabel>
+                    <FormLabel>نام‌خانوادگی</FormLabel>
                     <FormControl>
                       <Input type="text" className="leading-6" {...field} />
                     </FormControl>
@@ -98,9 +96,7 @@ export const EditUserForm = ({ initialData }: EditUserFormProps) => {
                 name="phoneNumber"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="c-form-label!">
-                      شماره موبایل
-                    </FormLabel>
+                    <FormLabel>شماره موبایل</FormLabel>
                     <FormControl>
                       <Input type="text" className="leading-6" {...field} />
                     </FormControl>
@@ -114,7 +110,7 @@ export const EditUserForm = ({ initialData }: EditUserFormProps) => {
                   name="username"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="c-form-label!">نام کابری</FormLabel>
+                      <FormLabel>نام کابری</FormLabel>
                       <FormControl>
                         <Input type="text" className="leading-6" {...field} />
                       </FormControl>
@@ -129,7 +125,7 @@ export const EditUserForm = ({ initialData }: EditUserFormProps) => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="c-form-label!">ایمیل</FormLabel>
+                    <FormLabel>ایمیل</FormLabel>
                     <FormControl>
                       <Input
                         disabled={true}
@@ -150,7 +146,7 @@ export const EditUserForm = ({ initialData }: EditUserFormProps) => {
                 name="bio"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="c-form-label!">بیو</FormLabel>
+                    <FormLabel>بیو</FormLabel>
                     <FormControl>
                       <Textarea
                         className="leading-6 min-h-28 max-h-48"

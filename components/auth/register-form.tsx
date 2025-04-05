@@ -69,9 +69,7 @@ export const RegisterForm = () => {
                     name="firstName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                          نام
-                        </FormLabel>
+                        <FormLabel>نام</FormLabel>
                         <FormControl>
                           <Input type="text" autoComplete="name" {...field} />
                         </FormControl>
@@ -86,9 +84,7 @@ export const RegisterForm = () => {
                     name="lastName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                          نام خانوادگی
-                        </FormLabel>
+                        <FormLabel>نام خانوادگی</FormLabel>
                         <FormControl>
                           <Input
                             type="text"
@@ -107,9 +103,7 @@ export const RegisterForm = () => {
                 name="email"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      ایمیل
-                    </FormLabel>
+                    <FormLabel>ایمیل</FormLabel>
                     <FormControl>
                       <Input type="email" autoComplete="email" {...field} />
                     </FormControl>
@@ -123,9 +117,7 @@ export const RegisterForm = () => {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      رمز عبور
-                    </FormLabel>
+                    <FormLabel>رمز عبور</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -142,9 +134,7 @@ export const RegisterForm = () => {
                 name="retypePassword"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      تکرار رمز عبور
-                    </FormLabel>
+                    <FormLabel>تکرار رمز عبور</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
