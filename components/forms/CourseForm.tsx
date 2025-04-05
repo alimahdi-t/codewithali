@@ -134,9 +134,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    نام دوره
-                  </FormLabel>
+                  <FormLabel>نام دوره</FormLabel>
                   <FormControl>
                     <Input type="text" className="leading-6" {...field} />
                   </FormControl>
@@ -149,9 +147,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
               name="slug"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    Slug
-                  </FormLabel>
+                  <FormLabel>Slug</FormLabel>
                   <FormControl>
                     <Input type="text" className="leading-6" {...field} />
                   </FormControl>
@@ -164,9 +160,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    توضیحات
-                  </FormLabel>
+                  <FormLabel>توضیحات</FormLabel>
                   <FormControl>
                     <Textarea {...field} />
                   </FormControl>
@@ -179,9 +173,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    محتوا
-                  </FormLabel>
+                  <FormLabel>محتوا</FormLabel>
                   <FormControl>
                     <RichTextEditor
                       content={field.value}
@@ -200,9 +192,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
                 name="imageUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      لینک تصویر
-                    </FormLabel>
+                    <FormLabel>لینک تصویر</FormLabel>
                     <FormControl>
                       <Input type="text" className="leading-6" {...field} />
                     </FormControl>
@@ -215,9 +205,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
                 name="price"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      قیمت
-                    </FormLabel>
+                    <FormLabel>قیمت</FormLabel>
                     <FormControl>
                       <Input type="text" className="leading-6" {...field} />
                     </FormControl>
@@ -232,9 +220,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
                 name="level"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      سطح دوره
-                    </FormLabel>
+                    <FormLabel>سطح دوره</FormLabel>
                     <FormControl>
                       <Select
                         dir="rtl"
@@ -266,9 +252,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
                 name="status"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      وضعیت دوره
-                    </FormLabel>
+                    <FormLabel>وضعیت دوره</FormLabel>
                     <FormControl>
                       <Select
                         dir="rtl"
@@ -304,9 +288,7 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
                 name="instructorId"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      انتخاب مدرس
-                    </FormLabel>
+                    <FormLabel>انتخاب مدرس</FormLabel>
                     <FormControl>
                       <Select
                         onValueChange={(value) =>

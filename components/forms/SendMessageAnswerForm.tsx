@@ -42,7 +42,7 @@ export const SendMessageAnswerForm = () => {
           name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+              <FormLabel>
                 عنوان
                 <span className="text-red-500 px-1">*</span>
               </FormLabel>
@@ -58,7 +58,7 @@ export const SendMessageAnswerForm = () => {
           name="message"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
+              <FormLabel>
                 توضیحات
                 <span className="text-red-500 px-1">*</span>
               </FormLabel>

@@ -1,29 +1,29 @@
 "use client";
 import { Toggle } from "../ui/toggle";
 import {
-  Heading1,
-  Heading2,
-  Heading3,
-  Code,
-  Bold,
-  Italic,
-  Strikethrough,
   AlignCenter,
   AlignLeft,
   AlignRight,
+  Bold,
+  CircleX,
+  Code,
+  Heading1,
+  Heading2,
+  Heading3,
   Highlighter,
-  List,
-  Underline,
-  Link,
-  TextQuote,
-  ListOrdered,
   ImagePlus,
+  Italic,
+  Link,
+  List,
+  ListOrdered,
   Palette,
   Redo,
-  Undo,
+  Strikethrough,
   Subscript,
   Superscript,
-  CircleX,
+  TextQuote,
+  Underline,
+  Undo,
 } from "lucide-react";
 import { Editor } from "@tiptap/react";
 import { useState } from "react";
@@ -347,7 +347,7 @@ export default function ToolBar({ editor }: ToolBarProps) {
   return (
     <div
       dir="ltr"
-      className="w-full border rounded-md py-1 mb-1 bg-slate-50 space-x-1 top-10 z-50 px-1"
+      className="w-full border rounded-md py-1 mb-1 space-x-1 top-10 z-50 px-1"
     >
       {Options.map((option, i) => (
         <TooltipProvider key={i}>

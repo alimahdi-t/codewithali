@@ -87,7 +87,7 @@ export default function RichTextEditor({
     editorProps: {
       attributes: {
         class:
-          "max-w-5xl min-h-[300px] max-h-[500px] overflow-y-auto border rounded-md bg-slate-50 px-3 py-2 prose",
+          "max-w-5xl min-h-[300px] max-h-[500px] overflow-y-auto border rounded-md  px-3 py-2 prose",
       },
     },
     onUpdate: ({ editor }) => {
@@ -98,12 +98,12 @@ export default function RichTextEditor({
   if (!editor) {
     return (
       <div className="w-full flex flex-col gap-y-0.5">
-        <Skeleton className="w-full border rounded-md py-1 px-2 mb-1 bg-slate-50 sticky  top-10 z-50 flex flex-wrap justify-end items-center gap-3 ">
+        <Skeleton className="w-full border rounded-md py-1 px-2 mb-1  sticky  top-10 z-50 flex flex-wrap justify-end items-center gap-3 ">
           {Array.from({ length: 22 }).map((_, i) => (
             <Skeleton key={i} className="w-5 h-5 bg-gray-400 rounded-full" />
           ))}
         </Skeleton>
-        <Skeleton className="max-w-5xl min-h-[300px] max-h-[500px] overflow-y-auto border rounded-md bg-slate-50 px-3 py-2 prose"></Skeleton>
+        <Skeleton className="max-w-5xl min-h-[300px] max-h-[500px] overflow-y-auto border rounded-md px-3 py-2 prose"></Skeleton>
         <div
           className={`relative bottom-16 right-4 text-xs text-gray-600/50 flex items-start gap-2 character-count`}
         >
@@ -134,18 +134,27 @@ export default function RichTextEditor({
         }`}
       >
         <svg height="20" width="20" viewBox="0 0 20 20">
-          <circle r="10" cx="10" cy="10" fill="#e9ecef" />
+          <circle
+            r="10"
+            cx="10"
+            cy="10"
+            className="dark:fill-gray-600 fill-gray-300"
+          />
           <circle
             r="5"
             cx="10"
             cy="10"
-            fill="transparent"
-            stroke="currentColor"
+            className="stroke-primary dark:fill-gray-900 fill-white"
             strokeWidth="10"
             strokeDasharray={`calc(${percentage} * 31.4 / 100) 31.4`}
             transform="rotate(-90) translate(-20)"
           />
-          <circle r="6" cx="10" cy="10" fill="white" />
+          <circle
+            r="6"
+            cx="10"
+            cy="10"
+            className="dark:fill-gray-900 fill-white"
+          />
         </svg>
         {convertToPersianNumbers(editor.storage.characterCount.characters())} /{" "}
         {convertToPersianNumbers(charLimit)} حرف

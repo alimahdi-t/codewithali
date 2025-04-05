@@ -161,9 +161,7 @@ export default function PostForm({
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    عنوان
-                  </FormLabel>
+                  <FormLabel>عنوان</FormLabel>
                   <FormControl>
                     <Input type="text" className="leading-6" {...field} />
                   </FormControl>
@@ -176,9 +174,7 @@ export default function PostForm({
               name="slug"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    Slug
-                  </FormLabel>
+                  <FormLabel>Slug</FormLabel>
                   <FormControl>
                     <Input type="text" className="leading-6" {...field} />
                   </FormControl>
@@ -192,9 +188,7 @@ export default function PostForm({
               name="content"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    محتوا
-                  </FormLabel>
+                  <FormLabel>محتوا</FormLabel>
                   <FormControl>
                     <RichTextEditor
                       content={field.value}
@@ -212,9 +206,7 @@ export default function PostForm({
               name="imageUrl"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    لینک تصویر
-                  </FormLabel>
+                  <FormLabel>لینک تصویر</FormLabel>
                   <FormControl>
                     <Input type="text" className="leading-6" {...field} />
                   </FormControl>
@@ -229,9 +221,7 @@ export default function PostForm({
                 name="readingTime"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      زمان مورد نیاز برای مطالعه
-                    </FormLabel>
+                    <FormLabel>زمان مورد نیاز برای مطالعه</FormLabel>
                     <FormControl>
                       <Input type="text" className="leading-6" {...field} />
                     </FormControl>
@@ -245,9 +235,7 @@ export default function PostForm({
                 name="isEditorPick"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                      منتخب سردبیر
-                    </FormLabel>
+                    <FormLabel>منتخب سردبیر</FormLabel>
                     <FormControl>
                       <Select
                         dir="rtl"
@@ -280,9 +268,7 @@ export default function PostForm({
                   name="authorId"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                        ایدی نویسنده
-                      </FormLabel>
+                      <FormLabel>ایدی نویسنده</FormLabel>
                       <FormControl>
                         <Input type="text" className="leading-6" {...field} />
                       </FormControl>
@@ -298,9 +284,7 @@ export default function PostForm({
               name="tags"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    انتخاب برچسپ‌ها
-                  </FormLabel>
+                  <FormLabel>انتخاب برچسپ‌ها</FormLabel>
                   <FormControl>
                     <MultiSelect
                       options={tags.map((tag) => ({
