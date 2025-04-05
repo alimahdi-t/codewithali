@@ -20,10 +20,12 @@ export const StatisticsCard: React.FC<StatisticsCardProps> = ({
   const searchParams = useSearchParams();
 
   const variants = {
-    info: "text-action-info bg-action-light-info",
-    warning: "text-action-warning bg-action-light-warning",
-    success: "text-action-success bg-action-light-success",
-    error: "text-action-error bg-action-light-error",
+    info: "text-action-info bg-action-light-info dark:bg-action-info/50",
+    warning:
+      "text-action-warning bg-action-light-warning dark:bg-action-warning/50",
+    success:
+      "text-action-success bg-action-light-success dark:bg-action-success/50",
+    error: "text-action-error bg-action-light-error dark:bg-action-error/50",
   };
 
   const handleClick = () => {
@@ -43,7 +45,7 @@ export const StatisticsCard: React.FC<StatisticsCardProps> = ({
   return (
     <div
       onClick={handleClick}
-      className={`${variants[variant]} c-stat-card c-scale-animation cursor-pointer`}
+      className={`${variants[variant]} c-stat-card c-scale-animation   cursor-pointer`}
     >
       <h3 className="font-black text-2xl leading-7">
         {convertToPersianNumbers(count)}
