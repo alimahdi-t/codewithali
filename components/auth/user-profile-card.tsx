@@ -12,10 +12,10 @@ export const UserProfileCard = () => {
         <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
       </Avatar>
       <div>
-        <p className="text-sm font-semibold text-center text-gray-900">
+        <p className="text-sm font-semibold text-center text-gray-900 dark:text-white">
           {user?.name}
         </p>
-        <p className="text-xs text-gray-400 font-semibold text-center  rounded-lg px-2 py-1 font-sans">
+        <p className="text-xs text-gray-400 dark:text-gray-300 font-semibold text-center  rounded-lg px-2 py-1 font-sans">
           {user?.email}
         </p>
       </div>
