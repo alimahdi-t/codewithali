@@ -36,10 +36,10 @@ export const UserProfileCard = () => {
         <AvatarFallback>{user.name?.charAt(0)}</AvatarFallback>
       </Avatar>
       <div>
-        <p className="text-sm font-semibold text-center text-gray-900 dark:text-white">
+        <p className="text-sm font-semibold text-center text-dark-900_light-25">
           {user.name}
         </p>
-        <p className="text-xs text-gray-400 dark:text-gray-300 font-semibold text-center rounded-lg px-2 py-1 font-sans">
+        <p className="text-xs text-dark-400_light-300 font-semibold text-center rounded-lg px-2 py-1 font-sans">
           {user.email}
         </p>
       </div>

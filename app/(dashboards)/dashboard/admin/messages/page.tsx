@@ -40,7 +40,7 @@ const MessagesPage = async (props: Props) => {
     response;
 
   return (
-    <div className="rounded-xl p-4 bg-background shadow-sm">
+    <div className="rounded-xl p-4 bg-card shadow-sm">
       <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6">
         <StatisticsCard
           count={totalMessages ?? ""}
@@ -91,13 +91,13 @@ const MessagesPage = async (props: Props) => {
                     {convertToPersianNumbers(index + 1)}
                   </TableCell>
                   <TableCell>{message.title}</TableCell>
-                  <TableCell className="font-sans text-gray-600">
+                  <TableCell className="font-sans text-dark-400_light-600">
                     {message.email}
                   </TableCell>
                   <TableCell>
                     <MessageStatus status={message.status} />
                   </TableCell>
-                  <TableCell className="text-gray-500">
+                  <TableCell className="text-dark-400_light-300">
                     {convertToPersianNumbers(
                       moment(message.createdAt)
                         .locale("fa")

@@ -16,13 +16,30 @@ html{
 
 /*-----------------------------------------------*/
 
+
+@utility text-dark-900_light-25{
+  @apply dark:text-gray-25 text-gray-900
+}
+
 @utility text-dark-900_light-200{
   @apply dark:text-gray-200  text-gray-900
 }
 
+@utility text-dark-400_light-600{
+  @apply text-gray-600 dark:text-gray-400
+}
+
+@utility text-dark-400_light-300{
+  @apply text-gray-400 dark:text-gray-300
+}
+
+
+
 @utility border-dark800_light200 {
   @apply dark:border-gray-800 border-gray-200;
 }
+
+
 
 /*-----------------------------------------------*/
 
