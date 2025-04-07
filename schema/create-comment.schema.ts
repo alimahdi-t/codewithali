@@ -9,9 +9,9 @@ export const CreateCommentSchema = z
       .max(500, "متن نظر نمی‌تواند بیشتر از ۵۰۰ کاراکتر باشد"),
 
     authorId: z.number(),
-    courseId: z.number().optional().nullable(),
-    postId: z.number().optional().nullable(),
-    parentId: z.number().optional().nullable(), // for replies
+    courseId: z.number().optional(),
+    postId: z.number().optional(),
+    parentId: z.string().optional(), // for replies
   })
   .refine(
     (data) =>

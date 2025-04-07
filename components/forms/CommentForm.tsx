@@ -17,6 +17,8 @@ import Loader from "@/components/common/Loader";
 import { CreateCommentSchema } from "@/schema/create-comment.schema";
 import { useCurrentUser } from "@/hooks/use-current-user";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { toast } from "sonner";
+import { createComment } from "@/actions/comments/create-comment.action";
 
 type CommentFormProps =
   | { courseId: number; postId?: never }
@@ -39,6 +41,15 @@ export const CommentForm = ({ courseId, postId }: CommentFormProps) => {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     console.log(data);
+    await createComment(data).then((response) => {
+      if (response.error) {
+        toast.error(response.error);
+      }
+      if (response.success) {
+        toast.success(response.success);
+        form.reset();
+      }
+    });
   };
 
   return (
