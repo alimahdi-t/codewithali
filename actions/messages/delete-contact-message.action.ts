@@ -13,11 +13,11 @@ export async function deleteContactMessageAction({
         id,
       },
     });
-    revalidatePath("dashboard/admin/messages");
+    revalidatePath("/dashboard/admin/messages");
     return { success: "پیام با موفقیت حذف شد!" };
   } catch (error) {
     return {
-      error: "خطایی ناشناخته در حدف پیام رخ داد! لطفا دوباره امتحان کنید.",
+      error: "خطایی ناشناخته در حذف پیام رخ داد! لطفا دوباره امتحان کنید.",
     };
   }
 }

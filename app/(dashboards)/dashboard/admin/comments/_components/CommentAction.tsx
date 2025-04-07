@@ -2,6 +2,8 @@
 import { ActionGroup } from "@/components/common/ActionGroup";
 import { Comment } from "@prisma/client";
 import { useRouter } from "next/navigation";
+import { deleteComment } from "@/actions/comments/delete-comment.action";
+import { toast } from "sonner";
 
 export const CommentAction = ({ comment }: { comment: Comment }) => {
   const route = useRouter();
@@ -9,14 +11,14 @@ export const CommentAction = ({ comment }: { comment: Comment }) => {
     // route.push(`/dashboard/admin/messages/${message.id}`);
   };
   const onDelete = async () => {
-    // await deleteContactMessageAction({ id: message.id }).then((response) => {
-    //   if (response.success) {
-    //     toast.success(response.success);
-    //   }
-    //   if (response.error) {
-    //     toast.error(response.error);
-    //   }
-    // });
+    await deleteComment({ id: comment.id }).then((response) => {
+      if (response.success) {
+        toast.success(response.success);
+      }
+      if (response.error) {
+        toast.error(response.error);
+      }
+    });
   };
 
   return (
