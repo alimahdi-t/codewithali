@@ -1,28 +1,28 @@
-import { MessageStatus as Status } from "@prisma/client";
+import { CommentStatus as status } from "@prisma/client";
 
-interface MessageStatusProps {
-  status: Status;
+interface Props {
+  status: status;
 }
 
-const statusVariants: Record<Status, { text: string; className: string }> = {
+const statusVariants: Record<status, { text: string; className: string }> = {
   PENDING: {
     text: "در انتظار رسیدگی",
     className:
       "text-action-warning bg-action-light-warning dark:bg-action-warning/50",
   },
-  IN_PROGRESS: {
+  APPROVED: {
     text: "در حال بررسی",
     className:
       "text-action-success bg-action-light-success dark:bg-action-success/50",
   },
-  RESOLVED: {
+  REJECTED: {
     text: "بسته شده",
     className:
       "text-action-error bg-action-light-error dark:bg-action-error/50",
   },
 };
 
-export const MessageStatus = ({ status }: MessageStatusProps) => {
+export const CommentStatus = ({ status }: Props) => {
   const variant = statusVariants[status];
 
   return (

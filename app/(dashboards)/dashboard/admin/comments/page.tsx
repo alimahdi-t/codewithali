@@ -1,6 +1,24 @@
 import { StatisticsCard } from "@/app/(dashboards)/dashboard/admin/messages/_components/StatisticsCard";
+import { getComments } from "@/actions/comments/get-comments.action";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { convertToPersianNumbers } from "@/utils";
+import moment from "jalali-moment";
+import { CommentStatus } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentStatus";
+import { CommentAction } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentAction";
+import Pagination from "@/components/shared/Pagination";
 
-const CommentsPage = () => {
+const CommentsPage = async () => {
+  const pageSize = 2;
+  const response = await getComments();
+
+  const { comments } = response;
   return (
     <div className="rounded-xl p-4 bg-card shadow-sm">
       <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6">
@@ -25,56 +43,62 @@ const CommentsPage = () => {
         />
       </div>
       <div className="mt-12">
-        {/*{messages?.length === 0 ? (*/}
-        {/*  <p className="text-base font-normal">پیامی یافت نشد!</p>*/}
-        {/*) : (*/}
-        {/*  <Table>*/}
-        {/*    <TableHeader className="align-middle">*/}
-        {/*      <TableRow className="text-start">*/}
-        {/*        <TableHead className="w-24 text-start">ردیف</TableHead>*/}
-        {/*        <TableHead className="text-start">عنوان</TableHead>*/}
-        {/*        <TableHead className="text-start">ایمیل</TableHead>*/}
-        {/*        <TableHead className="text-start">وضعیت</TableHead>*/}
-        {/*        <TableHead className="text-start">تاریخ</TableHead>*/}
-        {/*        <TableHead className="text-start">عملیات</TableHead>*/}
-        {/*      </TableRow>*/}
-        {/*    </TableHeader>*/}
-        {/*    <TableBody className="text[#5A6A85]">*/}
-        {/*      {messages?.map((message, index) => (*/}
-        {/*        <TableRow*/}
-        {/*          key={index}*/}
-        {/*          className="h-[72px] text[#5A6A85] text-sm"*/}
-        {/*        >*/}
-        {/*          <TableCell className="text-xs font-normal">*/}
-        {/*            {convertToPersianNumbers(index + 1)}*/}
-        {/*          </TableCell>*/}
-        {/*          <TableCell>{message.title}</TableCell>*/}
-        {/*          <TableCell className="font-sans text-dark-400_light-600">*/}
-        {/*            {message.email}*/}
-        {/*          </TableCell>*/}
-        {/*          <TableCell>*/}
-        {/*            <MessageStatus status={message.status} />*/}
-        {/*          </TableCell>*/}
-        {/*          <TableCell className="text-dark-400_light-300">*/}
-        {/*            {convertToPersianNumbers(*/}
-        {/*              moment(message.createdAt)*/}
-        {/*                .locale("fa")*/}
-        {/*                .format("YYYY/MM/DD"),*/}
-        {/*            )}*/}
-        {/*          </TableCell>*/}
-        {/*          <TableCell>*/}
-        {/*            <MessageActions message={message} />*/}
-        {/*          </TableCell>*/}
-        {/*        </TableRow>*/}
-        {/*      ))}*/}
-        {/*    </TableBody>*/}
-        {/*  </Table>*/}
-        {/*)}*/}
+        {comments?.length === 0 ? (
+          <p className="text-base font-normal">پیامی یافت نشد!</p>
+        ) : (
+          <Table>
+            <TableHeader className="align-middle">
+              <TableRow className="text-start">
+                <TableHead className="w-24 text-start">ردیف</TableHead>
+                <TableHead className="text-start">عنوان</TableHead>
+                <TableHead className="text-start">کاربر</TableHead>
+                <TableHead className="text-start">نوع</TableHead>
+                <TableHead className="text-start">وضعیت</TableHead>
+                <TableHead className="text-start">تاریخ</TableHead>
+                <TableHead className="text-start">عملیات</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody className="text[#5A6A85]">
+              {comments?.map((comment, index) => (
+                <TableRow
+                  key={index}
+                  className="h-[72px] text[#5A6A85] text-sm"
+                >
+                  <TableCell className="text-xs font-normal">
+                    {convertToPersianNumbers(index + 1)}
+                  </TableCell>
+                  <TableCell>
+                    <p className="truncate max-w-60">{comment.content}</p>
+                  </TableCell>
+                  <TableCell className="text-dark-400_light-600">
+                    {comment.author.firstName.concat(
+                      " ",
+                      comment.author.lastName,
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <CommentStatus status={comment.status} />
+                  </TableCell>
+                  <TableCell>
+                    <CommentStatus status={comment.status} />
+                  </TableCell>
+                  <TableCell className="text-dark-400_light-300">
+                    {convertToPersianNumbers(
+                      moment(comment.createdAt)
+                        .locale("fa")
+                        .format("YYYY/MM/DD"),
+                    )}
+                  </TableCell>
+                  <TableCell>
+                    <CommentAction comment={comment} />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
         <div>
-          {/*<Pagination*/}
-          {/*  pageSize={pageSize}*/}
-          {/*  itemCount={filteredMessagesCount ?? 0}*/}
-          {/*/>*/}
+          <Pagination pageSize={pageSize} itemCount={comments?.length ?? 0} />
         </div>
       </div>
     </div>
