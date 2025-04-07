@@ -30,6 +30,8 @@ model User {
 
   emailVerified DateTime?
   accounts      Account[]
+
+  Comment Comment[]
 }
 
 model Account {
@@ -89,6 +91,8 @@ model Course {
   instructor   User         @relation(fields: [instructorId], references: [id])
   Enrolment    Enrolment[]
   tag          CourseTag[]
+
+  Comment Comment[]
 }
 
 // ✅
@@ -107,6 +111,8 @@ model Post {
   // Relations
   author User  @relation(fields: [authorId], references: [id])
   tags   Tag[] // ✅ Many-to-many without a junction table
+
+  Comment Comment[]
 }
 
 // ✅
@@ -149,10 +155,38 @@ model Discount {
   Course     Course[]
 }
 
+model Comment {
+  id         String            @id @default(cuid())
+  content    String
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+  authorId   Int
+  courseId   Int?
+  postId     Int?
+  parentId   String?
+  status     CommentStatus  @default(PENDING) // 👈 وضعیت بررسی
+
+  // روابط
+  author     User           @relation(fields: [authorId], references: [id])
+  course     Course?        @relation(fields: [courseId], references: [id])
+  post       Post?          @relation(fields: [postId], references: [id])
+  parent     Comment?       @relation("CommentReplies", fields: [parentId], references: [id])
+  replies    Comment[]      @relation("CommentReplies")
+
+
+}
+
+
 enum MessageStatus {
   PENDING
   IN_PROGRESS
   RESOLVED
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }
 
 // ✅

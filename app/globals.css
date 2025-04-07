@@ -328,7 +328,7 @@ body,
     --popover: var(--color-gray-900);
     --popover-foreground: #fafafa;
     --primary: var(--color-brand-400);
-    --primary-foreground: var(--color-white);
+    --primary-foreground: var(--color-gray-900);
     --secondary: var(--color-gray-100);
     --secondary-foreground: #fafafa;
     --muted: var(--color-gray-800);
