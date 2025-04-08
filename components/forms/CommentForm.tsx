@@ -19,6 +19,7 @@ import { useCurrentUser } from "@/hooks/use-current-user";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import { createComment } from "@/actions/comments/create-comment.action";
+import FormError from "@/components/FormError";
 
 type CommentFormProps = {
   targetId: number;
@@ -28,12 +29,14 @@ type CommentFormProps = {
 type PropsWithVisibility = CommentFormProps & {
   showForm?: boolean;
   setShowForm?: (value: boolean) => void;
+  showAvatar?: boolean;
 };
 
 export const CommentForm = ({
   targetId,
   targetType,
   setShowForm,
+  showAvatar = false,
   showForm = true,
 }: PropsWithVisibility) => {
   const user = useCurrentUser();
@@ -68,13 +71,19 @@ export const CommentForm = ({
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
           {/*FIX bug user if not log in*/}
-          <div className="flex items-center gap-1.5">
-            <Avatar>
-              <AvatarImage src={user?.image} />
-              <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
-            </Avatar>
-            <p className="text-sm font-normal">{user?.name}</p>
-          </div>
+          {user ? (
+            showAvatar && (
+              <div className="flex items-center gap-1.5">
+                <Avatar>
+                  <AvatarImage src={user?.image} />
+                  <AvatarFallback>{user?.name?.charAt(0)}</AvatarFallback>
+                </Avatar>
+                <p className="text-sm font-normal">{user?.name}</p>
+              </div>
+            )
+          ) : (
+            <FormError message={"برای ثبت نظر وارد حساب خود شوید."} />
+          )}
           <FormField
             control={form.control}
             name="content"
@@ -95,9 +104,9 @@ export const CommentForm = ({
 
           <div>
             <Button
-              // disabled={!form.formState.isValid}
               type="submit"
               size="sm"
+              disabled={!user || form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? <Loader /> : "ارسال نظر"}
             </Button>{" "}
