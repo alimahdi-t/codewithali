@@ -1,6 +1,6 @@
 import { getCommentsByCourseId } from "@/actions/comments/get-comment-by-course.action";
 import { toast } from "sonner";
-import { Comment } from "@/components/common/Comment";
+import { Comment } from "@/components/shared/Comment/Comment";
 
 interface Props {
   courseId: number;

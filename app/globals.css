@@ -33,6 +33,10 @@ html{
   @apply text-gray-400 dark:text-gray-300
 }
 
+@utility text-dark-700_light-300{
+  @apply text-gray-700 dark:text-gray-300
+}
+
 
 
 @utility border-dark800_light200 {

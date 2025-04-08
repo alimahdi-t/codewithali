@@ -7,11 +7,10 @@ import InstructorInfo from "@/app/(root)/(pages)/courses/[slug]/_components/Inst
 import { CourseHeader } from "@/app/(root)/(pages)/courses/[slug]/_components/Header/CourseHeader";
 import CourseMetrics from "@/app/(root)/(pages)/courses/[slug]/_components/CourseMetrics";
 import CompletionProgress from "@/app/(root)/(pages)/courses/[slug]/_components/CompletionProgress";
-import { Button } from "@/components/ui/button";
 import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
 import CourseTabs from "@/app/(root)/(pages)/courses/[slug]/_components/CourseTabs";
 import { CourseCommentSection } from "@/app/(root)/(pages)/courses/[slug]/_components/CourseCommentSection";
-import { CommentForm } from "@/components/forms/CommentForm";
+import { AddComment } from "@/components/shared/Comment/AddComment";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -72,11 +71,7 @@ const CoursePage = async (props: Props) => {
 
           <Card id="comments">
             <CardHeader>
-              <div className="flex justify-between items-center">
-                <h3 className="text-lg font-medium">نظرات</h3>
-                <Button size="sm">ثبت نظر</Button>
-              </div>
-              <CommentForm courseId={course.id} />
+              <AddComment targetId={course.id} targetType={"course"} />
               <CourseCommentSection courseId={course.id} />
             </CardHeader>
           </Card>

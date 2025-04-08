@@ -13,26 +13,26 @@ export async function createComment(
     return { error: "ورودی نامعتبر هست!" };
   }
 
-  const { content, postId, courseId, authorId, parentId } =
+  const { content, targetId, targetType, authorId, parentId } =
     validatedFields.data;
 
   try {
-    if (courseId) {
+    if (targetType === "course") {
       // 🔵 Create a comment for a course
       await prisma.comment.create({
         data: {
           content,
-          course: { connect: { id: courseId } },
+          course: { connect: { id: targetId } },
           author: { connect: { id: authorId } },
           parent: parentId ? { connect: { id: parentId } } : undefined,
         },
       });
-    } else if (postId) {
+    } else if (targetType === "post") {
       // 🟣 Create a comment for a post
       await prisma.comment.create({
         data: {
           content,
-          post: { connect: { id: postId } },
+          post: { connect: { id: targetId } },
           author: { connect: { id: authorId } },
           parent: parentId ? { connect: { id: parentId } } : undefined,
         },

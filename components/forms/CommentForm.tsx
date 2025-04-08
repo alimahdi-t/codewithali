@@ -20,19 +20,30 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { toast } from "sonner";
 import { createComment } from "@/actions/comments/create-comment.action";
 
-type CommentFormProps =
-  | { courseId: number; postId?: never }
-  | { postId: number; courseId?: never };
+type CommentFormProps = {
+  targetId: number;
+  targetType: "course" | "post";
+};
 
-export const CommentForm = ({ courseId, postId }: CommentFormProps) => {
+type PropsWithVisibility = CommentFormProps & {
+  showForm?: boolean;
+  setShowForm?: (value: boolean) => void;
+};
+
+export const CommentForm = ({
+  targetId,
+  targetType,
+  setShowForm,
+  showForm = true,
+}: PropsWithVisibility) => {
   const user = useCurrentUser();
   const FormSchema = CreateCommentSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     mode: "onSubmit",
     defaultValues: {
-      courseId,
-      postId,
+      targetId: targetId,
+      targetType,
       parentId: undefined,
       content: "",
       authorId: Number(user?.id),
@@ -51,11 +62,12 @@ export const CommentForm = ({ courseId, postId }: CommentFormProps) => {
       }
     });
   };
-
+  if (!showForm) return null;
   return (
     <div className="w-full">
       <Form {...form}>
         <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+          {/*FIX bug user if not log in*/}
           <div className="flex items-center gap-1.5">
             <Avatar>
               <AvatarImage src={user?.image} />
@@ -85,9 +97,19 @@ export const CommentForm = ({ courseId, postId }: CommentFormProps) => {
             <Button
               // disabled={!form.formState.isValid}
               type="submit"
+              size="sm"
             >
               {form.formState.isSubmitting ? <Loader /> : "ارسال نظر"}
-            </Button>
+            </Button>{" "}
+            {setShowForm && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setShowForm?.(!showForm)}
+              >
+                لغو
+              </Button>
+            )}
           </div>
         </form>
       </Form>
