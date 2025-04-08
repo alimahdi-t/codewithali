@@ -77,7 +77,7 @@ const CoursePage = async (props: Props) => {
                 <Button size="sm">ثبت نظر</Button>
               </div>
               <CommentForm courseId={course.id} />
-              <CourseCommentSection />
+              <CourseCommentSection courseId={course.id} />
             </CardHeader>
           </Card>
           <Card id="faq">

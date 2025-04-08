@@ -76,6 +76,10 @@ export interface DeleteCommentParams {
   id: string;
 }
 
+export interface getCommentsByCourseIdParams {
+  courseId: number;
+}
+
 export type GetUserParams =
   | { id: number; username?: never; email?: never }
   | { id?: never; username: string; email?: never }

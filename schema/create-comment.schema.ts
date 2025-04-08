@@ -5,8 +5,7 @@ export const CreateCommentSchema = z
     content: z
       .string()
       .min(1, "متن نظر نمی‌تواند خالی باشد")
-      .min(10, "متن نظر نمی‌تواند کمتر از ۱۰ کاراکتر باشد")
-      .max(500, "متن نظر نمی‌تواند بیشتر از ۵۰۰ کاراکتر باشد"),
+      .max(1000, "متن نظر نمی‌تواند بیشتر از ۱۰۰۰ کاراکتر باشد"),
 
     authorId: z.number(),
     courseId: z.number().optional(),
