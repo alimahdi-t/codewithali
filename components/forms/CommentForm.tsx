@@ -24,6 +24,7 @@ import FormError from "@/components/FormError";
 type CommentFormProps = {
   targetId: number;
   targetType: "course" | "post";
+  parentId?: string;
 };
 
 type PropsWithVisibility = CommentFormProps & {
@@ -35,6 +36,7 @@ type PropsWithVisibility = CommentFormProps & {
 export const CommentForm = ({
   targetId,
   targetType,
+  parentId,
   setShowForm,
   showAvatar = false,
   showForm = true,
@@ -47,7 +49,7 @@ export const CommentForm = ({
     defaultValues: {
       targetId: targetId,
       targetType,
-      parentId: undefined,
+      parentId: parentId ?? undefined,
       content: "",
       authorId: Number(user?.id),
     },
@@ -94,7 +96,11 @@ export const CommentForm = ({
                   <Textarea
                     className="leading-6 min-h-48"
                     {...field}
-                    placeholder="نظر خود را بنویسید ..."
+                    placeholder={
+                      parentId
+                        ? "پاسخ خود را بنویسید..."
+                        : "نظر خود را بنویسید..."
+                    }
                   />
                 </FormControl>
                 <FormMessage />

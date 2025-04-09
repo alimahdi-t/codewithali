@@ -11,10 +11,17 @@ export async function getCommentsByCourseId({
       where: {
         courseId: Number(courseId), // Make sure courseId is a number
         status: "APPROVED",
+        parentId: null, // only top-level comments
       },
       include: {
         author: true,
-        replies: true,
+
+        replies: {
+          where: { status: "APPROVED" },
+          include: {
+            author: true,
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",

@@ -5,7 +5,7 @@ import { Comment } from "@/components/shared/Comment/Comment";
 interface Props {
   courseId: number;
 }
-
+//TODO: make this section reusable
 export const CourseCommentSection = async ({ courseId }: Props) => {
   const response = await getCommentsByCourseId({ courseId: courseId });
 
@@ -27,7 +27,31 @@ export const CourseCommentSection = async ({ courseId }: Props) => {
           date={comment.createdAt}
           content={comment.content}
           author={comment.author.firstName.concat(" ", comment.author.lastName)}
-        />
+          targetId={courseId}
+          targetType={"course"}
+          commentId={comment.id}
+        >
+          <div className="my-4 space-y-4">
+            {comment.replies?.map((reply) => (
+              <div key={reply.id} className="mr-4 pr-4 border-r">
+                <Comment
+                  key={reply.id}
+                  date={reply.createdAt}
+                  content={reply.content}
+                  author={reply.author.firstName.concat(
+                    " ",
+                    reply.author.lastName,
+                  )}
+                  targetId={courseId}
+                  targetType={"course"}
+                  commentId={reply.id}
+                  replyAllowed={false}
+                  isReply={true}
+                />
+              </div>
+            ))}
+          </div>
+        </Comment>
       ))}
     </div>
   );

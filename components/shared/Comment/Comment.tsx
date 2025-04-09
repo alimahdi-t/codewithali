@@ -13,12 +13,33 @@ interface CommentProps {
   content: string;
   author: string;
   date: Date;
+  commentId: string;
+  targetId: number;
+  targetType: "course" | "post";
+  children?: React.ReactNode;
+  replyAllowed?: boolean;
+  isReply?: boolean;
 }
-
-export const Comment = ({ content, author, date, ...props }: CommentProps) => {
+//Todo: based of rule must show different profile
+export const Comment = ({
+  content,
+  author,
+  date,
+  commentId,
+  targetType,
+  targetId,
+  isReply = false,
+  replyAllowed = true,
+  children,
+  ...props
+}: CommentProps) => {
   return (
     <div
-      className="p-4.5 md:p-5 bg-gray-100 dark:bg-gray-100/5 dark:bg-dark rounded-lg group duration-500 transition-[height]"
+      className={`p-4.5 md:p-5 ${
+        isReply
+          ? "mt-4 bg-gray-200/80 dark:bg-gray-100/10"
+          : "bg-gray-100 dark:bg-gray-100/5"
+      } dark:bg-dark rounded-lg group duration-500 transition-[height]`}
       {...props}
     >
       <div className="flex justify-between items-center">
@@ -50,8 +71,14 @@ export const Comment = ({ content, author, date, ...props }: CommentProps) => {
       <p className="mt-3 text-sm font-normal text-dark-700_light-300 leading-5">
         {content}
       </p>
-
-      <CommentReply />
+      {children}
+      {replyAllowed && (
+        <CommentReply
+          parentId={commentId}
+          targetId={targetId}
+          targetType={targetType}
+        />
+      )}
     </div>
   );
 };

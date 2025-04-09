@@ -4,7 +4,13 @@ import { CommentForm } from "@/components/forms/CommentForm";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 
-export const CommentReply = () => {
+interface Props {
+  targetId: number;
+  targetType: "course" | "post";
+  parentId: string;
+}
+
+export const CommentReply = ({ targetId, targetType, parentId }: Props) => {
   const [showForm, setShowForm] = useState(false);
   const session = useSession();
   const handleOnClick = () => {
@@ -26,8 +32,9 @@ export const CommentReply = () => {
       </button>
       {showForm && (
         <CommentForm
-          targetId={1}
-          targetType={"course"}
+          targetId={targetId}
+          targetType={targetType}
+          parentId={parentId}
           showForm={showForm}
           setShowForm={setShowForm}
         />
