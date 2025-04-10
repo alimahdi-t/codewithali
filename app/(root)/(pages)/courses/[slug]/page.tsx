@@ -9,7 +9,7 @@ import CourseMetrics from "@/app/(root)/(pages)/courses/[slug]/_components/Cours
 import CompletionProgress from "@/app/(root)/(pages)/courses/[slug]/_components/CompletionProgress";
 import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
 import CourseTabs from "@/app/(root)/(pages)/courses/[slug]/_components/CourseTabs";
-import { CourseCommentSection } from "@/app/(root)/(pages)/courses/[slug]/_components/CourseCommentSection";
+import { CommentSection } from "@/app/(root)/(pages)/courses/[slug]/_components/CommentSection";
 import { AddComment } from "@/components/shared/Comment/AddComment";
 
 interface Props {
@@ -72,7 +72,7 @@ const CoursePage = async (props: Props) => {
           <Card id="comments">
             <CardHeader>
               <AddComment targetId={course.id} targetType={"course"} />
-              <CourseCommentSection courseId={course.id} />
+              <CommentSection courseId={course.id} />
             </CardHeader>
           </Card>
           <Card id="faq">

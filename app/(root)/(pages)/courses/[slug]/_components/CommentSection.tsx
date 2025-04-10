@@ -6,7 +6,7 @@ interface Props {
   courseId: number;
 }
 //TODO: make this section reusable
-export const CourseCommentSection = async ({ courseId }: Props) => {
+export const CommentSection = async ({ courseId }: Props) => {
   const response = await getCommentsByCourseId({ courseId: courseId });
 
   if (response.error) {
