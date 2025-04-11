@@ -1,13 +1,9 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Role } from "@prisma/client";
+import { getUsersParams } from "@/actions/shared.types";
 
-interface Props {
-  role?: Role;
-}
-
-export async function getUsers({ role }: Props) {
+export async function getUsers({ role }: getUsersParams) {
   try {
     return await prisma.user.findMany({
       where: { role },
