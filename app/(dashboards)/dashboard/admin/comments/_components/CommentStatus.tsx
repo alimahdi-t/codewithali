@@ -16,7 +16,7 @@ const statusVariants: Record<status, { text: string; className: string }> = {
       "text-action-success bg-action-light-success dark:bg-action-success/50",
   },
   REJECTED: {
-    text: "بسته شده",
+    text: "رد شده",
     className:
       "text-action-error bg-action-light-error dark:bg-action-error/50",
   },
