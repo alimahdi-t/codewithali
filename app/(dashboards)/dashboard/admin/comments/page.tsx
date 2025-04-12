@@ -13,6 +13,7 @@ import moment from "jalali-moment";
 import { CommentStatus } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentStatus";
 import { CommentAction } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentAction";
 import Pagination from "@/components/shared/Pagination";
+import { CommentType } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentType";
 
 const CommentsPage = async () => {
   const pageSize = 2;
@@ -44,7 +45,7 @@ const CommentsPage = async () => {
       </div>
       <div className="mt-12">
         {comments?.length === 0 ? (
-          <p className="text-base font-normal">پیامی یافت نشد!</p>
+          <p className="text-base font-normal">نظری یافت نشد!</p>
         ) : (
           <Table>
             <TableHeader className="align-middle">
@@ -77,7 +78,19 @@ const CommentsPage = async () => {
                     )}
                   </TableCell>
                   <TableCell>
-                    <CommentStatus status={comment.status} />
+                    <CommentType
+                      type={comment.postId ? "post" : "course"}
+                      title={
+                        comment.courseId
+                          ? comment.course?.title
+                          : comment.post?.title
+                      }
+                      slug={
+                        comment.courseId
+                          ? comment.course?.slug
+                          : comment.post?.slug
+                      }
+                    />
                   </TableCell>
                   <TableCell>
                     <CommentStatus status={comment.status} />
