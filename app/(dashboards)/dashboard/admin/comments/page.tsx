@@ -14,6 +14,12 @@ import { CommentStatus } from "@/app/(dashboards)/dashboard/admin/comments/_comp
 import { CommentAction } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentAction";
 import Pagination from "@/components/shared/Pagination";
 import { CommentType } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentType";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const CommentsPage = async () => {
   const pageSize = 2;
@@ -69,7 +75,18 @@ const CommentsPage = async () => {
                     {convertToPersianNumbers(index + 1)}
                   </TableCell>
                   <TableCell>
-                    <p className="truncate max-w-60">{comment.content}</p>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <p className="truncate max-w-60">{comment.content}</p>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-wrap max-w-md text-sm leading-6">
+                            {comment.content}
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
                   </TableCell>
                   <TableCell className="text-dark-400_light-600">
                     {comment.author.firstName.concat(
