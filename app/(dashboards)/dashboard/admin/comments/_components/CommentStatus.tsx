@@ -6,12 +6,12 @@ interface Props {
 
 const statusVariants: Record<status, { text: string; className: string }> = {
   PENDING: {
-    text: "در انتظار رسیدگی",
+    text: "در انتظار تایید",
     className:
       "text-action-warning bg-action-light-warning dark:bg-action-warning/50",
   },
   APPROVED: {
-    text: "در حال بررسی",
+    text: "تأیید شده",
     className:
       "text-action-success bg-action-light-success dark:bg-action-success/50",
   },

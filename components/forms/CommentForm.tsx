@@ -64,6 +64,10 @@ export const CommentForm = ({
       if (response.success) {
         toast.success(response.success);
         form.reset();
+        if (setShowForm) {
+          // close the form after successfully submitting for both reply and commenting
+          setShowForm(false);
+        }
       }
     });
   };
@@ -107,11 +111,12 @@ export const CommentForm = ({
               </FormItem>
             )}
           />
-
-          <div>
+          {/*You can refactor this for all form*/}
+          <div className="w-full flex items-center gap-x-1">
             <Button
               type="submit"
               size="sm"
+              className="min-w-24"
               disabled={!user || form.formState.isSubmitting}
             >
               {form.formState.isSubmitting ? <Loader /> : "ارسال نظر"}
