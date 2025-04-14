@@ -8,7 +8,6 @@ import { CourseHeader } from "@/app/(root)/(pages)/courses/[slug]/_components/He
 import CourseMetrics from "@/app/(root)/(pages)/courses/[slug]/_components/CourseMetrics";
 import CompletionProgress from "@/app/(root)/(pages)/courses/[slug]/_components/CompletionProgress";
 import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
-import CourseTabs from "@/app/(root)/(pages)/courses/[slug]/_components/CourseTabs";
 import { CommentSection } from "@/app/(root)/(pages)/courses/[slug]/_components/CommentSection";
 import { AddComment } from "@/components/shared/Comment/AddComment";
 
@@ -35,9 +34,9 @@ const CoursePage = async (props: Props) => {
         imageUrl={imageUrl}
         price={price}
       />
-      <div className="w-full flex flex-row gap-4 flex-1 pb-12 mt-12 relative">
-        <div className="flex flex-col gap-4">
-          <CourseTabs />
+      <div className="w-full flex flex-row gap-4 flex-1 pb-12 mt-12 max-lg:flex-col">
+        <div className="flex-1 flex flex-col gap-4">
+          {/*<CourseTabs />*/}
           <CourseMetrics />
           <Card id="additional-info" className="flex-1">
             <CardHeader>
@@ -85,7 +84,7 @@ const CoursePage = async (props: Props) => {
         </div>
 
         {/* TODO: this must be fixed while its above div scroll*/}
-        <div className="w-[480px] flex flex-col gap-4 h-full sticky top-10">
+        <div className="w-[300px] max-lg:w-full flex flex-col gap-4 h-full sticky top-10">
           <CompletionProgress progress={100} />
           <InstructorInfo instructor={instructor} />
         </div>
