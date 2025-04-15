@@ -11,6 +11,7 @@ import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components
 import { CommentSection } from "@/app/(root)/(pages)/courses/[slug]/_components/CommentSection";
 import { AddComment } from "@/components/shared/Comment/AddComment";
 import { BreadCrumb } from "@/components/shared/BreadCrump";
+import { ShowMoreWrapper } from "@/components/shared/ShowMoreWrapper";
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -48,12 +49,14 @@ const CoursePage = async (props: Props) => {
               <CardHeader>
                 <h3 className="text-lg font-medium">توضیحات</h3>
               </CardHeader>
-              <CardContent>
-                <Image src={imageUrl} width={1200} height={1200} alt={""} />
-                <div className="px-2 py-6 leading-7 text-justify">
-                  <ReadOnly content={content} />
-                </div>
-              </CardContent>
+              <ShowMoreWrapper>
+                <CardContent>
+                  <Image src={imageUrl} width={1200} height={1200} alt={""} />
+                  <div className="px-2 py-6 leading-7 text-justify">
+                    <ReadOnly content={content} />
+                  </div>
+                </CardContent>
+              </ShowMoreWrapper>
             </Card>
 
             <Card id="syllabus">
