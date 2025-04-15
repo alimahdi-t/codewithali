@@ -2,7 +2,6 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -31,7 +30,7 @@ const MobileNav = ({ className }: { className?: string }) => {
         side="right"
         className="w-[300px] dark:bg-gray-900 dark:text-white dark:border-none bg-white px-2"
       >
-        <SheetHeader className="px-4 py-2">
+        <SheetHeader className="px-4 py-2 mt-2">
           {/*<SheetDescription></SheetDescription>*/}
           <div className="flex flex-row justify-start items-center gap-4">
             <SheetTitle className="mt-4">
@@ -64,11 +63,6 @@ const MobileNav = ({ className }: { className?: string }) => {
             </SheetClose>
           ))}
         </div>
-        <SheetFooter className="absolute bottom-0">
-          <SheetClose asChild>
-            <button type="submit">Save changes</button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
