@@ -22,7 +22,7 @@ export const CourseHeader = (props: Props) => {
             {description} {description} {description}
           </p>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center lg:mt-4">
           <AddToCartButton courseId={id} />
           <Price
             price={price}
