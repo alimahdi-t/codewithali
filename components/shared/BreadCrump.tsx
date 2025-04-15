@@ -1,54 +1,60 @@
-"use client";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { HiOutlineHome } from "react-icons/hi2";
-import { usePathname } from "next/navigation";
+import { ChevronLeft } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
-const pages = [
-  { name: "دوره ها", href: "#", current: false },
-  { name: "Project Nero", href: "#", current: true },
-];
-
-export default function BreadCrump() {
-  const path = usePathname();
-
-  return (
-    <nav>
-      {path}
-      <ol
-        role="list"
-        className="mx-auto flex w-full max-w-7xl space-x-4 px-4 sm:px-6 lg:px-8 bg-white shadow-lg gap-4"
-      >
-        <li className="flex">
-          <div className="flex items-center">
-            <a href="#" className="text-black hover:text-gray-500">
-              <HiOutlineHome className="h-5 w-5 shrink-0" aria-hidden="true" />
-              <span className="sr-only">خانه</span>
-            </a>
-          </div>
-        </li>
-        {pages.map((page) => (
-          <li key={page.name} className="flex">
-            <div className="flex items-center mx-4">
-              <svg
-                className="h-full w-6 shrink-0 text-gray-200"
-                viewBox="0 0 24 44"
-                preserveAspectRatio="none"
-                fill="currentColor"
-                aria-hidden="true"
-                strokeWidth={3}
-              >
-                <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
-              </svg>
-              <a
-                href={page.href}
-                className="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
-                aria-current={page.current ? "page" : undefined}
-              >
-                {page.name}
-              </a>
-            </div>
-          </li>
-        ))}
-      </ol>
-    </nav>
-  );
+interface Props {
+  path: { label: string; href: string };
+  parentPath: { label: string; href: string };
 }
+
+export const BreadCrumb = ({ path, parentPath }: Props) => {
+  return (
+    <div className="c-card mb-10 px-6 py-3">
+      <Breadcrumb>
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink href="/public" asChild>
+              <TooltipProvider>
+                <Tooltip>
+                  <TooltipTrigger className="cursor-pointer">
+                    <HiOutlineHome className="size-6" />
+                  </TooltipTrigger>
+                  <TooltipContent>
+                    <span>خانه</span>
+                  </TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator>
+            <ChevronLeft />
+          </BreadcrumbSeparator>
+          <BreadcrumbItem>
+            <BreadcrumbLink href={parentPath.href}>
+              {parentPath.label}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator>
+            <ChevronLeft />
+          </BreadcrumbSeparator>
+          <BreadcrumbItem>
+            <BreadcrumbPage>{path.label}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+    </div>
+  );
+};
