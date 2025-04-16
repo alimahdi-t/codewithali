@@ -1,4 +1,10 @@
-import { CourseStatus, Level, MessageStatus, Role } from "@prisma/client";
+import {
+  CommentStatus,
+  CourseStatus,
+  Level,
+  MessageStatus,
+  Role,
+} from "@prisma/client";
 
 export interface CreateCourseParams {
   title: string;
@@ -35,6 +41,12 @@ export interface GetContactMessages {
   page?: number;
   pageSize?: number;
   status: MessageStatus;
+}
+
+export interface GetCommentsParams {
+  page?: number;
+  pageSize?: number;
+  status: CommentStatus;
 }
 
 export interface CreatePostParams {

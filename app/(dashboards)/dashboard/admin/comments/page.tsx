@@ -20,34 +20,48 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Link from "next/link";
+import { COMMENT_STATUSES } from "@/constants/dashboard";
+import { GetCommentsParams } from "@/actions/shared.types";
+import { toast } from "sonner";
 
-const CommentsPage = async () => {
-  const pageSize = 2;
-  const response = await getComments();
+interface Props {
+  searchParams: Promise<GetCommentsParams>;
+}
 
-  const { comments } = response;
+const CommentsPage = async (props: Props) => {
+  const searchParams = await props.searchParams;
+  const pageSize = 6;
+  const response = await getComments({
+    page: searchParams.page,
+    pageSize,
+    status: searchParams.status,
+  });
+  if (response.error) {
+    toast.error(response.error);
+    return null;
+  }
+  if (!response) {
+    return;
+  }
+
+  const { comments, statusCountMap, totalComment, filteredCommentCount } =
+    response;
+
+  if (!statusCountMap) return;
   return (
     <div className="rounded-xl p-4 bg-card shadow-sm">
       <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6">
-        <StatisticsCard count={15} label="همه نظرات" variant="info" />
-        <StatisticsCard
-          count={3}
-          label="نظرات در انتظار تایید"
-          variant="warning"
-          status="PENDING"
-        />
-        <StatisticsCard
-          count={2}
-          label="نظرات تأیید شده"
-          variant="success"
-          status="IN_PROGRESS"
-        />
-        <StatisticsCard
-          count={10}
-          label="نظرات رد شده"
-          variant="error"
-          status="RESOLVED"
-        />
+        <StatisticsCard count={totalComment} label="همه نظرات" variant="info" />
+        {COMMENT_STATUSES.map((cs, index) => (
+          <StatisticsCard
+            key={index}
+            count={statusCountMap[cs.value] || 0}
+            label={cs.label}
+            variant={cs.variant}
+            status={cs.value}
+          />
+        ))}
       </div>
       <div className="mt-12">
         {comments?.length === 0 ? (
@@ -89,10 +103,12 @@ const CommentsPage = async () => {
                     </TooltipProvider>
                   </TableCell>
                   <TableCell className="text-dark-400_light-600">
-                    {comment.author.firstName.concat(
-                      " ",
-                      comment.author.lastName,
-                    )}
+                    <Link href={"#"}>
+                      {comment.author.firstName.concat(
+                        " ",
+                        comment.author.lastName,
+                      )}
+                    </Link>
                   </TableCell>
                   <TableCell>
                     <CommentType
@@ -128,7 +144,10 @@ const CommentsPage = async () => {
           </Table>
         )}
         <div>
-          <Pagination pageSize={pageSize} itemCount={comments?.length ?? 0} />
+          <Pagination
+            pageSize={pageSize}
+            itemCount={filteredCommentCount ?? 0}
+          />
         </div>
       </div>
     </div>

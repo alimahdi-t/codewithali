@@ -7,7 +7,7 @@ interface StatisticsCardProps {
   count: string | number;
   label: string;
   variant?: "info" | "warning" | "success" | "error";
-  status?: "PENDING" | "IN_PROGRESS" | "RESOLVED";
+  status?: string;
 }
 
 export const StatisticsCard: React.FC<StatisticsCardProps> = ({

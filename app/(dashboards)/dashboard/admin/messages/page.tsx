@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import { StatisticsCard } from "@/app/(dashboards)/dashboard/admin/messages/_components/StatisticsCard";
 import { GetContactMessages } from "@/actions/shared.types";
 import { MessageActions } from "@/app/(dashboards)/dashboard/admin/messages/_components/MessageActions";
+import { MESSAGE_STATUSES } from "@/constants/dashboard";
 
 interface Props {
   searchParams: Promise<GetContactMessages>;
@@ -35,9 +36,9 @@ const MessagesPage = async (props: Props) => {
   if (!response) {
     return;
   }
-
   const { messages, statusCountMap, totalMessages, filteredMessagesCount } =
     response;
+  if (!statusCountMap) return;
 
   return (
     <div className="rounded-xl p-4 bg-card shadow-sm">
@@ -47,24 +48,15 @@ const MessagesPage = async (props: Props) => {
           label="همه پیام ها"
           variant="info"
         />
-        <StatisticsCard
-          count={statusCountMap?.PENDING ?? ""}
-          label="پیام‌های در انتظار رسیدگی"
-          variant="warning"
-          status="PENDING"
-        />
-        <StatisticsCard
-          count={statusCountMap?.IN_PROGRESS ?? ""}
-          label="پیام‌های در حال بررسی"
-          variant="success"
-          status="IN_PROGRESS"
-        />
-        <StatisticsCard
-          count={statusCountMap?.RESOLVED ?? ""}
-          label="پیام‌های بسته ‌شده"
-          variant="error"
-          status="RESOLVED"
-        />
+        {MESSAGE_STATUSES.map((item, index) => (
+          <StatisticsCard
+            key={index}
+            count={statusCountMap[item.value] || 0}
+            label={item.label}
+            variant={item.variant}
+            status={item.value}
+          />
+        ))}
       </div>
       <div className="mt-12">
         {messages?.length === 0 ? (
