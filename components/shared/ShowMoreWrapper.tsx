@@ -15,7 +15,7 @@ export const ShowMoreWrapper = ({ children }: { children: ReactNode }) => {
 
         {/* Gradient Overlay */}
         {!isOpen && (
-          <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-white dark:from-gray-900 to-transparent z-10 pointer-events-none" />
         )}
       </div>
       <button
