@@ -9,7 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { convertToPersianNumbers } from "@/utils";
-import moment from "jalali-moment";
 import { CommentStatus } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentStatus";
 import { CommentAction } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentAction";
 import Pagination from "@/components/shared/Pagination";
@@ -24,6 +23,7 @@ import Link from "next/link";
 import { COMMENT_STATUSES } from "@/constants/dashboard";
 import { GetCommentsParams } from "@/actions/shared.types";
 import { toast } from "sonner";
+import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 
 interface Props {
   searchParams: Promise<GetCommentsParams>;
@@ -129,11 +129,7 @@ const CommentsPage = async (props: Props) => {
                     <CommentStatus status={comment.status} />
                   </TableCell>
                   <TableCell className="text-dark-400_light-300">
-                    {convertToPersianNumbers(
-                      moment(comment.createdAt)
-                        .locale("fa")
-                        .format("YYYY/MM/DD"),
-                    )}
+                    <DateTooltip date={comment.createdAt} />
                   </TableCell>
                   <TableCell>
                     <CommentAction comment={comment} />
