@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { getPostsAction } from "@/actions/posts/get-posts.action";
 import {
   Table,
@@ -18,6 +17,7 @@ import {
 } from "@/components/ui/menubar";
 import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import DeletePostButton from "@/app/(dashboards)/dashboard/admin/posts/DeletePostButton";
+import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
 
 const PostsPage = async () => {
   const posts = await getPostsAction();
@@ -29,26 +29,13 @@ const PostsPage = async () => {
   return (
     <div className="w-full">
       {/* ✅ Page Header */}
-      <div className="flex flex-row justify-between">
-        <div>
-          <h1 className="text-2xl font-bold leading-6 text-gray-900">
-            لیست مقاله‌ها
-          </h1>
-          <p className="mt-2 text-base text-gray-900">
-            لیست تمام مقاله‌ها، برای مشاهده مشخصات آنها با کلیک بر روی آن وارد
-            صحفه آن مقاله شوید.
-          </p>
-        </div>
-        <Link href="/dashboard/admin/posts/new">
-          <Button
-            variant="default"
-            size="sm"
-            className="text-xs hover:bg-brand-700 font-normal"
-          >
-            افزودن مقاله
-          </Button>
-        </Link>
-      </div>
+      <DashboardPageHeader
+        title="لیست مقاله‌ها"
+        description="لیست تمام مقاله‌ها، برای مشاهده مشخصات آنها با کلیک بر روی آن وارد صحفه آن مقاله شوید."
+        buttonLabel="افزودن مقاله"
+        buttonHref="/dashboard/admin/posts/new"
+      />
+
       <div className="mt-8 flow-root">
         <div className="inline-block min-w-full py-2 align-middle">
           <Table>

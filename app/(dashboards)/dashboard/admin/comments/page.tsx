@@ -19,6 +19,7 @@ import { GetCommentsParams } from "@/actions/shared.types";
 import { toast } from "sonner";
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
+import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
 
 interface Props {
   searchParams: Promise<GetCommentsParams>;
@@ -46,7 +47,11 @@ const CommentsPage = async (props: Props) => {
   if (!statusCountMap) return;
   return (
     <div className="rounded-xl p-4 bg-card shadow-sm">
-      <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6">
+      <DashboardPageHeader
+        title="لیست نظرات"
+        description="لیست تمام نظرات، برای مشاهدهٔ جزئیات هر نظر، بر روی گزینه مشاهده کلیک کنید."
+      />
+      <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6 mt-8">
         <StatisticsCard count={totalComment} label="همه نظرات" variant="info" />
         {COMMENT_STATUSES.map((cs, index) => (
           <StatisticsCard

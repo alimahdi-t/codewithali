@@ -14,31 +14,21 @@ import Link from "next/link";
 import { CourseActions } from "@/app/(dashboards)/dashboard/admin/courses/_components/CourseAction";
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
-import { Button } from "@/components/ui/button";
 import { CourseStatusBadge } from "@/app/(dashboards)/dashboard/admin/courses/_components/CourseStatusBadge";
+import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
 
 const CoursesListPage = async () => {
   const courses = await getCourses({});
 
   return (
-    <div className="w-full rounded-xl p-8 bg-card shadow-sm">
+    <div className="w-full">
       {/* ✅ Page Header */}
-      <div className="flex flex-row justify-between">
-        <div>
-          <h1 className="text-2xl font-bold leading-6 text-gray-900 dark:text-gray-25">
-            مدیریت دوره‌ها
-          </h1>
-          <p className="mt-2 text-base text-gray-900 dark:text-gray-200">
-            لیست تمام دوره‌ها، برای مشاهده مشخصات آنها با کلیک بر روی آن وارد
-            صحفه آن دوره شوید.
-          </p>
-        </div>
-        <Link href="/dashboard/admin/courses/new">
-          <Button variant="default" size="sm" className="text-sm font-normal">
-            افزودن مقاله
-          </Button>
-        </Link>
-      </div>
+      <DashboardPageHeader
+        title="مدیریت دوره‌ها"
+        description="لیست تمام دوره‌ها، برای مشاهده مشخصات آنها با کلیک بر روی آن وارد صحفه آن دوره شوید."
+        buttonHref="/dashboard/admin/courses/new"
+        buttonLabel="افزودن دوره"
+      />
 
       <div className="mt-12">
         {courses?.length === 0 ? (
@@ -51,7 +41,7 @@ const CoursesListPage = async () => {
                 <TableHead className="text-start">عنوان</TableHead>
                 <TableHead className="text-start">مدرس</TableHead>
                 <TableHead className="text-start">قیمت</TableHead>
-                <TableHead className="text-start">تخفیف فعال</TableHead>
+                <TableHead className="text-start">تخفیف</TableHead>
                 <TableHead className="text-start">سطح دوره</TableHead>
                 <TableHead className="text-start">وضعیت دوره</TableHead>
                 <TableHead className="text-start">تاریخ</TableHead>
@@ -82,7 +72,7 @@ const CoursesListPage = async () => {
                     />
                   </TableCell>
                   <TableCell className="text-dark-400_light-600">
-                    یافت نشد!
+                    <p className="text-xs">یافت نشد!</p>
                   </TableCell>
                   <TableCell>
                     <CourseLevel value={course.level} />
