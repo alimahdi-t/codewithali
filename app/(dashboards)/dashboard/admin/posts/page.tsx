@@ -4,6 +4,7 @@ import {
   Table,
   TableBody,
   TableCell,
+  TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
@@ -18,6 +19,8 @@ import {
 import { HiOutlineEllipsisVertical } from "react-icons/hi2";
 import DeletePostButton from "@/app/(dashboards)/dashboard/admin/posts/DeletePostButton";
 import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
+import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
+import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 
 const PostsPage = async () => {
   const posts = await getPostsAction();
@@ -39,39 +42,47 @@ const PostsPage = async () => {
       <div className="mt-8 flow-root">
         <div className="inline-block min-w-full py-2 align-middle">
           <Table>
-            <TableHeader>
-              <TableRow className="font-semibold select-none text-base text-gray-900">
-                <TableCell></TableCell>
-                <TableCell>عنوان</TableCell>
-                <TableCell>نویسنده</TableCell>
-                <TableCell></TableCell>
+            <TableHeader className="align-middle">
+              <TableRow className="text-start">
+                <TableHead className="w-24 text-start">ردیف</TableHead>
+                <TableHead className="text-start">عنوان</TableHead>
+                <TableHead className="text-start">نویسنده</TableHead>
+                <TableHead className="text-start">
+                  زمان مورد نیاز برای خواندن
+                </TableHead>
+                <TableHead className="text-start">منتخب سردبیر</TableHead>
+                <TableHead className="text-start">تاریخ</TableHead>
+                <TableHead className="text-start">عملیات</TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody className="text-sm">
+            <TableBody className="text[#5A6A85]">
               {posts.map((post, index) => (
                 <TableRow
                   key={post.id}
-                  className="border-gray-200/50 h-12 hover:bg-gray-100"
+                  className="h-[72px] text[#5A6A85] text-sm"
                 >
-                  <TableCell>{convertToPersianNumbers(index + 1)}</TableCell>
-                  <TableCell>
-                    <Link
-                      href={`/courses/${post.slug}`}
-                      className="hover:text-brand-700"
-                    >
-                      {post.title}
-                    </Link>
+                  <TableCell className="text-xs font-normal">
+                    {convertToPersianNumbers(index + 1)}
                   </TableCell>
                   <TableCell>
+                    <TruncatedTooltipText text={post.title} />
+                  </TableCell>
+                  <TableCell className="text-dark-400_light-600">
                     <Link href="#" className="hover:text-brand-700">
                       {`${post.author.firstName} ${post.author.lastName}`}
                     </Link>
                   </TableCell>
-
-                  <TableCell className="max-md:hidden">
-                    {post.isEditorPick}
+                  <TableCell>
+                    {`${convertToPersianNumbers(post.readingTime)} دقیقه`}
                   </TableCell>
-                  <TableCell className="text-gray-600 cursor-pointer">
+                  <TableCell className="text-dark-400_light-600">
+                    {post.isEditorPick ? "بله" : "خیر"}
+                  </TableCell>
+
+                  <TableCell className="text-dark-400_light-300">
+                    <DateTooltip date={post.createAt} />
+                  </TableCell>
+                  <TableCell>
                     <Menubar
                       dir="rtl"
                       className="border-none bg-transparent justify-center px-0 py-0"
