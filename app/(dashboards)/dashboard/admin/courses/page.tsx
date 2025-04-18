@@ -15,6 +15,7 @@ import { CourseActions } from "@/app/(dashboards)/dashboard/admin/courses/_compo
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
 import { Button } from "@/components/ui/button";
+import { CourseStatusBadge } from "@/app/(dashboards)/dashboard/admin/courses/_components/CourseStatusBadge";
 
 const CoursesListPage = async () => {
   const courses = await getCourses({});
@@ -86,7 +87,9 @@ const CoursesListPage = async () => {
                   <TableCell>
                     <CourseLevel value={course.level} />
                   </TableCell>
-                  <TableCell>{course.status}</TableCell>
+                  <TableCell>
+                    <CourseStatusBadge status={course.status} />
+                  </TableCell>
                   <TableCell className="text-dark-400_light-300">
                     <DateTooltip date={course.createdAt} />
                   </TableCell>
