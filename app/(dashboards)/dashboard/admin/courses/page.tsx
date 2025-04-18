@@ -16,6 +16,8 @@ import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
 import { CourseStatusBadge } from "@/app/(dashboards)/dashboard/admin/courses/_components/CourseStatusBadge";
 import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
+import { StatisticsCard } from "@/app/(dashboards)/dashboard/admin/messages/_components/StatisticsCard";
+import { COURSE_STATUSES } from "@/constants/dashboard";
 
 const CoursesListPage = async () => {
   const courses = await getCourses({});
@@ -29,6 +31,19 @@ const CoursesListPage = async () => {
         buttonHref="/dashboard/admin/courses/new"
         buttonLabel="افزودن دوره"
       />
+
+      <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6 mt-8">
+        <StatisticsCard count={22} label="همه دوره ها" variant="info" />
+        {COURSE_STATUSES.map((item, index) => (
+          <StatisticsCard
+            key={index}
+            count={12}
+            label={item.label}
+            variant={item.variant}
+            status={item.value}
+          />
+        ))}
+      </div>
 
       <div className="mt-12">
         {courses?.length === 0 ? (

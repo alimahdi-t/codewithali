@@ -1,4 +1,4 @@
-import { CommentStatus, MessageStatus } from "@prisma/client";
+import { CommentStatus, Level, MessageStatus } from "@prisma/client";
 
 export const COMMENT_STATUSES: {
   value: CommentStatus;
@@ -30,4 +30,14 @@ export const MESSAGE_STATUSES: {
   { label: "پیام‌های در انتظار رسیدگی", variant: "warning", value: "PENDING" },
   { label: "پیام‌های در حال بررسی", variant: "success", value: "IN_PROGRESS" },
   { label: "پیام‌های بسته ‌شده", variant: "error", value: "RESOLVED" },
+];
+
+export const COURSE_STATUSES: {
+  value: Level;
+  label: string;
+  variant: "info" | "warning" | "success" | "error";
+}[] = [
+  { label: "دوره‌های مبتدی", variant: "success", value: "BEGINNER" },
+  { label: "دوره‌های پیشرفته", variant: "warning", value: "ADVANCED" },
+  { label: "دوره‌های تخصصی", variant: "error", value: "EXPERT" },
 ];
