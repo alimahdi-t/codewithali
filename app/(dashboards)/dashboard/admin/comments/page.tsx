@@ -13,17 +13,12 @@ import { CommentStatus } from "@/app/(dashboards)/dashboard/admin/comments/_comp
 import { CommentAction } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentAction";
 import Pagination from "@/components/shared/Pagination";
 import { CommentType } from "@/app/(dashboards)/dashboard/admin/comments/_components/CommentType";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import Link from "next/link";
 import { COMMENT_STATUSES } from "@/constants/dashboard";
 import { GetCommentsParams } from "@/actions/shared.types";
 import { toast } from "sonner";
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
+import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
 
 interface Props {
   searchParams: Promise<GetCommentsParams>;
@@ -89,18 +84,7 @@ const CommentsPage = async (props: Props) => {
                     {convertToPersianNumbers(index + 1)}
                   </TableCell>
                   <TableCell>
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger>
-                          <p className="truncate max-w-60">{comment.content}</p>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-wrap max-w-md text-sm leading-6">
-                            {comment.content}
-                          </p>
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
+                    <TruncatedTooltipText text={comment.content} />
                   </TableCell>
                   <TableCell className="text-dark-400_light-600">
                     <Link href={"#"}>

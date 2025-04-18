@@ -61,7 +61,7 @@ export const ActionGroup = ({
 
       {/* add Discount Action */}
 
-      {onEdit && (
+      {onAddDiscount && (
         <TooltipWrapper label="افزودن تخفیف">
           <span
             className="cursor-pointer text-action-warning hover:text-white hover:bg-action-warning p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center"

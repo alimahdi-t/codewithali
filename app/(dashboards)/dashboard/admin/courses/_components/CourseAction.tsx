@@ -27,16 +27,11 @@ export const CourseActions = ({ courseSlug }: { courseSlug: string }) => {
     router.push(`/dashboard/admin/courses/edit/${courseSlug}`);
   };
 
-  const onAddDiscount = () => {
-    //TODO
-  };
-
   return (
     <ActionGroup
       onView={onView}
       onDelete={onDelete}
       onEdit={onEdit}
-      onAddDiscount={onAddDiscount}
       deleteAlertProps={{}}
     />
   );
