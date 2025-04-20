@@ -32,17 +32,28 @@ interface GenericTableProps<T> {
   columns: Column<T>[];
   data: T[];
   emptyText?: string;
+  bulkActions?: (selectedIds: (string | number)[]) => React.ReactNode;
 }
 
 export function GenericTable<T extends { id: string | number }>({
   columns,
   data,
   emptyText,
+  bulkActions,
 }: GenericTableProps<T>) {
   const allKeys = columns.map((col) => col.key.toString());
   const [visibleKeys, setVisibleKeys] = useState(allKeys);
 
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([]);
+
+  // Pagination
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const rowsPerPage = 2;
+  // const totalPages = Math.ceil(data.length / rowsPerPage);
+  // const paginatedData = data.slice(
+  //   (currentPage - 1) * rowsPerPage,
+  //   currentPage * rowsPerPage,
+  // );
 
   const toggleColumn = (key: string) => {
     setVisibleKeys((prev) =>
@@ -69,7 +80,7 @@ export function GenericTable<T extends { id: string | number }>({
   };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-2">
       <DropdownMenu dir="rtl">
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="ml-auto">
@@ -96,6 +107,23 @@ export function GenericTable<T extends { id: string | number }>({
           ))}
         </DropdownMenuContent>
       </DropdownMenu>
+      <div
+        className={cn(
+          "transition-all duration-400 ease-in-out overflow-hidden",
+          selectedRows.length > 0
+            ? "max-h-40 opacity-100 mt-3"
+            : "max-h-0 opacity-0",
+        )}
+      >
+        <div className="flex justify-between items-center p-3 border rounded-md bg-muted text-muted-foreground text-sm">
+          <span className="text-xs">
+            {`${convertToPersianNumbers(
+              selectedRows.length,
+            )} از ${convertToPersianNumbers(data.length)} ردیف انتخاب شده.`}
+          </span>
+          {bulkActions?.(selectedRows)}
+        </div>
+      </div>
 
       <Table>
         <TableHeader>
@@ -122,7 +150,10 @@ export function GenericTable<T extends { id: string | number }>({
             </TableRow>
           ) : (
             data.map((item, rowIndex) => (
-              <TableRow key={rowIndex}>
+              <TableRow
+                key={rowIndex}
+                className="h-[72px] text-[#5A6A85] text-sm"
+              >
                 <TableCell className="size-12">
                   <Checkbox
                     checked={selectedRows.includes(item.id)}
@@ -140,12 +171,37 @@ export function GenericTable<T extends { id: string | number }>({
             ))
           )}
         </TableBody>
-        <TableCaption className="text-start select-none">
+        <TableCaption className="text-start select-none my-2">
           <span className="text-xs">
-            {convertToPersianNumbers(
-              `انتخاب ${selectedRows.length} از ${data.length} ردیف.`,
-            )}
+            {`${convertToPersianNumbers(
+              selectedRows.length,
+            )} از ${convertToPersianNumbers(data.length)} ردیف انتخاب شده.`}
           </span>
+
+          {/*<div className="flex justify-between items-center py-3 text-sm">*/}
+          {/*  <div>*/}
+          {/*    صفحه {convertToPersianNumbers(currentPage)} از{" "}*/}
+          {/*    {convertToPersianNumbers(totalPages)}*/}
+          {/*  </div>*/}
+          {/*  <div className="space-x-2 rtl:space-x-reverse">*/}
+          {/*    <Button*/}
+          {/*      variant="outline"*/}
+          {/*      size="sm"*/}
+          {/*      disabled={currentPage === 1}*/}
+          {/*      onClick={() => setCurrentPage((prev) => prev - 1)}*/}
+          {/*    >*/}
+          {/*      قبلی*/}
+          {/*    </Button>*/}
+          {/*    <Button*/}
+          {/*      variant="outline"*/}
+          {/*      size="sm"*/}
+          {/*      disabled={currentPage === totalPages}*/}
+          {/*      onClick={() => setCurrentPage((prev) => prev + 1)}*/}
+          {/*    >*/}
+          {/*      بعدی*/}
+          {/*    </Button>*/}
+          {/*  </div>*/}
+          {/*</div>*/}
         </TableCaption>
       </Table>
     </div>

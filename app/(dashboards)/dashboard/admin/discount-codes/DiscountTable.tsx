@@ -2,6 +2,8 @@
 
 import { GenericTable } from "@/components/shared/GenericTable";
 import { convertToPersianNumbers } from "@/utils";
+import { ActionGroup } from "@/components/common/ActionGroup";
+import { Button } from "@/components/ui/button";
 
 const columns = [
   {
@@ -29,6 +31,19 @@ const columns = [
     key: "createdAt",
     header: "تاریخ شروع",
     render: (item: Comment) => item.createdAt.toLocaleDateString("fa-IR"),
+  },
+  {
+    key: "actions",
+    header: "عملیات",
+    render: (item: Comment) => (
+      <div className="flex gap-2">
+        <ActionGroup
+          deleteAlertProps={{}}
+          onEdit={() => {}}
+          onDelete={() => {}}
+        />
+      </div>
+    ),
   },
 ];
 
@@ -62,8 +77,47 @@ const comments: Comment[] = [
     status: "PENDING",
     createdAt: new Date(),
   },
+  {
+    id: "4",
+    content: "این یک نظر تستی است",
+    authorName: "علی محمدی",
+    status: "PENDING",
+    createdAt: new Date(),
+  },
+  {
+    id: "5",
+    content: "این یک نظر تستی است",
+    authorName: "علی محمدی",
+    status: "PENDING",
+    createdAt: new Date(),
+  },
+  {
+    id: "6",
+    content: "این یک نظر تستی است",
+    authorName: "علی محمدی",
+    status: "PENDING",
+    createdAt: new Date(),
+  },
 ];
 
 export const DiscountTable = () => {
-  return <GenericTable columns={columns} data={comments} />;
+  const handleBulkDelete = async (ids: (string | number)[]) => {
+    console.log(ids);
+  };
+
+  return (
+    <GenericTable
+      columns={columns}
+      data={comments}
+      bulkActions={(selectedIds) => (
+        <Button
+          size="sm"
+          variant="destructive"
+          onClick={() => handleBulkDelete(selectedIds)}
+        >
+          افزودن کد تخفیف
+        </Button>
+      )}
+    />
+  );
 };
