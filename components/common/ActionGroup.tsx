@@ -88,7 +88,7 @@ export const ActionGroup = ({
       {onDelete && (
         <AlertDialog>
           <AlertDialogTrigger>
-            <TooltipWrapper label="حدف">
+            <TooltipWrapper label="حذف">
               <span className="cursor-pointer text-action-error hover:text-white hover:bg-action-error p-2 rounded-full transition-all hover:scale-110 duration-200 flex items-center justify-center">
                 <HiOutlineTrash className="size-5" />
               </span>
