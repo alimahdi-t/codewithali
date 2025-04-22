@@ -133,11 +133,11 @@ export function GenericTable<T extends { id: string | number }>({
         )}
       >
         <div className="flex justify-between items-center p-3 border rounded-md bg-muted text-muted-foreground text-sm">
-          <span className="text-xs">
-            {`${convertToPersianNumbers(
-              selectedRows.length,
-            )} از ${convertToPersianNumbers(data.length)} ردیف انتخاب شده.`}
-          </span>
+          {/*<span className="text-xs">*/}
+          {/*  {`${convertToPersianNumbers(*/}
+          {/*    selectedRows.length,*/}
+          {/*  )} از ${convertToPersianNumbers(data.length)} ردیف انتخاب شده.`}*/}
+          {/*</span>*/}
           {bulkActions?.(selectedRows)}
         </div>
       </div>

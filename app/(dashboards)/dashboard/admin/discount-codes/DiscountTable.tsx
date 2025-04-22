@@ -9,6 +9,7 @@ import Image from "next/image";
 import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import CreateDiscountForm from "@/components/forms/CreateDiscountForm";
+import DayCountdown from "@/components/common/DayCountdown";
 
 const columns = [
   {
@@ -27,6 +28,7 @@ const columns = [
         className="rounded"
         src={item.imageUrl}
         alt={""}
+        priority={false}
       />
     ),
   },
@@ -45,7 +47,7 @@ const columns = [
   },
   {
     key: "status",
-    header: "تخفیف",
+    header: "میزان تخفیف",
     render: (item: CourseWithDiscount) => (
       <span className="text-sm">
         {item.discount ? item.discount.percentage : "بدون تخفیف"}
@@ -58,7 +60,9 @@ const columns = [
     render: (item: CourseWithDiscount) => (
       <span className="text-sm">
         {item.discount?.expiresAt ? (
-          <DateTooltip date={item.discount.expiresAt} />
+          <DateTooltip date={item.discount.expiresAt}>
+            <DayCountdown date={item.discount.expiresAt} />
+          </DateTooltip>
         ) : (
           ""
         )}
@@ -70,11 +74,7 @@ const columns = [
     header: "عملیات",
     render: (item: CourseWithDiscount) => (
       <div className="flex gap-2">
-        <ActionGroup
-          deleteAlertProps={{}}
-          onAddDiscount={() => {}}
-          onDelete={() => {}}
-        />
+        <ActionGroup deleteAlertProps={{}} onDelete={() => {}} />
       </div>
     ),
   },
@@ -102,25 +102,22 @@ export const DiscountTable = ({ data }: { data: CourseWithDiscount[] }) => {
     console.log(ids);
   };
 
-  const handleBulkAddDiscount = async (ids: (string | number)[]) => {
-    console.log();
-  };
-  console.log(data);
-
   return (
     <GenericTable
       columns={columns}
       data={data}
       bulkActions={(selectedIds) => (
-        <div className="flex items-center">
+        <div className="flex items-center flex-wrap">
           <CreateDiscountForm ids={selectedIds.map(String)} />
-          <Button
-            size="sm"
-            variant="destructive"
-            onClick={() => handleBulkDelete(selectedIds)}
-          >
-            افزودن کد تخفیف
-          </Button>
+          <div className="relative mt-6">
+            <Button
+              size="sm"
+              variant="destructive"
+              onClick={() => handleBulkDelete(selectedIds)}
+            >
+              حذف همه کد‌های تخفیف
+            </Button>
+          </div>
         </div>
       )}
     />
