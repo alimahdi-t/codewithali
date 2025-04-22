@@ -1,6 +1,7 @@
 generator client {
   provider = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  output   = "app/generated/prisma/client"
 }
 
 datasource db {
@@ -87,7 +88,7 @@ model Course {
   instructorId Int
   discountId   String?
   //Relations
-  discount     Discount?     @relation(fields: [discountId], references: [id], onDelete: Cascade)
+  discount     Discount?     @relation(fields: [discountId], references: [id], onDelete: SetNull)
   instructor   User         @relation(fields: [instructorId], references: [id])
   Enrolment    Enrolment[]
   tag          CourseTag[]
@@ -150,6 +151,7 @@ model ContactMessage {
 model Discount {
   id         String    @id @default(cuid())
   percentage Int
+  startsAt   DateTime?
   expiresAt  DateTime?
   createdAt  DateTime  @default(now())
   Course     Course[]

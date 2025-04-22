@@ -1,0 +1,214 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "rhel-openssl-1.0.x"]
+  output        = "app/generated/prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ✅
+model User {
+  id          Int      @id @default(autoincrement())
+  username    String?  @unique
+  firstName   String
+  lastName    String
+  imageUrl    String?
+  email       String?  @unique
+  password    String?
+  phoneNumber String?  @unique
+  role        Role     @default(USER)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  bio         String?
+
+  // Relations
+  enrolment Enrolment[]
+  Course    Course[]
+  Post      Post[]
+
+  emailVerified DateTime?
+  accounts      Account[]
+
+  Comment Comment[]
+}
+
+model Account {
+  id                       String  @id @default(cuid())
+  userId                   Int     @unique
+  type                     String
+  provider                 String
+  providerAccountId        String
+  refresh_token            String?
+  access_token             String?
+  expires_at               Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?
+  session_state            String?
+  refresh_token_expires_in Int?
+  user                     User?   @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+// ✅
+model Enrolment {
+  user_id       Int
+  course_id     Int
+  enrolmentDate DateTime @default(now())
+
+  //Relations
+  user   User   @relation(fields: [user_id], references: [id])
+  course Course @relation(fields: [course_id], references: [id])
+
+  // Composite primary key
+  @@id([user_id, course_id])
+}
+
+// ✅
+model Course {
+  id           Int          @id @default(autoincrement())
+  slug         String       @unique
+  title        String
+  description  String
+  content      String
+  imageUrl     String
+  level        Level
+  status       CourseStatus
+  price        Int
+  createdAt    DateTime     @default(now())
+  updateAt     DateTime     @updatedAt
+  instructorId Int
+  discountId   String?
+  //Relations
+  discount     Discount?    @relation(fields: [discountId], references: [id], onDelete: SetNull)
+  instructor   User         @relation(fields: [instructorId], references: [id])
+  Enrolment    Enrolment[]
+  tag          CourseTag[]
+
+  Comment Comment[]
+}
+
+// ✅
+model Post {
+  id           Int      @id @default(autoincrement())
+  slug         String   @unique
+  title        String
+  content      String
+  imageUrl     String
+  createAt     DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  authorId     Int
+  isEditorPick Boolean? @default(false)
+  readingTime  Int
+
+  // Relations
+  author User  @relation(fields: [authorId], references: [id])
+  tags   Tag[] // ✅ Many-to-many without a junction table
+
+  Comment Comment[]
+}
+
+// ✅
+model Tag {
+  id      Int         @id @default(autoincrement())
+  name    String      @unique
+  posts   Post[]
+  courses CourseTag[]
+}
+
+// ✅
+model CourseTag {
+  course_id Int
+  tag_id    Int
+  // Relations
+  course    Course @relation(fields: [course_id], references: [id])
+  tag       Tag    @relation(fields: [tag_id], references: [id])
+
+  // Composite primary key
+  @@id([course_id, tag_id])
+}
+
+model ContactMessage {
+  id        String        @id @default(cuid())
+  fullName  String
+  email     String
+  phone     String?
+  title     String
+  message   String
+  status    MessageStatus @default(PENDING)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+}
+
+model Discount {
+  id         String    @id @default(cuid())
+  percentage Int
+  startsAt   DateTime?
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
+  Course     Course[]
+}
+
+model Comment {
+  id        String        @id @default(cuid())
+  content   String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  authorId  Int
+  courseId  Int?
+  postId    Int?
+  parentId  String?
+  status    CommentStatus @default(PENDING) // 👈 وضعیت بررسی
+
+  // روابط
+  author  User      @relation(fields: [authorId], references: [id])
+  course  Course?   @relation(fields: [courseId], references: [id])
+  post    Post?     @relation(fields: [postId], references: [id])
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies Comment[] @relation("CommentReplies")
+}
+
+enum MessageStatus {
+  PENDING
+  IN_PROGRESS
+  RESOLVED
+}
+
+enum CommentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+// ✅
+enum Role {
+  USER
+  INSTRUCTOR
+  AUTHOR
+  INSTRUCOT_AUTHOR
+  ADMIN
+}
+
+// ✅
+enum Level {
+  BEGINNER
+  ADVANCED
+  EXPERT
+}
+
+// ✅
+enum CourseStatus {
+  COMPLETED
+  PREORDER
+  ONGOING
+  CANCELLED
+  UPCOMING
+}

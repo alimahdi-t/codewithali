@@ -10,6 +10,7 @@ import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTool
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import CreateDiscountForm from "@/components/forms/CreateDiscountForm";
 import DayCountdown from "@/components/common/DayCountdown";
+import { deleteDiscount } from "@/actions/discount/delete-discount.action";
 
 const columns = [
   {
@@ -74,7 +75,14 @@ const columns = [
     header: "عملیات",
     render: (item: CourseWithDiscount) => (
       <div className="flex gap-2">
-        <ActionGroup deleteAlertProps={{}} onDelete={() => {}} />
+        <ActionGroup
+          deleteAlertProps={{}}
+          onDelete={async () => {
+            if (item.discount?.id) {
+              deleteDiscount({ id: item.discount.id });
+            }
+          }}
+        />
       </div>
     ),
   },
