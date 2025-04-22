@@ -1,45 +1,78 @@
 "use client";
 
-import { GenericTable } from "@/components/shared/GenericTable";
+import { GenericTable } from "@/components/shared/Table/GenericTable";
 import { convertToPersianNumbers } from "@/utils";
 import { ActionGroup } from "@/components/common/ActionGroup";
 import { Button } from "@/components/ui/button";
+import { Prisma } from "@prisma/client";
+import Image from "next/image";
+import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
+import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
+import CreateDiscountForm from "@/components/forms/CreateDiscountForm";
 
 const columns = [
   {
     key: "id",
     header: "شناسه",
     className: "w-24",
-    render: (item: Comment) => convertToPersianNumbers(item.id),
+    render: (item: CourseWithDiscount) => convertToPersianNumbers(item.id),
   },
   {
-    key: "content",
-    header: "متن",
-  },
-  {
-    key: "authorName",
-    header: "کاربر",
-  },
-  {
-    key: "status",
-    header: "وضعیت",
-    render: (item: Comment) => (
-      <span className="text-xs text-yellow-600">{item.status}</span>
+    key: "image",
+    header: "تصویر",
+    render: (item: CourseWithDiscount) => (
+      <Image
+        width={80}
+        height={40}
+        className="rounded"
+        src={item.imageUrl}
+        alt={""}
+      />
     ),
   },
   {
-    key: "createdAt",
-    header: "تاریخ شروع",
-    render: (item: Comment) => item.createdAt.toLocaleDateString("fa-IR"),
+    key: "title",
+    header: "عنوان",
+    render: (item: CourseWithDiscount) => (
+      <TruncatedTooltipText text={item.title} />
+    ),
+  },
+  {
+    key: "authorName",
+    header: "مدرس",
+    render: (item: CourseWithDiscount) =>
+      item.instructor.firstName.concat(" ", item.instructor.lastName),
+  },
+  {
+    key: "status",
+    header: "تخفیف",
+    render: (item: CourseWithDiscount) => (
+      <span className="text-sm">
+        {item.discount ? item.discount.percentage : "بدون تخفیف"}
+      </span>
+    ),
+  },
+  {
+    key: "expireDate",
+    header: "تاریخ انقضا",
+    render: (item: CourseWithDiscount) => (
+      <span className="text-sm">
+        {item.discount?.expiresAt ? (
+          <DateTooltip date={item.discount.expiresAt} />
+        ) : (
+          ""
+        )}
+      </span>
+    ),
   },
   {
     key: "actions",
     header: "عملیات",
-    render: (item: Comment) => (
+    render: (item: CourseWithDiscount) => (
       <div className="flex gap-2">
         <ActionGroup
           deleteAlertProps={{}}
-          onEdit={() => {}}
+          onAddDiscount={() => {}}
           onDelete={() => {}}
         />
       </div>
@@ -47,76 +80,48 @@ const columns = [
   },
 ];
 
-type Comment = {
-  id: string;
-  content: string;
-  authorName: string;
-  status: string;
-  createdAt: Date;
-};
+type CourseWithDiscount = Prisma.CourseGetPayload<{
+  select: {
+    id: true;
+    title: true;
+    imageUrl: true;
+    slug: true;
+    instructor: {
+      select: {
+        firstName: true;
+        lastName: true;
+        username: true;
+      };
+    };
+    discount: true;
+  };
+}>;
 
-const comments: Comment[] = [
-  {
-    id: "1",
-    content: "این یک نظر تستی است",
-    authorName: "علی محمدی",
-    status: "PENDING",
-    createdAt: new Date(),
-  },
-  {
-    id: "2",
-    content: "این یک نظر تستی است",
-    authorName: "علی محمدی",
-    status: "PENDING",
-    createdAt: new Date(),
-  },
-  {
-    id: "3",
-    content: "این یک نظر تستی است",
-    authorName: "علی محمدی",
-    status: "PENDING",
-    createdAt: new Date(),
-  },
-  {
-    id: "4",
-    content: "این یک نظر تستی است",
-    authorName: "علی محمدی",
-    status: "PENDING",
-    createdAt: new Date(),
-  },
-  {
-    id: "5",
-    content: "این یک نظر تستی است",
-    authorName: "علی محمدی",
-    status: "PENDING",
-    createdAt: new Date(),
-  },
-  {
-    id: "6",
-    content: "این یک نظر تستی است",
-    authorName: "علی محمدی",
-    status: "PENDING",
-    createdAt: new Date(),
-  },
-];
-
-export const DiscountTable = () => {
+export const DiscountTable = ({ data }: { data: CourseWithDiscount[] }) => {
   const handleBulkDelete = async (ids: (string | number)[]) => {
     console.log(ids);
   };
 
+  const handleBulkAddDiscount = async (ids: (string | number)[]) => {
+    console.log();
+  };
+  console.log(data);
+
   return (
     <GenericTable
       columns={columns}
-      data={comments}
+      data={data}
       bulkActions={(selectedIds) => (
-        <Button
-          size="sm"
-          variant="destructive"
-          onClick={() => handleBulkDelete(selectedIds)}
-        >
-          افزودن کد تخفیف
-        </Button>
+        <div className="flex items-center">
+          <CreateDiscountForm ids={selectedIds.map(String)} />
+          <Button
+            size="sm"
+            variant="destructive"
+            onClick={() => handleBulkDelete(selectedIds)}
+          >
+            افزودن کد تخفیف
+          </Button>
+        </div>
       )}
     />
   );

@@ -126,3 +126,13 @@ export const adminDashboardLinks: {
     icon: HiOutlineCog8Tooth,
   },
 ];
+
+export const daysOfWeek = [
+  { full: "شنبه", short: "ش", enShort: "Sa" },
+  { full: "یک‌شنبه", short: "ی", enShort: "Su" },
+  { full: "دوشنبه", short: "د", enShort: "Mo" },
+  { full: "سه‌شنبه", short: "س", enShort: "Tu" },
+  { full: "چهارشنبه", short: "چ", enShort: "We" },
+  { full: "پنجشنبه", short: "پ", enShort: "Th" },
+  { full: "جمعه", short: "ج", enShort: "Fr" },
+];

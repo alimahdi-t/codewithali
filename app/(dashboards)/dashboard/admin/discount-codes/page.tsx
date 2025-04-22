@@ -1,8 +1,13 @@
 import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
 
 import { DiscountTable } from "@/app/(dashboards)/dashboard/admin/discount-codes/DiscountTable";
+import { getDiscount } from "@/actions/discount/get-discount.action";
 
-const DiscountCodesPage = () => {
+const DiscountCodesPage = async () => {
+  const response = await getDiscount();
+
+  const { data } = response;
+  if (!data) return null;
   return (
     <div className="rounded-xl p-4 bg-card shadow-sm">
       <DashboardPageHeader
@@ -12,7 +17,7 @@ const DiscountCodesPage = () => {
       />
 
       <div className="mt-12">
-        <DiscountTable />
+        <DiscountTable data={data} />
       </div>
     </div>
   );
