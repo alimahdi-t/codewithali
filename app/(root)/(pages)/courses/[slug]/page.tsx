@@ -24,8 +24,16 @@ const CoursePage = async (props: Props) => {
     notFound();
   }
 
-  const { id, instructor, price, imageUrl, description, content, title } =
-    course;
+  const {
+    id,
+    instructor,
+    price,
+    imageUrl,
+    description,
+    content,
+    title,
+    discount,
+  } = course;
 
   return (
     <>
@@ -40,6 +48,7 @@ const CoursePage = async (props: Props) => {
           description={description}
           imageUrl={imageUrl}
           price={price}
+          discount={discount}
         />
         <div className="w-full flex flex-row gap-4 flex-1 pb-12 mt-12 max-lg:flex-col">
           <div className="flex-1 flex flex-col gap-4">

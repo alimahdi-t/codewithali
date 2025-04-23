@@ -9,6 +9,7 @@ export async function getCourseBySlug({ slug }: GetCourseBySlugParams) {
       },
       include: {
         instructor: true,
+        discount: true,
       },
     });
   } catch (error) {

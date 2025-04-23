@@ -1,6 +1,8 @@
 import { AddToCartButton } from "@/app/(root)/(pages)/courses/[slug]/_components/AddToCartButton";
 import Price from "@/components/common/Price";
 import Image from "next/image";
+import { TimerCountdown } from "@/app/(root)/(pages)/courses/[slug]/_components/TimerCountdown";
+import { Discount } from "@prisma/client";
 
 interface Props {
   id: string;
@@ -8,7 +10,7 @@ interface Props {
   description: string;
   imageUrl: string;
   price: number;
-  discount?: number;
+  discount: Discount | null;
 }
 
 export const CourseHeader = (props: Props) => {
@@ -22,14 +24,27 @@ export const CourseHeader = (props: Props) => {
             {description} {description} {description}
           </p>
         </div>
-        <div className="flex justify-between items-center lg:mt-4">
+        <TimerCountdown
+          date={discount?.expiresAt}
+          percentage={discount?.percentage}
+        />
+        <div className="flex justify-between items-center mt-4 flex-wrap gap-4">
           <AddToCartButton courseId={id} />
-          <Price
-            price={price}
-            classname="text-2xl font-bold"
-            iconClassName="w-6 h-6 mr-1.5"
-            discount={discount}
-          />
+          <div className="flex items-center gap-2">
+            {discount && (
+              <Price
+                price={price}
+                classname="line-through text-dark-400_light-300 text-lg"
+                iconClassName="hidden"
+              />
+            )}
+            <Price
+              price={price}
+              classname="text-2xl font-bold"
+              iconClassName="w-6 h-6 mr-1.5"
+              discount={discount?.percentage}
+            />
+          </div>
         </div>
       </div>
       <div className="lg:col-span-3 overflow-hidden rounded-lg max-lg:order-1">
