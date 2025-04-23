@@ -11,6 +11,7 @@ import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import CreateDiscountForm from "@/components/forms/CreateDiscountForm";
 import DayCountdown from "@/components/common/DayCountdown";
 import { deleteDiscount } from "@/actions/discount/delete-discount.action";
+import { DiscountBadge } from "@/components/common/DiscountBadge";
 
 const columns = [
   {
@@ -50,13 +51,24 @@ const columns = [
     key: "status",
     header: "میزان تخفیف",
     render: (item: CourseWithDiscount) => (
+      <DiscountBadge percentage={item.discount?.percentage} />
+    ),
+  },
+  {
+    key: "startsDate",
+    header: "تاریخ شروع",
+    render: (item: CourseWithDiscount) => (
       <span className="text-sm">
-        {item.discount ? item.discount.percentage : "بدون تخفیف"}
+        {item.discount?.startsAt ? (
+          <DateTooltip date={item.discount.startsAt} />
+        ) : (
+          ""
+        )}
       </span>
     ),
   },
   {
-    key: "expireDate",
+    key: "expiresDate",
     header: "تاریخ انقضا",
     render: (item: CourseWithDiscount) => (
       <span className="text-sm">
