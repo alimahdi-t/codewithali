@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { TooltipWrapper } from "@/components/common/TooltipWrapper";
 
 type CalenderProps = {
   onDateSelect: (date: Moment) => void;
@@ -85,19 +86,23 @@ const Calender: React.FC<CalenderProps> = ({ onDateSelect }) => {
       <DialogContent className="scale-75">
         <div className="mx-auto w-full max-w-md py-8 px-8 mt-6 flex flex-col justify-center rounded text-center select-none bg-white">
           <div className="grid grid-cols-7">
-            <HiMiniChevronRight
-              className="mx-auto col-span-1 z-10 w-8 h-8 rounded-full p-1.5 hover:bg-slate-100 cursor-pointer"
-              onClick={() => setDate(date.clone().add(1, "month"))}
-            />
-            <p className="col-span-5 inset-0 flex items-center justify-center font-semibold">
+            <TooltipWrapper label={"ماه بعد"}>
+              <HiMiniChevronRight
+                className="mx-auto col-span-1 z-10 w-8 h-8 rounded-full p-1.5 hover:bg-slate-100 cursor-pointer"
+                onClick={() => setDate(date.clone().add(1, "month"))}
+              />
+            </TooltipWrapper>
+            <p className="col-span-5 inset-0 flex items-center justify-center font-bold text-lg">
               {`${date.format("MMMM")} ${convertToPersianNumbers(
                 date.format("YYYY"),
               )}`}
             </p>
-            <HiMiniChevronLeft
-              className="mx-auto col-span-1 z-10 w-8 h-8 rounded-full p-1.5 hover:bg-slate-100 cursor-pointer"
-              onClick={() => setDate(date.clone().subtract(1, "month"))}
-            />
+            <TooltipWrapper label={"ماه قبل"}>
+              <HiMiniChevronLeft
+                className="mx-auto col-span-1 z-10 w-8 h-8 rounded-full p-1.5 hover:bg-slate-100 cursor-pointer"
+                onClick={() => setDate(date.clone().subtract(1, "month"))}
+              />
+            </TooltipWrapper>
           </div>
 
           <div className="mt-6 grid grid-cols-7 gap-y-4 max-sm:gap-y-2 grid-rows-7">
