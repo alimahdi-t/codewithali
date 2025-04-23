@@ -19,50 +19,48 @@ export async function createDiscounts(
     const expiresDate = new Date(expiresAt as Date);
     expiresDate.setHours(23, 59, 59, 999);
 
-    // 1. Create new discount
-    const discount = await prisma.discount.create({
-      data: {
-        percentage,
-        expiresAt: expiresDate,
-      },
-    });
+    let updateCount = 0;
 
-    // 2. Update selected courses with new discount
-    const result = await prisma.course.updateMany({
-      where: {
-        id: { in: courseIds.map(Number) },
-      },
-      data: {
-        discountId: discount.id,
-      },
-    });
+    // 1. Create a discount for each course
+    for (const courseId of courseIds) {
+      const discount = await prisma.discount.create({
+        data: {
+          percentage,
+          startsAt: startsAt,
+          expiresAt: expiresDate,
+        },
+      });
 
-    // 3. Find unused discount IDs
+      await prisma.course.update({
+        where: { id: Number(courseId) },
+        data: {
+          discountId: discount.id,
+        },
+      });
+
+      updateCount++;
+    }
+
+    // 2. Delete unused discounts (not attached to any course)
     const unusedDiscounts = await prisma.discount.findMany({
       where: {
         Course: {
-          none: {}, // No courses attached
-        },
-        id: {
-          not: discount.id, // Don't delete the one we just created
+          none: {},
         },
       },
     });
 
-    // 4. Delete those unused discounts
-    const deletedDiscounts = await prisma.discount.deleteMany({
+    const deleted = await prisma.discount.deleteMany({
       where: {
-        id: {
-          in: unusedDiscounts.map((d) => d.id),
-        },
+        id: { in: unusedDiscounts.map((d) => d.id) },
       },
     });
 
-    // 5. Revalidate cache
+    // 3. Revalidate
     revalidatePath("/dashboard/admin/discount-codes");
 
     return {
-      success: `تخفیف جدید برای ${result.count} دوره ثبت شد و ${deletedDiscounts.count} تخفیف قدیمی حذف شد.`,
+      success: `برای ${updateCount} دوره تخفیف جدید ثبت شد و ${deleted.count} تخفیف قدیمی حذف شد.`,
     };
   } catch (error) {
     console.error("خطا در ایجاد یا اعمال تخفیف:", error);
