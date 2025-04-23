@@ -83,8 +83,8 @@ const CourseCard = ({ course, className, ...props }: Props) => {
         <hr />
 
         <div className="flex flex-col items-end">
-          <p className="font-bold text-xs line-through text-gray-400">
-            {course.price !== 0 && course.discount?.percentage !== 0
+          <p className="font-bold leading-5 h-5 text-xs line-through text-gray-400">
+            {course.discount?.percentage && course.price !== 0
               ? convertToPersianAndFormat(course.price)
               : " "}
           </p>
