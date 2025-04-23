@@ -12,93 +12,8 @@ import CreateDiscountForm from "@/components/forms/CreateDiscountForm";
 import DayCountdown from "@/components/common/DayCountdown";
 import { deleteDiscount } from "@/actions/discount/delete-discount.action";
 import { DiscountBadge } from "@/components/common/DiscountBadge";
-
-const columns = [
-  {
-    key: "id",
-    header: "شناسه",
-    className: "w-24",
-    render: (item: CourseWithDiscount) => convertToPersianNumbers(item.id),
-  },
-  {
-    key: "image",
-    header: "تصویر",
-    render: (item: CourseWithDiscount) => (
-      <Image
-        width={80}
-        height={40}
-        className="rounded"
-        src={item.imageUrl}
-        alt={""}
-        priority={false}
-      />
-    ),
-  },
-  {
-    key: "title",
-    header: "عنوان",
-    render: (item: CourseWithDiscount) => (
-      <TruncatedTooltipText text={item.title} />
-    ),
-  },
-  {
-    key: "authorName",
-    header: "مدرس",
-    render: (item: CourseWithDiscount) =>
-      item.instructor.firstName.concat(" ", item.instructor.lastName),
-  },
-  {
-    key: "status",
-    header: "میزان تخفیف",
-    render: (item: CourseWithDiscount) => (
-      <DiscountBadge percentage={item.discount?.percentage} />
-    ),
-  },
-  {
-    key: "startsDate",
-    header: "تاریخ شروع",
-    render: (item: CourseWithDiscount) => (
-      <span className="text-sm">
-        {item.discount?.startsAt ? (
-          <DateTooltip date={item.discount.startsAt} />
-        ) : (
-          ""
-        )}
-      </span>
-    ),
-  },
-  {
-    key: "expiresDate",
-    header: "تاریخ انقضا",
-    render: (item: CourseWithDiscount) => (
-      <span className="text-sm">
-        {item.discount?.expiresAt ? (
-          <DateTooltip date={item.discount.expiresAt}>
-            <DayCountdown date={item.discount.expiresAt} />
-          </DateTooltip>
-        ) : (
-          ""
-        )}
-      </span>
-    ),
-  },
-  {
-    key: "actions",
-    header: "عملیات",
-    render: (item: CourseWithDiscount) => (
-      <div className="flex gap-2">
-        <ActionGroup
-          deleteAlertProps={{}}
-          onDelete={async () => {
-            if (item.discount?.id) {
-              deleteDiscount({ id: item.discount.id });
-            }
-          }}
-        />
-      </div>
-    ),
-  },
-];
+import { toast } from "sonner";
+import { deleteAllDiscount } from "@/actions/discount/delete-all-discount.action";
 
 type CourseWithDiscount = Prisma.CourseGetPayload<{
   select: {
@@ -118,8 +33,130 @@ type CourseWithDiscount = Prisma.CourseGetPayload<{
 }>;
 
 export const DiscountTable = ({ data }: { data: CourseWithDiscount[] }) => {
+  const columns = [
+    {
+      key: "id",
+      header: "شناسه",
+      className: "w-24",
+      render: (item: CourseWithDiscount) => convertToPersianNumbers(item.id),
+    },
+    {
+      key: "image",
+      header: "تصویر",
+      render: (item: CourseWithDiscount) => (
+        <Image
+          width={80}
+          height={40}
+          className="rounded"
+          src={item.imageUrl}
+          alt={""}
+          priority={false}
+        />
+      ),
+    },
+    {
+      key: "title",
+      header: "عنوان",
+      render: (item: CourseWithDiscount) => (
+        <TruncatedTooltipText text={item.title} />
+      ),
+    },
+    {
+      key: "authorName",
+      header: "مدرس",
+      render: (item: CourseWithDiscount) =>
+        item.instructor.firstName.concat(" ", item.instructor.lastName),
+    },
+    {
+      key: "status",
+      header: "میزان تخفیف",
+      render: (item: CourseWithDiscount) => (
+        <DiscountBadge percentage={item.discount?.percentage} />
+      ),
+    },
+    {
+      key: "startsDate",
+      header: "تاریخ شروع",
+      render: (item: CourseWithDiscount) => (
+        <span className="text-sm">
+          {item.discount?.startsAt ? (
+            <DateTooltip date={item.discount.startsAt} />
+          ) : (
+            ""
+          )}
+        </span>
+      ),
+    },
+    {
+      key: "expiresDate",
+      header: "تاریخ انقضا",
+      render: (item: CourseWithDiscount) => (
+        <span className="text-sm">
+          {item.discount?.expiresAt ? (
+            <DateTooltip date={item.discount.expiresAt}>
+              <DayCountdown date={item.discount.expiresAt} />
+            </DateTooltip>
+          ) : (
+            ""
+          )}
+        </span>
+      ),
+    },
+    {
+      key: "actions",
+      header: "عملیات",
+      render: (item: CourseWithDiscount) => (
+        <div className="flex gap-2">
+          <ActionGroup
+            deleteAlertProps={{}}
+            onDelete={async () => {
+              if (item.discount?.id) {
+                try {
+                  const res = await deleteDiscount({ id: item.discount.id });
+
+                  if (res.success) {
+                    toast.success(res.message);
+                  } else {
+                    toast.error(res.message || "خطایی در حذف تخفیف رخ داد.");
+                  }
+                } catch (error) {
+                  toast.error("خطایی در حذف تخفیف رخ داد.");
+                }
+              } else {
+                toast.error("کد تخفیفی برای حذف وجود ندارد.");
+              }
+            }}
+          />
+        </div>
+      ),
+    },
+  ];
+
   const handleBulkDelete = async (ids: (string | number)[]) => {
-    console.log(ids);
+    // 1. Filter selected courses
+    const selectedCourses = data.filter((item) => ids.includes(item.id));
+
+    // 2. Get discount IDs from selected courses
+    const discountIds = selectedCourses
+      .map((course) => course.discount?.id)
+      .filter(Boolean); // Remove undefined/null
+
+    if (discountIds.length === 0) {
+      toast.error("هیچ کد تخفیفی برای حذف وجود ندارد.");
+      return;
+    }
+    try {
+      // 3. Call delete action with discount IDs
+      const res = await deleteAllDiscount({ ids: discountIds as string[] });
+
+      if (res.success) {
+        toast.success(res.message);
+      } else {
+        toast.error(res.message || "خطایی رخ داد.");
+      }
+    } catch (error) {
+      toast.error("خطایی رخ داد.");
+    }
   };
 
   return (
