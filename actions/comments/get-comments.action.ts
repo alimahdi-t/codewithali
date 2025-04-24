@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { GetCommentsParams } from "@/actions/shared.types";
 
-// Define the enum manually if Prisma's enum import fails
+// Define CommentStatus manually if it's not exported from Prisma
 type CommentStatus = "PENDING" | "APPROVED" | "REJECTED";
 
 export async function getComments(params: GetCommentsParams) {
@@ -34,7 +34,6 @@ export async function getComments(params: GetCommentsParams) {
       _count: { status: true },
     });
 
-    // Properly typed accumulator
     const statusCountMap = statusCounts.reduce(
       (acc: Record<CommentStatus, number>, item) => {
         acc[item.status as CommentStatus] = item._count.status;
