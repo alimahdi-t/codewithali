@@ -1,4 +1,5 @@
 "use client";
+
 import { useCart } from "@/context/CartProvider";
 import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -25,6 +26,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Input } from "@/components/ui/input";
+import CheckOutPageLoading from "./loading"; // make sure the path is correct
 
 type CourseWithDiscount = Prisma.CourseGetPayload<{
   select: {
@@ -39,24 +41,31 @@ type CourseWithDiscount = Prisma.CourseGetPayload<{
 const Checkout = () => {
   const { cart, removeFromCart } = useCart();
   const [serverCart, setServerCart] = useState<CourseWithDiscount[]>([]);
+  const [isLoading, setIsLoading] = useState(true); // 👈 loading state
 
   useEffect(() => {
     const getCart = async () => {
-      await getCartItems({ cartItems: cart }).then((response) => {
-        if (response.error) {
-          toast.error(response.error);
-        }
-        if (response.success) {
-          setServerCart(response.data);
-        }
-      });
+      setIsLoading(true);
+      const response = await getCartItems({ cartItems: cart });
+      if (response.error) {
+        toast.error(response.error);
+      }
+      if (response.success) {
+        setServerCart(response.data);
+      }
+      setIsLoading(false);
     };
 
     getCart();
   }, [cart]);
 
   const length = cart.length;
-  console.log(serverCart);
+
+  // 👇 Show loading UI while fetching data
+  if (isLoading) {
+    return <CheckOutPageLoading />;
+  }
+
   if (length < 1)
     return (
       <div className="w-full flex flex-col">
@@ -65,7 +74,7 @@ const Checkout = () => {
             src={"svg/empty-cart.svg"}
             width={400}
             height={400}
-            alt={""}
+            alt=""
             className="object-contain aspect-2/1"
           />
           <div className="relative  text-center">
@@ -83,7 +92,9 @@ const Checkout = () => {
         </div>
       </div>
     );
+
   if (!serverCart) return null;
+
   return (
     <div className="w-full flex flex-col">
       <h2 className="c-text-h3">ثبت سفارش</h2>
@@ -156,7 +167,7 @@ const Checkout = () => {
               </div>
             </CardContent>
           </Card>
-          {/*TODO: complete discount section*/}
+          {/* تخفیف */}
           <Card>
             <CardContent>
               <Accordion type="single" collapsible className="w-full">
