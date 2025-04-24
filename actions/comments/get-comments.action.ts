@@ -1,27 +1,26 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { CommentStatus } from "@prisma/client";
 import { GetCommentsParams } from "@/actions/shared.types";
+
+// Define the enum inline (fallback for deployment issues)
+type CommentStatus = "PENDING" | "APPROVED" | "REJECTED";
 
 export async function getComments(params: GetCommentsParams) {
   const { pageSize = 12, page = 1, status } = params;
+
   try {
-    // Get the total number of Comments (regardless of filter)
+    // Get total comment count
     const totalComment = await prisma.comment.count();
 
-    // Get the total count of filtered comments (for pagination)
+    // Count filtered comments
     const filteredCommentCount = await prisma.comment.count({
-      where: {
-        status,
-      },
+      where: { status },
     });
 
+    // Get paginated filtered comments
     const comments = await prisma.comment.findMany({
-      //TODO: only select needed column
-      where: {
-        status,
-      },
+      where: { status },
       include: {
         author: true,
         course: true,
@@ -35,26 +34,31 @@ export async function getComments(params: GetCommentsParams) {
       },
     });
 
-    // Get the count of each status
+    // Group by status
     const statusCounts = await prisma.comment.groupBy({
       by: ["status"],
       _count: { status: true },
     });
 
-    // Format status counts correctly
+    // Create status count map
     const statusCountMap = statusCounts.reduce(
       (acc, item) => {
-        acc[item.status] = item._count.status;
+        acc[item.status as CommentStatus] = item._count.status;
         return acc;
       },
       {
-        [CommentStatus.PENDING]: 0,
-        [CommentStatus.APPROVED]: 0,
-        [CommentStatus.REJECTED]: 0,
-      },
+        PENDING: 0,
+        APPROVED: 0,
+        REJECTED: 0,
+      } as Record<CommentStatus, number>,
     );
 
-    return { totalComment, filteredCommentCount, statusCountMap, comments };
+    return {
+      totalComment,
+      filteredCommentCount,
+      statusCountMap,
+      comments,
+    };
   } catch (error) {
     console.error(error);
     return { error: "خطایی در دریافت نظرات رخ داده است." };
