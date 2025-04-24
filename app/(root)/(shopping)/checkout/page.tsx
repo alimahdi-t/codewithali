@@ -18,13 +18,21 @@ import Link from "next/link";
 import { getCartItems } from "@/actions/cart/get-cart-items.action";
 import { toast } from "sonner";
 import { CourseItem } from "@/app/(root)/(shopping)/checkout/_components/CourseItem";
+import { Prisma } from "@prisma/client";
+
+type CourseWithDiscount = Prisma.CourseGetPayload<{
+  select: {
+    id: true;
+    title: true;
+    price: true;
+    imageUrl: true;
+    discount: true;
+  };
+}>;
 
 const Checkout = () => {
   const { cart, removeFromCart } = useCart();
-  const [serverCart, setServerCart] =
-    useState<
-      { id: number; title: string; imageUrl: string; price: number }[]
-    >();
+  const [serverCart, setServerCart] = useState<CourseWithDiscount[]>();
 
   useEffect(() => {
     const getCart = async () => {
@@ -42,7 +50,7 @@ const Checkout = () => {
   }, [cart]);
 
   const length = cart.length;
-
+  console.log(serverCart);
   if (length < 1)
     return (
       <div className="w-full flex flex-col">
@@ -89,7 +97,7 @@ const Checkout = () => {
                     title={cartItem.title}
                     imageUrl={cartItem.imageUrl}
                     price={cartItem.price}
-                    discountPercent={35}
+                    discountPercent={cartItem.discount?.percentage}
                     onClick={() => removeFromCart(cartItem.id.toString())}
                   />
                 ))}
@@ -128,7 +136,12 @@ const Checkout = () => {
               <div className="flex items-center justify-between text-sm font-medium">
                 <p>مبلغ کل</p>
                 <Price
-                  price={calculateTotalPrice(serverCart || [])}
+                  price={calculateTotalPrice(
+                    serverCart.map((item) => ({
+                      price: item.price,
+                      discount: item.discount?.percentage,
+                    })) || [],
+                  )}
                   classname="font-normal text-sm gap-1"
                 />
               </div>
@@ -136,7 +149,12 @@ const Checkout = () => {
                 <p>تخفیف</p>
                 <p className="font-normal text-sm gap-1">
                   {`${convertToPersianAndFormat(
-                    calculateTotalDiscount(serverCart || []),
+                    calculateTotalDiscount(
+                      serverCart.map((item) => ({
+                        price: item.price,
+                        discount: item.discount?.percentage,
+                      })) || [],
+                    ),
                   )} تومان`}
                 </p>
               </div>
@@ -145,7 +163,12 @@ const Checkout = () => {
                 <p className="font-bold">مبلغ قابل پرداخت</p>
                 <p className="font-bold gap-1">
                   {`${convertToPersianAndFormat(
-                    calculatePayableAmount(serverCart || []),
+                    calculatePayableAmount(
+                      serverCart.map((item) => ({
+                        price: item.price,
+                        discount: item.discount?.percentage,
+                      })) || [],
+                    ),
                   )} تومان`}
                 </p>
               </div>

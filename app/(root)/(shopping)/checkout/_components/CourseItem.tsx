@@ -7,7 +7,7 @@ interface Props {
   title: string;
   imageUrl: string;
   price: number;
-  discountPercent: number;
+  discountPercent?: number;
   onClick: () => void;
 }
 
@@ -37,11 +37,14 @@ export const CourseItem = ({
             <p className="text-sm font-light whitespace-nowrap">
               {`${convertToPersianAndFormat(price)} تومان`}
             </p>
+            {/*Discount amount*/}
             <p className="text-sm font-light whitespace-nowrap text-action-error">
-              {`${convertToPersianAndFormat(
-                price -
-                  calculateDiscount(price, { percentage: discountPercent }),
-              )} تومان تخفیف`}
+              {discountPercent !== 0 &&
+                discountPercent &&
+                `${convertToPersianAndFormat(
+                  price -
+                    calculateDiscount(price, { percentage: discountPercent }),
+                )} تومان تخفیف`}
             </p>
           </div>
         </div>

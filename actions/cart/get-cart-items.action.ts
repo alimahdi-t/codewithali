@@ -13,7 +13,13 @@ export async function getCartItems({ cartItems }: Props) {
     //TODO:include discount
     const items = await prisma.course.findMany({
       where: { id: { in: cartItems.map(Number) } },
-      select: { id: true, title: true, price: true, imageUrl: true },
+      select: {
+        id: true,
+        title: true,
+        price: true,
+        imageUrl: true,
+        discount: true,
+      },
     });
 
     return { success: "اطلاعات سبد خرید با موفقیت دریافت شد.", data: items };
