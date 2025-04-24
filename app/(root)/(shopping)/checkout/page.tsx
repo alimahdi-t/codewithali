@@ -10,7 +10,6 @@ import {
   convertToPersianNumbers,
 } from "@/utils";
 import Price from "@/components/common/Price";
-import { HiOutlineGift } from "react-icons/hi2";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -19,6 +18,13 @@ import { getCartItems } from "@/actions/cart/get-cart-items.action";
 import { toast } from "sonner";
 import { CourseItem } from "@/app/(root)/(shopping)/checkout/_components/CourseItem";
 import { Prisma } from "@prisma/client";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Input } from "@/components/ui/input";
 
 type CourseWithDiscount = Prisma.CourseGetPayload<{
   select: {
@@ -32,7 +38,7 @@ type CourseWithDiscount = Prisma.CourseGetPayload<{
 
 const Checkout = () => {
   const { cart, removeFromCart } = useCart();
-  const [serverCart, setServerCart] = useState<CourseWithDiscount[]>();
+  const [serverCart, setServerCart] = useState<CourseWithDiscount[]>([]);
 
   useEffect(() => {
     const getCart = async () => {
@@ -104,88 +110,71 @@ const Checkout = () => {
               </div>
             </CardContent>
           </Card>
-          {/*TODO: complete discount section*/}
-          <Card className="flex">
+        </div>
+        <div className="md:col-span-4 col-span-1 flex flex-col gap-4 sticky top-4 h-min">
+          <Card className="flex flex-col gap-4">
             <CardHeader>
-              <div className="flex items-center gap-1 text-gray-600">
-                <HiOutlineGift className="size-5 relative mb-1" />
-                <CardTitle className="text-sm font-semibold">
-                  کد تخفیف
-                </CardTitle>
-              </div>
+              <CardTitle>سفارش شما</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="relative w-full max-w-[325px] group border py-4 flex items-center rounded-2xl">
-                <button
-                  className="flex items-center rounded-lg top-1 left-1 !h-10 w-[118px]
-                disabled:cursor-not-allowed focus:outline-none bg-none justify-center
-                absolute   disabled:text-zinc-300 disabled:bg-zinc-50 bg-zinc-100 text-zinc-600 border-[#E3E3E3] text-sm font-normal"
-                >
-                  اعمال کد تخفیف
-                </button>
+              <div className="">
+                <div className="flex items-center justify-between text-sm font-medium">
+                  <p>مبلغ کل</p>
+                  <Price
+                    price={calculateTotalPrice(serverCart)}
+                    classname="font-normal text-sm gap-1"
+                  />
+                </div>
+                <div className="mt-4 flex items-center justify-between text-action-error">
+                  <p>تخفیف</p>
+                  <p className="font-normal text-sm gap-1">
+                    {`${convertToPersianAndFormat(
+                      calculateTotalDiscount(serverCart),
+                    )} تومان`}
+                  </p>
+                </div>
+                <Separator className="mt-4" />
+                <div className="mt-6 flex items-center justify-between text-sm font-medium">
+                  <p className="font-bold">مبلغ قابل پرداخت</p>
+                  <p className="font-bold gap-1">
+                    {`${convertToPersianAndFormat(
+                      calculatePayableAmount(serverCart),
+                    )} تومان`}
+                  </p>
+                </div>
+                <Button className="w-full mt-8 text-base font-medium">
+                  پرداخت
+                </Button>
+                <p className="text-xs font-normal mt-2.5 text-muted-foreground">
+                  پرداخت و ثبت سفارش، به منزله مطالعه و پذیرفتن
+                  <Link className="text-primary" href="#">
+                    {" "}
+                    قوانین و مقررات
+                  </Link>{" "}
+                  استفاده از خدمات فرادرس است.
+                </p>
               </div>
             </CardContent>
           </Card>
+          {/*TODO: complete discount section*/}
+          <Card>
+            <CardContent>
+              <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="item-1">
+                  <AccordionTrigger className="p-1">
+                    <span className="text-sm font-medium">کد تخفیف دارید؟</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="p-1">
+                    <div className="flex gap-2 items-center mt-2">
+                      <Input placeholder="کد تخفیف خود رو وارد کنید" />
+                      <Button size="sm">ثبت</Button>
+                    </div>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+            </CardContent>
+          </Card>
         </div>
-        <Card className="md:col-span-4 col-span-1 flex flex-col gap-4 sticky top-4 h-min">
-          <CardHeader>
-            <CardTitle>سفارش شما</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="">
-              <div className="flex items-center justify-between text-sm font-medium">
-                <p>مبلغ کل</p>
-                <Price
-                  price={calculateTotalPrice(
-                    serverCart.map((item) => ({
-                      price: item.price,
-                      discount: item.discount?.percentage,
-                    })) || [],
-                  )}
-                  classname="font-normal text-sm gap-1"
-                />
-              </div>
-              <div className="mt-4 flex items-center justify-between text-action-error">
-                <p>تخفیف</p>
-                <p className="font-normal text-sm gap-1">
-                  {`${convertToPersianAndFormat(
-                    calculateTotalDiscount(
-                      serverCart.map((item) => ({
-                        price: item.price,
-                        discount: item.discount?.percentage,
-                      })) || [],
-                    ),
-                  )} تومان`}
-                </p>
-              </div>
-              <Separator className="mt-4" />
-              <div className="mt-6 flex items-center justify-between text-sm font-medium">
-                <p className="font-bold">مبلغ قابل پرداخت</p>
-                <p className="font-bold gap-1">
-                  {`${convertToPersianAndFormat(
-                    calculatePayableAmount(
-                      serverCart.map((item) => ({
-                        price: item.price,
-                        discount: item.discount?.percentage,
-                      })) || [],
-                    ),
-                  )} تومان`}
-                </p>
-              </div>
-              <Button className="w-full mt-8 text-base font-medium">
-                پرداخت
-              </Button>
-              <p className="text-xs font-normal mt-2.5 text-muted-foreground">
-                پرداخت و ثبت سفارش، به منزله مطالعه و پذیرفتن
-                <Link className="text-primary" href="#">
-                  {" "}
-                  قوانین و مقررات
-                </Link>{" "}
-                استفاده از خدمات فرادرس است.
-              </p>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </div>
   );

@@ -49,7 +49,9 @@ export function calculateDiscount(
 
 type CartItem = {
   price: number;
-  discount?: number;
+  discount?: {
+    percentage?: number;
+  } | null;
 };
 
 export const calculateTotalPrice = (cartItems: CartItem[]): number =>
@@ -57,9 +59,8 @@ export const calculateTotalPrice = (cartItems: CartItem[]): number =>
 
 export const calculateTotalDiscount = (cartItems: CartItem[]): number =>
   cartItems.reduce((total, item) => {
-    const discountAmount = item.discount
-      ? (item.price * item.discount) / 100
-      : 0;
+    const discountPercentage = item.discount?.percentage || 0;
+    const discountAmount = (item.price * discountPercentage) / 100;
     return total + discountAmount;
   }, 0);
 

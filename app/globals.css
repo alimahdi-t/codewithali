@@ -390,3 +390,35 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes accordion-down {
+  from {
+    max-height: 0;
+    opacity: 0;
+  }
+  to {
+    max-height: 500px; /* adjust based on your content */
+    opacity: 1;
+  }
+}
+
+@keyframes accordion-up {
+  from {
+    max-height: 500px;
+    opacity: 1;
+  }
+  to {
+    max-height: 0;
+    opacity: 0;
+  }
+}
+
+.accordion-down {
+  animation: accordion-down 0.3s ease-out forwards;
+  overflow: hidden;
+}
+
+.accordion-up {
+  animation: accordion-up 0.3s ease-out forwards;
+  overflow: hidden;
+}
