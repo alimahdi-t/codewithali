@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { CommentStatus } from "@prisma/client";
 import { GetCommentsParams } from "@/actions/shared.types";
 
 export async function getComments(params: GetCommentsParams) {
@@ -47,9 +48,9 @@ export async function getComments(params: GetCommentsParams) {
         return acc;
       },
       {
-        PENDING: 0,
-        APPROVED: 0,
-        REJECTED: 0,
+        [CommentStatus.PENDING]: 0,
+        [CommentStatus.APPROVED]: 0,
+        [CommentStatus.REJECTED]: 0,
       },
     );
 
