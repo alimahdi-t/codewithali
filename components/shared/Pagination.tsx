@@ -56,7 +56,7 @@ const Pagination = ({ itemCount, pageSize }: Props) => {
       params.set("page", "1");
       router.replace("?" + params.toString());
     }
-  }, [pageCount]); // Remove unnecessary dependencies
+  }, [pageCount, currentPage, searchParams, router]); // Remove unnecessary dependencies
 
   // Don't show pagination if there's only one page or no data
   if (itemCount === 0 || pageCount <= 1) return null;

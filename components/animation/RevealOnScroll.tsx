@@ -10,7 +10,8 @@ export const RevealOnScroll: React.FC<RevealOnScrollProps> = ({ children }) => {
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!ref.current) return;
+    const node = ref.current;
+    if (!node) return;
 
     const scrollObserver = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
@@ -19,12 +20,10 @@ export const RevealOnScroll: React.FC<RevealOnScrollProps> = ({ children }) => {
       }
     });
 
-    scrollObserver.observe(ref.current);
+    scrollObserver.observe(node);
 
     return () => {
-      if (ref.current) {
-        scrollObserver.unobserve(ref.current);
-      }
+      scrollObserver.unobserve(node);
     };
   }, []);
 

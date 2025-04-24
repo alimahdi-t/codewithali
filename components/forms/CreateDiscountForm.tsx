@@ -44,7 +44,7 @@ export default function CreateDiscountForm({ ids }: Props) {
       "courseIds",
       ids.map((id) => String(id)),
     );
-  }, [ids]);
+  }, [ids, form]);
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     console.log(data);
