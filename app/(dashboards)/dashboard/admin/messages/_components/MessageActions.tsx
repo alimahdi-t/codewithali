@@ -1,6 +1,6 @@
 "use client";
 import { ActionGroup } from "@/components/common/ActionGroup";
-import { ContactMessage } from "@prisma/client";
+import { ContactMessage } from "@/prisma/client";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { deleteContactMessageAction } from "@/actions/messages/delete-contact-message.action";

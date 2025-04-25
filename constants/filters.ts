@@ -1,4 +1,4 @@
-import { Level } from "@prisma/client";
+import { Level } from "@/prisma/client";
 
 export const courseSortFilter: { name: string; value: string }[] = [
   { name: "جدید ترین", value: "newest" },

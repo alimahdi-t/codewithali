@@ -9,8 +9,6 @@ interface Props {
 export async function getCartItems({ cartItems }: Props) {
   try {
     //TODO:Prevent getting cart items if user not logged in
-
-    //TODO:include discount
     const items = await prisma.course.findMany({
       where: { id: { in: cartItems.map(Number) } },
       select: {

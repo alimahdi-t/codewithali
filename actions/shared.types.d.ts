@@ -4,7 +4,7 @@ import {
   Level,
   MessageStatus,
   Role,
-} from "@prisma/client";
+} from "@/prisma/client";
 
 export interface CreateCourseParams {
   title: string;

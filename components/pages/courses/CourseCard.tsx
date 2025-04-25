@@ -6,7 +6,7 @@ import {
 } from "@/utils";
 import TomanIcon from "@/components/common/TomanIcon";
 import DiscountTag from "@/components/pages/courses/DiscountTag";
-import { Course, Discount, User } from "@prisma/client";
+import { Course, Discount, User } from "@/prisma/client";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";

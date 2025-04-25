@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { User } from "@prisma/client";
+import { User } from "@/prisma/client";
 
 interface Props {
   instructor: User;

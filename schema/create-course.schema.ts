@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { CourseStatus, Level } from "@prisma/client";
+import { CourseStatus, Level } from "@/prisma/client";
 import { extractTextFromHTML } from "@/utils";
 
 export const CreateCourseSchema = z.object({

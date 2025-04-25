@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { UpdatePostParams } from "@/actions/shared.types";
-import { Post } from "@prisma/client";
+import { Post } from "@/prisma/client";
 
 export async function updatePost(
   params: UpdatePostParams,

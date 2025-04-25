@@ -1,4 +1,4 @@
-import { CommentStatus, Level, MessageStatus } from "@prisma/client";
+import { CommentStatus, Level, MessageStatus } from "@/prisma/client";
 
 export const COMMENT_STATUSES: {
   value: CommentStatus;

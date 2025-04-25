@@ -1,4 +1,4 @@
-import { CourseStatus } from "@prisma/client";
+import { CourseStatus } from "@/prisma/client";
 
 interface CourseStatusBadgeProps {
   status: CourseStatus;

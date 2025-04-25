@@ -4,7 +4,7 @@ import { GenericTable } from "@/components/shared/Table/GenericTable";
 import { convertToPersianNumbers } from "@/utils";
 import { ActionGroup } from "@/components/common/ActionGroup";
 import { Button } from "@/components/ui/button";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/prisma/client";
 import Image from "next/image";
 import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";

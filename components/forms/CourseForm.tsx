@@ -32,7 +32,7 @@ import { CreateCourseSchema, EditCourseSchema } from "@/schema";
 import { editCourse } from "@/actions/courses/edit-course.action";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import { User } from "@prisma/client";
+import { User } from "@/prisma/client";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface CourseFormProps {

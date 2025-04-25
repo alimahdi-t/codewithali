@@ -1,4 +1,4 @@
-import { CommentStatus as commentStatus } from "@prisma/client";
+import { CommentStatus as commentStatus } from "@/prisma/client";
 import {
   Menubar,
   MenubarContent,

@@ -18,7 +18,7 @@ import Link from "next/link";
 import { getCartItems } from "@/actions/cart/get-cart-items.action";
 import { toast } from "sonner";
 import { CourseItem } from "@/app/(root)/(shopping)/checkout/_components/CourseItem";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "@/prisma/client";
 import {
   Accordion,
   AccordionContent,

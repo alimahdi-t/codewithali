@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { CommentStatus } from "@prisma/client";
+import { CommentStatus } from "@/prisma/client";
 import { GetCommentsParams } from "@/actions/shared.types";
 
 export async function getComments(params: GetCommentsParams) {

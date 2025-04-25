@@ -2,7 +2,7 @@
 
 import { CreatePostParams } from "@/actions/shared.types";
 import prisma from "@/lib/prisma";
-import { Post } from "@prisma/client";
+import { Post } from "@/prisma/client";
 
 export async function createPostAction(
   params: CreatePostParams,

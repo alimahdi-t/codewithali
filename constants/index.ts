@@ -18,7 +18,7 @@ import {
   UserMultipleIcon,
 } from "@/public/assets/icons/hugeIcons";
 
-import { CourseStatus, Level } from "@prisma/client";
+import { CourseStatus, Level } from "@/prisma/client";
 
 export const navLinks = [
   { label: "دوره ها", href: "/courses" },

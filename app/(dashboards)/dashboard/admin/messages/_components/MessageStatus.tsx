@@ -1,4 +1,4 @@
-import { MessageStatus as Status } from "@prisma/client";
+import { MessageStatus as Status } from "@/prisma/client";
 
 interface MessageStatusProps {
   status: Status;

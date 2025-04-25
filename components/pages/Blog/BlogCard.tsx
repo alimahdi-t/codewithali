@@ -1,4 +1,4 @@
-import { Post, Tag as ITag, User } from "@prisma/client";
+import { Post, Tag as ITag, User } from "@/prisma/client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import moment from "jalali-moment";

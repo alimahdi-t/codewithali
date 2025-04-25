@@ -2,7 +2,7 @@ import { AddToCartButton } from "@/app/(root)/(pages)/courses/[slug]/_components
 import Price from "@/components/common/Price";
 import Image from "next/image";
 import { TimerCountdown } from "@/app/(root)/(pages)/courses/[slug]/_components/TimerCountdown";
-import { Discount } from "@prisma/client";
+import { Discount } from "@/prisma/client";
 
 interface Props {
   id: string;

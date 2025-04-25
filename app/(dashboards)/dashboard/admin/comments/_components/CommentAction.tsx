@@ -1,6 +1,6 @@
 "use client";
 import { ActionGroup } from "@/components/common/ActionGroup";
-import { Comment } from "@prisma/client";
+import { Comment } from "@/prisma/client";
 import { useRouter } from "next/navigation";
 import { deleteComment } from "@/actions/comments/delete-comment.action";
 import { toast } from "sonner";

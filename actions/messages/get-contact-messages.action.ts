@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { MessageStatus } from "@prisma/client";
+import { MessageStatus } from "@/prisma/client";
 import { GetContactMessages } from "@/actions/shared.types";
 
 export async function getContactMessages(params: GetContactMessages) {

@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createPostAction } from "@/actions/posts/create-post.action";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Tag } from "@prisma/client";
+import { Tag } from "@/prisma/client";
 import {
   Form,
   FormControl,

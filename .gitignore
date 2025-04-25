@@ -39,4 +39,5 @@ next-env.d.ts
 
 .env
 
-/prisma/app
+# location of prisma client for v 6.6.0 or above
+/prisma/client

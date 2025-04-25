@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Post, Tag, User } from "@prisma/client";
+import { Post, Tag, User } from "@/prisma/client";
 
 type PostWithRelations = Post & {
   author: User;
