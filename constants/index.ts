@@ -136,3 +136,6 @@ export const daysOfWeek = [
   { full: "پنجشنبه", short: "پ", enShort: "Th" },
   { full: "جمعه", short: "ج", enShort: "Fr" },
 ];
+
+export const fakeDelay = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));

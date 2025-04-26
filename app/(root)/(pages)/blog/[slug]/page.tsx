@@ -93,7 +93,7 @@ const BlogPost = async (props: Props) => {
             <CardHeader>
               <CommentSection
                 targetId={post.id}
-                targetType={"course"}
+                targetType={"post"}
                 noCommentMessage="نظری برای این مقاله ثبت نشده است."
               />
             </CardHeader>

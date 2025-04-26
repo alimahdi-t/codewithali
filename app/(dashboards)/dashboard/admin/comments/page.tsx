@@ -116,7 +116,7 @@ const CommentsPage = async (props: Props) => {
                     />
                   </TableCell>
                   <TableCell>
-                    <CommentStatus status={comment.status} />
+                    <CommentStatus status={comment.status} id={comment.id} />
                   </TableCell>
                   <TableCell className="text-dark-400_light-300">
                     <DateTooltip date={comment.createdAt} />
