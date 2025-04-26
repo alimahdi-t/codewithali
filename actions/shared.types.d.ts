@@ -89,7 +89,8 @@ export interface DeleteCommentParams {
 }
 
 export interface getCommentsByCourseIdParams {
-  courseId: number;
+  targetId: number;
+  targetType: "post" | "course";
 }
 
 export interface getUsersParams {

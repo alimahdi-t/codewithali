@@ -20,6 +20,7 @@ import { toast } from "sonner";
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTooltipText";
 import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
+import { NoComment } from "@/components/shared/Comment/NoComment";
 
 interface Props {
   searchParams: Promise<GetCommentsParams>;
@@ -65,7 +66,7 @@ const CommentsPage = async (props: Props) => {
       </div>
       <div className="mt-12">
         {comments?.length === 0 ? (
-          <p className="text-base font-normal">نظری یافت نشد!</p>
+          <NoComment />
         ) : (
           <Table>
             <TableHeader className="align-middle">

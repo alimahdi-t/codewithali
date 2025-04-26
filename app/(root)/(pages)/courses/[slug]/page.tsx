@@ -9,7 +9,6 @@ import CourseMetrics from "@/app/(root)/(pages)/courses/[slug]/_components/Cours
 import CompletionProgress from "@/app/(root)/(pages)/courses/[slug]/_components/CompletionProgress";
 import CourseContentHeader from "@/app/(root)/(pages)/courses/[slug]/_components/CourseContentHeader";
 import { CommentSection } from "@/app/(root)/(pages)/courses/[slug]/_components/CommentSection";
-import { AddComment } from "@/components/shared/Comment/AddComment";
 import { BreadCrumb } from "@/components/shared/BreadCrump";
 import { ShowMoreWrapper } from "@/components/shared/ShowMoreWrapper";
 
@@ -88,8 +87,11 @@ const CoursePage = async (props: Props) => {
 
             <Card id="comments">
               <CardHeader>
-                <AddComment targetId={course.id} targetType={"course"} />
-                <CommentSection courseId={course.id} />
+                <CommentSection
+                  targetId={course.id}
+                  targetType={"course"}
+                  noCommentMessage="نظری برای این دوره ثبت نشده است."
+                />
               </CardHeader>
             </Card>
             <Card id="faq">
