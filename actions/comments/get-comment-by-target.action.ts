@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { getCommentsByCourseIdParams } from "@/actions/shared.types";
 
-export async function getCommentsByCourseId({
+export async function getCommentsByTarget({
   targetId,
   targetType,
 }: getCommentsByCourseIdParams) {
