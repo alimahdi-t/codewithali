@@ -1,6 +1,7 @@
 import { getCommentsByCourseId } from "@/actions/comments/get-comment-by-course.action";
 import { toast } from "sonner";
 import { Comment } from "@/components/shared/Comment/Comment";
+import { NoComment } from "@/components/shared/Comment/NoComment";
 
 interface Props {
   courseId: number;
@@ -21,6 +22,9 @@ export const CommentSection = async ({ courseId }: Props) => {
 
   return (
     <div className="flex flex-col gap-y-4 mt-8">
+      {comments.length === 0 && (
+        <NoComment message="نظری برای این مقاله ثبت نشده است." />
+      )}
       {comments.map((comment) => (
         <Comment
           key={comment.id}
