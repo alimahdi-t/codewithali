@@ -87,7 +87,11 @@ const CoursePage = async (props: Props) => {
 
             <Card id="comments">
               <CardHeader>
-                <CommentSection targetId={course.id} targetType={"course"} />
+                <CommentSection
+                  targetId={course.id}
+                  targetType={"course"}
+                  noCommentMessage="نظری برای این دوره ثبت نشده است."
+                />
               </CardHeader>
             </Card>
             <Card id="faq">

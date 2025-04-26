@@ -7,8 +7,13 @@ import { AddComment } from "@/components/shared/Comment/AddComment";
 interface Props {
   targetId: number;
   targetType: "post" | "course";
+  noCommentMessage?: string;
 }
-export const CommentSection = async ({ targetId, targetType }: Props) => {
+export const CommentSection = async ({
+  targetId,
+  targetType,
+  noCommentMessage,
+}: Props) => {
   const response = await getCommentsByTarget({
     targetId: targetId,
     targetType: targetType,
@@ -32,7 +37,7 @@ export const CommentSection = async ({ targetId, targetType }: Props) => {
           targetType={targetType}
           commentCount={0}
         />
-        <NoComment message="نظری برای این مقاله ثبت نشده است." />
+        <NoComment message={noCommentMessage} />
       </>
     );
   }
