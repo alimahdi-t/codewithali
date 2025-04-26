@@ -1,4 +1,4 @@
-import { getCommentsByCourseId } from "@/actions/comments/get-comment-by-course.action";
+import { getCommentsByCourseId } from "@/actions/comments/get-comment-by-target.action";
 import { toast } from "sonner";
 import { Comment } from "@/components/shared/Comment/Comment";
 import { NoComment } from "@/components/shared/Comment/NoComment";
@@ -10,7 +10,10 @@ interface Props {
 }
 //TODO: make this section reusable
 export const CommentSection = async ({ targetId, targetType }: Props) => {
-  const response = await getCommentsByCourseId({ courseId: targetId });
+  const response = await getCommentsByCourseId({
+    targetId: targetId,
+    targetType: targetType,
+  });
 
   if (response.error) {
     toast.error(response.error);
