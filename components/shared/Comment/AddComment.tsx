@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
 import { convertToPersianNumbers } from "@/utils";
+import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 
 interface Props {
   targetId: number;
@@ -43,6 +44,7 @@ export const AddComment = ({
 
         <Button size="sm" onClick={handleOnClick}>
           ثبت نظر
+          <HiOutlineChatBubbleBottomCenterText className="size-5 mr-1" />
         </Button>
       </div>
       <CommentForm
