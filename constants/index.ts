@@ -18,7 +18,11 @@ import {
   UserMultipleIcon,
 } from "@/public/assets/icons/hugeIcons";
 
-import { CourseStatus, Level } from "@/prisma/client";
+import {
+  CommentStatus as commentStatus,
+  CourseStatus,
+  Level,
+} from "@/prisma/client";
 
 export const navLinks = [
   { label: "دوره ها", href: "/courses" },
@@ -135,4 +139,10 @@ export const daysOfWeek = [
   { full: "چهارشنبه", short: "چ", enShort: "We" },
   { full: "پنجشنبه", short: "پ", enShort: "Th" },
   { full: "جمعه", short: "ج", enShort: "Fr" },
+];
+
+export const commentStatusOptions: { label: string; value: commentStatus }[] = [
+  { label: "در انتظار تایید", value: "PENDING" },
+  { label: "تأیید", value: "APPROVED" },
+  { label: "رد", value: "REJECTED" },
 ];

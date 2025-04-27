@@ -1,0 +1,3 @@
+todo 1: instead of show date for comment show relative date like 5 month ago, 3 day ago, 1 hour ago
+todo 2: add an icon of clock next to comment date
+✅ 3: add icon to add comment button

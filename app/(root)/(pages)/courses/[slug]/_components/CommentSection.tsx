@@ -25,11 +25,8 @@ export const CommentSection = async ({
   }
 
   const { comments } = response;
-  if (!comments) {
-    return null;
-  }
 
-  if (comments.length === 0) {
+  if (comments?.length === 0) {
     return (
       <>
         <AddComment
@@ -47,10 +44,10 @@ export const CommentSection = async ({
       <AddComment
         targetId={targetId}
         targetType={targetType}
-        commentCount={comments.length}
+        commentCount={comments?.length ?? 0}
       />
       <div className="flex flex-col gap-y-4 mt-8">
-        {comments.map((comment) => (
+        {comments?.map((comment) => (
           <Comment
             key={comment.id}
             date={comment.createdAt}
