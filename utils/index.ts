@@ -69,3 +69,6 @@ export const calculatePayableAmount = (cartItems: CartItem[]): number => {
   const totalDiscount = calculateTotalDiscount(cartItems);
   return Math.max(totalPrice - totalDiscount, 0);
 };
+
+export const fakeDelay = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));

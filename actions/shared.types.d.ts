@@ -84,8 +84,8 @@ export interface GetContactMessageParams {
   id: string;
 }
 
-export interface DeleteCommentParams {
-  id: string;
+export interface DeleteCommentsParams {
+  ids: string[];
 }
 
 export interface getCommentsByCourseIdParams {
