@@ -30,12 +30,12 @@ const userDashboardLinks: {
   },
   {
     label: "دوره های من",
-    path: "/my-account/my-courses",
+    path: "/my-account/courses",
     icon: HiOutlineAcademicCap,
   },
   {
     label: "خدمات پرداخت",
-    path: "/edit-account/payments",
+    path: "/my-account/payments",
     icon: HiOutlineTicket,
   },
   {
@@ -53,7 +53,7 @@ const authorDashboardLinks: {
   { label: "داشبورد", path: "/dashboard/admin", icon: DashboardSquare02Icon },
   {
     label: "دوره های من",
-    path: "/my-account/my-courses",
+    path: "/my-account/courses",
     icon: HiOutlineAcademicCap,
   },
   {
