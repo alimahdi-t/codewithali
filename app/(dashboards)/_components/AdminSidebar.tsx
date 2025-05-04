@@ -4,7 +4,6 @@ import React from "react";
 import { HiOutlineBars3 } from "react-icons/hi2";
 import { Separator } from "@/components/ui/separator";
 import { UserProfileCard } from "@/components/auth/user-profile-card";
-import { adminDashboardLinks } from "@/constants";
 import {
   Sheet,
   SheetClose,
@@ -15,8 +14,11 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { MenuItem } from "@/app/(dashboards)/_components/AdminSidebar/MenuItem";
+import { getDashboardLinks } from "@/constants/dashboardsLinks";
+import { useCurrentRole } from "@/hooks/use-cuurent-role";
 
 export const AdminSidebar = () => {
+  const role = useCurrentRole();
   return (
     <aside
       className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col border-l c-border bg-card shadow-sm`}
@@ -27,7 +29,7 @@ export const AdminSidebar = () => {
         <UserProfileCard />
         <Separator className="my-4" />
         <ul role="list" className="flex flex-col gap-0.5">
-          {adminDashboardLinks.map((item, i) => (
+          {getDashboardLinks(role).map((item, i) => (
             <MenuItem item={item} key={i} />
           ))}
           <Separator className="" />
@@ -40,6 +42,7 @@ export const AdminSidebar = () => {
 };
 
 export const AdminMobileSideBar = () => {
+  const role = useCurrentRole();
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -56,7 +59,7 @@ export const AdminMobileSideBar = () => {
         <div className="px-2">
           <Separator />
           <ul role="list" className="flex mt-1 flex-col gap-0.5">
-            {adminDashboardLinks.map((item, i) => (
+            {getDashboardLinks(role).map((item, i) => (
               <SheetClose asChild key={i}>
                 <MenuItem item={item} />
               </SheetClose>
