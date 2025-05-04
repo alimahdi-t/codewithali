@@ -1,18 +1,22 @@
 import NextAuth from "next-auth";
 import authConfig from "./auth.config";
 import {
+  adminPrefix,
   apiAuthPrefix,
   authRoutes,
   DEFAULT_LOGIN_REDIRECT,
   publicRoutes,
 } from "@/route";
+import { getToken } from "next-auth/jwt";
 
 export const { auth } = NextAuth(authConfig);
 
 //@ts-ignore
-export default auth((req) => {
+export default auth(async (req) => {
   const { nextUrl } = req;
   const isLoggedIn = !!req.auth; // Returns true if user signed in
+  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
+  const role = token?.role;
 
   const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix); // prefix of api for auth routes
   const isPublicRoute = publicRoutes.some((route) => {
@@ -25,6 +29,8 @@ export default auth((req) => {
     return route === nextUrl.pathname; // Exact match for static routes
   });
   const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+
+  const isAdminRoute = nextUrl.pathname.startsWith(adminPrefix);
 
   if (isApiAuthRoute) {
     return null;
@@ -41,6 +47,12 @@ export default auth((req) => {
   if (!isLoggedIn && !isPublicRoute) {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
+
+  // Prevent not admin user to access admin dashboard
+  if (isAdminRoute && role !== "ADMIN") {
+    return Response.redirect(new URL("/contact", nextUrl));
+  }
+
   return null;
 });
 

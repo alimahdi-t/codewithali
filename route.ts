@@ -1,12 +1,12 @@
 /**
- * An array of routes that are accessible to public
- * These routes do not require authentication
- * @types {string[]}
+ * An array of routes that are accessible to the public.
+ * These routes do not require authentication.
+ * @type {string[]}
  */
 export const publicRoutes = [
   "/", // Home page
   "/courses", // Course listing (details might be gated)
-  "/courses/[slug]", // Individual course page (details public, content locked)
+  "/courses/[slug]", // Individual course page
   "/blog", // Blog listing
   "/blog/[slug]", // Individual blog post
   "/about",
@@ -14,39 +14,33 @@ export const publicRoutes = [
 ];
 
 /**
- * An array of routes that are used for authentication
- * These routes will redirect logged-in users to /settings
+ * Routes used for authentication.
+ * These routes will redirect logged-in users to their dashboard.
  * @type {string[]}
  */
 export const authRoutes = ["/auth/login", "/auth/sign-up", "/auth/reset"];
 
 /**
- * The prefix for API authentication routes.
- * Routes that start with this prefix are used for API authentication purposes
+ * Prefix for API authentication routes.
+ * Routes that start with this prefix are used for API auth logic.
  * @type {string}
  */
 export const apiAuthPrefix = "/api/auth";
 
 /**
- * The default redirect path after logging in
+ * Prefix for admin dashboard routes.
+ * Used to guard and identify admin-specific pages.
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT = "/dashboard/admin";
+export const adminPrefix = "/dashboard/admin";
 
 /**
- * The default redirect path after logging in for admin
- * @type {string}
+ * Default redirect paths after login, based on role.
  */
-export const ADMIN_DEFAULT_LOGIN_REDIRECT = "/dashboard/admin";
+export const DEFAULT_LOGIN_REDIRECT = "/dashboard/admin"; // General fallback
 
-/**
- * The default redirect path after logging in for instructor
- * @type {string}
- */
-export const INSTRUCTOR_DEFAULT_LOGIN_REDIRECT = "/dashboard/instructor";
-
-/**
- * The default redirect path after logging in for author
- * @type {string}
- */
-export const AUTHOR_DEFAULT_LOGIN_REDIRECT = "/dashboard/author";
+export const ROLE_LOGIN_REDIRECTS = {
+  admin: "/dashboard/admin",
+  instructor: "/dashboard/instructor",
+  author: "/dashboard/author",
+};

@@ -20,7 +20,6 @@ export default {
 
           const samePassword = await comparePassword(password, user.password);
 
-          console.log(user);
           if (samePassword) return user;
         }
 
