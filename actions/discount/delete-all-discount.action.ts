@@ -13,7 +13,7 @@ export async function deleteAllDiscount({ ids }: { ids: string[] }) {
       where: { id: { in: ids } },
     });
 
-    revalidatePath("/dashboard/admin/discount-codes");
+    revalidatePath("/dashboard/admin/discounts");
     revalidatePath("/courses");
 
     return {

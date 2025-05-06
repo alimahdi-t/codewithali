@@ -1,12 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "rhel-openssl-1.0.x"]
-  output   = "client"
+  output        = "client"
 }
 
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 // ✅
@@ -84,16 +84,18 @@ model Course {
   status       CourseStatus
   price        Int
   createdAt    DateTime     @default(now())
-  updateAt     DateTime     @updatedAt
+  updatedAt    DateTime     @updatedAt
   instructorId Int
   discountId   String?
   //Relations
-  discount     Discount?     @relation(fields: [discountId], references: [id], onDelete: SetNull)
+  discount     Discount?    @relation(fields: [discountId], references: [id], onDelete: SetNull)
   instructor   User         @relation(fields: [instructorId], references: [id])
   Enrolment    Enrolment[]
   tag          CourseTag[]
 
   Comment Comment[]
+
+  DiscountCodeCourse DiscountCodeCourse[]
 }
 
 // ✅
@@ -158,26 +160,59 @@ model Discount {
 }
 
 model Comment {
-  id         String            @id @default(cuid())
-  content    String
-  createdAt  DateTime       @default(now())
-  updatedAt  DateTime       @updatedAt
-  authorId   Int
-  courseId   Int?
-  postId     Int?
-  parentId   String?
-  status     CommentStatus  @default(PENDING) // 👈 وضعیت بررسی
+  id        String        @id @default(cuid())
+  content   String
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  authorId  Int
+  courseId  Int?
+  postId    Int?
+  parentId  String?
+  status    CommentStatus @default(PENDING) // 👈 وضعیت بررسی
 
   // روابط
-  author     User           @relation(fields: [authorId], references: [id])
-  course     Course?        @relation(fields: [courseId], references: [id])
-  post       Post?          @relation(fields: [postId], references: [id])
-  parent     Comment?       @relation("CommentReplies", fields: [parentId], references: [id])
-  replies    Comment[]      @relation("CommentReplies")
-
-
+  author  User      @relation(fields: [authorId], references: [id])
+  course  Course?   @relation(fields: [courseId], references: [id])
+  post    Post?     @relation(fields: [postId], references: [id])
+  parent  Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  replies Comment[] @relation("CommentReplies")
 }
 
+model DiscountCode {
+  id             String               @id @default(cuid())
+  code           String               @unique
+  percentage     Int?
+  flatAmount     Int? // if you want fixed amount discounts too
+  type           DiscountType         @default(PERCENTAGE)
+  expiresAt      DateTime?
+  usageLimit     Int?
+  usedCount      Int                  @default(0)
+  isActive       Boolean              @default(true)
+  appliesToAll   Boolean              @default(true)
+  CourseDiscount DiscountCodeCourse[]
+  minPurchase    Int?
+  maxDiscount    Int?
+  description    String?
+  createdAt      DateTime             @default(now())
+
+  @@index([isActive])
+  @@index([expiresAt])
+}
+
+model DiscountCodeCourse {
+  discountCodeId String
+  courseId       Int
+
+  discountCode DiscountCode @relation(fields: [discountCodeId], references: [id])
+  course       Course       @relation(fields: [courseId], references: [id])
+
+  @@id([discountCodeId, courseId])
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FLAT_AMOUNT
+}
 
 enum MessageStatus {
   PENDING
@@ -196,7 +231,7 @@ enum Role {
   USER
   INSTRUCTOR
   AUTHOR
-  INSTRUCOT_AUTHOR
+  INSTRUCTOR_AUTHOR
   ADMIN
 }
 

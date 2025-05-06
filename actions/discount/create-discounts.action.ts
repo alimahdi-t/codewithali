@@ -57,7 +57,7 @@ export async function createDiscounts(
     });
 
     // 3. Revalidate
-    revalidatePath("/dashboard/admin/discount-codes");
+    revalidatePath("/dashboard/admin/discounts");
 
     return {
       success: `برای ${updateCount} دوره تخفیف جدید ثبت شد و ${deleted.count} تخفیف قدیمی حذف شد.`,

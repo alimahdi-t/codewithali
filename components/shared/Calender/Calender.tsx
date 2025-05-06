@@ -13,12 +13,17 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TooltipWrapper } from "@/components/common/TooltipWrapper";
+import { cn } from "@/lib/utils";
 
 type CalenderProps = {
   onDateSelect: (date: Moment) => void;
+  triggerClassName?: string;
 };
 
-const Calender: React.FC<CalenderProps> = ({ onDateSelect }) => {
+const Calender: React.FC<CalenderProps> = ({
+  onDateSelect,
+  triggerClassName,
+}) => {
   const [date, setDate] = useState<Moment>(moment().locale("fa"));
   const today = useMemo(() => moment().locale("fa"), []);
   const [selectedDate, setSelectedDate] = useState<Moment>(today);
@@ -76,7 +81,7 @@ const Calender: React.FC<CalenderProps> = ({ onDateSelect }) => {
     <Dialog>
       <DialogTitle className="p-0 h-0 w-0 hidden"></DialogTitle>
 
-      <DialogTrigger className="p-0 m-0 block">
+      <DialogTrigger className={cn("p-0 m-0 block ", triggerClassName)}>
         <Input
           className="leading-6 mt-0"
           placeholder={selectedDate.format("dddd، D MMM")}

@@ -87,7 +87,6 @@ export default function CreateDiscountForm({ ids }: Props) {
                         min={0}
                         max={100}
                         onChange={(event) => {
-                          console.log(event.target.value);
                           form.setValue(
                             "percentage",
                             Number(event.target.value),

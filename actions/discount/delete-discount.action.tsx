@@ -10,7 +10,7 @@ export async function deleteDiscount({ id }: { id: string }) {
     });
 
     // اگر مسیر خاصی باید revalidate بشه
-    revalidatePath("/dashboard/admin/discount-codes");
+    revalidatePath("/dashboard/admin/discounts");
     revalidatePath("/courses");
 
     return { success: true, message: "تخفیف با موفقیت حذف شد" };
