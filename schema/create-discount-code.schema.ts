@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const DiscountTypeEnum = z.enum(["PERCENTAGE", "FLAT"]);
+export const DiscountTypeEnum = z.enum(["PERCENTAGE", "FLAT_AMOUNT"]);
 
 export const CreateDiscountCodeSchema = z
   .object({
@@ -35,7 +35,7 @@ export const CreateDiscountCodeSchema = z
   })
   .refine(
     (data) => {
-      return !(data.type === "FLAT" && data.percentage !== undefined);
+      return !(data.type === "FLAT_AMOUNT" && data.percentage !== undefined);
     },
     {
       message: "مقدار تخفیف درصدی برای نوع ثابت (FLAT) نباید وارد شود",

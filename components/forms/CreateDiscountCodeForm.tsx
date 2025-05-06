@@ -28,6 +28,8 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 import { MultiSelect } from "@/components/MultiSelect";
 import { Prisma } from "@/prisma/client";
+import { createDiscountCodeAction } from "@/actions/discount-codes/create-discount-code.action";
+import { toast } from "sonner";
 
 type course = Prisma.CourseGetPayload<{
   select: {
@@ -66,7 +68,14 @@ export default function CreateDiscountCodeForm({ courses }: Props) {
     console.log(data);
     try {
       startTransition(() => {
-        // Call your API function here
+        createDiscountCodeAction(data).then((response) => {
+          if (response.error) {
+            toast.error(response.error);
+          }
+          if (response.success) {
+            toast.success(response.success);
+          }
+        });
       });
     } catch (error) {
       console.error(error);
