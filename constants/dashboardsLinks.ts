@@ -4,6 +4,7 @@ import {
   CreditCardValidationIcon,
   DashboardSquare02Icon,
   DiscountIcon,
+  DiscountTag01Icon,
   Mail01Icon,
   Tag01Icon,
   Task01Icon,
@@ -79,6 +80,11 @@ const adminDashboardLinks: {
   { label: "کاربران", path: "/dashboard/admin/users", icon: UserMultipleIcon },
   { label: "پیام", path: "/dashboard/admin/messages", icon: Mail01Icon },
   { label: "کامنت ها", path: "/dashboard/admin/comments", icon: Comment02Icon },
+  {
+    label: "تخفیف ها",
+    path: "/dashboard/admin/discounts",
+    icon: DiscountTag01Icon,
+  },
   {
     label: "کدهای تخفیف",
     path: "/dashboard/admin/discount-codes",
