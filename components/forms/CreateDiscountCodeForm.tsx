@@ -26,8 +26,20 @@ import { useState, useTransition } from "react";
 import { CreateDiscountCodeSchema } from "@/schema/create-discount-code.schema";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
+import { MultiSelect } from "@/components/MultiSelect";
+import { Prisma } from "@/prisma/client";
 
-export default function CreateDiscountCodeForm() {
+type course = Prisma.CourseGetPayload<{
+  select: {
+    id: true;
+    title: true;
+  };
+}>;
+interface Props {
+  courses: course[];
+}
+
+export default function CreateDiscountCodeForm({ courses }: Props) {
   const [isPending, startTransition] = useTransition();
   const [hasExpireDate, setHasExpireDate] = useState(false);
   const FormSchema = CreateDiscountCodeSchema;
@@ -60,9 +72,13 @@ export default function CreateDiscountCodeForm() {
       console.error(error);
     }
   };
-
+  const options = courses.map((course) => ({
+    label: course.title,
+    value: course.id.toString(),
+  }));
+  if (!courses) return null;
   const discountType = form.watch("type");
-
+  const appliesToAll = form.watch("appliesToAll");
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-3xl px-4">
@@ -279,6 +295,37 @@ export default function CreateDiscountCodeForm() {
                 )}
               />
             )}
+
+            {!appliesToAll && (
+              <FormField
+                control={form.control}
+                name="CourseDiscount"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>انتخاب دوره‌ها</FormLabel>
+                    <FormControl>
+                      <MultiSelect
+                        options={options}
+                        onValueChange={(selectedIds) => {
+                          // Set value as array of objects: [{ courseId: number }]
+                          const courseDiscount = selectedIds.map((id) => ({
+                            courseId: parseInt(id, 10),
+                          }));
+                          field.onChange(courseDiscount);
+                        }}
+                        value={
+                          field.value?.map((item) =>
+                            item.courseId.toString(),
+                          ) ?? []
+                        }
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
+
             <FormField
               control={form.control}
               name="description"
