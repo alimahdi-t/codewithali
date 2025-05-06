@@ -162,7 +162,7 @@ export default function CreateDiscountCodeForm({ courses }: Props) {
                   )}
                 />
               )}
-              {discountType === "FLAT" && (
+              {discountType === "FLAT_AMOUNT" && (
                 <FormField
                   control={form.control}
                   name="flatAmount"
