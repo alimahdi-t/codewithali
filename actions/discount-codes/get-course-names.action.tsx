@@ -14,6 +14,6 @@ export const getCourseNames = async () => {
     return { success: true, data: response };
   } catch (error) {
     console.error("Error fetching course names:", error);
-    return { success: false, error: "خطا در دریافت لیست دوره‌ها" };
+    return { error: "خطا در دریافت لیست دوره‌ها" };
   }
 };
