@@ -29,10 +29,17 @@ export const createDiscountCodeAction = async (
       type,
     } = validatedFields.data;
 
-    // Create the discount code
+    const exist = await prisma.discountCode.findUnique({
+      where: { code },
+    });
+
+    if (exist) {
+      return { error: "کد تخفیف وارد شده قبلاً ثبت شده است" };
+    }
+
     const newDiscount = await prisma.discountCode.create({
       data: {
-        code,
+        code: code.toUpperCase(),
         percentage,
         flatAmount,
         type,
@@ -53,7 +60,7 @@ export const createDiscountCodeAction = async (
       },
     });
 
-    return { success: "کد تخفیف با موفقیت ایجاد شد" };
+    return { success: "کد تخفیف با موفقیت ایجاد شد", data: newDiscount };
   } catch (error) {
     console.error("Error creating discount:", error);
     return {
