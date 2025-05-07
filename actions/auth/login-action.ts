@@ -5,7 +5,7 @@ import { z } from "zod";
 import { getUserByEmail } from "@/data/user";
 import { comparePassword } from "@/utils/password";
 import { signIn } from "@/auth";
-import { DEFAULT_LOGIN_REDIRECT } from "@/route";
+import { ROLE_LOGIN_REDIRECTS } from "@/route";
 import { AuthError } from "next-auth";
 
 export async function login(values: z.infer<typeof LoginSchema>) {
@@ -41,7 +41,7 @@ export async function login(values: z.infer<typeof LoginSchema>) {
       email,
       password,
       redirect: true,
-      redirectTo: DEFAULT_LOGIN_REDIRECT,
+      redirectTo: ROLE_LOGIN_REDIRECTS[existingUser.role],
     });
     return {
       success: `${
