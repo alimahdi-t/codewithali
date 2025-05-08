@@ -25,8 +25,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import CheckOutPageLoading from "./loading"; // make sure the path is correct
+import CheckOutPageLoading from "./loading";
+import { ApplyDiscountCodeForm } from "@/components/forms/ApplyDiscountCodeForm"; // make sure the path is correct
 
 type CourseWithDiscount = Prisma.CourseGetPayload<{
   select: {
@@ -176,10 +176,11 @@ const Checkout = () => {
                     <span className="text-sm font-medium">کد تخفیف دارید؟</span>
                   </AccordionTrigger>
                   <AccordionContent className="p-1">
-                    <div className="flex gap-2 items-center mt-2">
-                      <Input placeholder="کد تخفیف خود رو وارد کنید" />
-                      <Button size="sm">ثبت</Button>
-                    </div>
+                    {/*<div className="flex gap-2 items-center mt-2">*/}
+                    {/*  <Input placeholder="کد تخفیف خود رو وارد کنید" />*/}
+                    {/*  <Button size="sm">ثبت</Button>*/}
+                    {/*</div>*/}
+                    <ApplyDiscountCodeForm />
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
