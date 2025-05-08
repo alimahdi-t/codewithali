@@ -11,13 +11,27 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Loader from "@/components/common/Loader";
-import { useTransition } from "react";
-import { applyDiscountCodeAction } from "@/actions/discount-codes/applyDiscountCode";
+import { useState, useTransition } from "react";
 import { toast } from "sonner";
+import { HiTrash } from "react-icons/hi2";
+import { applyDiscountCodeAction } from "@/actions/discount-codes/apply-discount-code.action";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Card, CardContent } from "@/components/ui/card";
+import { BeatLoader } from "react-spinners";
 
-export const ApplyDiscountCodeForm = () => {
+interface Props {
+  courseIds: number[];
+}
+
+export const ApplyDiscountCodeForm = ({ courseIds }: Props) => {
   const [isPending, startTransition] = useTransition();
+  const [appliedCode, setAppliedCode] = useState<string | null>(null);
+
   const FormSchema = ApplyDiscountCodeSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -28,11 +42,8 @@ export const ApplyDiscountCodeForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
-
     startTransition(() => {
-      // simulate API call
-      applyDiscountCodeAction(data).then((response) => {
+      applyDiscountCodeAction({ ...data, courseIds }).then((response) => {
         if (response.error) {
           form.setError("code", {
             type: "manual",
@@ -42,47 +53,86 @@ export const ApplyDiscountCodeForm = () => {
 
         if (response.success) {
           form.reset();
+          setAppliedCode(data.code);
           toast.success(response.success);
-          // You could show a toast or update state with discount info
         }
       });
     });
   };
 
+  const handleCancel = () => {
+    setAppliedCode(null);
+    form.reset();
+    toast.info("کد تخفیف لغو شد");
+  };
+
   return (
-    <div className="flex justify-center">
-      <div className="w-full">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <FormField
-              control={form.control}
-              name="code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormControl>
-                    <div className="w-full flex gap-2 items-center mt-2">
-                      <Input
-                        type="text"
-                        placeholder="مثلاً: SUMMER2025"
-                        className="leading-6"
-                        {...field}
-                      />
+    <Card>
+      <CardContent>
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger className="p-1">
+              <span className="text-sm font-medium">کد تخفیف دارید؟</span>
+            </AccordionTrigger>
+            <AccordionContent className="p-1">
+              <div className="flex justify-center">
+                <div className="w-full">
+                  {appliedCode ? (
+                    <div className="flex items-center justify-between py-1.5 rounded-md text-green-600 dark:text-green-400">
+                      <span className="text-sm font-normal">
+                        کد <strong>{appliedCode}</strong> اعمال شد
+                      </span>
                       <Button
-                        disabled={!form.formState.isValid}
-                        type="submit"
-                        className="flex justify-self-end"
+                        variant="ghost"
+                        size="icon"
+                        onClick={handleCancel}
+                        className="rounded-full"
                       >
-                        {isPending ? <Loader /> : "ثبت"}
+                        <HiTrash className="size-5 text-action-error" />
                       </Button>
                     </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </form>
-        </Form>
-      </div>
-    </div>
+                  ) : (
+                    <Form {...form}>
+                      <form onSubmit={form.handleSubmit(onSubmit)}>
+                        <FormField
+                          control={form.control}
+                          name="code"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <div className="w-full flex gap-2 items-center mt-2">
+                                  <Input
+                                    type="text"
+                                    placeholder="مثلاً: SUMMER2025"
+                                    className="leading-6"
+                                    {...field}
+                                  />
+                                  <Button
+                                    disabled={!form.formState.isValid}
+                                    type="submit"
+                                    className="flex justify-self-end"
+                                  >
+                                    {isPending ? (
+                                      <BeatLoader size={8} />
+                                    ) : (
+                                      "ثبت"
+                                    )}
+                                  </Button>
+                                </div>
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      </form>
+                    </Form>
+                  )}
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </CardContent>
+    </Card>
   );
 };

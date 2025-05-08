@@ -2,8 +2,11 @@
 
 import { ApplyDiscountCodeSchema } from "@/schema/apply-discount-code.schema";
 import prisma from "@/lib/prisma";
+import { z } from "zod";
 
-export const applyDiscountCodeAction = async (values: { code: string }) => {
+export const applyDiscountCodeAction = async (
+  values: z.infer<typeof ApplyDiscountCodeSchema>,
+) => {
   const validatedFields = ApplyDiscountCodeSchema.safeParse(values);
   if (!validatedFields.success) {
     return {
@@ -12,7 +15,7 @@ export const applyDiscountCodeAction = async (values: { code: string }) => {
         "کد نامعتبر است",
     };
   }
-  const { code } = validatedFields.data;
+  const { code, courseIds } = validatedFields.data;
   const discount = await prisma.discountCode.findUnique({
     where: { code: code.toUpperCase() },
     include: { CourseDiscount: true },
@@ -28,6 +31,17 @@ export const applyDiscountCodeAction = async (values: { code: string }) => {
 
   if (discount.usageLimit && discount.usedCount >= discount.usageLimit) {
     return { error: "کد تخفیف به حداکثر استفاده رسیده است" };
+  }
+
+  // Check if the discount is applicable to any of the provided courses
+  if (
+    !discount.appliesToAll &&
+    courseIds &&
+    !discount.CourseDiscount.some((cd) => courseIds.includes(cd.courseId))
+  ) {
+    return {
+      error: "کد تخفیف برای هیچ‌کدام از دوره‌های انتخاب‌شده قابل استفاده نیست",
+    };
   }
 
   return { success: "کد تخفیف اعمال شد", discount };

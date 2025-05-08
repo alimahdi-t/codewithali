@@ -19,12 +19,6 @@ import { getCartItems } from "@/actions/cart/get-cart-items.action";
 import { toast } from "sonner";
 import { CourseItem } from "@/app/(root)/(shopping)/checkout/_components/CourseItem";
 import { Prisma } from "@/prisma/client";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import CheckOutPageLoading from "./loading";
 import { ApplyDiscountCodeForm } from "@/components/forms/ApplyDiscountCodeForm"; // make sure the path is correct
 
@@ -42,6 +36,7 @@ const Checkout = () => {
   const { cart, removeFromCart } = useCart();
   const [serverCart, setServerCart] = useState<CourseWithDiscount[]>([]);
   const [isLoading, setIsLoading] = useState(true); // 👈 loading state
+  const [appliedDiscount, setAppliedDiscount] = useState(null);
 
   useEffect(() => {
     const getCart = async () => {
@@ -168,24 +163,7 @@ const Checkout = () => {
             </CardContent>
           </Card>
           {/* تخفیف */}
-          <Card>
-            <CardContent>
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="item-1">
-                  <AccordionTrigger className="p-1">
-                    <span className="text-sm font-medium">کد تخفیف دارید؟</span>
-                  </AccordionTrigger>
-                  <AccordionContent className="p-1">
-                    {/*<div className="flex gap-2 items-center mt-2">*/}
-                    {/*  <Input placeholder="کد تخفیف خود رو وارد کنید" />*/}
-                    {/*  <Button size="sm">ثبت</Button>*/}
-                    {/*</div>*/}
-                    <ApplyDiscountCodeForm />
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </CardContent>
-          </Card>
+          <ApplyDiscountCodeForm courseIds={serverCart.map((c) => c.id)} />
         </div>
       </div>
     </div>
