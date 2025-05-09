@@ -8,19 +8,18 @@ import {
   calculateTotalDiscount,
   calculateTotalPrice,
   convertToPersianAndFormat,
-  convertToPersianNumbers,
 } from "@/utils";
 import Price from "@/components/common/Price";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
 import Link from "next/link";
 import { getCartItems } from "@/actions/cart/get-cart-items.action";
 import { toast } from "sonner";
-import { CourseItem } from "@/app/(root)/(shopping)/checkout/_components/CourseItem";
 import { Prisma } from "@/prisma/client";
 import CheckOutPageLoading from "./loading";
-import { ApplyDiscountCodeForm } from "@/components/forms/ApplyDiscountCodeForm"; // make sure the path is correct
+import { ApplyDiscountCodeForm } from "@/components/forms/ApplyDiscountCodeForm";
+import { CartEmpty } from "@/app/(root)/(shopping)/checkout/_components/CartEmpty";
+import { CartItems } from "@/app/(root)/(shopping)/checkout/_components/CartItems";
 
 type CourseWithDiscount = Prisma.CourseGetPayload<{
   select: {
@@ -32,16 +31,23 @@ type CourseWithDiscount = Prisma.CourseGetPayload<{
   };
 }>;
 
+type CourseType = CourseWithDiscount & {
+  discountAmount: number;
+};
+
 const Checkout = () => {
-  const { cart, removeFromCart } = useCart();
-  const [serverCart, setServerCart] = useState<CourseWithDiscount[]>([]);
+  const { cart, removeFromCart } = useCart(); // Ids of courses, example: [1, 2]
+  const [serverCart, setServerCart] = useState<CourseType[]>([]);
   const [isLoading, setIsLoading] = useState(true); // 👈 loading state
-  const [appliedDiscount, setAppliedDiscount] = useState(null);
+  const [appliedDiscount, setAppliedDiscount] = useState<string>();
 
   useEffect(() => {
     const getCart = async () => {
       setIsLoading(true);
-      const response = await getCartItems({ cartItems: cart });
+      const response = await getCartItems({
+        cartItems: cart,
+        discountCode: appliedDiscount,
+      });
       if (response.error) {
         toast.error(response.error);
       }
@@ -61,32 +67,7 @@ const Checkout = () => {
     return <CheckOutPageLoading />;
   }
 
-  if (length < 1)
-    return (
-      <div className="w-full flex flex-col">
-        <div className="flex justify-center flex-col items-center">
-          <Image
-            src={"svg/empty-cart.svg"}
-            width={400}
-            height={400}
-            alt=""
-            className="object-contain aspect-2/1"
-          />
-          <div className="relative  text-center">
-            <h1 className="font-medium text-xl text-secondary-foreground">
-              سبد خرید شما خالی است.
-            </h1>
-            <p className="text-base mt-2 text-muted-foreground">
-              می‌توانید با مراجعه به فهرست دوره‌ها، دوره مورد نظر خود را انتخاب
-              کنید.
-            </p>
-            <Link href="/courses">
-              <Button className="mt-3">رفتن به به فهرست دوره‌ها</Button>
-            </Link>
-          </div>
-        </div>
-      </div>
-    );
+  if (length < 1) return <CartEmpty />;
 
   if (!serverCart) return null;
 
@@ -95,27 +76,12 @@ const Checkout = () => {
       <h2 className="c-text-h3">ثبت سفارش</h2>
       <div className="grid md:grid-cols-12 grid-cols-1 gap-8 mt-4 max-lg:flex-wrap">
         <div className="md:col-span-8 col-span-1 flex flex-col gap-4">
-          <Card className="flex">
-            <CardHeader>
-              <CardTitle>
-                {convertToPersianNumbers(`آموزش‌ها (${cart.length})`)}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="w-full overflow-hidden space-y-4">
-                {serverCart?.map((cartItem) => (
-                  <CourseItem
-                    key={cartItem.id}
-                    title={cartItem.title}
-                    imageUrl={cartItem.imageUrl}
-                    price={cartItem.price}
-                    discountPercent={cartItem.discount?.percentage}
-                    onClick={() => removeFromCart(cartItem.id.toString())}
-                  />
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+          <CartItems
+            cartItems={serverCart}
+            onRemove={(id) => {
+              removeFromCart(id);
+            }}
+          />
         </div>
         <div className="md:col-span-4 col-span-1 flex flex-col gap-4 sticky top-4 h-min">
           <Card className="flex flex-col gap-4">
@@ -162,8 +128,13 @@ const Checkout = () => {
               </div>
             </CardContent>
           </Card>
-          {/* تخفیف */}
-          <ApplyDiscountCodeForm courseIds={serverCart.map((c) => c.id)} />
+          <ApplyDiscountCodeForm
+            courseIds={serverCart.map((c) => c.id)}
+            onSuccess={(discount) => {
+              console.log("Received discount in parent:", discount);
+              setAppliedDiscount(discount.code);
+            }}
+          />
         </div>
       </div>
     </div>

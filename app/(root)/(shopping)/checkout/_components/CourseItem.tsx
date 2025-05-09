@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { calculateDiscount, convertToPersianAndFormat } from "@/utils";
+import { convertToPersianAndFormat, convertToPersianNumbers } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { HiOutlineXMark } from "react-icons/hi2";
 
@@ -7,7 +7,7 @@ interface Props {
   title: string;
   imageUrl: string;
   price: number;
-  discountPercent?: number;
+  discountAmount: number;
   onClick: () => void;
 }
 
@@ -15,7 +15,7 @@ export const CourseItem = ({
   title,
   imageUrl,
   price,
-  discountPercent,
+  discountAmount,
   onClick,
 
   ...props
@@ -39,12 +39,8 @@ export const CourseItem = ({
             </p>
             {/*Discount amount*/}
             <p className="text-sm font-light whitespace-nowrap text-action-error">
-              {discountPercent !== 0 &&
-                discountPercent &&
-                `${convertToPersianAndFormat(
-                  price -
-                    calculateDiscount(price, { percentage: discountPercent }),
-                )} تومان تخفیف`}
+              {discountAmount !== 0 &&
+                convertToPersianNumbers(`${discountAmount} تومان تخفیف`)}
             </p>
           </div>
         </div>

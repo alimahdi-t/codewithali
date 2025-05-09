@@ -15,22 +15,28 @@ export const applyDiscountCodeAction = async (
         "کد نامعتبر است",
     };
   }
+
   const { code, courseIds } = validatedFields.data;
+
   const discount = await prisma.discountCode.findUnique({
     where: { code: code.toUpperCase() },
     include: { CourseDiscount: true },
   });
 
-  if (!discount || !discount.isActive) {
-    return { error: "کد تخفیف نامعتبر یا غیرفعال است" };
+  if (!discount) {
+    return { error: "کد تخفیف نامعتبر است" };
+  }
+
+  if (!discount.isActive) {
+    return { error: "کد تخفیف غیرفعال است" };
   }
 
   if (discount.expiresAt && new Date() > discount.expiresAt) {
-    return { error: "تاریخ انقضای کد تخفیف گذشته است" };
+    return { error: "مهلت کد تخفیف گذشته است" };
   }
 
   if (discount.usageLimit && discount.usedCount >= discount.usageLimit) {
-    return { error: "کد تخفیف به حداکثر استفاده رسیده است" };
+    return { error: "سقف استفاده از کد تخفیف پر شده است" };
   }
 
   // Check if the discount is applicable to any of the provided courses
