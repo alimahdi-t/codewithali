@@ -1,7 +1,11 @@
+"use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { convertToPersianNumbers } from "@/utils";
 import { CourseItem } from "@/app/(root)/(shopping)/checkout/_components/CourseItem";
 import { Prisma } from "@/prisma/client";
+import { deleteFromCart } from "@/actions/cart/delete-from-cart.action";
+import { mutateCartCount } from "@/components/shared/cart/CartButtonWrapper";
+import { toast } from "sonner";
 
 type CourseWithDiscount = Prisma.CourseGetPayload<{
   select: {
@@ -19,10 +23,19 @@ type CourseType = CourseWithDiscount & {
 
 interface Props {
   cartItems: CourseType[];
-  onRemove: (id: string) => void;
 }
 
-export const CartItems = ({ cartItems, onRemove }: Props) => {
+export const CartItems = ({ cartItems }: Props) => {
+  const removeFromCart = async (id: number) => {
+    await deleteFromCart({ courseId: id }).then((response) => {
+      if (response.success) {
+        mutateCartCount();
+      } else if (response.error) {
+        toast.error(response.error);
+      }
+    });
+  };
+
   return (
     <Card className="flex">
       <CardHeader>
@@ -39,7 +52,7 @@ export const CartItems = ({ cartItems, onRemove }: Props) => {
               imageUrl={cartItem.imageUrl}
               price={cartItem.price}
               discountAmount={cartItem.discountAmount}
-              onClick={() => onRemove(cartItem.id.toString())}
+              onClick={() => removeFromCart(Number(cartItem.id))}
             />
           ))}
         </div>

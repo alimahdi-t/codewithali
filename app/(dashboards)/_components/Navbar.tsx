@@ -3,7 +3,7 @@ import ShowDate from "@/components/common/ShowDate";
 import { Logo } from "@/components/Logo";
 import React from "react";
 import { AdminMobileSideBar } from "@/app/(dashboards)/_components/AdminSidebar";
-import { CartButton } from "@/components/shared/cart/CartButton";
+import CartCountClient from "@/components/shared/cart/CartButtonWrapper";
 
 const DashboardNavbar = () => {
   return (
@@ -30,7 +30,7 @@ const DashboardNavbar = () => {
               <span className="sr-only">View notifications</span>
             </button>
 
-            <CartButton />
+            <CartCountClient />
             <ThemeButton />
             <span className="lg:hidden">
               <AdminMobileSideBar />
