@@ -3,8 +3,11 @@ import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader"
 import { DiscountTable } from "@/app/(dashboards)/dashboard/admin/discounts/DiscountTable";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getAllDiscountCodes } from "@/actions/discount-codes/get-all-discount-codes.action";
 
 const DiscountCodesPage = async () => {
+  const response = await getAllDiscountCodes();
+  console.log(response);
   return (
     <div className="rounded-xl p-4 bg-card shadow-sm">
       <DashboardPageHeader
