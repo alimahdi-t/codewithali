@@ -1,4 +1,5 @@
 "use client";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,7 +13,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { HiTrash } from "react-icons/hi2";
 import { applyDiscountCodeAction } from "@/actions/discount-codes/apply-discount-code.action";
@@ -25,6 +26,7 @@ import {
 import { Card, CardContent } from "@/components/ui/card";
 import { BeatLoader } from "react-spinners";
 import { Prisma } from "@/prisma/client";
+import { useRouter, useSearchParams } from "next/navigation";
 
 type discountType = Prisma.DiscountCodeGetPayload<{
   include: { CourseDiscount: true };
@@ -33,20 +35,37 @@ type discountType = Prisma.DiscountCodeGetPayload<{
 interface Props {
   courseIds: number[];
   onSuccess?: (discount: discountType) => void;
+  discount?: string;
 }
 
-export const ApplyDiscountCodeForm = ({ courseIds, onSuccess }: Props) => {
+export const ApplyDiscountCodeForm = ({
+  courseIds,
+  onSuccess,
+  discount,
+}: Props) => {
   const [appliedCode, setAppliedCode] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition(); // used for showing Loading UI and disable form input and button
-  const FormSchema = ApplyDiscountCodeSchema;
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const [accordionValue, setAccordionValue] = useState<string | undefined>(
+    discount ? "item-1" : undefined,
+  );
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const form = useForm<z.infer<typeof ApplyDiscountCodeSchema>>({
+    resolver: zodResolver(ApplyDiscountCodeSchema),
     mode: "onSubmit",
     defaultValues: {
       code: "",
       courseIds: courseIds,
     },
   });
+
+  useEffect(() => {
+    if (discount) {
+      setAppliedCode(discount);
+      setAccordionValue("item-1");
+    }
+  }, [discount]);
 
   const onSubmit = async (data: z.infer<typeof ApplyDiscountCodeSchema>) => {
     startTransition(() => {
@@ -62,7 +81,11 @@ export const ApplyDiscountCodeForm = ({ courseIds, onSuccess }: Props) => {
           form.reset();
           setAppliedCode(response.discount.code);
           toast.success(response.success);
-          onSuccess?.(response.discount); // send discount to parent
+          onSuccess?.(response.discount);
+
+          const params = new URLSearchParams(searchParams);
+          params.set("discount", response.discount.code);
+          router.push(`?${params.toString()}`);
         }
       });
     });
@@ -72,12 +95,22 @@ export const ApplyDiscountCodeForm = ({ courseIds, onSuccess }: Props) => {
     setAppliedCode(null);
     form.reset();
     toast.info("کد تخفیف لغو شد");
+
+    const params = new URLSearchParams(searchParams);
+    params.delete("discount");
+    router.push(`?${params.toString()}`);
   };
 
   return (
     <Card>
       <CardContent>
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full"
+          value={accordionValue}
+          onValueChange={setAccordionValue}
+        >
           <AccordionItem value="item-1">
             <AccordionTrigger className="p-1">
               <span className="text-sm font-medium">کد تخفیف دارید؟</span>

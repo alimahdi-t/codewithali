@@ -10,7 +10,10 @@ interface Props {
 
 export async function getCartItems({ cartItems, discountCode }: Props) {
   try {
+    console.log("server", discountCode);
     //TODO:Prevent getting cart items if user not logged in
+
+    // Fetch selected cart items
     const items = await prisma.course.findMany({
       where: { id: { in: cartItems.map(Number) } },
       select: {
@@ -21,24 +24,36 @@ export async function getCartItems({ cartItems, discountCode }: Props) {
         discount: true,
       },
     });
-    console.log("DISCOUNT", discountCode);
 
+    // Initialize global discount
+    let globalDiscount: { percentage: number } | null = null;
+
+    // If a discount code exists, fetch it
     if (discountCode) {
-      const d = prisma.discountCode.findUnique({
+      const foundCode = await prisma.discountCode.findUnique({
         where: { code: discountCode },
       });
+
+      if (foundCode) {
+        globalDiscount = { percentage: foundCode.percentage ?? 0 };
+      }
     }
 
+    // Apply discount logic
     const data = items.map((item) => {
+      const itemDiscount =
+        item.discount?.percentage || globalDiscount?.percentage;
+
+      const discountedPrice = calculateDiscount(item.price, {
+        percentage: itemDiscount,
+      });
+
       return {
         ...item,
-        discountAmount:
-          item.price -
-          calculateDiscount(item.price, {
-            percentage: item.discount?.percentage,
-          }),
+        discountAmount: item.price - discountedPrice,
       };
     });
+
     return { success: "اطلاعات سبد خرید با موفقیت دریافت شد.", data: data };
   } catch (error) {
     console.error("Error fetching cart items:", error);

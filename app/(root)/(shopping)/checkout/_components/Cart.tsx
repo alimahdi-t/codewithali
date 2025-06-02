@@ -15,16 +15,16 @@ import Link from "next/link";
 import { ApplyDiscountCodeForm } from "@/components/forms/ApplyDiscountCodeForm";
 
 interface Props {
-  searchParams?: { discount?: string };
+  discount?: string;
   cart: number[];
 }
 
-export const Cart = async ({ searchParams, cart }: Props) => {
+export const Cart = async ({ discount, cart }: Props) => {
   if (cart.length < 1) return <CartEmpty />;
 
   const response = await getCartItems({
     cartItems: cart.map((item) => item.toString()),
-    discountCode: undefined,
+    discountCode: discount,
   });
 
   if (!response?.data) {
@@ -32,7 +32,7 @@ export const Cart = async ({ searchParams, cart }: Props) => {
   }
 
   const serverCart = response.data;
-
+  console.log(serverCart);
   return (
     <div className="w-full flex flex-col">
       <h2 className="c-text-h3">ثبت سفارش</h2>
@@ -86,7 +86,10 @@ export const Cart = async ({ searchParams, cart }: Props) => {
             </CardContent>
           </Card>
 
-          <ApplyDiscountCodeForm courseIds={serverCart.map((c) => c.id)} />
+          <ApplyDiscountCodeForm
+            courseIds={serverCart.map((c) => c.id)}
+            discount={discount}
+          />
         </div>
       </div>
     </div>
