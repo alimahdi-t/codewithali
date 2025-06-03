@@ -3,12 +3,7 @@ import { getCartItems } from "@/actions/cart/get-cart-items.action";
 import { CartItems } from "@/app/(root)/(shopping)/checkout/_components/CartItems";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Price from "@/components/common/Price";
-import {
-  calculatePayableAmount,
-  calculateTotalDiscount,
-  calculateTotalPrice,
-  convertToPersianAndFormat,
-} from "@/utils";
+import { convertToPersianAndFormat } from "@/utils";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -26,11 +21,10 @@ export const Cart = async ({ discount, cart }: Props) => {
     cartItems: cart.map((item) => item.toString()),
     discountCode: discount,
   });
-
   if (!response?.data) {
     return <CartEmpty />;
   }
-
+  const { data, payableAmount, totalDiscount, totalPrice } = response;
   const serverCart = response.data;
   console.log(serverCart);
   return (
@@ -50,7 +44,8 @@ export const Cart = async ({ discount, cart }: Props) => {
                 <div className="flex items-center justify-between text-sm font-medium">
                   <p>مبلغ کل</p>
                   <Price
-                    price={calculateTotalPrice(serverCart)}
+                    price={totalPrice}
+                    // price={calculateTotalPrice(serverCart)}
                     classname="font-normal text-sm gap-1"
                   />
                 </div>
@@ -58,7 +53,8 @@ export const Cart = async ({ discount, cart }: Props) => {
                   <p>تخفیف</p>
                   <p className="font-normal text-sm gap-1">
                     {`${convertToPersianAndFormat(
-                      calculateTotalDiscount(serverCart),
+                      totalDiscount,
+                      // calculateTotalDiscount(serverCart),
                     )} تومان`}
                   </p>
                 </div>
@@ -67,7 +63,8 @@ export const Cart = async ({ discount, cart }: Props) => {
                   <p className="font-bold">مبلغ قابل پرداخت</p>
                   <p className="font-bold gap-1">
                     {`${convertToPersianAndFormat(
-                      calculatePayableAmount(serverCart),
+                      payableAmount,
+                      // calculatePayableAmount(serverCart),
                     )} تومان`}
                   </p>
                 </div>

@@ -42,7 +42,7 @@ export async function getCartItems({ cartItems, discountCode }: Props) {
     // Apply discount logic
     const data = items.map((item) => {
       const itemDiscount =
-        item.discount?.percentage || globalDiscount?.percentage;
+        globalDiscount?.percentage ?? item.discount?.percentage;
 
       const discountedPrice = calculateDiscount(item.price, {
         percentage: itemDiscount,
@@ -54,7 +54,16 @@ export async function getCartItems({ cartItems, discountCode }: Props) {
       };
     });
 
-    return { success: "اطلاعات سبد خرید با موفقیت دریافت شد.", data: data };
+    return {
+      success: "اطلاعات سبد خرید با موفقیت دریافت شد.",
+      data: data,
+      totalPrice: data.reduce((sum, item) => sum + item.price, 0),
+      totalDiscount: data.reduce((sum, item) => sum + item.discountAmount, 0),
+      payableAmount: data.reduce(
+        (sum, item) => sum + item.price - item.discountAmount,
+        0,
+      ),
+    };
   } catch (error) {
     console.error("Error fetching cart items:", error);
     return { error: "خطایی در دریافت اطلاعات سبد خرید رخ داد!" };
