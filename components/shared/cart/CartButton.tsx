@@ -1,24 +1,32 @@
-"use client";
-import { Button } from "@/components/ui/button";
-import { useCart } from "@/context/CartProvider";
-import { convertToPersianNumbers } from "@/utils";
-import { ShoppingCart } from "lucide-react";
 import Link from "next/link";
-import { useCurrentUser } from "@/hooks/use-current-user";
+import { ShoppingCart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { convertToPersianNumbers } from "@/utils";
 
-export const CartButton = () => {
-  const { cart } = useCart();
-  const user = useCurrentUser();
-  if (!user) return null;
+interface Props {
+  count: number;
+}
+
+export const CartButton = ({ count }: Props) => {
+  // const user = useCurrentUser();
+  // const [count, setCount] = useState(0);
+  //
+  // useEffect(() => {
+  //   if (user) {
+  //     // gets cart count for this user from the database
+  //     getCartItemsCount().then(setCount);
+  //   }
+  // }, [user]);
+  //
+  // if (!user) return null;
   return (
     <Link href="/checkout">
       <Button size="icon" variant="ghost" className="rounded-full relative">
-        {cart.length > 0 && (
+        {count > 0 && (
           <span className="absolute opacity-60 dark:opacity-80 dark:text-black flex items-center justify-center p-2.5 bottom-px -right-1.5 w-4 h-4 rounded-full text-white text-center bg-primary  text-[10px]">
-            {convertToPersianNumbers(cart.length)}
+            {convertToPersianNumbers(count)}
           </span>
         )}
-
         <ShoppingCart className="size-5" />
       </Button>
     </Link>

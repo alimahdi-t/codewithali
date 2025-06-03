@@ -7,7 +7,7 @@ import React from "react";
 import { Logo } from "@/components/Logo";
 import NavLinks from "@/components/shared/Navbar/NavLinks";
 import { UserButton } from "@/components/auth/user-button";
-import { CartButton } from "@/components/shared/cart/CartButton";
+import CartCountClient from "@/components/shared/cart/CartButtonWrapper";
 
 const Navbar = () => {
   return (
@@ -28,7 +28,7 @@ const Navbar = () => {
           </span>
 
           <div className="flex items-center max-md:hidden ">
-            <CartButton />
+            <CartCountClient />
             <ThemeButton className="max-md:hidden" />
             <span className="max-md:hidden mx-2">
               <UserButton />

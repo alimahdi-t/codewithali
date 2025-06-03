@@ -4,10 +4,11 @@ import {
   adminPrefix,
   apiAuthPrefix,
   authRoutes,
-  DEFAULT_LOGIN_REDIRECT,
   publicRoutes,
+  ROLE_LOGIN_REDIRECTS,
 } from "@/route";
 import { getToken } from "next-auth/jwt";
+import { Role } from "@/prisma/client";
 
 export const { auth } = NextAuth(authConfig);
 
@@ -38,7 +39,9 @@ export default auth(async (req) => {
 
   if (isAuthRoute) {
     if (isLoggedIn) {
-      return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+      return Response.redirect(
+        new URL(ROLE_LOGIN_REDIRECTS[role as Role], nextUrl),
+      );
     }
     return null;
   }

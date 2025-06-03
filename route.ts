@@ -40,7 +40,9 @@ export const adminPrefix = "/dashboard/admin";
 export const DEFAULT_LOGIN_REDIRECT = "/dashboard/admin"; // General fallback
 
 export const ROLE_LOGIN_REDIRECTS = {
-  admin: "/dashboard/admin",
-  instructor: "/dashboard/instructor",
-  author: "/dashboard/author",
+  ADMIN: "/dashboard/admin",
+  INSTRUCTOR: "/dashboard/instructor",
+  INSTRUCTOR_AUTHOR: "/dashboard/instructor",
+  AUTHOR: "/dashboard/author",
+  USER: "/my-account",
 };

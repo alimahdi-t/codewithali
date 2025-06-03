@@ -101,3 +101,11 @@ export type GetUserParams =
   | { id: number; username?: never; email?: never }
   | { id?: never; username: string; email?: never }
   | { id?: never; username?: never; email: string };
+
+export interface AddToCartParams {
+  id: number;
+}
+
+export interface DeleteFromCartParams {
+  courseId: number;
+}
