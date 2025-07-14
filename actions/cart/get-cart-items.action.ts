@@ -34,15 +34,23 @@ export async function getCartItems({ cartItems, discountCode }: Props) {
         where: { code: discountCode },
       });
 
-      if (foundCode) {
+      if (
+        foundCode &&
+        (!foundCode.expiresAt || new Date(foundCode.expiresAt) > new Date())
+      ) {
         globalDiscount = { percentage: foundCode.percentage ?? 0 };
       }
     }
 
     // Apply discount logic
     const data = items.map((item) => {
+      const courseDiscountValid =
+        item.discount &&
+        (!item.discount.expiresAt ||
+          new Date(item.discount.expiresAt) > new Date());
       const itemDiscount =
-        globalDiscount?.percentage ?? item.discount?.percentage;
+        globalDiscount?.percentage ??
+        (courseDiscountValid ? item.discount?.percentage : 0);
 
       const discountedPrice = calculateDiscount(item.price, {
         percentage: itemDiscount,
