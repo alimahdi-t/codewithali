@@ -27,8 +27,6 @@ export const SectionBlock = ({ title, subTitle, children }: Props) => {
       <div className="mt-4">
         <div className="grid gap-4 grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
           {children}
-          {children}
-          {children}
         </div>
       </div>
     </section>
