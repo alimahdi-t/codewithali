@@ -6,13 +6,16 @@ import { postSortFilter } from "@/constants/filters";
 import { convertToPersianNumbers } from "@/utils";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import NoResult from "@/components/shared/NoResult";
+import { getEditorPickPosts } from "@/actions/posts/get-picked-posts.action";
+import ArticleCard from "@/components/pages/Blog/ArticleCard";
 
 const Blog = async () => {
   const posts = await getPostsAction();
-  if (!posts) {
+  const editorPickedPosts = await getEditorPickPosts();
+  if (!posts || !editorPickedPosts) {
     return <p>Loading...</p>;
   }
-
+  console.log("hey", editorPickedPosts);
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex justify-between">
@@ -40,19 +43,21 @@ const Blog = async () => {
             />
             <HiMagnifyingGlass className="w-6 h-6 text-gray-600" />
           </div>
-          <div
-            className="background-dark900_light50 rounded-lg shadow-lg
+          {editorPickedPosts.length > 0 && (
+            <div
+              className="background-dark900_light50 rounded-lg shadow-lg
           border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 px-4 py-6"
-          >
-            <h3 className="font-dana font-medium text-lg leading-5">
-              منتخب سردبیر
-            </h3>
-            <div className="flex flex-col gap-4">
-              {/*{topArticles.map((article) => (*/}
-              {/*  <ArticleCard key={article.id} article={article} />*/}
-              {/*))}*/}
+            >
+              <h3 className="font-dana font-medium text-lg leading-5">
+                منتخب سردبیر
+              </h3>
+              <div className="flex flex-col gap-5 mt-4">
+                {editorPickedPosts.map((article) => (
+                  <ArticleCard key={article.id} article={article} />
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/*---*/}
