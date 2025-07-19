@@ -6,7 +6,7 @@ import { extractTextFromHTML } from "@/utils";
 export const CreatePostSchema = z.object({
   slug: z
     .string()
-    .min(5, "Slug باید حداقل ۵۳ کاراکتر باشد")
+    .min(5, "Slug باید حداقل ۵ کاراکتر باشد")
     .max(100, "Slug نباید بیشتر از ۱۰۰ کاراکتر باشد")
     .refine((value) => !/\s/.test(value), {
       message: "اسلاگ نباید شامل فاصله باشد",
