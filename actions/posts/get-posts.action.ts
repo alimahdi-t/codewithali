@@ -18,7 +18,7 @@ export async function getPostsAction(): Promise<GetPostsResponse> {
         tags: true,
       },
     });
-    return posts; // حالا تایپ خروجی با `GetPostsResponse` هماهنگ است.
+    return posts;
   } catch (error) {
     console.error("خطا در دریافت پست‌ها:", error);
     return null;
