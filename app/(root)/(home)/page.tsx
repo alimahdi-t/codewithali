@@ -6,7 +6,7 @@ import BlogCard from "@/components/pages/Blog/BlogCard";
 import Image from "next/image";
 
 export default async function Home() {
-  const courses = await getCourses({});
+  const courses = await getCourses({ page: 1, pageSize: 12 });
   const posts = await getPostsAction();
 
   const learningPaths = [
@@ -53,14 +53,20 @@ export default async function Home() {
 
   return (
     <div className="max-w-7xl mx-auto py-5">
-      <SectionBlock title={"آخرین دورهای ما"}>
+      <SectionBlock
+        title={"آخرین دورهای ما"}
+        link={{ title: "مشاهده همه", href: "/courses" }}
+      >
         {courses.map((course) => (
           <CourseCard key={course.id} course={course} />
         ))}
       </SectionBlock>
 
       {/*  TODO: conditional rendering if course or post not exist*/}
-      <SectionBlock title={"آخـــرین مقالات ما"}>
+      <SectionBlock
+        title={"آخـــرین مقالات ما"}
+        link={{ title: "مشاهده همه", href: "/blog" }}
+      >
         {posts?.map((post) => <BlogCard key={post.id} post={post} />)}
       </SectionBlock>
       <SectionBlock title={"نقشه های راه برای شروع"}>
