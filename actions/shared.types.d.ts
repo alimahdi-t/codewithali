@@ -37,6 +37,14 @@ export interface GetAllCoursesParams {
   pageSize?: number; // Number of courses per page
 }
 
+export interface GetAllPostsParams {
+  orderBy?: "newest" | "oldest"; // Sorting options
+  categories?: string[]; // Filter by course categories (e.g., "frontend", "backend", "python")
+  searchQuery?: string; // Search query for course titles or descriptions
+  page?: number; // Pagination support
+  pageSize?: number; // Number of courses per page
+}
+
 export interface GetContactMessages {
   page?: number;
   pageSize?: number;

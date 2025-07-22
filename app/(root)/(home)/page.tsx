@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default async function Home() {
   const courses = await getCourses({ page: 1, pageSize: 12 });
-  const posts = await getPostsAction();
+  const posts = await getPostsAction({});
 
   if (!courses || !posts) {
     return null;

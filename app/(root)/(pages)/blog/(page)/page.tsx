@@ -8,14 +8,27 @@ import { HiMagnifyingGlass } from "react-icons/hi2";
 import NoResult from "@/components/shared/NoResult";
 import { getEditorPickPosts } from "@/actions/posts/get-picked-posts.action";
 import ArticleCard from "@/components/pages/Blog/ArticleCard";
+import { GetAllPostsParams } from "@/actions/shared.types";
 
-const Blog = async () => {
-  const posts = await getPostsAction();
+interface Props {
+  searchParams: Promise<GetAllPostsParams>;
+}
+
+const Blog = async (props: Props) => {
+  const searchParams = await props.searchParams;
+  const page = searchParams.page || 1;
+  const pageSize: number = 12;
+  const posts = await getPostsAction({
+    pageSize: pageSize,
+    page: page,
+    searchQuery: searchParams.searchQuery,
+    orderBy: searchParams.orderBy,
+    categories: searchParams.categories,
+  });
   const editorPickedPosts = await getEditorPickPosts();
   if (!posts || !editorPickedPosts) {
     return <p>Loading...</p>;
   }
-  console.log("hey", editorPickedPosts);
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex justify-between">
@@ -30,8 +43,7 @@ const Blog = async () => {
       </div>
 
       <div className="flex gap-4 mt-16">
-        {/*TODO: Implement editor pick, searching, loading, no result, gird box for best posts*/}
-        {/*C1: Sidebar*/}
+        {/*TODO: searching, loading, no result, gird box for best posts*/}
         <div className="w-[350px] flex flex-col gap-4 max-lg:hidden">
           <div
             className="flex justify-center items-center background-dark900_light50 rounded-lg shadow-lg
