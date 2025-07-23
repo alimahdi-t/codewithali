@@ -23,7 +23,7 @@ import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTool
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 
 const PostsPage = async () => {
-  const posts = await getPostsAction();
+  const posts = await getPostsAction({});
 
   if (!posts || "error" in posts || posts.length === 0) {
     return <p className="text-red-500">هیچ مقاله‌ای یافت نشد.</p>;
