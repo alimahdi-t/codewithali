@@ -6,13 +6,14 @@ import BlogCard from "@/components/pages/Blog/BlogCard";
 import Image from "next/image";
 
 export default async function Home() {
-  const courses = await getCourses({ page: 1, pageSize: 12 });
-  const result = await getPostsAction({});
+  const coursesResult = await getCourses({ page: 1, pageSize: 12 });
+  const postsResult = await getPostsAction({});
 
-  if (!courses || !result) {
+  if (!coursesResult || !postsResult) {
     return null;
   }
-  const { posts } = result;
+  const { posts } = postsResult;
+  const { courses } = coursesResult;
   // await fakeDelay(1000);
 
   const learningPaths = [
