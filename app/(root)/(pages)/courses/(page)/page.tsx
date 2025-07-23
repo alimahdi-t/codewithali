@@ -17,9 +17,9 @@ interface Props {
 const CoursesPage = async (props: Props) => {
   const searchParams = await props.searchParams;
   const page = searchParams.page || 1;
-  const pageSize: number = 12;
+  const pageSize: number = 1;
 
-  const courses = await getCourses({
+  const result = await getCourses({
     isFree: searchParams.isFree,
     searchQuery: searchParams.searchQuery,
     orderBy: searchParams.orderBy,
@@ -30,9 +30,10 @@ const CoursesPage = async (props: Props) => {
     pageSize: pageSize,
   });
 
-  if (!courses) {
+  if (!result) {
     return <p>Loading...</p>;
   }
+  const { courses, totalCoursesCount } = result;
 
   return (
     <div className="w-full flex flex-col">
@@ -43,7 +44,7 @@ const CoursesPage = async (props: Props) => {
         </div>
 
         <p className="mt-2 text-lg leading-8 text-secondary">{`${convertToPersianNumbers(
-          courses?.length,
+          totalCoursesCount,
         )} عنوان آموزشی`}</p>
       </div>
       <div className="flex gap-4 mt-16">
@@ -72,7 +73,7 @@ const CoursesPage = async (props: Props) => {
               />
             ))}
           </div>
-          <Pagination itemCount={courses?.length} pageSize={pageSize} />
+          <Pagination itemCount={totalCoursesCount} pageSize={pageSize} />
         </div>
       </div>
     </div>

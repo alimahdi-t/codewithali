@@ -20,7 +20,8 @@ import { StatisticsCard } from "@/app/(dashboards)/dashboard/admin/messages/_com
 import { COURSE_STATUSES } from "@/constants/dashboard";
 
 const CoursesListPage = async () => {
-  const courses = await getCourses({});
+  const result = await getCourses({});
+  const { courses, totalCoursesCount } = result;
 
   return (
     <div className="w-full">

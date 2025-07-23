@@ -42,32 +42,38 @@ export async function getCourses(params: GetAllCoursesParams) {
       ];
     }
 
-    return await prisma.course.findMany({
-      where: filters,
-      orderBy: orderOptions[orderBy] || { createdAt: "desc" },
-      include: {
-        instructor: {
-          select: {
-            id: true,
-            firstName: true,
-            lastName: true,
-            username: true,
-            imageUrl: true,
+    const [courses, totalCoursesCount] = await Promise.all([
+      prisma.course.findMany({
+        where: filters,
+        orderBy: orderOptions[orderBy] || { createdAt: "desc" },
+        include: {
+          instructor: {
+            select: {
+              id: true,
+              firstName: true,
+              lastName: true,
+              username: true,
+              imageUrl: true,
+            },
+          },
+          discount: {
+            where: {
+              OR: [
+                { expiresAt: null }, // تخفیف بدون تاریخ انقضا
+                { expiresAt: { gte: new Date() } }, // تخفیف هنوز منقضی نشده
+              ],
+            },
           },
         },
-        discount: {
-          where: {
-            OR: [
-              { expiresAt: null }, // تخفیف بدون تاریخ انقضا
-              { expiresAt: { gte: new Date() } }, // تخفیف هنوز منقضی نشده
-            ],
-          },
-        },
-      },
 
-      skip: (page - 1) * pageSize,
-      take: pageSize,
-    });
+        skip: (page - 1) * pageSize,
+        take: pageSize,
+      }),
+      prisma.course.count({
+        where: filters,
+      }),
+    ]);
+    return { courses, totalCoursesCount };
   } catch (error) {
     throw new Error(`Error fetching courses: ${error}`);
   }
