@@ -27,7 +27,7 @@ interface EditUserFormProps {
 
 export const EditUserForm = ({ initialData }: EditUserFormProps) => {
   const [isPending, startTransition] = useTransition();
-  const role = useCurrentRole();
+  const role = useCurrentRole(); // Get The Role of user, e.g: ADMIN, USER and ...
   const { update } = useSession();
 
   const FormSchema = EditUserSchema;

@@ -4,11 +4,11 @@ import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { postSortFilter } from "@/constants/filters";
 import { convertToPersianNumbers } from "@/utils";
-import { HiMagnifyingGlass } from "react-icons/hi2";
 import NoResult from "@/components/shared/NoResult";
 import { getEditorPickPosts } from "@/actions/posts/get-picked-posts.action";
 import ArticleCard from "@/components/pages/Blog/ArticleCard";
 import { GetAllPostsParams } from "@/actions/shared.types";
+import { SearchForm } from "@/components/forms/SearchForm";
 
 interface Props {
   searchParams: Promise<GetAllPostsParams>;
@@ -43,18 +43,10 @@ const Blog = async (props: Props) => {
       </div>
 
       <div className="flex gap-4 mt-16">
-        {/*TODO: searching, loading, no result, gird box for best posts*/}
+        {/*TODO: loading, no result, gird box for best posts*/}
         <div className="w-[350px] flex flex-col gap-4 max-lg:hidden">
-          <div
-            className="flex justify-center items-center background-dark900_light50 rounded-lg shadow-lg
-          border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 p-4 "
-          >
-            <input
-              placeholder={"جستجو بین مقالات"}
-              className="flex-1 border-none outline-hidden placeholder:text-gray-600"
-            />
-            <HiMagnifyingGlass className="w-6 h-6 text-gray-600" />
-          </div>
+          <SearchForm />
+
           {editorPickedPosts.length > 0 && (
             <div
               className="background-dark900_light50 rounded-lg shadow-lg
