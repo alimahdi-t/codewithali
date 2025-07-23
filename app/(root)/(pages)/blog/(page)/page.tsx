@@ -3,7 +3,7 @@ import { getPostsAction } from "@/actions/posts/get-posts.action";
 import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { postSortFilter } from "@/constants/filters";
-import { convertToPersianNumbers } from "@/utils";
+import { convertToPersianNumbers, fakeDelay } from "@/utils";
 import NoResult from "@/components/shared/NoResult";
 import { getEditorPickPosts } from "@/actions/posts/get-picked-posts.action";
 import ArticleCard from "@/components/pages/Blog/ArticleCard";
@@ -26,7 +26,7 @@ const Blog = async (props: Props) => {
     orderBy: searchParams.orderBy,
     categories: searchParams.categories,
   });
-
+  await fakeDelay(5000);
   const editorPickedPosts = await getEditorPickPosts();
   if (!result || !editorPickedPosts) {
     return <p>Loading...</p>;

@@ -3,7 +3,7 @@ import SortOptions from "@/components/Course/SortOptions";
 import { Skeleton } from "@/components/ui/skeleton";
 import CourseCardLoading from "@/app/(root)/(pages)/courses/CourseCardLoading";
 import { postSortFilter } from "@/constants/filters";
-import { HiMagnifyingGlass } from "react-icons/hi2";
+import { SearchForm } from "@/components/forms/SearchForm";
 
 export default function LoadingCoursePage() {
   const posts = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
@@ -18,29 +18,34 @@ export default function LoadingCoursePage() {
       </div>
       <div className="flex gap-4 mt-16">
         <div className="w-[350px] flex flex-col gap-4 max-lg:hidden">
-          <div
-            className="flex justify-center items-center background-dark900_light50 rounded-lg shadow-lg
-          border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 p-4 "
-          >
-            <input
-              placeholder={"جستجو بین مقالات"}
-              className="flex-1 border-none outline-hidden placeholder:text-gray-600"
-            />
-            <HiMagnifyingGlass className="w-6 h-6 text-gray-600" />
-          </div>
-          <div
-            className="background-dark900_light50 rounded-lg shadow-lg
+          <SearchForm />
+          {posts.length > 0 && (
+            <div
+              className="background-dark900_light50 rounded-lg shadow-lg
           border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 px-4 py-6"
-          >
-            <h3 className="font-dana font-medium text-lg leading-5">
-              منتخب سردبیر
-            </h3>
-            <div className="flex flex-col gap-4">
-              {/*{topArticles.map((article) => (*/}
-              {/*  <ArticleCard key={article.id} article={article} />*/}
-              {/*))}*/}
+            >
+              <h3 className="font-dana font-medium text-lg leading-5">
+                منتخب سردبیر
+              </h3>
+              <div className="flex flex-col gap-5 mt-4 ">
+                {posts.map((article) => (
+                  <div
+                    key={article}
+                    className="flex justify-center items-start gap-1.5"
+                  >
+                    <Skeleton
+                      key={article}
+                      className="aspect-4/3 w-16 h-12 rounded bg-gray-400"
+                    />
+                    <div className="flex flex-col gap-1 group cursor-pointer transition delay-300">
+                      <Skeleton className="w-30 h-3 bg-gray-400 rounded" />
+                      <Skeleton className="w-24 h-3 bg-gray-400 rounded" />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/*---*/}
