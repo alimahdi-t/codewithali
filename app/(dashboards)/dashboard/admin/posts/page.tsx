@@ -23,11 +23,12 @@ import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTool
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 
 const PostsPage = async () => {
-  const posts = await getPostsAction({});
+  const result = await getPostsAction({});
 
-  if (!posts || "error" in posts || posts.length === 0) {
+  if (!result) {
     return <p className="text-red-500">هیچ مقاله‌ای یافت نشد.</p>;
   }
+  const { posts, totalCount } = result;
   //TODO: Handle if not found, also handle for courses page
   return (
     <div className="w-full">

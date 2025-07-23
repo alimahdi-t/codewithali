@@ -7,12 +7,12 @@ import Image from "next/image";
 
 export default async function Home() {
   const courses = await getCourses({ page: 1, pageSize: 12 });
-  const posts = await getPostsAction({});
+  const result = await getPostsAction({});
 
-  if (!courses || !posts) {
+  if (!courses || !result) {
     return null;
   }
-
+  const { posts } = result;
   // await fakeDelay(1000);
 
   const learningPaths = [

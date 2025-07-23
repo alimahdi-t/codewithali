@@ -9,7 +9,10 @@ type PostWithRelations = Post & {
   tags: Tag[];
 };
 
-type GetPostsResponse = PostWithRelations[] | null;
+type GetPostsResponse = {
+  posts: PostWithRelations[];
+  totalCount: number;
+} | null;
 
 export async function getPostsAction(
   params: GetAllPostsParams,
@@ -48,9 +51,6 @@ export async function getPostsAction(
     let orderByClause: any = {};
 
     switch (orderBy) {
-      // case "comments":
-      //   orderByClause = { _count: { Comment: "desc" } };
-      //   break;
       case "oldest":
         orderByClause = { createAt: "asc" };
         break;
@@ -60,18 +60,23 @@ export async function getPostsAction(
         break;
     }
 
-    const posts = await prisma.post.findMany({
-      where: whereClause,
-      include: {
-        author: true,
-        tags: true,
-      },
-      orderBy: orderByClause,
-      skip,
-      take,
-    });
+    const [posts, totalCount] = await Promise.all([
+      prisma.post.findMany({
+        where: whereClause,
+        include: {
+          author: true,
+          tags: true,
+        },
+        orderBy: orderByClause,
+        skip,
+        take,
+      }),
+      prisma.post.count({
+        where: whereClause,
+      }),
+    ]);
 
-    return posts;
+    return { posts, totalCount };
   } catch (error) {
     console.error("خطا در دریافت پست‌ها:", error);
     return null;

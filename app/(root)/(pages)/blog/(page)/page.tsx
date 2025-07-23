@@ -9,6 +9,7 @@ import { getEditorPickPosts } from "@/actions/posts/get-picked-posts.action";
 import ArticleCard from "@/components/pages/Blog/ArticleCard";
 import { GetAllPostsParams } from "@/actions/shared.types";
 import { SearchForm } from "@/components/forms/SearchForm";
+import Pagination from "@/components/shared/Pagination";
 
 interface Props {
   searchParams: Promise<GetAllPostsParams>;
@@ -17,18 +18,21 @@ interface Props {
 const Blog = async (props: Props) => {
   const searchParams = await props.searchParams;
   const page = searchParams.page || 1;
-  const pageSize: number = 12;
-  const posts = await getPostsAction({
+  const pageSize: number = 2;
+  const result = await getPostsAction({
     pageSize: pageSize,
     page: page,
     searchQuery: searchParams.searchQuery,
     orderBy: searchParams.orderBy,
     categories: searchParams.categories,
   });
+
   const editorPickedPosts = await getEditorPickPosts();
-  if (!posts || !editorPickedPosts) {
+  if (!result || !editorPickedPosts) {
     return <p>Loading...</p>;
   }
+
+  const { posts, totalCount } = result;
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex justify-between">
@@ -38,7 +42,7 @@ const Blog = async (props: Props) => {
         </div>
 
         <p className="mt-2 text-lg leading-8 text-secondary">{`${convertToPersianNumbers(
-          posts?.length,
+          totalCount,
         )} مقاله`}</p>
       </div>
 
@@ -64,7 +68,6 @@ const Blog = async (props: Props) => {
           )}
         </div>
 
-        {/*---*/}
         <div className="flex flex-col w-full gap-4">
           <div className="flex gap-4">
             <CourseFilterOption className="sm:hidden" />
@@ -82,8 +85,7 @@ const Blog = async (props: Props) => {
             {posts?.map((post) => <BlogCard key={post.id} post={post} />)}
           </div>
 
-          {/*<Pagination itemCount={64} pageSize={12} currentPage={1} />*/}
-          <p className="text-black dark:text-white">Pagination</p>
+          <Pagination itemCount={totalCount} pageSize={pageSize} />
         </div>
       </div>
     </div>
