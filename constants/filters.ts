@@ -24,5 +24,5 @@ export const courseGroupFilter = [
 export const postSortFilter: { name: string; value: string }[] = [
   { name: "جدید ترین", value: "newest" },
   { name: "قدیمی ترین", value: "oldest" },
-  { name: "پر نظرترین", value: "mostViewed" },
+  // { name: "پر نظرترین", value: "comments" },
 ];

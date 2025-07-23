@@ -4,18 +4,35 @@ import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { postSortFilter } from "@/constants/filters";
 import { convertToPersianNumbers } from "@/utils";
-import { HiMagnifyingGlass } from "react-icons/hi2";
 import NoResult from "@/components/shared/NoResult";
 import { getEditorPickPosts } from "@/actions/posts/get-picked-posts.action";
 import ArticleCard from "@/components/pages/Blog/ArticleCard";
+import { GetAllPostsParams } from "@/actions/shared.types";
+import { SearchForm } from "@/components/forms/SearchForm";
+import Pagination from "@/components/shared/Pagination";
 
-const Blog = async () => {
-  const posts = await getPostsAction();
+interface Props {
+  searchParams: Promise<GetAllPostsParams>;
+}
+
+const Blog = async (props: Props) => {
+  const searchParams = await props.searchParams;
+  const page = searchParams.page || 1;
+  const pageSize: number = 2;
+  const result = await getPostsAction({
+    pageSize: pageSize,
+    page: page,
+    searchQuery: searchParams.searchQuery,
+    orderBy: searchParams.orderBy,
+    categories: searchParams.categories,
+  });
+
   const editorPickedPosts = await getEditorPickPosts();
-  if (!posts || !editorPickedPosts) {
+  if (!result || !editorPickedPosts) {
     return <p>Loading...</p>;
   }
-  console.log("hey", editorPickedPosts);
+
+  const { posts, totalCount } = result;
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex justify-between">
@@ -25,24 +42,15 @@ const Blog = async () => {
         </div>
 
         <p className="mt-2 text-lg leading-8 text-secondary">{`${convertToPersianNumbers(
-          posts?.length,
+          totalCount,
         )} مقاله`}</p>
       </div>
 
       <div className="flex gap-4 mt-16">
-        {/*TODO: Implement editor pick, searching, loading, no result, gird box for best posts*/}
-        {/*C1: Sidebar*/}
+        {/*TODO: loading, no result, gird box for best posts*/}
         <div className="w-[350px] flex flex-col gap-4 max-lg:hidden">
-          <div
-            className="flex justify-center items-center background-dark900_light50 rounded-lg shadow-lg
-          border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 p-4 "
-          >
-            <input
-              placeholder={"جستجو بین مقالات"}
-              className="flex-1 border-none outline-hidden placeholder:text-gray-600"
-            />
-            <HiMagnifyingGlass className="w-6 h-6 text-gray-600" />
-          </div>
+          <SearchForm />
+
           {editorPickedPosts.length > 0 && (
             <div
               className="background-dark900_light50 rounded-lg shadow-lg
@@ -60,7 +68,6 @@ const Blog = async () => {
           )}
         </div>
 
-        {/*---*/}
         <div className="flex flex-col w-full gap-4">
           <div className="flex gap-4">
             <CourseFilterOption className="sm:hidden" />
@@ -78,8 +85,7 @@ const Blog = async () => {
             {posts?.map((post) => <BlogCard key={post.id} post={post} />)}
           </div>
 
-          {/*<Pagination itemCount={64} pageSize={12} currentPage={1} />*/}
-          <p className="text-black dark:text-white">Pagination</p>
+          <Pagination itemCount={totalCount} pageSize={pageSize} />
         </div>
       </div>
     </div>

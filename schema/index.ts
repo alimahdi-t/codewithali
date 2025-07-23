@@ -9,3 +9,4 @@ export * from "./change-password.schema";
 export * from "./reset.schema";
 export * from "./send-message-answer.schema";
 export * from "./edit-user.schema";
+export * from "./search-form.schema";
