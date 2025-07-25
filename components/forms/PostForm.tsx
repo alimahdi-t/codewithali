@@ -80,7 +80,7 @@ export default function PostForm({
         content: data.content,
         authorId: parseInt(data.authorId),
         readingTime: parseInt(data.readingTime),
-        isEditorPick: false,
+        isEditorPick: data.isEditorPick,
         tags: data.tags,
       });
 
@@ -100,7 +100,7 @@ export default function PostForm({
           content: data.content,
           authorId: parseInt(data.authorId),
           readingTime: parseInt(data.readingTime),
-          isEditorPick: false,
+          isEditorPick: data.isEditorPick,
           tags: data.tags,
         });
 
