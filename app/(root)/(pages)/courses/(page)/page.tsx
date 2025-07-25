@@ -1,7 +1,7 @@
 import CourseCard from "@/components/pages/courses/CourseCard";
-import { convertToPersianNumbers } from "@/utils";
+import { convertToPersianNumbers, fakeDelay } from "@/utils";
 import SortOptions from "@/components/Course/SortOptions";
-import CourseFilterOption from "@/components/Course/CourseFilterOption";
+import { FilterOption } from "@/components/Course/FilterOption";
 import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
 import NoResult from "@/components/shared/NoResult";
 import { NoCourseFound } from "@/constants/Icons";
@@ -17,7 +17,7 @@ interface Props {
 const CoursesPage = async (props: Props) => {
   const searchParams = await props.searchParams;
   const page = searchParams.page || 1;
-  const pageSize: number = 1;
+  const pageSize: number = 12;
 
   const result = await getCourses({
     isFree: searchParams.isFree,
@@ -30,6 +30,7 @@ const CoursesPage = async (props: Props) => {
     pageSize: pageSize,
   });
 
+  await fakeDelay(3000);
   if (!result) {
     return <p>Loading...</p>;
   }
@@ -47,23 +48,28 @@ const CoursesPage = async (props: Props) => {
           totalCoursesCount,
         )} عنوان آموزشی`}</p>
       </div>
+
       <div className="flex gap-4 mt-16">
-        <div className="max-lg:hidden">
+        <div className="w-[300px] max-lg:hidden">
           <BlogCardSideBar />
         </div>
 
         <div className="w-full flex flex-col gap-4">
-          <div className="w-full flex gap-4">
-            <CourseFilterOption className="sm:hidden" />
-            <SortOptions basePath="/courses" filters={courseSortFilter} />
+          <div className="max-sm:hidden lg:hidden">
+            <BlogCardSideBar />
           </div>
 
+          <div className="w-full flex gap-4">
+            <FilterOption title={"فیلتر"} sheetTitle={"فیلترها"}>
+              <BlogCardSideBar />
+            </FilterOption>
+            <SortOptions basePath="/courses" filters={courseSortFilter} />
+          </div>
           <NoResult
             icon={<NoCourseFound />}
             label="دوره‌‌ای با مشخصات مورد نظر پیدا نشد."
             hiddenCondition={courses?.length !== 0}
           />
-
           <div className="w-full h-min grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {courses?.map((course) => (
               <CourseCard

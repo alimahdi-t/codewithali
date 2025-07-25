@@ -6,7 +6,7 @@ import { courseLevelFilter } from "@/constants/filters";
 
 const BlogCardSideBar = () => {
   return (
-    <div className="flex flex-col  gap-4 w-[250px]  max-md:hidden max-h-screen sticky top-4">
+    <div className="flex flex-col  gap-4 max-h-screen sticky top-4">
       <FilterToggle label="فقط دوره‌های رایگان" filterParam="isFree" />
       <FilterToggle label="درحال پیش فروش" filterParam="isPreOrder" />
 

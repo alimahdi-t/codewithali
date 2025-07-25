@@ -1,4 +1,3 @@
-import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { Skeleton } from "@/components/ui/skeleton";
 import CourseCardLoading from "@/app/(root)/(pages)/courses/CourseCardLoading";
@@ -50,8 +49,11 @@ export default function LoadingCoursePage() {
 
         {/*---*/}
         <div className="flex flex-col w-full gap-4">
+          <SearchForm />
           <div className="flex gap-4">
-            <CourseFilterOption className="sm:hidden" />
+            {/*<FilterOption title="فیلتر" sheetTitle="فیلترها">*/}
+            {/*  <SearchForm />*/}
+            {/*</FilterOption>*/}
             <SortOptions basePath="/blog" filters={postSortFilter} />
           </div>
 
