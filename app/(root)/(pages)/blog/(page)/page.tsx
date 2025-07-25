@@ -1,6 +1,5 @@
 import BlogCard from "@/components/pages/Blog/BlogCard";
 import { getPostsAction } from "@/actions/posts/get-posts.action";
-import CourseFilterOption from "@/components/Course/CourseFilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { postSortFilter } from "@/constants/filters";
 import { convertToPersianNumbers, fakeDelay } from "@/utils";
@@ -47,7 +46,6 @@ const Blog = async (props: Props) => {
       </div>
 
       <div className="flex gap-4 mt-16">
-        {/*TODO: loading, no result, gird box for best posts*/}
         <div className="w-[350px] flex flex-col gap-4 max-lg:hidden">
           <SearchForm />
 
@@ -69,8 +67,13 @@ const Blog = async (props: Props) => {
         </div>
 
         <div className="flex flex-col w-full gap-4">
+          <div className="max-lg:hidden">
+            <SearchForm />
+          </div>
           <div className="flex gap-4">
-            <CourseFilterOption className="sm:hidden" />
+            {/*<FilterOption title="فیلتر" sheetTitle="فیلترها">*/}
+            {/*  <SearchForm />*/}
+            {/*</FilterOption>*/}
             <SortOptions basePath="/blog" filters={postSortFilter} />
           </div>
           {posts?.length === 0 && (

@@ -65,7 +65,7 @@ const SortOptions = ({
             </SheetTitle>
             <SheetDescription></SheetDescription>
           </SheetHeader>
-          <ul className="list-none flex flex-col items-center">
+          <ul className="list-none flex flex-col items-center px-8">
             {filters.map((item, index) => (
               <SheetClose key={index} asChild>
                 <li

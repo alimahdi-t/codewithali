@@ -1,5 +1,5 @@
 import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
-import CourseFilterOption from "@/components/Course/CourseFilterOption";
+import { FilterOption } from "@/components/Course/FilterOption";
 import SortOptions from "@/components/Course/SortOptions";
 import { Skeleton } from "@/components/ui/skeleton";
 import CourseCardLoading from "@/app/(root)/(pages)/courses/CourseCardLoading";
@@ -19,13 +19,15 @@ export default function LoadingCoursePage() {
         <Skeleton className="w-32 h-7 bg-gray-400 rounded-full" />
       </div>
       <div className="flex gap-4 mt-16">
-        <div className="max-lg:hidden">
+        <div className="w-[300px] max-lg:hidden">
           <BlogCardSideBar />
         </div>
 
         <div className="w-full flex flex-col gap-4">
           <div className="w-full flex gap-4">
-            <CourseFilterOption className="sm:hidden" />
+            <FilterOption title={"فیلتر"} sheetTitle={"فیلترها"}>
+              <BlogCardSideBar />
+            </FilterOption>
             <SortOptions basePath="/courses" filters={courseSortFilter} />
           </div>
 
