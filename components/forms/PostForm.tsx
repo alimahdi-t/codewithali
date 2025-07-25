@@ -32,6 +32,7 @@ import { Button } from "@/components/ui/button";
 import Loader from "@/components/common/Loader";
 import { updatePost } from "@/actions/updatePost.action";
 import { toast } from "sonner";
+import { useCurrentUser } from "@/hooks/use-current-user";
 
 interface PostFormProps {
   initialData?: z.infer<typeof EditPostSchema>; // For edit mode: data for pre-filling the form when editing an existing post
@@ -48,7 +49,11 @@ export default function PostForm({
 }: PostFormProps) {
   const router = useRouter();
   const [tags, setTags] = useState<Tag[]>([]);
+  const user = useCurrentUser();
 
+  if (!user) {
+    return null;
+  }
   const FormSchema = type === "edit" ? EditPostSchema : CreatePostSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -59,14 +64,14 @@ export default function PostForm({
       imageUrl: "",
       content: "",
       tags: [],
-      authorId: "",
+      authorId: user.id,
       readingTime: "",
       isEditorPick: false,
     },
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
+    // console.log(data);
     if (type === "edit") {
       if (!initialData?.id) {
         toast.error("خطا: شناسه مقاله نامعتبر است");
@@ -270,7 +275,12 @@ export default function PostForm({
                     <FormItem>
                       <FormLabel>ایدی نویسنده</FormLabel>
                       <FormControl>
-                        <Input type="text" className="leading-6" {...field} />
+                        <Input
+                          disabled={true}
+                          type="text"
+                          className="leading-6"
+                          {...field}
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
