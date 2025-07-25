@@ -47,13 +47,11 @@ export default function PostForm({
   role,
   path,
 }: PostFormProps) {
-  const router = useRouter();
-  const [tags, setTags] = useState<Tag[]>([]);
   const user = useCurrentUser();
 
-  if (!user) {
-    return null;
-  }
+  const router = useRouter();
+  const [tags, setTags] = useState<Tag[]>([]);
+
   const FormSchema = type === "edit" ? EditPostSchema : CreatePostSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -64,7 +62,7 @@ export default function PostForm({
       imageUrl: "",
       content: "",
       tags: [],
-      authorId: user.id,
+      authorId: user?.id,
       readingTime: "",
       isEditorPick: false,
     },
@@ -155,7 +153,9 @@ export default function PostForm({
   //   const newTags = field.value.filter((t: string) => t !== tag);
   //   form.setValue("tags", newTags);
   // };
-
+  if (!user) {
+    return null;
+  }
   return (
     <div className="flex justify-center">
       <div className="w-full max-w-3xl px-4">
