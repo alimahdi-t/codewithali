@@ -9,6 +9,8 @@ import { GetAllCoursesParams } from "@/actions/shared.types";
 import { getCourses } from "@/actions/courses/get-courses.action";
 import Pagination from "@/components/shared/Pagination";
 import { courseSortFilter } from "@/constants/filters";
+import { getPurchasedCourseIds } from "@/actions/order/get-purchased-course-ids.action";
+import { currentUser } from "@/lib/auth";
 
 interface Props {
   searchParams: Promise<GetAllCoursesParams>;
@@ -29,6 +31,10 @@ const CoursesPage = async (props: Props) => {
     categories: searchParams.categories,
     pageSize: pageSize,
   });
+  const user = await currentUser();
+  const purchasedCourseIds = user
+    ? await getPurchasedCourseIds(Number(user.id))
+    : [];
 
   await fakeDelay(3000);
   if (!result) {
@@ -76,6 +82,7 @@ const CoursesPage = async (props: Props) => {
                 key={course.id}
                 course={course}
                 className="col-span-1"
+                purchased={purchasedCourseIds.includes(course.id)}
               />
             ))}
           </div>
