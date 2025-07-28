@@ -18,10 +18,11 @@ interface Props {
 
 const CoursePage = async (props: Props) => {
   const params = await props.params;
-  const course = await getCourseBySlug({ slug: params.slug });
-  if (!course) {
+  const response = await getCourseBySlug({ slug: params.slug });
+  if (!response) {
     notFound();
   }
+  const { course, purchased } = response;
 
   const {
     id,
@@ -48,6 +49,7 @@ const CoursePage = async (props: Props) => {
           imageUrl={imageUrl}
           price={price}
           discount={discount}
+          purchased={purchased}
         />
         <div className="w-full flex flex-row gap-4 flex-1 pb-12 mt-12 max-lg:flex-col">
           <div className="flex-1 flex flex-col gap-4">
