@@ -35,6 +35,7 @@ model User {
   Comment Comment[]
 
   CartItem CartItem[]
+  orders   Order[]
 }
 
 model Account {
@@ -100,6 +101,8 @@ model Course {
   DiscountCodeCourse DiscountCodeCourse[]
 
   CartItem CartItem[]
+
+  OrderItem OrderItem[]
 }
 
 // ✅
@@ -225,6 +228,46 @@ model CartItem {
   @@id([userId, courseId]) // Composite primary key
 }
 
+
+model Order {
+  id          Int          @id @default(autoincrement())
+  amount      Int
+  OrderStatus OrderStatus  @default(PENDING)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user_id     Int
+  user        User         @relation(fields: [user_id], references: [id])
+
+  items       OrderItem[]  // 👈 This line enables reverse relation
+}
+
+
+
+model OrderItem {
+  id                 Int       @id @default(autoincrement())
+  name               String
+  price              Int       // Original price before discount
+  finalPrice         Int       // Price after applying discount
+  discountPercentage Int
+  course_id          Int
+  orderId            Int
+
+  course             Course    @relation(fields: [course_id], references: [id])
+  order              Order     @relation(fields: [orderId], references: [id])
+
+  createdAt          DateTime  @default(now())
+}
+
+
+
+
+
+enum OrderStatus {
+  PENDING     // در انتظار پرداخت
+  PAID        // پرداخت شده
+  Filled      // ناموفق
+  REFUNDED    // بازپرداخت شده
+}
 
 enum DiscountType {
   PERCENTAGE
