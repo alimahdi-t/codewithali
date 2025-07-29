@@ -4,6 +4,8 @@ import CourseCard from "@/components/pages/courses/CourseCard";
 import { getPostsAction } from "@/actions/posts/get-posts.action";
 import BlogCard from "@/components/pages/Blog/BlogCard";
 import Image from "next/image";
+import { getPurchasedCourseIds } from "@/actions/order/get-purchased-course-ids.action";
+import { currentUser } from "@/lib/auth";
 
 export default async function Home() {
   const coursesResult = await getCourses({ page: 1, pageSize: 12 });
@@ -12,6 +14,10 @@ export default async function Home() {
   if (!coursesResult || !postsResult) {
     return null;
   }
+  const user = await currentUser();
+  const purchasedCourseIds = user
+    ? await getPurchasedCourseIds(Number(user.id))
+    : [];
   const { posts } = postsResult;
   const { courses } = coursesResult;
   // await fakeDelay(1000);
@@ -66,7 +72,11 @@ export default async function Home() {
           link={{ title: "مشاهده همه", href: "/courses" }}
         >
           {courses.map((course) => (
-            <CourseCard key={course.id} course={course} />
+            <CourseCard
+              key={course.id}
+              course={course}
+              purchased={purchasedCourseIds.includes(course.id)}
+            />
           ))}
         </SectionBlock>
       )}
