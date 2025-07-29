@@ -5,9 +5,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Price from "@/components/common/Price";
 import { convertToPersianAndFormat } from "@/utils";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ApplyDiscountCodeForm } from "@/components/forms/ApplyDiscountCodeForm";
+import { SubmitOrderForm } from "@/app/(root)/(shopping)/checkout/_components/SubmitOrderForm";
 
 interface Props {
   discount?: string;
@@ -24,9 +24,9 @@ export const Cart = async ({ discount, cart }: Props) => {
   if (!response?.data) {
     return <CartEmpty />;
   }
+
   const { data, payableAmount, totalDiscount, totalPrice } = response;
   const serverCart = response.data;
-  console.log(serverCart);
   return (
     <div className="w-full flex flex-col">
       <h2 className="c-text-h3">ثبت سفارش</h2>
@@ -45,32 +45,26 @@ export const Cart = async ({ discount, cart }: Props) => {
                   <p>مبلغ کل</p>
                   <Price
                     price={totalPrice}
-                    // price={calculateTotalPrice(serverCart)}
                     classname="font-normal text-sm gap-1"
                   />
                 </div>
                 <div className="mt-4 flex items-center justify-between text-action-error">
                   <p>تخفیف</p>
                   <p className="font-normal text-sm gap-1">
-                    {`${convertToPersianAndFormat(
-                      totalDiscount,
-                      // calculateTotalDiscount(serverCart),
-                    )} تومان`}
+                    {`${convertToPersianAndFormat(totalDiscount)} تومان`}
                   </p>
                 </div>
                 <Separator className="mt-4" />
                 <div className="mt-6 flex items-center justify-between text-sm font-medium">
                   <p className="font-bold">مبلغ قابل پرداخت</p>
                   <p className="font-bold gap-1">
-                    {`${convertToPersianAndFormat(
-                      payableAmount,
-                      // calculatePayableAmount(serverCart),
-                    )} تومان`}
+                    {`${convertToPersianAndFormat(payableAmount)} تومان`}
                   </p>
                 </div>
-                <Button className="w-full mt-8 text-base font-medium">
-                  پرداخت
-                </Button>
+                <SubmitOrderForm
+                  courseIds={serverCart.map((c) => c.id)}
+                  discountCode={discount}
+                />
                 <p className="text-xs font-normal mt-2.5 text-muted-foreground">
                   پرداخت و ثبت سفارش، به منزله مطالعه و پذیرفتن
                   <Link className="text-primary" href="#">

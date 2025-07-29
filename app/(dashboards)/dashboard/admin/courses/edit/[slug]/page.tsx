@@ -8,10 +8,11 @@ interface Props {
 
 const EditCoursePage = async (props: Props) => {
   const params = await props.params;
-  const course = await getCourseBySlug({ slug: params.slug });
-  if (!course) {
+  const response = await getCourseBySlug({ slug: params.slug });
+  if (!response) {
     notFound();
   }
+  const { course } = response;
 
   return (
     <div className="w-full flex flex-col items-center py-12">
