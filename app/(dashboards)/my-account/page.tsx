@@ -1,40 +1,34 @@
-import {
-  HiOutlineBookOpen,
-  HiOutlineCreditCard,
-  HiOutlineCurrencyDollar,
-} from "react-icons/hi";
-import { convertToPersianNumbers } from "@/utils";
-
-import { IconType } from "react-icons";
+import { DashboardStatBox } from "@/components/dashboard/DashboardStatBox";
 
 const Dashboard = () => {
   return (
-    <div className="w-full bg-violet-500 space-y-8">
-      <div className="grid lg:grid-cols-4 grid-cols-2 gap-4">
-        <OverviewBox
-          label="دوره های من"
-          value={`${convertToPersianNumbers(17)} دوره`}
-          Icon={HiOutlineBookOpen}
+    <div className="w-full space-y-8">
+      <section className="lg:dark:darker-gradient-app bg-white flex items-center justify-between flex-wrap gap-x-3 gap-y-4 px-5 sm:px-7 py-5 lg:rounded-lg">
+        <DashboardStatBox
+          iconSrc="/images/dashboard/courses-empty.png"
+          value="19 دوره"
+          label="دوره ها من"
         />
-        <OverviewBox
-          label="موجودی حساب"
-          value={`${convertToPersianNumbers(0)} تومان`}
-          Icon={HiOutlineCurrencyDollar}
-          className="bg-green-500"
+        <DashboardStatBox
+          iconSrc="/images/dashboard/questions-empty.png"
+          value="0 پرسش"
+          label="پرسش پاسخ"
         />
-        <OverviewBox
-          label="مجموع پرداخت ها"
-          value={`${convertToPersianNumbers(0)} تومان`}
-          Icon={HiOutlineCreditCard}
-          className="bg-yellow-400"
+        <DashboardStatBox
+          iconSrc="/images/dashboard/tickets-empty.png"
+          value="0 تیکت"
+          label="تیکت ها"
         />
-        <OverviewBox
-          label="تیکت های من"
-          value={`${convertToPersianNumbers(6)} تیکت`}
-          Icon={HiOutlineCurrencyDollar}
-          className="bg-violet-500"
+        <DashboardStatBox
+          iconSrc="/images/dashboard/transactions-empty.png"
+          value={
+            <>
+              0 <span className="text-label font-regular mr-0.5">تومان</span>
+            </>
+          }
+          label="کیف پول"
         />
-      </div>
+      </section>
       <h1 className="text-2xl font-bold leading-6">داشبورد</h1>
       <div className="w-full bg-white h-[512px] px-4 rounded-2xl shadow-sm"></div>
     </div>
@@ -42,27 +36,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-
-const OverviewBox = ({
-  label,
-  value,
-  Icon,
-  className = "bg-sky-400",
-}: {
-  label: string;
-  value: string;
-  Icon: IconType;
-  className?: string;
-}) => {
-  return (
-    <div
-      className={`w-full h-min rounded-2xl shadow-sm flex items-center gap-2 ${className}`}
-    >
-      <Icon className="text-white w-20 h-20 p-4" />
-      <div className="space-y-2">
-        <h4 className="text-white text-sm font-semibold">{label}</h4>
-        <p className="text-white font-semibold">{value}</p>
-      </div>
-    </div>
-  );
-};
