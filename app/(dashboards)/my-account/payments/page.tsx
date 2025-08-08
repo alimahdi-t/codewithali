@@ -1,7 +1,12 @@
+import { SectionBlock } from "@/components/dashboard/SectionBlock";
+
 export default function UserPaymentPage() {
   return (
     <>
-      <p>user payment page</p>
+      <SectionBlock
+        title="تیکت های من"
+        addButton={{ label: "ایجاد تیکت جدید", href: "#" }}
+      />
     </>
   );
 }
