@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Footer from "@/components/shared/Footer/Footer";
 import Navbar from "@/components/shared/Navbar/Navbar";
+import { Button } from "@/components/ui/button";
 
 export default function NotFoundPage() {
   return (
@@ -14,8 +15,13 @@ export default function NotFoundPage() {
             متأسفیم، صفحه مورد نظر شما پیدا نشد.
           </p>
           <div className="mt-4">
-            <Link className="text-primary text-sm font-semibold" href={"/"}>
-              برو به خانه
+            <Link href={"/"}>
+              <Button
+                variant="ghost"
+                className="text-primary text-sm font-semibold hover:text-primary"
+              >
+                برو به خانه
+              </Button>
             </Link>
           </div>
         </div>
