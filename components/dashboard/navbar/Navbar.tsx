@@ -2,7 +2,7 @@ import ThemeButton from "@/components/common/ThemeButton";
 import ShowDate from "@/components/common/ShowDate";
 import { Logo } from "@/components/Logo";
 import React from "react";
-import { AdminMobileSideBar } from "@/app/(dashboards)/_components/AdminSidebar";
+import { AdminMobileSideBar } from "@/components/dashboard/sidebar/AdminMobileSideBar";
 import CartCountClient from "@/components/shared/cart/CartButtonWrapper";
 
 const DashboardNavbar = () => {

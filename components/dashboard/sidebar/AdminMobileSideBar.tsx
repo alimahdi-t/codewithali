@@ -1,9 +1,5 @@
 "use client";
-import React from "react";
-
-import { HiOutlineBars3 } from "react-icons/hi2";
-import { Separator } from "@/components/ui/separator";
-import { UserProfileCard } from "@/components/auth/user-profile-card";
+import { useCurrentRole } from "@/hooks/use-cuurent-role";
 import {
   Sheet,
   SheetClose,
@@ -13,33 +9,12 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { MenuItem } from "@/app/(dashboards)/_components/AdminSidebar/MenuItem";
+import { HiOutlineBars3 } from "react-icons/hi2";
+import { UserProfileCard } from "@/components/auth/user-profile-card";
+import { Separator } from "@/components/ui/separator";
 import { getDashboardLinks } from "@/constants/dashboardsLinks";
-import { useCurrentRole } from "@/hooks/use-cuurent-role";
-
-export const AdminSidebar = () => {
-  const role = useCurrentRole();
-  return (
-    <aside
-      className={`hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col border-l c-border bg-card shadow-sm`}
-    >
-      <div
-        className={`"w-full flex grow flex-col overflow-y-auto scroll-thin px-2 pb-4 py-4`}
-      >
-        <UserProfileCard />
-        <Separator className="my-4" />
-        <ul role="list" className="flex flex-col gap-0.5">
-          {getDashboardLinks(role).map((item, i) => (
-            <MenuItem item={item} key={i} />
-          ))}
-          <Separator className="" />
-
-          <MenuItem isLogout={true} />
-        </ul>
-      </div>
-    </aside>
-  );
-};
+import { MenuItem } from "@/components/dashboard/sidebar/MenuItem";
+import React from "react";
 
 export const AdminMobileSideBar = () => {
   const role = useCurrentRole();
