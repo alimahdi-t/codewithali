@@ -46,10 +46,10 @@ export const CreateCourseSchema = z.object({
     ),
   imageUrl: z.string().url("لینک تصویر معتبر نیست."),
   level: z.nativeEnum(Level, {
-    errorMap: () => ({ message: "سطح نامعتبر است." }),
+    error: () => ({ message: "سطح نامعتبر است." }),
   }),
   status: z.nativeEnum(CourseStatus, {
-    errorMap: () => ({ message: "وضعیت نامعتبر است." }),
+    error: () => ({ message: "وضعیت نامعتبر است." }),
   }),
   price: z.string().min(1, "قیمت نمی تواند خالی باشد"),
   instructorId: z.string().min(1, "شناسه مدرس نمی تواند خالی باشد"),
