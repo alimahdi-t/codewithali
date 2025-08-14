@@ -11,10 +11,10 @@ import Link from "next/link";
 import FormSuccess from "@/components/FormSuccess";
 import FormError from "@/components/FormError";
 import { login } from "@/actions/auth/login-action";
-import Loader from "@/components/common/Loader";
 import { useTransition } from "react";
 import { toast } from "sonner";
 import { LocalizedInput } from "@/components/shared/LocalizedInput";
+import { SubmitButton } from "@/components/forms/SubmitButton";
 
 export const LoginForm = () => {
   const { success, setSuccess, error, setError } = useFormStatus();
@@ -34,18 +34,14 @@ export const LoginForm = () => {
     setSuccess("");
     setError("");
     startTransition(() => {
-      login(data)
-        .then((response) => {
-          if (response?.error) {
-            setError(response.error);
-          }
-          if (response.success) {
-            toast.success(response.success);
-          }
-        })
-        .catch(() => {
-          setError("Something went wrong!");
-        });
+      login(data).then((response) => {
+        if (response?.error) {
+          setError(response.error);
+        }
+        if (response?.success) {
+          toast.success(response.success);
+        }
+      });
     });
   };
 
@@ -66,7 +62,7 @@ export const LoginForm = () => {
               label="ایمیل"
               direction="ltr"
               textAlign="left"
-              type="email"
+              type="text"
             />
             <LocalizedInput
               control={form.control}
@@ -91,9 +87,7 @@ export const LoginForm = () => {
 
           <FormSuccess message={success} />
           <FormError message={error} />
-          <Button type="submit" className="w-full mt-4">
-            {isPending ? <Loader /> : "ورود"}
-          </Button>
+          <SubmitButton pending={isPending} label="ورود" />
         </form>
       </Form>
     </CardWrapper>

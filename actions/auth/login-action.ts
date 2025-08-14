@@ -35,14 +35,14 @@ export async function login(values: z.infer<typeof LoginSchema>) {
 
   //TODO: if two factor confirmation is enabled, validate the confirmation
 
-  // TODO: Redirect user based of its type
   try {
-    await signIn("credentials", {
+    const x = await signIn("credentials", {
       email,
       password,
       redirect: true,
       redirectTo: ROLE_LOGIN_REDIRECTS[existingUser.role],
     });
+
     return {
       success: `${
         existingUser.firstName + " " + existingUser.lastName + " "
