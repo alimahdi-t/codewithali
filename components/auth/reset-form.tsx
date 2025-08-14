@@ -5,20 +5,12 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
 import FormSuccess from "@/components/FormSuccess";
 import FormError from "@/components/FormError";
-import Loader from "@/components/common/Loader";
 import { useTransition } from "react";
+import { LocalizedInput } from "@/components/shared/LocalizedInput";
+import { SubmitButton } from "@/components/forms/SubmitButton";
 
 export const ResetForm = () => {
   const { success, setSuccess, error, setError } = useFormStatus();
@@ -34,7 +26,10 @@ export const ResetForm = () => {
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
+    startTransition(() => {
+      // TODO: complete here
+      console.log(data);
+    });
   };
 
   return (
@@ -48,32 +43,21 @@ export const ResetForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4">
-            <FormField
+            <LocalizedInput
               control={form.control}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6 text-gray-900">
-                    ایمیل
-                  </FormLabel>
-                  <FormControl>
-                    <Input type="email" autoComplete="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="ایمیل"
+              direction="ltr"
+              textAlign="left"
+              type="text"
             />
-          </div>
 
-          <FormSuccess message={success} />
-          <FormError message={error} />
-          <Button
-            disabled={!form.formState.isValid}
-            type="submit"
-            className="w-full mt-4"
-          >
-            {isPending ? <Loader /> : "ارسال"}
-          </Button>
+            <FormSuccess message={success} />
+            <FormError message={error} />
+            <div className="mt-8">
+              <SubmitButton pending={isPending} label="ارسال" />
+            </div>
+          </div>
         </form>
       </Form>
     </CardWrapper>

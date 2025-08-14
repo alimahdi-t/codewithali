@@ -2,7 +2,6 @@
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -47,8 +46,9 @@ export default function CreateDiscountCodeForm({ courses }: Props) {
   const FormSchema = CreateDiscountCodeSchema;
 
   const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
-    mode: "onTouched",
+    //TODO: check here later
+    // resolver: zodResolver(FormSchema),
+    mode: "onSubmit",
     defaultValues: {
       code: "",
       percentage: undefined,
