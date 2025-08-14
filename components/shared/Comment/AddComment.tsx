@@ -4,7 +4,7 @@ import { CommentForm } from "@/components/forms/CommentForm";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { toast } from "sonner";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { HiOutlineChatBubbleBottomCenterText } from "react-icons/hi2";
 
 interface Props {
@@ -36,7 +36,7 @@ export const AddComment = ({
         <div className="flex items-center gap-1">
           <h3 className="text-lg font-medium">نظرات</h3>
           {showCommentCount && commentCount > 0 && (
-            <span className="text-sm">{`(${convertToPersianNumbers(
+            <span className="text-sm">{`(${toPersianNumber(
               commentCount,
             )})`}</span>
           )}

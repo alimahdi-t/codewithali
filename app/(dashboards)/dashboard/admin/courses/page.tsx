@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import Price from "@/components/common/Price";
 import { getCourses } from "@/actions/courses/get-courses.action";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import CourseLevel from "@/components/CourseLevel";
 import Link from "next/link";
 import { CourseActions } from "@/app/(dashboards)/dashboard/admin/courses/_components/CourseAction";
@@ -71,7 +71,7 @@ const CoursesListPage = async () => {
                   className="h-[72px] text[#5A6A85] text-sm"
                 >
                   <TableCell className="text-xs font-normal">
-                    {convertToPersianNumbers(index + 1)}
+                    {toPersianNumber(index + 1)}
                   </TableCell>
                   <TableCell>
                     <TruncatedTooltipText text={course.title} />

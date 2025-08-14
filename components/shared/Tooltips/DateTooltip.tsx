@@ -4,7 +4,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import moment from "jalali-moment";
 import { ReactNode } from "react";
 
@@ -20,13 +20,11 @@ export const DateTooltip = ({ date, children }: Props) => {
         <TooltipTrigger>
           {children
             ? children
-            : convertToPersianNumbers(
-                moment(date).locale("fa").format("YYYY/MM/DD"),
-              )}
+            : toPersianNumber(moment(date).locale("fa").format("YYYY/MM/DD"))}
         </TooltipTrigger>
         <TooltipContent>
           <p className="text-xs">
-            {convertToPersianNumbers(
+            {toPersianNumber(
               moment(date).locale("fa").format("DD MMM YYYY, HH:mm"),
             )}
           </p>

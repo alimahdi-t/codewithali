@@ -18,7 +18,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import {
   ChevronLeft,
   ChevronRight,
@@ -196,9 +196,9 @@ export function GenericTable<T extends { id: string | number }>({
         <div className="flex items-center justify-between mx-4 my-4">
           <div>
             <span className="text-xs">
-              {`${convertToPersianNumbers(
-                selectedRows.length,
-              )} از ${convertToPersianNumbers(data.length)} ردیف انتخاب شده.`}
+              {`${toPersianNumber(selectedRows.length)} از ${toPersianNumber(
+                data.length,
+              )} ردیف انتخاب شده.`}
             </span>
           </div>
           <div className="flex items-center gap-x-8">
@@ -217,7 +217,7 @@ export function GenericTable<T extends { id: string | number }>({
                 <SelectContent>
                   {[5, 10, 20, 50].map((num) => (
                     <SelectItem key={num} value={num.toString()}>
-                      {convertToPersianNumbers(num)}
+                      {toPersianNumber(num)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -226,8 +226,8 @@ export function GenericTable<T extends { id: string | number }>({
             </div>
             <div className="flex justify-between items-center py-3 text-sm space-x-4">
               <div className="w-24 text-center">
-                صفحه {convertToPersianNumbers(currentPage)} از{" "}
-                {convertToPersianNumbers(totalPages)}
+                صفحه {toPersianNumber(currentPage)} از{" "}
+                {toPersianNumber(totalPages)}
               </div>
               <div className="flex items-center gap-2">
                 <Button

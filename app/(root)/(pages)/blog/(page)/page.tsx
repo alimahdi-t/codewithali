@@ -2,7 +2,7 @@ import BlogCard from "@/components/pages/Blog/BlogCard";
 import { getPostsAction } from "@/actions/posts/get-posts.action";
 import SortOptions from "@/components/Course/SortOptions";
 import { postSortFilter } from "@/constants/filters";
-import { convertToPersianNumbers, fakeDelay } from "@/utils";
+import { fakeDelay, toPersianNumber } from "@/utils";
 import NoResult from "@/components/shared/NoResult";
 import { getEditorPickPosts } from "@/actions/posts/get-picked-posts.action";
 import ArticleCard from "@/components/pages/Blog/ArticleCard";
@@ -40,7 +40,7 @@ const Blog = async (props: Props) => {
           <h2 className="c-text-h2">آخرین مقالات</h2>
         </div>
 
-        <p className="mt-2 text-lg leading-8 text-secondary">{`${convertToPersianNumbers(
+        <p className="mt-2 text-lg leading-8 text-secondary">{`${toPersianNumber(
           totalCount,
         )} مقاله`}</p>
       </div>

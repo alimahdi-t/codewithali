@@ -1,4 +1,4 @@
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import {
   Table,
   TableBody,
@@ -80,7 +80,7 @@ const MessagesPage = async (props: Props) => {
                   className="h-[72px] text[#5A6A85] text-sm"
                 >
                   <TableCell className="text-xs font-normal">
-                    {convertToPersianNumbers(index + 1)}
+                    {toPersianNumber(index + 1)}
                   </TableCell>
                   <TableCell>{message.title}</TableCell>
                   <TableCell className="font-sans text-dark-400_light-600">
@@ -90,7 +90,7 @@ const MessagesPage = async (props: Props) => {
                     <MessageStatus status={message.status} />
                   </TableCell>
                   <TableCell className="text-dark-400_light-300">
-                    {convertToPersianNumbers(
+                    {toPersianNumber(
                       moment(message.createdAt)
                         .locale("fa")
                         .format("YYYY/MM/DD"),

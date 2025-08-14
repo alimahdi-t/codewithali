@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import prisma from "@/lib/prisma";
 
 export async function deleteAllDiscount({ ids }: { ids: string[] }) {
@@ -18,7 +18,7 @@ export async function deleteAllDiscount({ ids }: { ids: string[] }) {
 
     return {
       success: true,
-      message: `${convertToPersianNumbers(
+      message: `${toPersianNumber(
         deleted.count.toString(),
       )} تخفیف با موفقیت حذف شد.`,
     };

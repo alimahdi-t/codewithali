@@ -1,4 +1,4 @@
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 export const DiscountBadge = ({ percentage }: { percentage?: number }) => {
   const noDiscount = !percentage || percentage <= 0;
@@ -20,9 +20,7 @@ export const DiscountBadge = ({ percentage }: { percentage?: number }) => {
     <span
       className={`${className} px-2 inline-block py-1 rounded-xl text-xs font-light leading-5 text-center text-nowrap`}
     >
-      {noDiscount
-        ? "بدون تخفیف"
-        : convertToPersianNumbers(`${percentage}% تخفیف`)}
+      {noDiscount ? "بدون تخفیف" : toPersianNumber(`${percentage}% تخفیف`)}
     </span>
   );
 };

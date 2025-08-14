@@ -1,11 +1,15 @@
 export function extractTextFromHTML(htmlString: string): string {
   return htmlString.replace(/<\/?[^>]+(>|$)/g, "");
 }
-export const convertToPersianNumbers = (number: string | number): string => {
+export const toPersianNumber = (number: string | number): string => {
   const persianDigits = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
   return number
     .toString()
     .replace(/\d/g, (digit) => persianDigits[parseInt(digit, 10)]);
+};
+
+export const toEnglishNumber = (input: string): string => {
+  return input.replace(/[۰-۹]/g, (d) => "0123456789"["۰۱۲۳۴۵۶۷۸۹".indexOf(d)]);
 };
 
 export function convertToPersianAndFormat(number: string | number): string {

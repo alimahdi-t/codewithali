@@ -5,7 +5,7 @@ import {
 } from "@/public/assets/icons/hugeIcons";
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 const footerInfo = {
   email: "seyyedalimehdi@gmail.com",
@@ -67,7 +67,7 @@ const Footer = () => {
             <div className="flex gap-2 justify-center items-center">
               <Call02Icon className="size-5" />
               <Link href="tel:09030579074" className="leading-5">
-                {convertToPersianNumbers(footerInfo.phoneNumber)}
+                {toPersianNumber(footerInfo.phoneNumber)}
               </Link>
             </div>
             <div className="flex gap-2 justify-center items-center">

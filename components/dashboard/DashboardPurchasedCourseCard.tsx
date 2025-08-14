@@ -2,7 +2,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { ImageCard } from "@/components/common/card/ImageCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { HiMiniStar } from "react-icons/hi2";
 import { ArrowLeft02Icon } from "@/public/assets/icons/huge-icon";
 
@@ -77,7 +77,7 @@ export function DashboardPurchasedCourseCard({
             </Link>
           </div>
           <div className="flex items-center justify-center gap-1 text-sm text-yellow-500 leading-5 dark:text-yellow-400">
-            <p>{convertToPersianNumbers(rating)}</p>
+            <p>{toPersianNumber(rating)}</p>
             <HiMiniStar className="size-4" />
           </div>
         </div>

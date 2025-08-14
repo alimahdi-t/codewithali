@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import {
   Menubar,
   MenubarContent,
@@ -63,7 +63,7 @@ const UsersList = async () => {
                   key={user.id}
                   className="border-gray-200/50 h-12 hover:bg-gray-100"
                 >
-                  <TableCell>{convertToPersianNumbers(index + 1)}</TableCell>
+                  <TableCell>{toPersianNumber(index + 1)}</TableCell>
                   <TableCell>
                     <Link
                       href={`/courses/${user.lastName}`}

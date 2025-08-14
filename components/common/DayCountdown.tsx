@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import moment from "jalali-moment";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 interface Props {
   date: Date;
@@ -47,17 +47,17 @@ export const DayCountdown = ({ date }: Props) => {
   const getRelativePastTime = () => {
     const { days, hours, minutes, seconds } = timeLeft;
 
-    if (days > 0) return `${convertToPersianNumbers(days)} روز گذشته`;
-    if (hours > 0) return `${convertToPersianNumbers(hours)} ساعت گذشته`;
-    if (minutes > 0) return `${convertToPersianNumbers(minutes)} دقیقه گذشته`;
-    return `${convertToPersianNumbers(seconds)} ثانیه گذشته`;
+    if (days > 0) return `${toPersianNumber(days)} روز گذشته`;
+    if (hours > 0) return `${toPersianNumber(hours)} ساعت گذشته`;
+    if (minutes > 0) return `${toPersianNumber(minutes)} دقیقه گذشته`;
+    return `${toPersianNumber(seconds)} ثانیه گذشته`;
   };
 
-  const timeStr = `${convertToPersianNumbers(
+  const timeStr = `${toPersianNumber(
     String(timeLeft.hours).padStart(2, "0"),
-  )}:${convertToPersianNumbers(
+  )}:${toPersianNumber(
     String(timeLeft.minutes).padStart(2, "0"),
-  )}:${convertToPersianNumbers(String(timeLeft.seconds).padStart(2, "0"))}`;
+  )}:${toPersianNumber(String(timeLeft.seconds).padStart(2, "0"))}`;
 
   if (timeLeft.past) {
     return (
@@ -68,7 +68,7 @@ export const DayCountdown = ({ date }: Props) => {
   } else {
     return timeLeft.days > 0 ? (
       <span className="px-2 inline-block py-1 rounded-xl text-xs font-light leading-5 text-center text-nowrap text-action-success bg-action-light-success dark:bg-action-success/30">
-        {`${convertToPersianNumbers(timeLeft.days)} روز باقی‌مانده`}
+        {`${toPersianNumber(timeLeft.days)} روز باقی‌مانده`}
       </span>
     ) : (
       <span className="w-36 px-2 inline-block py-1 rounded-xl text-xs font-light leading-5 text-center text-nowrap text-action-success bg-action-light-success dark:bg-action-success/30">

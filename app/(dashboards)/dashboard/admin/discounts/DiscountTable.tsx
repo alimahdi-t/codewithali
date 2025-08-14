@@ -1,7 +1,7 @@
 "use client";
 
 import { GenericTable } from "@/components/shared/Table/GenericTable";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { ActionGroup } from "@/components/common/ActionGroup";
 import { Button } from "@/components/ui/button";
 import { Prisma } from "@/prisma/client";
@@ -38,7 +38,7 @@ export const DiscountTable = ({ data }: { data: CourseWithDiscount[] }) => {
       key: "id",
       header: "شناسه",
       className: "w-24",
-      render: (item: CourseWithDiscount) => convertToPersianNumbers(item.id),
+      render: (item: CourseWithDiscount) => toPersianNumber(item.id),
     },
     {
       key: "image",

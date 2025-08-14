@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import {
   Menubar,
   MenubarContent,
@@ -63,7 +63,7 @@ const PostsPage = async () => {
                   className="h-[72px] text[#5A6A85] text-sm"
                 >
                   <TableCell className="text-xs font-normal">
-                    {convertToPersianNumbers(index + 1)}
+                    {toPersianNumber(index + 1)}
                   </TableCell>
                   <TableCell>
                     <TruncatedTooltipText text={post.title} />
@@ -74,7 +74,7 @@ const PostsPage = async () => {
                     </Link>
                   </TableCell>
                   <TableCell>
-                    {`${convertToPersianNumbers(post.readingTime)} دقیقه`}
+                    {`${toPersianNumber(post.readingTime)} دقیقه`}
                   </TableCell>
                   <TableCell className="text-dark-400_light-600">
                     {post.isEditorPick ? "بله" : "خیر"}

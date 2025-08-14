@@ -1,6 +1,6 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { CourseItem } from "@/app/(root)/(shopping)/checkout/_components/CourseItem";
 import { Prisma } from "@/prisma/client";
 import { deleteFromCart } from "@/actions/cart/delete-from-cart.action";
@@ -40,7 +40,7 @@ export const CartItems = ({ cartItems }: Props) => {
     <Card className="flex">
       <CardHeader>
         <CardTitle>
-          {convertToPersianNumbers(`آموزش‌ها (${cartItems.length})`)}
+          {toPersianNumber(`آموزش‌ها (${cartItems.length})`)}
         </CardTitle>
       </CardHeader>
       <CardContent>

@@ -1,5 +1,5 @@
 import moment from "jalali-moment";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { StudentIcon } from "@/public/assets/icons/hugeIcons";
 import {
   Tooltip,
@@ -53,14 +53,14 @@ export const Comment = ({
           <Tooltip>
             <TooltipTrigger>
               <p className="text-xs text-dark-400_light-600">
-                {convertToPersianNumbers(
+                {toPersianNumber(
                   moment(date).locale("fa").format("YYYY/MM/DD"),
                 )}
               </p>
             </TooltipTrigger>
             <TooltipContent>
               <p className="text-[10px]">
-                {convertToPersianNumbers(
+                {toPersianNumber(
                   moment(date).locale("fa").format("DD MMM YYYY, HH:mm"),
                 )}
               </p>

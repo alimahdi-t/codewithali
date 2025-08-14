@@ -1,7 +1,7 @@
 import { HiMiniChevronLeft, HiMiniChevronRight } from "react-icons/hi2";
 import React, { useMemo, useState } from "react";
 import moment, { Moment } from "jalali-moment";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { daysOfWeek } from "@/constants";
 import {
   Dialog,
@@ -98,9 +98,7 @@ const Calender: React.FC<CalenderProps> = ({
               />
             </TooltipWrapper>
             <p className="col-span-5 inset-0 flex items-center justify-center font-bold text-lg">
-              {`${date.format("MMMM")} ${convertToPersianNumbers(
-                date.format("YYYY"),
-              )}`}
+              {`${date.format("MMMM")} ${toPersianNumber(date.format("YYYY"))}`}
             </p>
             <TooltipWrapper label={"ماه قبل"}>
               <HiMiniChevronLeft
@@ -125,7 +123,7 @@ const Calender: React.FC<CalenderProps> = ({
                 key={`prev-${day}`}
                 className="mx-auto text-center text-gray-400 w-10 h-10 rounded-full flex items-center justify-center"
               >
-                {convertToPersianNumbers(day)}
+                {toPersianNumber(day)}
               </span>
             ))}
 
@@ -143,7 +141,7 @@ const Calender: React.FC<CalenderProps> = ({
                     : "hover:bg-stone-100"
                 }`}
               >
-                {convertToPersianNumbers(day)}
+                {toPersianNumber(day)}
               </span>
             ))}
 
@@ -152,7 +150,7 @@ const Calender: React.FC<CalenderProps> = ({
                 key={`next-${day}`}
                 className="mx-auto text-center text-gray-400 w-10 h-10 rounded-full flex items-center justify-center"
               >
-                {convertToPersianNumbers(day)}
+                {toPersianNumber(day)}
               </span>
             ))}
           </div>

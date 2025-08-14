@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { convertToPersianAndFormat, convertToPersianNumbers } from "@/utils";
+import { convertToPersianAndFormat, toPersianNumber } from "@/utils";
 import { Button } from "@/components/ui/button";
 import { HiOutlineXMark } from "react-icons/hi2";
 
@@ -40,7 +40,7 @@ export const CourseItem = ({
             {/*Discount amount*/}
             <p className="text-sm font-light whitespace-nowrap text-action-error">
               {discountAmount !== 0 &&
-                convertToPersianNumbers(`${discountAmount} تومان تخفیف`)}
+                toPersianNumber(`${discountAmount} تومان تخفیف`)}
             </p>
           </div>
         </div>

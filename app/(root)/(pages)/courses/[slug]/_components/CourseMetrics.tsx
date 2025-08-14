@@ -3,7 +3,7 @@ import {
   HiOutlineInformationCircle,
   HiOutlineUsers,
 } from "react-icons/hi2";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 interface Props {
   // courseStatus: string;
@@ -18,27 +18,27 @@ const CourseMetrics = ({}: Props) => {
     },
     {
       label: "مدت زمان",
-      value: `${convertToPersianNumbers(32)} ساعت`,
+      value: `${toPersianNumber(32)} ساعت`,
       icon: HiOutlineClock,
     },
     {
       label: "اخرین به روزرسانی",
-      value: convertToPersianNumbers(1276),
+      value: toPersianNumber(1276),
       icon: HiOutlineUsers,
     },
     {
       label: "تعداد دانشجو",
-      value: convertToPersianNumbers(1276),
+      value: toPersianNumber(1276),
       icon: HiOutlineUsers,
     },
     {
       label: "تعداد دانشجو",
-      value: convertToPersianNumbers(1276),
+      value: toPersianNumber(1276),
       icon: HiOutlineUsers,
     },
     {
       label: "تعداد دانشجو",
-      value: convertToPersianNumbers(1276),
+      value: toPersianNumber(1276),
       icon: HiOutlineUsers,
     },
   ];

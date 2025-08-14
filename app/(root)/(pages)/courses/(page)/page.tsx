@@ -1,5 +1,5 @@
 import CourseCard from "@/components/pages/courses/CourseCard";
-import { convertToPersianNumbers, fakeDelay } from "@/utils";
+import { fakeDelay, toPersianNumber } from "@/utils";
 import SortOptions from "@/components/Course/SortOptions";
 import { FilterOption } from "@/components/Course/FilterOption";
 import BlogCardSideBar from "@/components/Course/Sidebar/SidebarContainer";
@@ -50,7 +50,7 @@ const CoursesPage = async (props: Props) => {
           <h2 className="c-text-h2">دوره‌ها</h2>
         </div>
 
-        <p className="mt-2 text-lg leading-8 text-secondary">{`${convertToPersianNumbers(
+        <p className="mt-2 text-lg leading-8 text-secondary">{`${toPersianNumber(
           totalCoursesCount,
         )} عنوان آموزشی`}</p>
       </div>

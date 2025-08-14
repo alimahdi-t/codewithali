@@ -19,7 +19,7 @@ import CodeBlockLowlight from "@tiptap/extension-code-block-lowlight";
 import { all, createLowlight } from "lowlight";
 import TextDirection from "@/components/RichTextEditor/extensions/TextDirection";
 import { Skeleton } from "@/components/ui/skeleton";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 interface RichTextEditorProps {
   content: string;
@@ -156,10 +156,10 @@ export default function RichTextEditor({
             className="dark:fill-gray-900 fill-white"
           />
         </svg>
-        {convertToPersianNumbers(editor.storage.characterCount.characters())} /{" "}
-        {convertToPersianNumbers(charLimit)} حرف
+        {toPersianNumber(editor.storage.characterCount.characters())} /{" "}
+        {toPersianNumber(charLimit)} حرف
         <br />
-        {convertToPersianNumbers(editor.storage.characterCount.words())} کلمه
+        {toPersianNumber(editor.storage.characterCount.words())} کلمه
       </div>
 
       {/*<div dangerouslySetInnerHTML={{ __html: editor.getHTML() }} />*/}

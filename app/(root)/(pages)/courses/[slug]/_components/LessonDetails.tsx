@@ -1,4 +1,4 @@
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 interface Props {
   numberOfLessons?: number;
@@ -15,19 +15,19 @@ const LessonDetails = ({
     <div className="flex justify-center items-center text-xs gap-2 font-semibold text-gray-800">
       {numberOfLessons && (
         <div className="flex items-center gap-1 after:w-2 after:h-2 after:rounded-full after:bg-gray-200">
-          <p>{`${convertToPersianNumbers(numberOfLessons)} درسنامه`}</p>
+          <p>{`${toPersianNumber(numberOfLessons)} درسنامه`}</p>
         </div>
       )}
 
       {numberOfVideos && (
         <div className="flex items-center gap-1 after:w-2 after:h-2 after:rounded-full after:bg-gray-200">
-          <p>{`${convertToPersianNumbers(numberOfVideos)} ویدیو`}</p>
+          <p>{`${toPersianNumber(numberOfVideos)} ویدیو`}</p>
         </div>
       )}
 
       {numberOfHomeworks && (
         <div className="flex items-center gap-1">
-          <p>{`${convertToPersianNumbers(numberOfHomeworks)} تمرین`}</p>
+          <p>{`${toPersianNumber(numberOfHomeworks)} تمرین`}</p>
         </div>
       )}
     </div>

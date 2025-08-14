@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 interface Props {
   date?: Date | null;
@@ -49,7 +49,7 @@ export const TimerCountdown = ({ date, percentage }: Props) => {
   }, [date]);
 
   const formatTime = (num: number) =>
-    convertToPersianNumbers(num.toString().padStart(2, "0"));
+    toPersianNumber(num.toString().padStart(2, "0"));
 
   if (!date || !percentage || expired) {
     return;
@@ -58,33 +58,33 @@ export const TimerCountdown = ({ date, percentage }: Props) => {
   return (
     <div className="my-4 flex max-md:flex-col max-md:gap-y-4 items-center p-4 bg-gray-200/30 dark:bg-gray-100/5 rounded-lg justify-between text-xl">
       <p className="font-bold text-xl max-md:text-2xl text-red-500 dark:text-red-500/90">
-        {convertToPersianNumbers(`${percentage}% تخفیف تا `)}
+        {toPersianNumber(`${percentage}% تخفیف تا `)}
       </p>
       <div className="flex gap-3 text-muted-foreground">
         <div>
           <span className="w-10 text-dark-900_light-200 text-center font-bold text-2xl inline-block">
-            {convertToPersianNumbers(timeLeft.days)}
+            {toPersianNumber(timeLeft.days)}
           </span>
           <span className="text-base font-light">روز</span>
         </div>
         |
         <div>
           <span className="w-10 text-dark-900_light-200 text-center font-bold text-2xl inline-block">
-            {convertToPersianNumbers(timeLeft.hours)}
+            {toPersianNumber(timeLeft.hours)}
           </span>
           <span className="text-base font-light">ساعت</span>
         </div>
         |
         <div>
           <span className="w-10 text-dark-900_light-200 text-center font-bold text-2xl inline-block">
-            {convertToPersianNumbers(timeLeft.minutes)}
+            {toPersianNumber(timeLeft.minutes)}
           </span>
           <span className="text-base font-light">دقیقه</span>
         </div>
         |
         <div className="">
           <span className="w-10 text-action-error text-center font-bold text-2xl inline-block">
-            {convertToPersianNumbers(timeLeft.seconds)}
+            {toPersianNumber(timeLeft.seconds)}
           </span>
           <span className="text-base font-light">ثانیه</span>
         </div>

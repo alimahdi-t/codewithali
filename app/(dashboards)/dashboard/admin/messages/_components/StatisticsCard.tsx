@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 interface StatisticsCardProps {
   count: string | number;
@@ -48,7 +48,7 @@ export const StatisticsCard: React.FC<StatisticsCardProps> = ({
       className={`${variants[variant]} c-stat-card c-scale-animation   cursor-pointer`}
     >
       <h3 className="font-black text-2xl leading-7">
-        {convertToPersianNumbers(count)}
+        {toPersianNumber(count)}
       </h3>
       <p className="text-base font-medium truncate max-w-full">{label}</p>
     </div>

@@ -3,7 +3,7 @@ import {
   HiOutlineCodeBracket,
   HiOutlinePlayCircle,
 } from "react-icons/hi2";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 interface Props {
   numberOfLessons?: number;
@@ -21,21 +21,21 @@ const CourseContentHeader = ({
       {numberOfLessons && (
         <div className="flex items-center gap-1 after:w-2 after:h-2 after:rounded-full after:bg-gray-200">
           <HiOutlineBookOpen className="w-4 h-4" />
-          <p>{`${convertToPersianNumbers(numberOfLessons)} درسنامه`}</p>
+          <p>{`${toPersianNumber(numberOfLessons)} درسنامه`}</p>
         </div>
       )}
 
       {numberOfVideos && (
         <div className="flex items-center gap-1 after:w-2 after:h-2 after:rounded-full after:bg-gray-200">
           <HiOutlinePlayCircle className="w-4 h-4" />
-          <p>{`${convertToPersianNumbers(numberOfVideos)} ویدیو`}</p>
+          <p>{`${toPersianNumber(numberOfVideos)} ویدیو`}</p>
         </div>
       )}
 
       {numberOfHomeworks && (
         <div className="flex items-center gap-1">
           <HiOutlineCodeBracket className="w-4 h-4" />
-          <p>{`${convertToPersianNumbers(numberOfHomeworks)} تمرین`}</p>
+          <p>{`${toPersianNumber(numberOfHomeworks)} تمرین`}</p>
         </div>
       )}
     </div>

@@ -1,4 +1,4 @@
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 
 interface Props {
   progress: number;
@@ -19,7 +19,7 @@ const CompletionProgress = ({ progress }: Props) => {
           درصد تکمیل دوره
         </span>
         <span className="text-gray-700 font-semibold text-sm">
-          {convertToPersianNumbers(`${progress}%`)}
+          {toPersianNumber(`${progress}%`)}
         </span>
       </div>
       <div

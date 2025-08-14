@@ -8,7 +8,7 @@ import {
   HiOutlineUser,
 } from "react-icons/hi2";
 import moment from "jalali-moment";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { SendMessageAnswerForm } from "@/components/forms/SendMessageAnswerForm";
 
 interface Props {
@@ -45,7 +45,7 @@ const MessagePage = async (props: Props) => {
             <div className="flex items-center gap-x-1 ">
               <HiOutlineCalendarDays className="size-4" />
               <p className="text-xs font-normal">
-                {convertToPersianNumbers(
+                {toPersianNumber(
                   moment(new Date(message.createdAt))
                     .locale("fa")
                     .format("ddd DD MMM YYYY - ساعت HH:mm:ss"),
@@ -58,7 +58,7 @@ const MessagePage = async (props: Props) => {
                 <HiOutlineDevicePhoneMobile className="size-4" />
 
                 <p className="text-xs font-normal">
-                  {convertToPersianNumbers(message.phone)}
+                  {toPersianNumber(message.phone)}
                 </p>
               </div>
             )}

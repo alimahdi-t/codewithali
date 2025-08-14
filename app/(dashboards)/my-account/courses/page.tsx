@@ -1,5 +1,5 @@
 import { getUserPurchasedCoursesAction } from "@/actions/courses/get-user-purchased-courses.action";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { SectionBlock } from "@/components/dashboard/SectionBlock";
 import { DashboardPurchasedCourseCard } from "@/components/dashboard/DashboardPurchasedCourseCard";
 
@@ -11,9 +11,7 @@ export default async function UserCoursesPage() {
   }
   return (
     <>
-      <SectionBlock
-        title={`دوره های من (${convertToPersianNumbers(courses?.length)})`}
-      >
+      <SectionBlock title={`دوره های من (${toPersianNumber(courses?.length)})`}>
         <div className="grid grid-cols-4 gap-4">
           {courses?.map((course) => (
             <DashboardPurchasedCourseCard

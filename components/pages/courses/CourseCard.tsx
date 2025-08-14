@@ -2,7 +2,7 @@ import { HiMiniStar, HiOutlineUsers } from "react-icons/hi2";
 import {
   calculateDiscount,
   convertToPersianAndFormat,
-  convertToPersianNumbers,
+  toPersianNumber,
 } from "@/utils";
 import TomanIcon from "@/components/common/TomanIcon";
 import DiscountTag from "@/components/pages/courses/DiscountTag";
@@ -76,7 +76,7 @@ const CourseCard = ({ course, className, purchased, ...props }: Props) => {
             </Link>
           </div>
           <div className="flex items-center justify-center gap-1 text-sm text-yellow-500 leading-5 dark:text-yellow-400">
-            <p className="">{convertToPersianNumbers("5.0")}</p>
+            <p className="">{toPersianNumber("5.0")}</p>
             <HiMiniStar className="size-4" />
           </div>
         </div>
@@ -96,7 +96,7 @@ const CourseCard = ({ course, className, purchased, ...props }: Props) => {
                 <div className="flex items-center gap-x-1 ">
                   <HiOutlineUsers className="w-4 h-4" />
                   <p className="font-medium text-xs leading-6">
-                    {convertToPersianNumbers(1245)}
+                    {toPersianNumber(1245)}
                   </p>
                 </div>
 

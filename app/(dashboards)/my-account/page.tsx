@@ -2,7 +2,7 @@ import { DashboardStatBox } from "@/components/dashboard/DashboardStatBox";
 
 import { TooltipWrapper } from "@/components/common/TooltipWrapper";
 import { getUserStatsAction } from "@/actions/dashboard/get-user-stats.action";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { SectionBlock } from "@/components/dashboard/SectionBlock";
 import { DashboardPurchasedCourseCard } from "@/components/dashboard/DashboardPurchasedCourseCard";
 
@@ -20,20 +20,20 @@ const Dashboard = async () => {
       <section className="lg:dark:darker-gradient-app bg-white flex items-center justify-between flex-wrap gap-x-3 gap-y-4 px-5 sm:px-7 py-5 lg:rounded-lg">
         <DashboardStatBox
           iconSrc="/images/dashboard/courses-empty.png"
-          value={`${convertToPersianNumbers(count ?? 0)} دوره`}
+          value={`${toPersianNumber(count ?? 0)} دوره`}
           label="دوره ها من"
         />
         <TooltipWrapper label="در دست توسعه">
           <DashboardStatBox
             iconSrc="/images/dashboard/questions-empty.png"
-            value={`${convertToPersianNumbers(0)} پرسش`}
+            value={`${toPersianNumber(0)} پرسش`}
             label="پرسش پاسخ"
           />
         </TooltipWrapper>
         <TooltipWrapper label="در دست توسعه">
           <DashboardStatBox
             iconSrc="/images/dashboard/tickets-empty.png"
-            value={`${convertToPersianNumbers(0)} تیکت`}
+            value={`${toPersianNumber(0)} تیکت`}
             label="تیکت ها"
           />
         </TooltipWrapper>
@@ -42,7 +42,7 @@ const Dashboard = async () => {
             iconSrc="/images/dashboard/transactions-empty.png"
             value={
               <>
-                {convertToPersianNumbers(0)}{" "}
+                {toPersianNumber(0)}{" "}
                 <span className="text-label font-regular mr-0.5">تومان</span>
               </>
             }

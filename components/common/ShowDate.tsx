@@ -1,5 +1,5 @@
 import moment from "jalali-moment";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import React from "react";
 import { cn } from "@/lib/utils";
 
@@ -17,9 +17,7 @@ const ShowDate = ({
   const m = moment(date).locale("fa");
   return (
     <div className={cn("text-gray-500", className)}>
-      <time dateTime={m.toString()}>
-        {convertToPersianNumbers(m.format(format))}
-      </time>
+      <time dateTime={m.toString()}>{toPersianNumber(m.format(format))}</time>
     </div>
   );
 };

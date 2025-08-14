@@ -2,7 +2,7 @@ import { Post, Tag as ITag, User } from "@/prisma/client";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import moment from "jalali-moment";
-import { convertToPersianNumbers, extractTextFromHTML } from "@/utils";
+import { extractTextFromHTML, toPersianNumber } from "@/utils";
 import Tag from "@/components/common/Tag";
 import { ImageCard } from "@/components/common/card/ImageCard";
 
@@ -66,7 +66,7 @@ const BlogCard = ({ post, className, ...props }: Props) => {
             </p>
           </Link>
           <time dateTime={post.createAt.toString()} className="font-medium">
-            {convertToPersianNumbers(m.format("YYYY/MM/DD"))}
+            {toPersianNumber(m.format("YYYY/MM/DD"))}
           </time>
         </div>
       </div>

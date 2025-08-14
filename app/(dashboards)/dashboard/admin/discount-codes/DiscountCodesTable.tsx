@@ -1,7 +1,7 @@
 "use client";
 
 import { GenericTable } from "@/components/shared/Table/GenericTable";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { ActionGroup } from "@/components/common/ActionGroup";
 import { Button } from "@/components/ui/button";
 import { Prisma } from "@/prisma/client";
@@ -40,8 +40,7 @@ export const DiscountCodesTable = ({
       key: "id",
       header: "شناسه",
       className: "w-24",
-      render: (item: DiscountCodeWithCourses) =>
-        convertToPersianNumbers(item.id),
+      render: (item: DiscountCodeWithCourses) => toPersianNumber(item.id),
     },
 
     {
@@ -60,14 +59,14 @@ export const DiscountCodesTable = ({
       key: "usageLimit",
       header: "دفعات قابل استفاده",
       render: (item: DiscountCodeWithCourses) => (
-        <span>{convertToPersianNumbers(item.usageLimit ?? "بی‌نهایت")}</span>
+        <span>{toPersianNumber(item.usageLimit ?? "بی‌نهایت")}</span>
       ),
     },
     {
       key: "usageLimit",
       header: "استفاده شده",
       render: (item: DiscountCodeWithCourses) => (
-        <span>{convertToPersianNumbers(item.usedCount ?? 0)}</span>
+        <span>{toPersianNumber(item.usedCount ?? 0)}</span>
       ),
     },
     {

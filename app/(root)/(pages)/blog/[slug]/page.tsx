@@ -1,7 +1,7 @@
 import "./styles.css";
 import { getPost } from "@/actions/posts/getPost.action";
 import Image from "next/image";
-import { convertToPersianNumbers } from "@/utils";
+import { toPersianNumber } from "@/utils";
 import { Separator } from "@/components/ui/separator";
 import {
   HiOutlineChatBubbleBottomCenterText,
@@ -48,7 +48,7 @@ const BlogPost = async (props: Props) => {
                   className={`relative bottom-10 right-4 bg-gray-100 px-2 inline-block py-1 rounded-xl text-xs font-light leading-5 text-center`}
                 >
                   زمان مورد نیاز برای خواندن:
-                  {` ${convertToPersianNumbers(post.readingTime)} دقیقه `}
+                  {` ${toPersianNumber(post.readingTime)} دقیقه `}
                 </span>
 
                 <div className="py-6">
