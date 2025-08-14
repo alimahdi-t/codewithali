@@ -5,15 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CardWrapper } from "@/components/auth/card-wrapper";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { Form } from "@/components/ui/form";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import FormSuccess from "@/components/FormSuccess";
@@ -22,6 +14,7 @@ import { login } from "@/actions/auth/login-action";
 import Loader from "@/components/common/Loader";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import { LocalizedInput } from "@/components/shared/LocalizedInput";
 
 export const LoginForm = () => {
   const { success, setSuccess, error, setError } = useFormStatus();
@@ -67,40 +60,21 @@ export const LoginForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="space-y-4">
-            <FormField
+            <LocalizedInput
               control={form.control}
               name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6">
-                    ایمیل
-                  </FormLabel>
-                  <FormControl>
-                    <Input type="email" autoComplete="email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="ایمیل"
+              direction="ltr"
+              textAlign="left"
+              type="email"
             />
-
-            <FormField
+            <LocalizedInput
               control={form.control}
               name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="block text-sm font-medium leading-6">
-                    رمز عبور
-                  </FormLabel>
-                  <FormControl>
-                    <Input
-                      type="password"
-                      autoComplete="current-password"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+              label="رمز عبور"
+              direction="ltr"
+              textAlign="left"
+              type="password"
             />
           </div>
 
@@ -117,11 +91,7 @@ export const LoginForm = () => {
 
           <FormSuccess message={success} />
           <FormError message={error} />
-          <Button
-            disabled={!form.formState.isValid}
-            type="submit"
-            className="w-full mt-4"
-          >
+          <Button type="submit" className="w-full mt-4">
             {isPending ? <Loader /> : "ورود"}
           </Button>
         </form>

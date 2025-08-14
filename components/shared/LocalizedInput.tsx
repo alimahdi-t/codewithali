@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   FormControl,
   FormField,
@@ -9,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { toEnglishNumber, toPersianNumber } from "@/utils";
 import { Control, FieldValues, Path } from "react-hook-form";
 import { wordifyTomans } from "@/utils/wordifyfa";
+import { Eye, EyeOff } from "lucide-react"; // eye icons
 
 interface LocalizedInputProps<T extends FieldValues>
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -35,6 +37,10 @@ export const LocalizedInput = <T extends FieldValues>({
   showPriceInWord = false,
   ...props
 }: LocalizedInputProps<T>) => {
+  const [showPassword, setShowPassword] = useState(false);
+
+  const isPassword = type === "password";
+
   return (
     <FormField
       control={control}
@@ -47,34 +53,44 @@ export const LocalizedInput = <T extends FieldValues>({
             </FormLabel>
           )}
           <FormControl>
-            <Input
-              type="text" // keep text for localization
-              placeholder={toPersianNumber(placeholder ?? "")}
-              dir={direction}
-              value={toPersianNumber(field.value ?? "")}
-              onChange={(e) => {
-                const inputVal = e.target.value;
-                const englishVal = toEnglishNumber(inputVal);
+            <div className="relative">
+              <Input
+                type={isPassword && showPassword ? "text" : type}
+                placeholder={toPersianNumber(placeholder ?? "")}
+                dir={direction}
+                value={toPersianNumber(field.value ?? "")}
+                onChange={(e) => {
+                  const inputVal = e.target.value;
+                  const englishVal = toEnglishNumber(inputVal);
 
-                if (type === "number") {
-                  // Only digits allowed for number type
-                  if (/^\d*$/.test(englishVal)) {
-                    field.onChange(
-                      englishVal === "" ? undefined : Number(englishVal),
-                    );
+                  if (type === "number") {
+                    if (/^\d*$/.test(englishVal)) {
+                      field.onChange(
+                        englishVal === "" ? undefined : Number(englishVal),
+                      );
+                    }
+                  } else {
+                    field.onChange(englishVal);
                   }
-                } else {
-                  // For text, just convert digits but keep letters
-                  field.onChange(englishVal);
-                }
-              }}
-              minLength={minLength}
-              maxLength={maxLength}
-              {...props}
-              style={{
-                textAlign,
-              }}
-            />
+                }}
+                minLength={minLength}
+                maxLength={maxLength}
+                {...props}
+                style={{
+                  textAlign,
+                }}
+              />
+              {isPassword && (
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="absolute inset-y-0 right-2 flex items-center text-gray-500 z-10 cursor-pointer"
+                  tabIndex={-1} // prevent tab focus
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              )}
+            </div>
           </FormControl>
           {showErrorMessage && <FormMessage />}
           {showPriceInWord && (
