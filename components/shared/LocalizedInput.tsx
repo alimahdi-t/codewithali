@@ -21,6 +21,7 @@ interface LocalizedInputProps<T extends FieldValues>
   textAlign?: "center" | "left" | "right";
   showErrorMessage?: boolean;
   showPriceInWord?: boolean;
+  passwordButton?: boolean;
 }
 
 export const LocalizedInput = <T extends FieldValues>({
@@ -35,6 +36,7 @@ export const LocalizedInput = <T extends FieldValues>({
   textAlign = "left",
   showErrorMessage = true,
   showPriceInWord = false,
+  passwordButton = true,
   ...props
 }: LocalizedInputProps<T>) => {
   const [showPassword, setShowPassword] = useState(false);
@@ -80,7 +82,7 @@ export const LocalizedInput = <T extends FieldValues>({
                   textAlign,
                 }}
               />
-              {isPassword && (
+              {isPassword && passwordButton && (
                 <button
                   type="button"
                   onClick={() => setShowPassword((prev) => !prev)}

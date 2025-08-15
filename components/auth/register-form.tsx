@@ -5,23 +5,20 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useFormStatus } from "@/hooks/use-form-status";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+import { Form } from "@/components/ui/form";
+
 import FormError from "@/components/FormError";
 import FormSuccess from "@/components/FormSuccess";
 import { signUp } from "@/actions/auth/sign-up-action";
-import Loader from "@/components/common/Loader";
+import { SubmitButton } from "@/components/forms/SubmitButton";
+import { useState, useTransition } from "react";
+import { LocalizedInput } from "@/components/shared/LocalizedInput";
+import { CheckPassword } from "../forms/CheckPassword";
 
 export const RegisterForm = () => {
   const { success, setSuccess, error, setError } = useFormStatus();
+  const [isPending, startTransition] = useTransition();
+  const [isFocused, setIsFocused] = useState(false);
 
   const FormSchema = SignUpSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -39,14 +36,15 @@ export const RegisterForm = () => {
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     setSuccess("");
     setError("");
-
-    await signUp(data).then((response) => {
-      if (response.error) {
-        setError(response.error);
-      }
-      if (response.success) {
-        setSuccess(response.success);
-      }
+    startTransition(() => {
+      signUp(data).then((response) => {
+        if (response.error) {
+          setError(response.error);
+        }
+        if (response.success) {
+          setSuccess(response.success);
+        }
+      });
     });
   };
 
@@ -64,99 +62,69 @@ export const RegisterForm = () => {
             <div className="space-y-4">
               <div className="flex gap-2">
                 <div className="flex flex-col gap-2 w-full">
-                  <FormField
+                  <LocalizedInput
                     control={form.control}
                     name="firstName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>نام</FormLabel>
-                        <FormControl>
-                          <Input type="text" autoComplete="name" {...field} />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="نام"
+                    direction="rtl"
+                    textAlign="right"
+                    type="text"
+                    autoComplete="firstName"
                   />
                 </div>
+
                 <div className="flex flex-col gap-2 w-full">
-                  <FormField
+                  <LocalizedInput
                     control={form.control}
                     name="lastName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>نام خانوادگی</FormLabel>
-                        <FormControl>
-                          <Input
-                            type="text"
-                            autoComplete="family-name"
-                            {...field}
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
+                    label="نام خانوادگی"
+                    direction="rtl"
+                    textAlign="right"
+                    type="text"
                   />
                 </div>
               </div>
-              <FormField
+              <LocalizedInput
                 control={form.control}
                 name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>ایمیل</FormLabel>
-                    <FormControl>
-                      <Input type="email" autoComplete="email" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="ایمیل"
+                direction="ltr"
+                textAlign="left"
+                type="text"
               />
-
-              <FormField
+              <LocalizedInput
                 control={form.control}
                 name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>رمز عبور</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        autoComplete="current-password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="رمز عبور"
+                direction="ltr"
+                textAlign="left"
+                type="password"
+                showErrorMessage={false}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
               />
-              <FormField
+              {(isFocused || form.formState.errors["password"]) && (
+                <CheckPassword password={form.watch("password")} />
+              )}
+              <LocalizedInput
                 control={form.control}
                 name="retypePassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>تکرار رمز عبور</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        autoComplete="current-password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
+                label="تکرار رمز عبور"
+                direction="ltr"
+                textAlign="left"
+                type="password"
+                passwordButton={false}
               />
+
               <FormSuccess message={success} />
               <FormError message={error} />
             </div>
             <div>
-              <Button
-                disabled={!form.formState.isValid}
-                type="submit"
+              <SubmitButton
                 className="w-full mt-6"
-              >
-                {form.formState.isSubmitting ? <Loader /> : " ثبت نام"}
-              </Button>
+                pending={isPending}
+                label="ثبت نام"
+              />
             </div>
           </form>
         </Form>
