@@ -49,11 +49,10 @@ export default function LoadingCoursePage() {
 
         {/*---*/}
         <div className="flex flex-col w-full gap-4">
-          <SearchForm />
+          <div className="lg:hidden">
+            <SearchForm />
+          </div>
           <div className="flex gap-4">
-            {/*<FilterOption title="فیلتر" sheetTitle="فیلترها">*/}
-            {/*  <SearchForm />*/}
-            {/*</FilterOption>*/}
             <SortOptions basePath="/blog" filters={postSortFilter} />
           </div>
 

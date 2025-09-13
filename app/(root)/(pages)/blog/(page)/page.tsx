@@ -67,7 +67,7 @@ const Blog = async (props: Props) => {
         </div>
 
         <div className="flex flex-col w-full gap-4">
-          <div className="max-lg:hidden">
+          <div className="lg:hidden">
             <SearchForm />
           </div>
           <div className="flex gap-4">
