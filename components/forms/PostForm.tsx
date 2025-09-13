@@ -47,7 +47,7 @@ export default function PostForm({
   role,
   path,
 }: PostFormProps) {
-  const user = useCurrentUser();
+  const { user } = useCurrentUser();
 
   const router = useRouter();
   const [tags, setTags] = useState<Tag[]>([]);

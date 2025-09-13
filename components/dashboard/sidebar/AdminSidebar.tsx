@@ -9,10 +9,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 export const AdminSidebar = () => {
-  const user = useCurrentUser();
+  const { user, loading } = useCurrentUser();
 
   // Show skeleton if user or role not loaded yet
-  if (!user || !user.role) {
+  if (loading) {
     return (
       <aside className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-64 lg:flex-col border-l c-border bg-card shadow-sm">
         <div className="w-full flex grow flex-col overflow-y-auto scroll-thin px-2 pb-4 py-4">
@@ -48,7 +48,7 @@ export const AdminSidebar = () => {
         <UserProfileCard />
         <Separator className="my-4" />
         <ul role="list" className="flex flex-col gap-0.5">
-          {getDashboardLinks(user.role).map((item, i) => (
+          {getDashboardLinks(user?.role).map((item, i) => (
             <MenuItem item={item} key={i} />
           ))}
           <Separator className="" />

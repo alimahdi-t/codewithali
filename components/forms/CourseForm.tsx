@@ -45,7 +45,7 @@ interface CourseFormProps {
 const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
   const router = useRouter();
   const [instructors, setInstructors] = useState<undefined | User[]>();
-  const currentUser = useCurrentUser();
+  const { user: currentUser } = useCurrentUser();
 
   useEffect(() => {
     fetch("/api/users")

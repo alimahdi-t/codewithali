@@ -41,7 +41,7 @@ export const CommentForm = ({
   showAvatar = false,
   showForm = true,
 }: PropsWithVisibility) => {
-  const user = useCurrentUser();
+  const { user } = useCurrentUser();
   const FormSchema = CreateCommentSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
