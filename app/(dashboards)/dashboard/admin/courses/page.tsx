@@ -21,7 +21,7 @@ import { COURSE_STATUSES } from "@/constants/dashboard";
 
 const CoursesListPage = async () => {
   const result = await getCourses({});
-  const { courses, totalCoursesCount } = result;
+  const { courses, totalCoursesCount, levelCountMap } = result;
 
   return (
     <div className="w-full">
@@ -34,11 +34,15 @@ const CoursesListPage = async () => {
       />
 
       <div className="w-full grid md:grid-cols-4 grid-cols-2 gap-6 mt-8">
-        <StatisticsCard count={22} label="همه دوره ها" variant="info" />
+        <StatisticsCard
+          count={totalCoursesCount}
+          label="همه دوره ها"
+          variant="info"
+        />
         {COURSE_STATUSES.map((item, index) => (
           <StatisticsCard
             key={index}
-            count={12}
+            count={levelCountMap[item.value] || 0}
             label={item.label}
             variant={item.variant}
             status={item.value}
