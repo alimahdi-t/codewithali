@@ -2,6 +2,7 @@
 
 import prisma from "@/lib/prisma";
 import { GetAllCoursesParams } from "@/actions/shared.types";
+import { Level } from "@/prisma/client";
 
 export async function getCourses(params: GetAllCoursesParams) {
   try {
@@ -73,7 +74,27 @@ export async function getCourses(params: GetAllCoursesParams) {
         where: filters,
       }),
     ]);
-    return { courses, totalCoursesCount };
+
+    // Get the count of each status
+    const levelCounts = await prisma.course.groupBy({
+      by: ["level"],
+      _count: { level: true },
+    });
+
+    // Format status counts correctly
+    const levelCountMap = levelCounts.reduce(
+      (acc, item) => {
+        acc[item.level] = item._count.level;
+        return acc;
+      },
+      {
+        [Level.BEGINNER]: 0,
+        [Level.ADVANCED]: 0,
+        [Level.EXPERT]: 0,
+      },
+    );
+
+    return { courses, totalCoursesCount, levelCountMap };
   } catch (error) {
     throw new Error(`Error fetching courses: ${error}`);
   }
