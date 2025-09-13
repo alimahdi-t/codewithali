@@ -5,8 +5,15 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 const AdminDashboard = async () => {
-  const { usersCount, coursesCount, postCount, ordersCount } =
-    await getAdminStatsAction();
+  const {
+    usersCount,
+    coursesCount,
+    postCount,
+    ordersCount,
+    messageStatusCountMap,
+    commentStatusCountMap,
+  } = await getAdminStatsAction();
+  if (!messageStatusCountMap) return null;
 
   const stats = [
     {
@@ -64,102 +71,212 @@ const AdminDashboard = async () => {
           </Card>
         ))}
       </div>
-      <div className="flex-1 grid grid-cols-1 gap-4 lg:grid-cols-4">
-        <div className="flex flex-col gap-4 col-span-1">
-          <Card className="flex-1">
-            <CardHeader>
-              <div className={"flex justify-between items-center"}>
-                <CardTitle>نظرات</CardTitle>
-                <Link href={"/dashboard/admin/comments"}>
-                  <Button className="text-xs" variant="ghost">
-                    مشاهده
-                  </Button>
-                </Link>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card className="flex-1">
+          <CardHeader>
+            <div className={"flex justify-between items-center"}>
+              <CardTitle>نظرات</CardTitle>
+              <Link href={"/dashboard/admin/comments"}>
+                <Button className="text-xs" variant="ghost">
+                  مشاهده
+                </Button>
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
+              <div className="flex items-center gap-x-2">
+                <div className="size-3 rounded-full bg-action-info" />
+                <span>همه نظرات</span>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm">
-              <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3 rounded-full bg-action-info" />
-                  <span>همه نظرات</span>
-                </div>
-                <span className="font-semibold">{toPersianNumber(4)}</span>
+              <span className="font-semibold">
+                {toPersianNumber(
+                  commentStatusCountMap.PENDING +
+                    commentStatusCountMap.APPROVED +
+                    commentStatusCountMap.REJECTED,
+                )}
+              </span>
+            </div>
+            <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
+              <div className="flex items-center gap-x-2">
+                <div className="size-3 rounded-full bg-action-warning" />
+                <span>در انتظار تایید</span>
               </div>
-              <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3 rounded-full bg-action-warning" />
-                  <span>در انتظار تایید</span>
-                </div>
-                <span className="font-semibold">{toPersianNumber(4)}</span>
+              <span className="font-semibold">
+                {toPersianNumber(commentStatusCountMap.PENDING)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
+              <div className="flex items-center gap-x-2">
+                <div className="size-3 rounded-full bg-action-success" />
+                <span>تایید شده</span>
               </div>
-              <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3 rounded-full bg-action-success" />
-                  <span>تایید شده</span>
-                </div>
-                <span className="font-semibold">{toPersianNumber(4)}</span>
+              <span className="font-semibold">
+                {toPersianNumber(commentStatusCountMap.APPROVED)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
+              <div className="flex items-center gap-x-2">
+                <div className="size-3 rounded-full bg-action-error" />
+                <span>رد شده</span>
               </div>
-              <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3 rounded-full bg-action-error" />
-                  <span>رد شده</span>
-                </div>
-                <span className="font-semibold">{toPersianNumber(4)}</span>
+              <span className="font-semibold">
+                {toPersianNumber(commentStatusCountMap.REJECTED)}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
+        <Card className="flex-1">
+          <CardHeader>
+            <div className={"flex justify-between items-center"}>
+              <CardTitle>پیام‌ها</CardTitle>
+              <Link href={"/dashboard/admin/messages"}>
+                <Button className="text-xs" variant="ghost">
+                  مشاهده
+                </Button>
+              </Link>
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
+              <div className="flex items-center gap-x-2">
+                <div className="size-3 rounded-full bg-action-info" />
+                <span>همه پیام‌ها</span>
               </div>
-            </CardContent>
-          </Card>
-          <Card className="flex-1">
-            <CardHeader>
-              <div className={"flex justify-between items-center"}>
-                <CardTitle>پیام‌ها</CardTitle>
-                <Link href={"/dashboard/admin/messages"}>
-                  <Button className="text-xs" variant="ghost">
-                    مشاهده
-                  </Button>
-                </Link>
+              <span className="font-semibold">
+                {toPersianNumber(
+                  messageStatusCountMap.PENDING +
+                    messageStatusCountMap.IN_PROGRESS +
+                    messageStatusCountMap.RESOLVED,
+                )}
+              </span>
+            </div>
+            <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
+              <div className="flex items-center gap-x-2">
+                <div className="size-3 rounded-full bg-action-warning" />
+                <span>در انتظار رسیدگی</span>
               </div>
-            </CardHeader>
-            <CardContent className="space-y-2 text-sm">
-              <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3 rounded-full bg-action-info" />
-                  <span>همه پیام‌ها</span>
-                </div>
-                <span className="font-semibold">{toPersianNumber(4)}</span>
+              <span className="font-semibold">
+                {toPersianNumber(messageStatusCountMap.PENDING)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
+              <div className="flex items-center gap-x-2">
+                <div className="size-3 rounded-full bg-action-success" />
+                <span>در حال بررسی</span>
               </div>
-              <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3 rounded-full bg-action-warning" />
-                  <span>در انتظار رسیدگی</span>
-                </div>
-                <span className="font-semibold">{toPersianNumber(4)}</span>
+              <span className="font-semibold">
+                {toPersianNumber(messageStatusCountMap.IN_PROGRESS)}
+              </span>
+            </div>
+            <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
+              <div className="flex items-center gap-x-2">
+                <div className="size-3 rounded-full bg-action-error" />
+                <span>بسته شده</span>
               </div>
-              <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3 rounded-full bg-action-success" />
-                  <span>بررسی شده</span>
-                </div>
-                <span className="font-semibold">{toPersianNumber(4)}</span>
-              </div>
-              <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">
-                <div className="flex items-center gap-x-2">
-                  <div className="size-3 rounded-full bg-action-error" />
-                  <span>بسته شده</span>
-                </div>
-                <span className="font-semibold">{toPersianNumber(4)}</span>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="col-span-3">
-          <Card>
-            <CardHeader>
-              <CardTitle>نمودار فروش</CardTitle>
-            </CardHeader>
-          </Card>
-        </div>
+              <span className="font-semibold">
+                {toPersianNumber(messageStatusCountMap.RESOLVED)}
+              </span>
+            </div>
+          </CardContent>
+        </Card>
       </div>
+      {/*<div className="flex-1 grid grid-cols-1 gap-4 lg:grid-cols-4">*/}
+      {/*  <div className="flex flex-col gap-4 col-span-1">*/}
+      {/*    <Card className="flex-1">*/}
+      {/*      <CardHeader>*/}
+      {/*        <div className={"flex justify-between items-center"}>*/}
+      {/*          <CardTitle>نظرات</CardTitle>*/}
+      {/*          <Link href={"/dashboard/admin/comments"}>*/}
+      {/*            <Button className="text-xs" variant="ghost">*/}
+      {/*              مشاهده*/}
+      {/*            </Button>*/}
+      {/*          </Link>*/}
+      {/*        </div>*/}
+      {/*      </CardHeader>*/}
+      {/*      <CardContent className="space-y-2 text-sm">*/}
+      {/*        <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">*/}
+      {/*          <div className="flex items-center gap-x-2">*/}
+      {/*            <div className="size-3 rounded-full bg-action-info" />*/}
+      {/*            <span>همه نظرات</span>*/}
+      {/*          </div>*/}
+      {/*          <span className="font-semibold">{toPersianNumber(4)}</span>*/}
+      {/*        </div>*/}
+      {/*        <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">*/}
+      {/*          <div className="flex items-center gap-x-2">*/}
+      {/*            <div className="size-3 rounded-full bg-action-warning" />*/}
+      {/*            <span>در انتظار تایید</span>*/}
+      {/*          </div>*/}
+      {/*          <span className="font-semibold">{toPersianNumber(4)}</span>*/}
+      {/*        </div>*/}
+      {/*        <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">*/}
+      {/*          <div className="flex items-center gap-x-2">*/}
+      {/*            <div className="size-3 rounded-full bg-action-success" />*/}
+      {/*            <span>تایید شده</span>*/}
+      {/*          </div>*/}
+      {/*          <span className="font-semibold">{toPersianNumber(4)}</span>*/}
+      {/*        </div>*/}
+      {/*        <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">*/}
+      {/*          <div className="flex items-center gap-x-2">*/}
+      {/*            <div className="size-3 rounded-full bg-action-error" />*/}
+      {/*            <span>رد شده</span>*/}
+      {/*          </div>*/}
+      {/*          <span className="font-semibold">{toPersianNumber(4)}</span>*/}
+      {/*        </div>*/}
+      {/*      </CardContent>*/}
+      {/*    </Card>*/}
+      {/*    <Card className="flex-1">*/}
+      {/*      <CardHeader>*/}
+      {/*        <div className={"flex justify-between items-center"}>*/}
+      {/*          <CardTitle>پیام‌ها</CardTitle>*/}
+      {/*          <Link href={"/dashboard/admin/messages"}>*/}
+      {/*            <Button className="text-xs" variant="ghost">*/}
+      {/*              مشاهده*/}
+      {/*            </Button>*/}
+      {/*          </Link>*/}
+      {/*        </div>*/}
+      {/*      </CardHeader>*/}
+      {/*      <CardContent className="space-y-2 text-sm">*/}
+      {/*        <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">*/}
+      {/*          <div className="flex items-center gap-x-2">*/}
+      {/*            <div className="size-3 rounded-full bg-action-info" />*/}
+      {/*            <span>همه پیام‌ها</span>*/}
+      {/*          </div>*/}
+      {/*          <span className="font-semibold">{toPersianNumber(4)}</span>*/}
+      {/*        </div>*/}
+      {/*        <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">*/}
+      {/*          <div className="flex items-center gap-x-2">*/}
+      {/*            <div className="size-3 rounded-full bg-action-warning" />*/}
+      {/*            <span>در انتظار رسیدگی</span>*/}
+      {/*          </div>*/}
+      {/*          <span className="font-semibold">{toPersianNumber(4)}</span>*/}
+      {/*        </div>*/}
+      {/*        <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">*/}
+      {/*          <div className="flex items-center gap-x-2">*/}
+      {/*            <div className="size-3 rounded-full bg-action-success" />*/}
+      {/*            <span>بررسی شده</span>*/}
+      {/*          </div>*/}
+      {/*          <span className="font-semibold">{toPersianNumber(4)}</span>*/}
+      {/*        </div>*/}
+      {/*        <div className="flex items-center justify-between bg-gray-300/20 py-4 px-4 rounded-lg">*/}
+      {/*          <div className="flex items-center gap-x-2">*/}
+      {/*            <div className="size-3 rounded-full bg-action-error" />*/}
+      {/*            <span>بسته شده</span>*/}
+      {/*          </div>*/}
+      {/*          <span className="font-semibold">{toPersianNumber(4)}</span>*/}
+      {/*        </div>*/}
+      {/*      </CardContent>*/}
+      {/*    </Card>*/}
+      {/*  </div>*/}
+
+      {/*  <div className="col-span-3">*/}
+      {/*    <Card>*/}
+      {/*      <CardHeader>*/}
+      {/*        <CardTitle>نمودار فروش</CardTitle>*/}
+      {/*      </CardHeader>*/}
+      {/*    </Card>*/}
+      {/*  </div>*/}
+      {/*</div>*/}
     </div>
   );
 };
