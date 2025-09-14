@@ -3,6 +3,7 @@
 import { currentUser } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@/prisma/client";
+import { redirect } from "next/navigation";
 
 interface MakeOrderProps {
   courseIds: number[];
@@ -105,7 +106,7 @@ export const makeOrder = async ({
     const order = await prisma.order.create({
       data: {
         user_id: parseInt(userId),
-        OrderStatus: "PENDING",
+        OrderStatus: "PAID",
         amount: totalAmount,
         items: {
           create: orderItems,
@@ -119,9 +120,14 @@ export const makeOrder = async ({
     console.log("✅ Order created:", order.id);
 
     // Optional: Clear user's cart if needed
+    await prisma.cartItem.deleteMany({
+      where: {
+        userId: Number(userId),
+      },
+    });
     // await clearUserCart(userId);
     //
-    // return redirect(`/checkout/confirm?orderId=${order.id}`);
+    return redirect(`/order/confirm?orderId=${order.id}`);
   } catch (error) {
     console.error("❌ Failed to make order:", error);
     throw error;
