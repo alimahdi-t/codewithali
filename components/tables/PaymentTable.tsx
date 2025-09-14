@@ -5,6 +5,7 @@ import { toPersianNumber } from "@/utils";
 import { Prisma } from "@/prisma/client";
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import Price from "@/components/common/Price";
+import { StatusBadge } from "@/components/common/StatusBadge";
 
 type PaymentType = Prisma.OrderGetPayload<{
   include: {
@@ -41,7 +42,18 @@ export const PaymentTable = ({ data }: { data: PaymentType[] }) => {
     {
       key: "status",
       header: "وضعیت",
-      render: (item: PaymentType) => <span>{item.OrderStatus}</span>,
+      render: (item: PaymentType) => {
+        switch (item.OrderStatus) {
+          case "PAID":
+            return <StatusBadge variant={"success"} text={"موفق"} />;
+          case "PENDING":
+            return <StatusBadge variant={"warning"} text={"درحال انتظار"} />;
+          case "Filled":
+            return <StatusBadge variant={"error"} text={"ناموفق"} />;
+          case "REFUNDED":
+            return <StatusBadge variant={"info"} text={"مرجوع شده"} />;
+        }
+      },
     },
 
     {
