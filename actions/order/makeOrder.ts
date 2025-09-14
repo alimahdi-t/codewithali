@@ -127,7 +127,7 @@ export const makeOrder = async ({
     });
     // await clearUserCart(userId);
     //
-    return redirect(`/order/confirm?orderId=${order.id}`);
+    return redirect(`/order/confirm/${order.id}`);
   } catch (error) {
     console.error("❌ Failed to make order:", error);
     throw error;
