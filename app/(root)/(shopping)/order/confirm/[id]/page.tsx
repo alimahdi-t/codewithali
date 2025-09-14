@@ -2,13 +2,12 @@ import prisma from "@/lib/prisma";
 import { HiOutlineCheckCircle, HiOutlineXCircle } from "react-icons/hi2";
 import { Card } from "@/components/ui/card";
 
-// این کامپوننت سروریه
-export default async function OrderConfirmPage({
-  searchParams,
-}: {
-  searchParams: { orderId?: string };
-}) {
-  const orderId = searchParams.orderId;
+interface Props {
+  params: Promise<{ id: string }>;
+}
+
+export default async function OrderConfirmPage(props: Props) {
+  const { id: orderId } = await props.params;
   if (!orderId) {
     return <p>شناسه سفارش نامعتبر است.</p>;
   }
