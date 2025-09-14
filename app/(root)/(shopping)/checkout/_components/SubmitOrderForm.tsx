@@ -16,6 +16,7 @@ export const SubmitOrderForm = ({ courseIds, discountCode }: Props) => {
   const handleSubmit = () => {
     startTransition(() => {
       makeOrder({ courseIds, discountCode });
+      console.log(courseIds, discountCode);
     });
   };
 

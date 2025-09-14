@@ -253,7 +253,7 @@ model OrderItem {
   orderId            Int
 
   course             Course    @relation(fields: [course_id], references: [id])
-  order              Order     @relation(fields: [orderId], references: [id])
+  order              Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   createdAt          DateTime  @default(now())
 }
