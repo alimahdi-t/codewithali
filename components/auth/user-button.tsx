@@ -28,7 +28,7 @@ import { Button } from "@/components/ui/button";
 import { useCurrentUser } from "@/hooks/use-current-user";
 
 export const UserButton = () => {
-  const user = useCurrentUser();
+  const { user } = useCurrentUser();
   if (!user) {
     return (
       <Link href="/auth/sign-in">

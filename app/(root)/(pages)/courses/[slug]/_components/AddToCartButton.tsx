@@ -14,7 +14,7 @@ interface Props {
 }
 
 export const AddToCartButton = ({ courseId }: Props) => {
-  const user = useCurrentUser();
+  const { user } = useCurrentUser();
   const [isPending, setPending] = useState(false);
 
   const handleOnClick = async () => {
