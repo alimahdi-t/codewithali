@@ -9,14 +9,12 @@ import { StatusBadge } from "@/components/common/StatusBadge";
 
 type PaymentType = Prisma.OrderGetPayload<{
   include: {
+    user: true;
     items: true;
-  };
-  orderBy: {
-    createdAt: "desc"; // optional: latest orders first
   };
 }>;
 
-export const PaymentTable = ({ data }: { data: PaymentType[] }) => {
+export const AllPaymentTable = ({ data }: { data: PaymentType[] }) => {
   const columns = [
     {
       key: "id",
@@ -68,6 +66,22 @@ export const PaymentTable = ({ data }: { data: PaymentType[] }) => {
         <span className="text-sm">
           <DateTooltip date={item.createdAt} />
         </span>
+      ),
+    },
+    {
+      key: "student",
+      header: "نام دانشجو",
+      render: (item: PaymentType) => (
+        <span className="text-sm">
+          {item.user.firstName.concat(" ", item.user.lastName)}
+        </span>
+      ),
+    },
+    {
+      key: "studentٍEmail",
+      header: "ایمیل دانشجو",
+      render: (item: PaymentType) => (
+        <span className="text-sm text-gray-500">{item.user.email}</span>
       ),
     },
   ];
