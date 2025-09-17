@@ -5,14 +5,15 @@ import { getUserStatsAction } from "@/actions/dashboard/get-user-stats.action";
 import { toPersianNumber } from "@/utils";
 import { SectionBlock } from "@/components/dashboard/SectionBlock";
 import { DashboardPurchasedCourseCard } from "@/components/dashboard/DashboardPurchasedCourseCard";
+import { ClientToastWrapper } from "@/components/common/ClientToastWrapper";
 
 const Dashboard = async () => {
   const response = await getUserStatsAction();
   if (response.error) {
-    return;
+    return <ClientToastWrapper message={response.error} variant={"error"} />;
   }
   if (!response) {
-    return;
+    return null;
   }
   const { count, latest } = response;
   return (

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { HiOutlinePlus } from "react-icons/hi2";
 import Link from "next/link";
 import { ReactNode } from "react";
+import Image from "next/image";
 
 interface Props {
   title: string;
@@ -73,9 +74,12 @@ export const SectionBlock = (props: Props) => {
 const NotFound = () => {
   return (
     <div className="flex flex-col items-center text-center gap-5 sm:gap-7 py-6 sm:py-8">
-      <img
+      <Image
         src="/images/dashboard/tickets-empty.png"
         className="size-16 sm:size-25"
+        width={100}
+        height={100}
+        alt={""}
       />
       <div className="flex flex-col items-center text-center">
         <span className="text-caption sm:text-body font-bold">
