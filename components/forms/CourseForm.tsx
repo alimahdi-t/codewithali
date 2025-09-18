@@ -52,7 +52,6 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
       .then((res) => res.json())
       .then((data) => {
         setInstructors(data);
-        console.log(data);
       });
   }, []);
 

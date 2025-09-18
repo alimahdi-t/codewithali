@@ -4,6 +4,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { toPersianNumber } from "@/utils";
 
 type Props = {
   text: string;
@@ -18,10 +19,12 @@ export const TruncatedTooltipText = ({
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <p className={`truncate ${maxWidth}`}>{text}</p>
+          <p className={`truncate ${maxWidth}`}>{toPersianNumber(text)}</p>
         </TooltipTrigger>
         <TooltipContent>
-          <p className="text-wrap max-w-md text-sm leading-6">{text}</p>
+          <p className="text-wrap max-w-md text-sm leading-6">
+            {toPersianNumber(text)}
+          </p>
         </TooltipContent>
       </Tooltip>
     </TooltipProvider>
