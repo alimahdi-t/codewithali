@@ -15,7 +15,7 @@ export const DashboardPageHeader = ({
   buttonHref,
 }: PageHeaderProps) => {
   return (
-    <div className="flex flex-row justify-between mt-4">
+    <div className="flex flex-row justify-between">
       <div>
         <h1 className="text-2xl font-bold leading-6 text-gray-900 dark:text-gray-100">
           {title}

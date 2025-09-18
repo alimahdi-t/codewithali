@@ -24,6 +24,7 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Plus,
 } from "lucide-react";
 import {
   Select,
@@ -32,6 +33,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+
+import Link from "next/link";
 
 interface Column<T> {
   key: keyof T | string;
@@ -45,6 +48,7 @@ interface GenericTableProps<T> {
   data: T[];
   emptyText?: string;
   bulkActions?: (selectedIds: (string | number)[]) => React.ReactNode;
+  addButton?: { href: string; label: string };
 }
 
 export function GenericTable<T extends { id: string | number }>({
@@ -52,6 +56,7 @@ export function GenericTable<T extends { id: string | number }>({
   data,
   emptyText,
   bulkActions,
+  addButton,
 }: GenericTableProps<T>) {
   const allKeys = columns.map((col) => col.key.toString());
   const [visibleKeys, setVisibleKeys] = useState(allKeys);
@@ -66,7 +71,6 @@ export function GenericTable<T extends { id: string | number }>({
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage,
   );
-
   const toggleColumn = (key: string) => {
     setVisibleKeys((prev) =>
       prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
@@ -98,49 +102,58 @@ export function GenericTable<T extends { id: string | number }>({
 
   return (
     <div className="space-y-2">
-      <DropdownMenu dir="rtl">
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline" className="ml-auto">
-            ستون‌ها
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuCheckboxItem
-            checked={visibleKeys.length === allKeys.length}
-            onCheckedChange={toggleAllColumns}
-            className="font-bold"
-          >
-            نمایش همه
-          </DropdownMenuCheckboxItem>
-          {columns.map((column, index) => (
+      <div className="flex gap-x-2 items-center">
+        <DropdownMenu dir="rtl">
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" className="ml-auto cursor-pointer">
+              ستون‌ها
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
             <DropdownMenuCheckboxItem
-              key={index}
-              className="capitalize"
-              checked={visibleKeys.includes(column.key.toString())}
-              onCheckedChange={() => toggleColumn(column.key.toString())}
+              checked={visibleKeys.length === allKeys.length}
+              onCheckedChange={toggleAllColumns}
+              className="font-bold"
             >
-              {column.header}
+              نمایش همه
             </DropdownMenuCheckboxItem>
-          ))}
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <div
-        className={cn(
-          "transition-all duration-400 ease-in-out overflow-hidden",
-          selectedRows.length > 0
-            ? "max-h-min opacity-100 mt-3"
-            : "max-h-0 opacity-0",
+            {columns.map((column, index) => (
+              <DropdownMenuCheckboxItem
+                key={index}
+                className="capitalize"
+                checked={visibleKeys.includes(column.key.toString())}
+                onCheckedChange={() => toggleColumn(column.key.toString())}
+              >
+                {column.header}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+        {addButton && (
+          <Link href={addButton.href}>
+            <Button variant="default" size="sm" className="text-sm font-normal">
+              <Plus className="size-4.5 relative mb-0.5" />
+
+              {addButton.label}
+            </Button>
+          </Link>
         )}
-      >
-        <div className="flex justify-between items-center p-3 border rounded-md bg-muted text-muted-foreground text-sm">
-          {/*<span className="text-xs">*/}
-          {/*  {`${convertToPersianNumbers(*/}
-          {/*    selectedRows.length,*/}
-          {/*  )} از ${convertToPersianNumbers(data.length)} ردیف انتخاب شده.`}*/}
-          {/*</span>*/}
-          {bulkActions?.(selectedRows)}
-        </div>
       </div>
+
+      {bulkActions && (
+        <div
+          className={cn(
+            "transition-all duration-400 ease-in-out overflow-hidden",
+            selectedRows.length > 0
+              ? "max-h-min opacity-100 mt-3"
+              : "max-h-0 opacity-0",
+          )}
+        >
+          <div className="flex justify-between items-center p-3 border rounded-md bg-muted text-muted-foreground text-sm">
+            {bulkActions?.(selectedRows)}
+          </div>
+        </div>
+      )}
       <div className="rounded-lg border overflow-hidden">
         <Table>
           <TableHeader>
@@ -185,7 +198,7 @@ export function GenericTable<T extends { id: string | number }>({
                     <TableCell key={colIndex} className={col.className}>
                       {col.render
                         ? col.render(item)
-                        : String((item as any)[col.key])}
+                        : String(item[col.key as keyof T])}
                     </TableCell>
                   ))}
                 </TableRow>

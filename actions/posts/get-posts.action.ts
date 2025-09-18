@@ -1,22 +1,9 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { Post, Tag, User } from "@/prisma/client";
 import { GetAllPostsParams } from "@/actions/shared.types";
 
-type PostWithRelations = Post & {
-  author: User;
-  tags: Tag[];
-};
-
-type GetPostsResponse = {
-  posts: PostWithRelations[];
-  totalCount: number;
-} | null;
-
-export async function getPostsAction(
-  params: GetAllPostsParams,
-): Promise<GetPostsResponse> {
+export async function getPostsAction(params: GetAllPostsParams) {
   try {
     const {
       page = 1,
@@ -79,6 +66,6 @@ export async function getPostsAction(
     return { posts, totalCount };
   } catch (error) {
     console.error("خطا در دریافت پست‌ها:", error);
-    return null;
+    return { error: "خطا در دریافت پست‌ها" };
   }
 }
