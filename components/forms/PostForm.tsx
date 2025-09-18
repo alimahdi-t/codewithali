@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createPostAction } from "@/actions/posts/create-post.action";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 import { Tag } from "@/prisma/client";
 import {
   Form,
@@ -28,11 +28,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { MultiSelect } from "@/components/MultiSelect";
-import { Button } from "@/components/ui/button";
-import Loader from "@/components/common/Loader";
 import { updatePost } from "@/actions/updatePost.action";
 import { toast } from "sonner";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { SubmitButton } from "@/components/forms/SubmitButton";
 
 interface PostFormProps {
   initialData?: z.infer<typeof EditPostSchema>; // For edit mode: data for pre-filling the form when editing an existing post
@@ -48,6 +47,7 @@ export default function PostForm({
   path,
 }: PostFormProps) {
   const { user } = useCurrentUser();
+  const [isPending, startTransition] = useTransition();
 
   const router = useRouter();
   const [tags, setTags] = useState<Tag[]>([]);
@@ -69,34 +69,14 @@ export default function PostForm({
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    // console.log(data);
-    if (type === "edit") {
-      if (!initialData?.id) {
-        toast.error("خطا: شناسه مقاله نامعتبر است");
-        return;
-      }
-      const response = await updatePost({
-        id: initialData?.id,
-        title: data.title,
-        slug: data.slug,
-        imageUrl: data.imageUrl,
-        content: data.content,
-        authorId: parseInt(data.authorId),
-        readingTime: parseInt(data.readingTime),
-        isEditorPick: data.isEditorPick,
-        tags: data.tags,
-      });
-
-      if ("error" in response) {
-        toast.error("response.error");
-      } else {
-        toast.success("پست با موفقیت ویرایش شد");
-        router.push(path);
-      }
-    } else {
-      try {
-        // TODO: Remember to add a select component to show only the authors, and the user will be able to select between them
-        const response = await createPostAction({
+    startTransition(() => {
+      if (type === "edit") {
+        if (!initialData?.id) {
+          toast.error("خطا: شناسه مقاله نامعتبر است");
+          return;
+        }
+        updatePost({
+          id: initialData?.id,
           title: data.title,
           slug: data.slug,
           imageUrl: data.imageUrl,
@@ -105,20 +85,35 @@ export default function PostForm({
           readingTime: parseInt(data.readingTime),
           isEditorPick: data.isEditorPick,
           tags: data.tags,
+        }).then((response) => {
+          if (response.error) {
+            toast.error(response.error);
+          } else if (response.success) {
+            toast.success(response.success);
+            router.push(path);
+          }
         });
-
-        if ("error" in response) {
-          toast.error(response.error);
-        } else {
-          toast.success("پست با موفقیت ایجاد شد");
-          router.push(path);
-        }
-      } catch (error) {
-        {
-          console.log(error);
-        }
+      } else {
+        // TODO: Remember to add a select component to show only the authors, and the user will be able to select between them
+        createPostAction({
+          title: data.title,
+          slug: data.slug,
+          imageUrl: data.imageUrl,
+          content: data.content,
+          authorId: parseInt(data.authorId),
+          readingTime: parseInt(data.readingTime),
+          isEditorPick: data.isEditorPick,
+          tags: data.tags,
+        }).then((response) => {
+          if (response.error) {
+            toast.error(response.error);
+          } else if (response.success) {
+            toast.success(response.success);
+            router.push(path);
+          }
+        });
       }
-    }
+    });
   };
 
   // const handleInputKeyDown = (
@@ -353,21 +348,10 @@ export default function PostForm({
             {/*/>*/}
 
             <div>
-              <Button
-                disabled={!form.formState.isValid}
-                type="submit"
-                className="flex w-full justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 shadow-sm
-                  text-white bg-brand-500 hover:bg-brand-600
-                  focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-700"
-              >
-                {form.formState.isSubmitting ? (
-                  <Loader />
-                ) : type === "edit" ? (
-                  "ویرایش"
-                ) : (
-                  "افزودن"
-                )}
-              </Button>
+              <SubmitButton
+                pending={isPending}
+                label={type === "edit" ? "ویرایش" : "افزودن"}
+              />
             </div>
           </form>
         </Form>

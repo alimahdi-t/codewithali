@@ -2,11 +2,8 @@
 
 import { CreatePostParams } from "@/actions/shared.types";
 import prisma from "@/lib/prisma";
-import { Post } from "@/prisma/client";
 
-export async function createPostAction(
-  params: CreatePostParams,
-): Promise<Post | { error: string }> {
+export async function createPostAction(params: CreatePostParams) {
   const {
     title,
     slug,
@@ -31,7 +28,7 @@ export async function createPostAction(
       };
     }
 
-    return await prisma.post.create({
+    const newPost = await prisma.post.create({
       data: {
         title,
         slug,
@@ -48,6 +45,7 @@ export async function createPostAction(
         tags: true,
       },
     });
+    return { success: "مقاله با موفقیت ایجاد شد.", newPost };
   } catch (error) {
     console.log("An Error occurred while creating new post.", error);
     return {
