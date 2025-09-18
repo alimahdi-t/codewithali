@@ -5,7 +5,7 @@ import { Prisma } from "@/prisma/client";
 
 export async function getEditorPickPosts() {
   try {
-    return await prisma.post.findMany({
+    const editorPickPosts = await prisma.post.findMany({
       select: {
         id: true,
         slug: true,
@@ -18,9 +18,10 @@ export async function getEditorPickPosts() {
       },
       take: 10,
     });
+    return { editorPickPosts };
   } catch (error) {
     console.error("خطا در دریافت پست‌ها:", error);
-    return null;
+    return { error: "خطا در دریافت پست‌های منتخب" };
   }
 }
 

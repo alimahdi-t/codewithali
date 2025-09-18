@@ -9,6 +9,7 @@ import ArticleCard from "@/components/pages/Blog/ArticleCard";
 import { GetAllPostsParams } from "@/actions/shared.types";
 import { SearchForm } from "@/components/forms/SearchForm";
 import Pagination from "@/components/shared/Pagination";
+import { ClientToastWrapper } from "@/components/common/ClientToastWrapper";
 
 interface Props {
   searchParams: Promise<GetAllPostsParams>;
@@ -18,20 +19,25 @@ const Blog = async (props: Props) => {
   const searchParams = await props.searchParams;
   const page = searchParams.page || 1;
   const pageSize: number = 2;
-  const result = await getPostsAction({
+  const response = await getPostsAction({
     pageSize: pageSize,
     page: page,
     searchQuery: searchParams.searchQuery,
     orderBy: searchParams.orderBy,
     categories: searchParams.categories,
   });
+  if (response.error) {
+    return <ClientToastWrapper message={response.error} variant="error" />;
+  }
   await fakeDelay(5000);
-  const editorPickedPosts = await getEditorPickPosts();
-  if (!result || !editorPickedPosts) {
-    return <p>Loading...</p>;
+  const response2 = await getEditorPickPosts();
+  if (response2.error) {
+    return <ClientToastWrapper message={response2.error} variant="error" />;
   }
 
-  const { posts, totalCount } = result;
+  const { posts, totalCount } = response;
+  const { editorPickPosts } = response2;
+
   return (
     <div className="w-full flex flex-col">
       <div className="w-full flex justify-between">
@@ -41,7 +47,7 @@ const Blog = async (props: Props) => {
         </div>
 
         <p className="mt-2 text-lg leading-8 text-secondary">{`${toPersianNumber(
-          totalCount,
+          totalCount ?? 0,
         )} مقاله`}</p>
       </div>
 
@@ -49,7 +55,7 @@ const Blog = async (props: Props) => {
         <div className="w-[350px] flex flex-col gap-4 max-lg:hidden">
           <SearchForm />
 
-          {editorPickedPosts.length > 0 && (
+          {editorPickPosts && editorPickPosts.length > 0 && (
             <div
               className="background-dark900_light50 rounded-lg shadow-lg
           border-dark800_light200 dark:shadow-none dark:hover:border-brand-900 px-4 py-6"
@@ -58,7 +64,7 @@ const Blog = async (props: Props) => {
                 منتخب سردبیر
               </h3>
               <div className="flex flex-col gap-5 mt-4">
-                {editorPickedPosts.map((article) => (
+                {editorPickPosts?.map((article) => (
                   <ArticleCard key={article.id} article={article} />
                 ))}
               </div>
@@ -88,7 +94,7 @@ const Blog = async (props: Props) => {
             {posts?.map((post) => <BlogCard key={post.id} post={post} />)}
           </div>
 
-          <Pagination itemCount={totalCount} pageSize={pageSize} />
+          <Pagination itemCount={totalCount ?? 0} pageSize={pageSize} />
         </div>
       </div>
     </div>
