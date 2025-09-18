@@ -12,7 +12,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -25,15 +24,15 @@ import {
 } from "@/components/ui/select";
 import { CourseLevels, CourseStatusValue } from "@/constants";
 import { useRouter } from "next/navigation";
-import Loader from "@/components/common/Loader";
 import RichTextEditor from "@/components/RichTextEditor/RichTextEditor";
 import { createCourse } from "@/actions/courses/create-course.action";
 import { CreateCourseSchema, EditCourseSchema } from "@/schema";
 import { editCourse } from "@/actions/courses/edit-course.action";
 import { toast } from "sonner";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { User } from "@/prisma/client";
 import { useCurrentUser } from "@/hooks/use-current-user";
+import { SubmitButton } from "@/components/forms/SubmitButton";
 
 interface CourseFormProps {
   initialData?: z.infer<typeof EditCourseSchema>; // For edit mode: data for pre-filling the form when editing an existing course
@@ -45,6 +44,7 @@ interface CourseFormProps {
 const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
   const router = useRouter();
   const [instructors, setInstructors] = useState<undefined | User[]>();
+  const [isPending, startTransition] = useTransition();
   const { user: currentUser } = useCurrentUser();
 
   useEffect(() => {
@@ -74,13 +74,13 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    if (type === "edit") {
-      try {
+    startTransition(() => {
+      if (type === "edit") {
         if (!initialData?.id) {
           toast.error("خطا: شناسه دوره نامعتبر است");
           return;
         }
-        await editCourse({
+        editCourse({
           id: initialData.id,
           title: data.title,
           slug: data.slug,
@@ -91,16 +91,16 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
           level: data.level,
           price: parseInt(data.price),
           instructorId: parseInt(data.instructorId),
+        }).then((response) => {
+          if (response.error) {
+            toast.error(response.error);
+          } else if (response.success) {
+            toast.success(response.success);
+            router.push(path);
+          }
         });
-        toast.success("دوره با موفقیت ایجاد شد");
-        router.push(path);
-      } catch (error) {
-        toast.error("خطا در ویرایش دوره");
-      }
-      console.log(data);
-    } else {
-      try {
-        const course = await createCourse({
+      } else {
+        createCourse({
           title: data.title,
           slug: data.slug,
           description: data.description,
@@ -110,18 +110,16 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
           level: data.level,
           price: parseInt(data.price),
           instructorId: parseInt(data.instructorId),
+        }).then((response) => {
+          if (response.error) {
+            toast.error(response.error);
+          } else if (response.success) {
+            toast.success(response.success);
+            router.push(path);
+          }
         });
-
-        if (course?.error) {
-          toast.error(course.error);
-        } else {
-          toast.success("دوره با موفقیت ایجاد شد");
-          router.push(path);
-        }
-      } catch (error) {
-        toast.error("خطا در ایجاد دوره");
       }
-    }
+    });
   };
 
   return (
@@ -324,15 +322,10 @@ const CourseForm = ({ initialData, type, path, role }: CourseFormProps) => {
             )}
 
             <div>
-              <Button disabled={!form.formState.isValid} type="submit">
-                {form.formState.isSubmitting ? (
-                  <Loader />
-                ) : type === "edit" ? (
-                  "ویرایش"
-                ) : (
-                  "افزودن"
-                )}
-              </Button>
+              <SubmitButton
+                pending={isPending}
+                label={type === "edit" ? "ویرایش" : "افزودن"}
+              />
             </div>
           </form>
         </Form>
