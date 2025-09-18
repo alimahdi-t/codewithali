@@ -2,11 +2,8 @@
 
 import prisma from "@/lib/prisma";
 import { UpdatePostParams } from "@/actions/shared.types";
-import { Post } from "@/prisma/client";
 
-export async function updatePost(
-  params: UpdatePostParams,
-): Promise<Post | { error: string }> {
+export async function updatePost(params: UpdatePostParams) {
   try {
     const {
       id,
@@ -20,7 +17,7 @@ export async function updatePost(
       authorId,
     } = params;
 
-    return await prisma.post.update({
+    const updatedPost = await prisma.post.update({
       where: {
         id,
       },
@@ -41,10 +38,11 @@ export async function updatePost(
         tags: true,
       },
     });
+    return { success: `مقاله با موفقیت ویرایش شد.`, updatedPost };
   } catch (error) {
     console.log("An Error occurred while updating post.", error);
     return {
-      error: "خطایی در هنگام ویرایش مقاله رخ داد",
+      error: "خطایی در هنگام ویرایش مقاله رخ داد.",
     };
   }
 }

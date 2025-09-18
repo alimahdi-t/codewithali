@@ -90,7 +90,7 @@ export const PostsTable = ({ data }: { data: PostType[] }) => {
               <HiOutlineEllipsisVertical className="w-6 h-6" />
             </MenubarTrigger>
             <MenubarContent>
-              <Link href={`/posts/${item.slug}`}>
+              <Link href={`/blog/${item.slug}`}>
                 <MenubarItem>مشاهده</MenubarItem>
               </Link>
               <Link href={`/dashboard/admin/posts/edit/${item.slug}`}>
