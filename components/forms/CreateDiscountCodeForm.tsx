@@ -28,7 +28,7 @@ import { Prisma } from "@/prisma/client";
 import { createDiscountCodeAction } from "@/actions/discount-codes/create-discount-code.action";
 import { toast } from "sonner";
 import { SubmitButton } from "@/components/forms/SubmitButton";
-import { router } from "next/client";
+import { useRouter } from "next/navigation";
 
 type course = Prisma.CourseGetPayload<{
   select: {
@@ -44,6 +44,7 @@ export default function CreateDiscountCodeForm({ courses }: Props) {
   const [isPending, startTransition] = useTransition();
   const [hasExpireDate, setHasExpireDate] = useState(false);
   const FormSchema = CreateDiscountCodeSchema;
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof FormSchema>>({
     //TODO: check here later
