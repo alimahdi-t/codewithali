@@ -140,7 +140,7 @@ export const DiscountCodesTable = ({
       columns={columns}
       data={data}
       addButton={{
-        href: "/admin/discount-codes/new",
+        href: "/dashboard/admin/discount-codes/new",
         label: "افزودن کد تخفیف",
       }}
       bulkActions={(selectedIds) => (

@@ -18,8 +18,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import Loader from "@/components/common/Loader";
 import Calender from "@/components/shared/Calender/Calender";
 import { useState, useTransition } from "react";
 import { CreateDiscountCodeSchema } from "@/schema/create-discount-code.schema";
@@ -29,6 +27,8 @@ import { MultiSelect } from "@/components/MultiSelect";
 import { Prisma } from "@/prisma/client";
 import { createDiscountCodeAction } from "@/actions/discount-codes/create-discount-code.action";
 import { toast } from "sonner";
+import { SubmitButton } from "@/components/forms/SubmitButton";
+import { router } from "next/client";
 
 type course = Prisma.CourseGetPayload<{
   select: {
@@ -74,6 +74,7 @@ export default function CreateDiscountCodeForm({ courses }: Props) {
           }
           if (response.success) {
             toast.success(response.success);
+            router.push("/dashboard/admin/discount-codes");
           }
         });
       });
@@ -350,9 +351,7 @@ export default function CreateDiscountCodeForm({ courses }: Props) {
             />
 
             <div className="mt-6 flex items-center gap-x-2">
-              <Button type="submit" disabled={isPending}>
-                {isPending ? <Loader /> : "افزودن کد تخفیف"}
-              </Button>
+              <SubmitButton pending={isPending} label="افزودن کد تخفیف" />
             </div>
           </form>
         </Form>

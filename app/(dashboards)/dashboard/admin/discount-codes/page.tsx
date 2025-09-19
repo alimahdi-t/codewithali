@@ -1,6 +1,6 @@
 import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
 import { getAllDiscountCodes } from "@/actions/discount-codes/get-all-discount-codes.action";
-import { DiscountCodesTable } from "@/app/(dashboards)/dashboard/admin/discount-codes/DiscountCodesTable";
+import { DiscountCodesTable } from "@/components/tables/DiscountCodesTable";
 import { ClientToastWrapper } from "@/components/common/ClientToastWrapper";
 
 const DiscountCodesPage = async () => {
