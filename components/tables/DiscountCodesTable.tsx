@@ -9,10 +9,9 @@ import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTool
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import CreateDiscountForm from "@/components/forms/CreateDiscountForm";
 import DayCountdown from "@/components/common/DayCountdown";
-import { deleteDiscount } from "@/actions/discount/delete-discount.action";
 import { DiscountBadge } from "@/components/common/DiscountBadge";
 import { toast } from "sonner";
-import { deleteAllDiscount } from "@/actions/discount/delete-all-discount.action";
+import { deleteDiscountCodeAction } from "@/actions/discount-codes/delete-discount-code.action";
 
 type DiscountCodeWithCourses = Prisma.DiscountCodeGetPayload<{
   include: {
@@ -35,6 +34,23 @@ export const DiscountCodesTable = ({
 }: {
   data: DiscountCodeWithCourses[];
 }) => {
+  const handleDelete = async (ids: string[]) => {
+    if (ids.length === 0) {
+      toast.error("هیچ کد تخفیفی برای حذف وجود ندارد.");
+      return;
+    }
+
+    const response = await deleteDiscountCodeAction({
+      discountCodeId: ids,
+    });
+
+    if (response.success) {
+      toast.success(response.success);
+    } else if (response.error) {
+      toast.error(response.error);
+    }
+  };
+
   const columns = [
     {
       key: "id",
@@ -76,19 +92,7 @@ export const DiscountCodesTable = ({
         <DiscountBadge percentage={Number(item?.percentage)} />
       ),
     },
-    // {
-    //   key: "startsDate",
-    //   header: "تاریخ شروع",
-    //   render: (item: DiscountCodeWithCourses) => (
-    //     <span className="text-sm">
-    //       {item?. ? (
-    //         <DateTooltip date={item.startsAt} />
-    //       ) : (
-    //         ""
-    //       )}
-    //     </span>
-    //   ),
-    // },
+
     {
       key: "expiresDate",
       header: "تاریخ انقضا",
@@ -111,23 +115,7 @@ export const DiscountCodesTable = ({
         <div className="flex gap-2">
           <ActionGroup
             deleteAlertProps={{}}
-            onDelete={async () => {
-              if (item?.id) {
-                try {
-                  const res = await deleteDiscount({ id: item.id });
-
-                  if (res.success) {
-                    toast.success(res.message);
-                  } else {
-                    toast.error(res.message || "خطایی در حذف تخفیف رخ داد.");
-                  }
-                } catch (error) {
-                  toast.error("خطایی در حذف تخفیف رخ داد.");
-                }
-              } else {
-                toast.error("کد تخفیفی برای حذف وجود ندارد.");
-              }
-            }}
+            onDelete={() => handleDelete([item.id])}
           />
         </div>
       ),
@@ -143,28 +131,18 @@ export const DiscountCodesTable = ({
       .map((course) => course?.id)
       .filter(Boolean); // Remove undefined/null
 
-    if (discountIds.length === 0) {
-      toast.error("هیچ کد تخفیفی برای حذف وجود ندارد.");
-      return;
-    }
-    try {
-      // 3. Call delete action with discount IDs
-      const res = await deleteAllDiscount({ ids: discountIds as string[] });
-
-      if (res.success) {
-        toast.success(res.message);
-      } else {
-        toast.error(res.message || "خطایی رخ داد.");
-      }
-    } catch (error) {
-      toast.error("خطایی رخ داد.");
-    }
+    // 3. Call delete action with discount IDs
+    handleDelete(discountIds as string[]);
   };
 
   return (
     <GenericTable
       columns={columns}
       data={data}
+      addButton={{
+        href: "/dashboard/admin/discount-codes/new",
+        label: "افزودن کد تخفیف",
+      }}
       bulkActions={(selectedIds) => (
         <div className="flex items-center flex-wrap">
           <CreateDiscountForm ids={selectedIds.map(String)} />

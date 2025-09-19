@@ -1,3 +1,4 @@
+// ADMIN TABLE
 "use client";
 
 import { GenericTable } from "@/components/shared/Table/GenericTable";

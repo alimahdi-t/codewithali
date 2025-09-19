@@ -1,38 +1,29 @@
 import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { getAllDiscountCodes } from "@/actions/discount-codes/get-all-discount-codes.action";
-import { DiscountCodesTable } from "@/app/(dashboards)/dashboard/admin/discount-codes/DiscountCodesTable";
-import { toast } from "sonner";
+import { DiscountCodesTable } from "@/components/tables/DiscountCodesTable";
+import { ClientToastWrapper } from "@/components/common/ClientToastWrapper";
 
 const DiscountCodesPage = async () => {
   const response = await getAllDiscountCodes();
-  // console.log(response);
 
   if (response.warning) {
-    toast.warning(response.warning);
-    return;
+    return <ClientToastWrapper message={response.warning} variant={"info"} />;
   }
   if (response.error) {
-    toast.error(response.error);
-    return;
+    return <ClientToastWrapper message={response.error} variant={"error"} />;
   }
 
   const { data } = response;
 
   return (
-    <div className="rounded-xl p-4 bg-card shadow-sm">
-      <DashboardPageHeader
-        title="لیست کدهای تخفیف"
-        description="لیست تمام کدهای تخفیف، برای مشاهده جزئیات هر یک بر روی آن کلیک کنید."
-        buttonHref={""}
-      />
-      <Link href={"/dashboard/admin/discount-codes/new"}>
-        <Button>ساخت کد تخفیف جدید</Button>
-      </Link>
-      <div className="mt-12">
-        <DiscountCodesTable data={data ?? []} />
+    <div className="w-full py-6">
+      <div className="mb-4">
+        <DashboardPageHeader
+          title="لیست کدهای تخفیف"
+          description="لیست تمام کدهای تخفیف، برای مشاهده جزئیات هر یک بر روی آن کلیک کنید."
+        />
       </div>
+      <DiscountCodesTable data={data ?? []} />
     </div>
   );
 };
