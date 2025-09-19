@@ -5,7 +5,6 @@ import { ClientToastWrapper } from "@/components/common/ClientToastWrapper";
 
 const DiscountCodesPage = async () => {
   const response = await getAllDiscountCodes();
-  // console.log(response);
 
   if (response.warning) {
     return <ClientToastWrapper message={response.warning} variant={"info"} />;
@@ -17,15 +16,14 @@ const DiscountCodesPage = async () => {
   const { data } = response;
 
   return (
-    <div className="rounded-xl p-4 bg-card shadow-sm">
-      <DashboardPageHeader
-        title="لیست کدهای تخفیف"
-        description="لیست تمام کدهای تخفیف، برای مشاهده جزئیات هر یک بر روی آن کلیک کنید."
-        buttonHref={""}
-      />
-      <div className="mt-12">
-        <DiscountCodesTable data={data ?? []} />
+    <div className="w-full py-6">
+      <div className="mb-4">
+        <DashboardPageHeader
+          title="لیست کدهای تخفیف"
+          description="لیست تمام کدهای تخفیف، برای مشاهده جزئیات هر یک بر روی آن کلیک کنید."
+        />
       </div>
+      <DiscountCodesTable data={data ?? []} />
     </div>
   );
 };
