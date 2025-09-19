@@ -3,19 +3,17 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getAllDiscountCodes } from "@/actions/discount-codes/get-all-discount-codes.action";
 import { DiscountCodesTable } from "@/app/(dashboards)/dashboard/admin/discount-codes/DiscountCodesTable";
-import { toast } from "sonner";
+import { ClientToastWrapper } from "@/components/common/ClientToastWrapper";
 
 const DiscountCodesPage = async () => {
   const response = await getAllDiscountCodes();
   // console.log(response);
 
   if (response.warning) {
-    toast.warning(response.warning);
-    return;
+    return <ClientToastWrapper message={response.warning} variant={"info"} />;
   }
   if (response.error) {
-    toast.error(response.error);
-    return;
+    return <ClientToastWrapper message={response.error} variant={"error"} />;
   }
 
   const { data } = response;

@@ -15,10 +15,6 @@ export default async function UserPaymentPage() {
 
         <PaymentTable data={orders ?? []} />
       </div>
-      {/*<SectionBlock*/}
-      {/*  title="تیکت های من"*/}
-      {/*  addButton={{ label: "ایجاد تیکت جدید", href: "#" }}*/}
-      {/*/>*/}
     </>
   );
 }

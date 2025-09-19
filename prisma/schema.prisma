@@ -210,11 +210,12 @@ model DiscountCodeCourse {
   discountCodeId String
   courseId       Int
 
-  discountCode DiscountCode @relation(fields: [discountCodeId], references: [id])
-  course       Course       @relation(fields: [courseId], references: [id])
+  discountCode DiscountCode @relation(fields: [discountCodeId], references: [id], onDelete: Cascade)
+  course       Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
 
   @@id([discountCodeId, courseId])
 }
+
 
 model CartItem {
   user     User   @relation(fields: [userId], references: [id])

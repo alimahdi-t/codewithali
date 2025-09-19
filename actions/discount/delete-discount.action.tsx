@@ -9,7 +9,6 @@ export async function deleteDiscount({ id }: { id: string }) {
       where: { id: id },
     });
 
-    // اگر مسیر خاصی باید revalidate بشه
     revalidatePath("/dashboard/admin/discounts");
     revalidatePath("/courses");
 

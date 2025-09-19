@@ -9,10 +9,10 @@ import { TruncatedTooltipText } from "@/components/shared/Tooltips/TruncatedTool
 import { DateTooltip } from "@/components/shared/Tooltips/DateTooltip";
 import CreateDiscountForm from "@/components/forms/CreateDiscountForm";
 import DayCountdown from "@/components/common/DayCountdown";
-import { deleteDiscount } from "@/actions/discount/delete-discount.action";
 import { DiscountBadge } from "@/components/common/DiscountBadge";
 import { toast } from "sonner";
 import { deleteAllDiscount } from "@/actions/discount/delete-all-discount.action";
+import { deleteDiscountCodeAction } from "@/actions/discount-codes/delete-discount-code.action";
 
 type DiscountCodeWithCourses = Prisma.DiscountCodeGetPayload<{
   include: {
@@ -76,19 +76,7 @@ export const DiscountCodesTable = ({
         <DiscountBadge percentage={Number(item?.percentage)} />
       ),
     },
-    // {
-    //   key: "startsDate",
-    //   header: "تاریخ شروع",
-    //   render: (item: DiscountCodeWithCourses) => (
-    //     <span className="text-sm">
-    //       {item?. ? (
-    //         <DateTooltip date={item.startsAt} />
-    //       ) : (
-    //         ""
-    //       )}
-    //     </span>
-    //   ),
-    // },
+
     {
       key: "expiresDate",
       header: "تاریخ انقضا",
@@ -113,19 +101,15 @@ export const DiscountCodesTable = ({
             deleteAlertProps={{}}
             onDelete={async () => {
               if (item?.id) {
-                try {
-                  const res = await deleteDiscount({ id: item.id });
+                const response = await deleteDiscountCodeAction({
+                  discountCodeId: item.id,
+                });
 
-                  if (res.success) {
-                    toast.success(res.message);
-                  } else {
-                    toast.error(res.message || "خطایی در حذف تخفیف رخ داد.");
-                  }
-                } catch (error) {
-                  toast.error("خطایی در حذف تخفیف رخ داد.");
+                if (response.success) {
+                  toast.success(response.success);
+                } else if (response.error) {
+                  toast.error(response.error);
                 }
-              } else {
-                toast.error("کد تخفیفی برای حذف وجود ندارد.");
               }
             }}
           />

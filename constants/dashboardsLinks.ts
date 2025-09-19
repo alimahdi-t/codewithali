@@ -6,7 +6,6 @@ import {
   DiscountIcon,
   DiscountTag01Icon,
   Mail01Icon,
-  Tag01Icon,
   Task01Icon,
   UserMultipleIcon,
 } from "@/public/assets/icons/hugeIcons";
@@ -90,7 +89,7 @@ const adminDashboardLinks: {
     path: "/dashboard/admin/discount-codes",
     icon: DiscountIcon,
   },
-  { label: "تگ‌ها", path: "/dashboard/admin/tags", icon: Tag01Icon },
+  // { label: "تگ‌ها", path: "/dashboard/admin/tags", icon: Tag01Icon },
   {
     label: "پرداخت‌ها",
     path: "/dashboard/admin/payments",
