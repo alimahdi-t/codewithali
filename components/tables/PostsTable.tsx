@@ -25,7 +25,13 @@ type PostType = Prisma.PostGetPayload<{
   };
 }>;
 
-export const PostsTable = ({ data }: { data: PostType[] }) => {
+export const PostsTable = ({
+  data,
+  loading,
+}: {
+  data: PostType[];
+  loading?: boolean;
+}) => {
   const columns = [
     {
       key: "id",
@@ -114,6 +120,7 @@ export const PostsTable = ({ data }: { data: PostType[] }) => {
         href: "/dashboard/admin/posts/new",
         label: "افزودن مقاله",
       }}
+      loading={loading}
     />
   );
 };

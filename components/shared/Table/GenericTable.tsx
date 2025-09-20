@@ -33,7 +33,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
 import Link from "next/link";
 
 interface Column<T> {
@@ -49,6 +48,33 @@ interface GenericTableProps<T> {
   emptyText?: string;
   bulkActions?: (selectedIds: (string | number)[]) => React.ReactNode;
   addButton?: { href: string; label: string };
+  loading?: boolean; // NEW
+}
+
+// 🔹 Skeleton rows for loading state
+function TableSkeleton({
+  columnsCount,
+  rowsCount = 5,
+}: {
+  columnsCount: number;
+  rowsCount?: number;
+}) {
+  return (
+    <>
+      {Array.from({ length: rowsCount }).map((_, rowIndex) => (
+        <TableRow key={rowIndex} className="h-[72px]">
+          <TableCell className="size-12">
+            <div className="h-4 w-4 rounded bg-muted animate-pulse mx-4" />
+          </TableCell>
+          {Array.from({ length: columnsCount }).map((_, colIndex) => (
+            <TableCell key={colIndex}>
+              <div className="h-4 w-24 rounded bg-muted animate-pulse" />
+            </TableCell>
+          ))}
+        </TableRow>
+      ))}
+    </>
+  );
 }
 
 export function GenericTable<T extends { id: string | number }>({
@@ -57,20 +83,21 @@ export function GenericTable<T extends { id: string | number }>({
   emptyText,
   bulkActions,
   addButton,
+  loading = false,
 }: GenericTableProps<T>) {
   const allKeys = columns.map((col) => col.key.toString());
   const [visibleKeys, setVisibleKeys] = useState(allKeys);
-
   const [selectedRows, setSelectedRows] = useState<(string | number)[]>([]);
 
   // Pagination
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data.length / rowsPerPage);
+  const totalPages = Math.max(1, Math.ceil(data.length / rowsPerPage));
   const paginatedData = data.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage,
   );
+
   const toggleColumn = (key: string) => {
     setVisibleKeys((prev) =>
       prev.includes(key) ? prev.filter((k) => k !== key) : [...prev, key],
@@ -103,6 +130,7 @@ export function GenericTable<T extends { id: string | number }>({
   return (
     <div className="space-y-2">
       <div className="flex gap-x-2 items-center">
+        {/* Column toggle menu */}
         <DropdownMenu dir="rtl">
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto cursor-pointer">
@@ -129,17 +157,19 @@ export function GenericTable<T extends { id: string | number }>({
             ))}
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {/* Add button */}
         {addButton && (
           <Link href={addButton.href}>
             <Button variant="default" size="sm" className="text-sm font-normal">
               <Plus className="size-4.5 relative mb-0.5" />
-
               {addButton.label}
             </Button>
           </Link>
         )}
       </div>
 
+      {/* Bulk actions */}
       {bulkActions && (
         <div
           className={cn(
@@ -154,6 +184,8 @@ export function GenericTable<T extends { id: string | number }>({
           </div>
         </div>
       )}
+
+      {/* Table */}
       <div className="rounded-lg border overflow-hidden">
         <Table>
           <TableHeader>
@@ -177,8 +209,14 @@ export function GenericTable<T extends { id: string | number }>({
               ))}
             </TableRow>
           </TableHeader>
+
           <TableBody>
-            {data.length === 0 ? (
+            {loading ? (
+              <TableSkeleton
+                columnsCount={visibleColumns.length}
+                rowsCount={rowsPerPage}
+              />
+            ) : data.length === 0 ? (
               <TableRow className="h-[72px] text-sm">
                 <TableCell colSpan={visibleColumns.length + 1}>
                   {emptyText || "داده‌ای وجود ندارد."}
@@ -186,7 +224,7 @@ export function GenericTable<T extends { id: string | number }>({
               </TableRow>
             ) : (
               paginatedData.map((item, rowIndex) => (
-                <TableRow key={rowIndex} className="h-[72px]  text-sm">
+                <TableRow key={rowIndex} className="h-[72px] text-sm">
                   <TableCell className="size-12">
                     <Checkbox
                       className="mx-4"
@@ -206,6 +244,8 @@ export function GenericTable<T extends { id: string | number }>({
             )}
           </TableBody>
         </Table>
+
+        {/* Pagination */}
         <div className="flex items-center justify-between mx-4 my-4">
           <div>
             <span className="text-xs">
@@ -220,7 +260,7 @@ export function GenericTable<T extends { id: string | number }>({
               <Select
                 value={rowsPerPage.toString()}
                 onValueChange={(value) => {
-                  setCurrentPage(1); // reset to first page
+                  setCurrentPage(1);
                   setRowsPerPage(parseInt(value));
                 }}
               >
@@ -237,6 +277,7 @@ export function GenericTable<T extends { id: string | number }>({
               </Select>
               <span>ردیف در هر صفحه</span>
             </div>
+
             <div className="flex justify-between items-center py-3 text-sm space-x-4">
               <div className="w-24 text-center">
                 صفحه {toPersianNumber(currentPage)} از{" "}
@@ -248,7 +289,7 @@ export function GenericTable<T extends { id: string | number }>({
                   variant="outline"
                   className="size-8"
                   disabled={currentPage === 1}
-                  onClick={() => setCurrentPage((prev) => prev - 1)}
+                  onClick={() => setCurrentPage(1)}
                 >
                   <ChevronsRight className="size-4" />
                 </Button>
@@ -272,7 +313,6 @@ export function GenericTable<T extends { id: string | number }>({
                   بعدی
                   <ChevronLeft className="size-4" />
                 </Button>
-
                 <Button
                   size="icon"
                   variant="outline"
