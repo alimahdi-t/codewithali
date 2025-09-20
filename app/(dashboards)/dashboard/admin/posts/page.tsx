@@ -1,6 +1,6 @@
 import { getPostsAction } from "@/actions/posts/get-posts.action";
 import { DashboardPageHeader } from "@/components/dashboard/DashboardPageHeader";
-import { PostsTable } from "@/components/tables/PostsTabel";
+import { PostsTable } from "@/components/tables/PostsTable";
 import { ClientToastWrapper } from "@/components/common/ClientToastWrapper";
 
 const PostsPage = async () => {
@@ -20,7 +20,7 @@ const PostsPage = async () => {
         />
       </div>
 
-      <PostsTable data={posts ?? []} />
+      <PostsTable data={posts ?? []} loading={response.posts === undefined} />
     </div>
   );
 };

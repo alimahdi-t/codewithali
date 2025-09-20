@@ -9,6 +9,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from "@/components/ui/form";
 import { useTransition } from "react";
 import { SubmitButton } from "@/components/forms/SubmitButton";
@@ -140,6 +141,14 @@ export const UserForm = ({ initialData }: Props) => {
             </div>
             <LocalizedInput
               control={form.control}
+              name={"username"}
+              type="text"
+              placeholder=""
+              label="نام کاربری"
+              direction="ltr"
+            />
+            <LocalizedInput
+              control={form.control}
               name={"email"}
               type="text"
               placeholder="example@mail.com"
@@ -159,6 +168,8 @@ export const UserForm = ({ initialData }: Props) => {
                       className="resize-none"
                     />
                   </FormControl>
+
+                  <FormMessage />
                 </FormItem>
               )}
             />

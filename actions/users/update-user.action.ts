@@ -5,62 +5,73 @@ import { z } from "zod";
 import { UserSchema } from "@/schema/UserSchema.schema";
 import { revalidatePath } from "next/cache";
 
-/**
- * Update an existing user in the database.
- *
- * @param userId - ID of the user to update
- * @param values - User fields to update, validated against UserSchema
- * @returns {Promise<{success?: string; error?: string; updatedUser?: any}>}
- *          - success: message when update is successful
- *          - error: message when validation or DB operation fails
- *          - updatedUser: the updated user object (if success)
- */
 export const updateUserAction = async ({
   userId,
   values,
 }: {
   userId: number;
   values: z.infer<typeof UserSchema>;
-}): Promise<{ success?: string; error?: string; updatedUser?: any }> => {
+}) => {
   try {
-    // Validate incoming data against schema
-    const validatedFields = UserSchema.safeParse(values);
-
-    if (!validatedFields.success) {
-      return { error: "ورودی نامعتبر هست!" };
+    const validated = UserSchema.safeParse(values);
+    if (!validated.success) {
+      return { error: "ورودی نامعتبر است!" };
     }
 
-    // Extract validated fields (only safe data goes to DB)
     const { bio, email, firstName, lastName, username, phoneNumber, role } =
-      validatedFields.data;
+      validated.data;
 
-    // Perform database update
-    const updatedUser = await prisma.user.update({
+    // Get current user
+    const currentUser = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!currentUser) {
+      return { error: "کاربر پیدا نشد." };
+    }
+
+    // Check for conflicts only if the field has changed and is not empty
+    const conflict = await prisma.user.findFirst({
       where: {
-        id: Number(userId),
-      },
-      data: {
-        bio,
-        email,
-        firstName,
-        lastName,
-        username,
-        phoneNumber,
-        role,
+        OR: [
+          email && email !== currentUser.email ? { email } : undefined,
+          username && username !== currentUser.username
+            ? { username }
+            : undefined,
+          phoneNumber && phoneNumber !== currentUser.phoneNumber
+            ? { phoneNumber }
+            : undefined,
+        ].filter(Boolean) as any[],
+        NOT: { id: userId },
       },
     });
-    revalidatePath("/dashboard/admin/users");
-    // Return structured success response
-    return {
-      success: "کاربر با موفقیت بروزرسانی شد.",
-      updatedUser,
+
+    if (conflict) {
+      return {
+        error: "ایمیل، نام کاربری یا شماره تلفن قبلاً استفاده شده است.",
+      };
+    }
+
+    // Build the update object dynamically
+    const updateData: any = {
+      bio: bio || null,
+      firstName,
+      lastName,
+      role,
+      email: email === "" ? null : email,
+      username: username === "" ? null : username,
+      phoneNumber: phoneNumber === "" ? null : phoneNumber,
     };
+
+    const updatedUser = await prisma.user.update({
+      where: { id: userId },
+      data: updateData,
+    });
+
+    revalidatePath("/dashboard/admin/users");
+
+    return { success: "کاربر با موفقیت بروزرسانی شد.", updatedUser };
   } catch (error) {
     console.error("Error updating user:", error);
-
-    // Return structured error response
-    return {
-      error: "خطا در بروزرسانی کاربر. لطفاً دوباره تلاش کنید.",
-    };
+    return { error: "خطا در بروزرسانی کاربر. لطفاً دوباره تلاش کنید." };
   }
 };
