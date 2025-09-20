@@ -6,22 +6,33 @@ import {
 } from "@/utils";
 import TomanIcon from "@/components/common/TomanIcon";
 import DiscountTag from "@/components/pages/courses/DiscountTag";
-import { Course, Discount, User } from "@/prisma/client";
+import { Prisma } from "@/prisma/client";
 import { cn } from "@/lib/utils";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { ImageCard } from "@/components/common/card/ImageCard";
 
-interface ExtendedCourse extends Course {
-  instructor: Pick<
-    User,
-    "id" | "firstName" | "lastName" | "imageUrl" | "username"
-  >;
-  discount: Discount | null;
-}
+type CourseType = Prisma.CourseGetPayload<{
+  include: {
+    instructor: {
+      select: {
+        id: true;
+        firstName: true;
+        lastName: true;
+        username: true;
+        imageUrl: true;
+      };
+    };
+    discount: {
+      select: {
+        percentage: true;
+      };
+    };
+  };
+}>;
 
 interface Props {
-  course: ExtendedCourse;
+  course: CourseType;
   className?: string;
   purchased?: boolean;
 }

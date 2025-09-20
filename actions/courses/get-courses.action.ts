@@ -57,12 +57,16 @@ export async function getCourses(params: GetAllCoursesParams) {
               imageUrl: true,
             },
           },
+
           discount: {
             where: {
               OR: [
                 { expiresAt: null }, // تخفیف بدون تاریخ انقضا
                 { expiresAt: { gte: new Date() } }, // تخفیف هنوز منقضی نشده
               ],
+            },
+            select: {
+              percentage: true,
             },
           },
         },
