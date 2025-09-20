@@ -1,5 +1,5 @@
 interface StatusBadgeProps {
-  variant: "success" | "warning" | "error" | "info";
+  variant: "success" | "warning" | "error" | "info" | "undefined";
   text: string;
 }
 
@@ -21,6 +21,9 @@ const statusVariants: Record<
   error: {
     className:
       "text-action-error bg-action-light-error dark:bg-action-error/50",
+  },
+  undefined: {
+    className: "bg-gray-200/60 gray-500 dark:bg-gray-200/20 dark:gray-300/80",
   },
 };
 
