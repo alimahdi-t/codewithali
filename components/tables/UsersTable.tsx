@@ -95,6 +95,9 @@ export const UsersTable = ({ data }: { data: UserType[] }) => {
               <Link href={`/dashboard/admin/users/edit/${item.id}`}>
                 <MenubarItem>ویرایش</MenubarItem>
               </Link>
+              <Link href={`/dashboard/admin/users/change-password/${item.id}`}>
+                <MenubarItem>تغییر رمز عبور</MenubarItem>
+              </Link>
               <MenubarItem asChild className="text-red-500"></MenubarItem>
             </MenubarContent>
           </MenubarMenu>

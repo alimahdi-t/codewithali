@@ -9,7 +9,7 @@ interface Props {
 const EditUserInfoPage = async (props: Props) => {
   const { id } = await props.params;
   const user = await getUser({ id: parseInt(id) });
-  console.log(user);
+
   if (!user) return null;
   return (
     <FormWrapper title="ویرایش کاربر">
