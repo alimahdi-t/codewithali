@@ -3,6 +3,7 @@ import { EditUserForm } from "@/components/forms/EditUserForm";
 import { currentUser } from "@/lib/auth";
 import { getUserById } from "@/data/user";
 import { ChangePasswordForm } from "@/components/forms/ChangePasswordForm";
+import { FormWrapper } from "@/components/forms/FormWrapper";
 
 const SettingsPage = async () => {
   const user = await currentUser();
@@ -38,7 +39,9 @@ const SettingsPage = async () => {
       <Card>
         <CardHeader className="text-xl font-semibold">رمز عبور</CardHeader>
         <CardContent>
-          <ChangePasswordForm />
+          <FormWrapper title={""}>
+            <ChangePasswordForm />
+          </FormWrapper>
         </CardContent>
       </Card>
     </div>
