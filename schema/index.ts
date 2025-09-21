@@ -10,4 +10,4 @@ export * from "./reset.schema";
 export * from "./send-message-answer.schema";
 export * from "./edit-user.schema";
 export * from "./search-form.schema";
-export * from "./ChangeUserPassword.schema";
+export * from "./change-user-password.schema";

@@ -1,3 +1,5 @@
+// This form is for admin to change password of any user.
+
 "use client";
 import { useForm } from "react-hook-form";
 import { z } from "zod";

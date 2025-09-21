@@ -1,113 +1,92 @@
+// This form is for admin to change password of any user.
+
 "use client";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { useTransition } from "react";
-import Loader from "@/components/common/Loader";
+import { LocalizedInput } from "@/components/shared/LocalizedInput";
+import { Form } from "@/components/ui/form";
+import { useState, useTransition } from "react";
+import { SubmitButton } from "@/components/forms/SubmitButton";
+import { useRouter } from "next/navigation";
+
 import { ChangePasswordSchema } from "@/schema";
-import { changePassword } from "@/actions/auth/change-password-action";
+import { CheckPassword } from "@/components/forms/CheckPassword";
+
 import { toast } from "sonner";
+import { changePassword } from "@/actions/auth/change-password-action";
 
 export const ChangePasswordForm = () => {
   const [isPending, startTransition] = useTransition();
+  const [isFocused, setIsFocused] = useState(false);
+  const router = useRouter();
 
   const FormSchema = ChangePasswordSchema;
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    mode: "onTouched",
     defaultValues: {
-      password: "",
       currentPassword: "",
-      retypePassword: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-    console.log(data);
-
     startTransition(() => {
       changePassword(data).then((response) => {
         if (response.error) {
-          form.reset();
           toast.error(response.error);
-        }
-        if (response.success) {
-          form.reset();
+        } else if (response.success) {
           toast.success(response.success);
         }
       });
     });
   };
-
   return (
-    <div className="flex justify-center">
-      <div className="w-full">
-        <Form {...form}>
-          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid sm:grid-cols-3 grid-cols-2 gap-x-4">
-              <FormField
-                control={form.control}
-                name="currentPassword"
-                render={({ field }) => (
-                  //TODO: hide this if user doesn't have a password at first because he\she used a OAuth provider
-                  <FormItem>
-                    <FormLabel>رمزعبور فعلی</FormLabel>
-                    <FormControl>
-                      <Input type="password" className="leading-6" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>رمز عبور جدید</FormLabel>
-                    <FormControl>
-                      <Input type="password" className="leading-6" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="retypePassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>تایید رمز عبور</FormLabel>
-                    <FormControl>
-                      <Input type="password" className="leading-6" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="space-y-6">
+            <LocalizedInput
+              control={form.control}
+              name="currentPassword"
+              type="password"
+              direction="ltr"
+              label="رمز عبور فعلی"
+              maxLength={255}
+              showErrorMessage={false}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+            <LocalizedInput
+              control={form.control}
+              name="password"
+              type="password"
+              direction="ltr"
+              label="رمز عبور"
+              maxLength={255}
+              showErrorMessage={false}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+            />
+            {(isFocused || form.formState.errors["password"]) && (
+              <CheckPassword password={form.watch("password")} />
+            )}
+            <LocalizedInput
+              control={form.control}
+              name="confirmPassword"
+              type="password"
+              direction="ltr"
+              label="تکرار رمز عبور"
+              maxLength={255}
+            />
+
+            <div className="flex flex-col gap-3">
+              <SubmitButton pending={isPending} label={"تغییر رمز عبور"} />
             </div>
-            <div>
-              <Button
-                disabled={!form.formState.isValid}
-                type="submit"
-                className="flex justify-self-end"
-              >
-                {isPending ? <Loader /> : "ویرایش"}
-              </Button>
-            </div>
-          </form>
-        </Form>
-      </div>
-    </div>
+          </div>
+        </form>
+      </Form>
+    </>
   );
 };
