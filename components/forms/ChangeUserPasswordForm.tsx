@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 
 import { ChangeUserPasswordSchema } from "@/schema";
 import { CheckPassword } from "@/components/forms/CheckPassword";
+import { changeUserPasswordAction } from "@/actions/users/change-user-password.action";
+import { toast } from "sonner";
 
 interface Props {
   userId: number;
@@ -31,16 +33,16 @@ export const ChangeUserPasswordForm = ({ userId }: Props) => {
 
   const onSubmit = async (data: z.infer<typeof FormSchema>) => {
     startTransition(() => {
-      // updateUserAction({ userId: Number(initialData.id), values: data }).then(
-      //   (response) => {
-      //     if (response.error) {
-      //       toast.error(response.error);
-      //     } else if (response.success) {
-      //       toast.success(response.success);
-      //       router.push("/dashboard/admin/users");
-      //     }
-      //   },
-      // );
+      changeUserPasswordAction({ userId: Number(userId), values: data }).then(
+        (response) => {
+          if (response.error) {
+            toast.error(response.error);
+          } else if (response.success) {
+            toast.success(response.success);
+            router.push("/dashboard/admin/users");
+          }
+        },
+      );
     });
   };
   return (
