@@ -22,9 +22,9 @@ export async function changePassword(
     return { error: "اجازه دسترسی ندارید!" };
   }
 
-  const { currentPassword, password, retypePassword } = validatedFields.data;
+  const { currentPassword, password, confirmPassword } = validatedFields.data;
 
-  if (password !== retypePassword) {
+  if (password !== confirmPassword) {
     return { error: "رمز عبور و تکرار آن باید برابر باشد" };
   }
 
