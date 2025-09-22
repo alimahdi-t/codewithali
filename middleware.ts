@@ -1,5 +1,5 @@
-import NextAuth from "next-auth";
-import authConfig from "./auth.config";
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 import {
   adminPrefix,
   apiAuthPrefix,
@@ -7,63 +7,71 @@ import {
   publicRoutes,
   ROLE_LOGIN_REDIRECTS,
 } from "@/route";
-import { getToken } from "next-auth/jwt";
 import { Role } from "@/prisma/client";
 
-export const { auth } = NextAuth(authConfig);
-
-//@ts-ignore
-export default auth(async (req) => {
+export async function middleware(req: NextRequest) {
   const { nextUrl } = req;
-  const isLoggedIn = !!req.auth; // Returns true if user signed in
-  const token = await getToken({ req, secret: process.env.AUTH_SECRET });
-  const role = token?.role;
+  const pathname = nextUrl.pathname;
 
-  const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix); // prefix of api for auth routes
-  const isPublicRoute = publicRoutes.some((route) => {
-    // Check if route is a dynamic route (like /courses/[slug], /blog/[slug], /profile/[userId])
-    const dynamicSegmentRegex = /\[([^\]]+)\]/; // Matches any dynamic segment, e.g., [slug], [id], [userId], etc.
-    if (dynamicSegmentRegex.test(route)) {
-      const baseRoute = route.split(dynamicSegmentRegex)[0]; // Get the base route before the dynamic segment (e.g., "/courses", "/blog", "/profile")
-      return nextUrl.pathname.startsWith(baseRoute); // Match base route
-    }
-    return route === nextUrl.pathname; // Exact match for static routes
+  // ✅ Skip NextAuth API routes
+  if (pathname.startsWith(apiAuthPrefix)) return NextResponse.next();
+
+  // ✅ Skip static files
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.match(/\.(css|js|jpg|jpeg|png|gif|svg|ico|woff2?|ttf|json|map)$/)
+  ) {
+    return NextResponse.next();
+  }
+
+  // ✅ Get token (important: secureCookie handling)
+  const token = await getToken({
+    req,
+    secret: process.env.AUTH_SECRET,
+    secureCookie: process.env.NODE_ENV === "production",
   });
-  const isAuthRoute = authRoutes.includes(nextUrl.pathname);
 
-  const isAdminRoute = nextUrl.pathname.startsWith(adminPrefix);
+  const isLoggedIn = !!token;
+  const role = token?.role as Role | undefined;
 
-  if (isApiAuthRoute) {
-    return null;
-  }
-
-  if (isAuthRoute) {
-    if (isLoggedIn) {
-      return Response.redirect(
-        new URL(ROLE_LOGIN_REDIRECTS[role as Role], nextUrl),
-      );
+  // Determine route types
+  const isPublicRoute = publicRoutes.some((route) => {
+    const dynamicSegmentRegex = /\[([^\]]+)\]/;
+    if (dynamicSegmentRegex.test(route)) {
+      const baseRoute = route.split(dynamicSegmentRegex)[0];
+      return pathname.startsWith(baseRoute);
     }
-    return null;
+    return route === pathname;
+  });
+
+  const isAuthRoute = authRoutes.includes(pathname);
+  const isAdminRoute = pathname.startsWith(adminPrefix);
+
+  // 🔒 Redirect logged-in users from auth pages
+  if (isAuthRoute && isLoggedIn && role) {
+    const redirectUrl = ROLE_LOGIN_REDIRECTS[role];
+    if (redirectUrl && pathname !== redirectUrl) {
+      return NextResponse.redirect(new URL(redirectUrl, req.url));
+    }
+    return NextResponse.next();
   }
 
-  // Redirect the user to login page if user not signed in and the route isn't public
-  if (!isLoggedIn && !isPublicRoute) {
-    return Response.redirect(new URL("/auth/login", nextUrl));
+  // 🔑 Force login for protected pages (skip public routes)
+  if (!isLoggedIn && !(isPublicRoute || isAuthRoute)) {
+    return NextResponse.redirect(new URL("/auth/login", req.url));
   }
 
-  // Prevent not admin user to access admin dashboard
+  // 🚫 Admin access control
   if (isAdminRoute && role !== "ADMIN") {
-    return Response.redirect(new URL("/contact", nextUrl));
+    return NextResponse.redirect(new URL("/contact", req.url));
   }
 
-  return null;
-});
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
-    // Always run for API routes
     "/(api|trpc)(.*)",
   ],
 };
