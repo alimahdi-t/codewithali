@@ -1,7 +1,6 @@
 "use client";
 
 import { FcGoogle } from "react-icons/fc";
-import { FaGithub } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { signIn } from "next-auth/react";
 import { DEFAULT_LOGIN_REDIRECT } from "@/route";
@@ -24,17 +23,17 @@ export const Social = () => {
           ورود با Google
         </span>
       </Button>
-      <Button
-        variant="outline"
-        size="lg"
-        className="cursor-pointer w-full flex justify-center items-center gap-2"
-        onClick={() => onClick("github")}
-      >
-        <span className="text-xs flex items-center gap-1">
-          <FaGithub className="w-6 h-6" />
-          ورود با Github
-        </span>
-      </Button>
+      {/*<Button*/}
+      {/*  variant="outline"*/}
+      {/*  size="lg"*/}
+      {/*  className="cursor-pointer w-full flex justify-center items-center gap-2"*/}
+      {/*  onClick={() => onClick("github")}*/}
+      {/*>*/}
+      {/*  <span className="text-xs flex items-center gap-1">*/}
+      {/*    <FaGithub className="w-6 h-6" />*/}
+      {/*    ورود با Github*/}
+      {/*  </span>*/}
+      {/*</Button>*/}
     </div>
   );
 };
