@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { DashboardStatBox } from "@/components/dashboard/DashboardStatBox";
 
 import { TooltipWrapper } from "@/components/common/TooltipWrapper";
