@@ -5,6 +5,8 @@ import { z } from "zod";
 import { getUserByEmail } from "@/data/user";
 import prisma from "@/lib/prisma";
 import { hashPassword } from "@/utils/password";
+import { generateVerificationToken } from "@/data/token";
+import { sendVerificationEmail } from "@/emails/mail";
 
 export async function signUp(values: z.infer<typeof SignUpSchema>) {
   const validatedFields = SignUpSchema.safeParse(values);
@@ -36,8 +38,8 @@ export async function signUp(values: z.infer<typeof SignUpSchema>) {
   });
 
   //TODO: Send verification email
-  // const verificationToken = await generateVerificationToken(email);
-  // await sendVerificationEmail(verificationToken.email, verificationToken.token);
+  const verificationToken = await generateVerificationToken(email);
+  await sendVerificationEmail(verificationToken.email, verificationToken.token);
   return {
     success:
       "ثبت‌نام با موفقیت انجام شد. لطفاً ایمیل خود را بررسی کنید. لینک تأیید حساب کاربری برای شما ارسال شده است.",

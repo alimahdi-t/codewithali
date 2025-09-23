@@ -1,6 +1,7 @@
 import { v4 as uuidV4 } from "uuid";
-import prisma from "@/lib/prisma";
+
 import { getVerificationTokenByEmail } from "@/data/verification-token";
+import prisma from "@/lib/prisma";
 
 /**
  * Generates a new verification token for a given email.
