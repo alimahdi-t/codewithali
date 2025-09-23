@@ -36,7 +36,8 @@ export async function signUp(values: z.infer<typeof SignUpSchema>) {
   });
 
   //TODO: Send verification email
-
+  // const verificationToken = await generateVerificationToken(email);
+  // await sendVerificationEmail(verificationToken.email, verificationToken.token);
   return {
     success:
       "ثبت‌نام با موفقیت انجام شد. لطفاً ایمیل خود را بررسی کنید. لینک تأیید حساب کاربری برای شما ارسال شده است.",
