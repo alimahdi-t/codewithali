@@ -36,6 +36,8 @@ model User {
 
   CartItem CartItem[]
   orders   Order[]
+
+  TwoFactorConfirmation TwoFactorConfirmation[]
 }
 
 model Account {
@@ -260,6 +262,41 @@ model OrderItem {
 }
 
 
+model VerificationToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+}
+
+model PasswordResetToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@index([expires])
+}
+
+model TwoFactorToken {
+  id      String   @id @default(cuid())
+  email   String
+  token   String   @unique
+  expires DateTime
+
+  @@unique([email, token])
+  @@index([expires])
+}
+
+model TwoFactorConfirmation {
+  id     String @id @default(cuid())
+  userId Int    @unique
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
 
 
 
