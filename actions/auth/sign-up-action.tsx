@@ -37,7 +37,7 @@ export async function signUp(values: z.infer<typeof SignUpSchema>) {
     },
   });
 
-  //TODO: Send verification email
+  //TODO: Resend the email if user exist
   const verificationToken = await generateVerificationToken(email);
   await sendVerificationEmail(verificationToken.email, verificationToken.token);
   return {
