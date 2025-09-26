@@ -17,7 +17,9 @@ import { sendResetPasswordEmail } from "@/emails/mail";
  * @param values - Form data containing the email field.
  * @returns An object with a success or error message (in Persian).
  */
-export const reset = async (values: z.infer<typeof ResetSchema>) => {
+export const resetPasswordAction = async (
+  values: z.infer<typeof ResetSchema>,
+) => {
   try {
     // Validate the form input against the ResetSchema
     const validatedFields = ResetSchema.safeParse(values);
