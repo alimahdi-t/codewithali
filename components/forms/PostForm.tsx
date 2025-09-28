@@ -27,7 +27,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { MultiSelect } from "@/components/MultiSelect";
 import { updatePost } from "@/actions/updatePost.action";
 import { toast } from "sonner";
 import { useCurrentUser } from "@/hooks/use-current-user";
@@ -284,32 +283,32 @@ export default function PostForm({
               )}
             </div>
 
-            <FormField
-              control={form.control}
-              name="tags"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>انتخاب برچسپ‌ها</FormLabel>
-                  <FormControl>
-                    <MultiSelect
-                      options={tags.map((tag) => ({
-                        label: tag.name,
-                        value: tag.id.toString(),
-                      }))}
-                      onValueChange={(values) =>
-                        field.onChange(values.map((v) => parseInt(v)))
-                      }
-                      defaultValue={field.value?.map((v) => v.toString())}
-                      placeholder="انتخاب برپسپ"
-                      variant="inverted"
-                      animation={2}
-                      maxCount={1}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            {/*<FormField*/}
+            {/*  control={form.control}*/}
+            {/*  name="tags"*/}
+            {/*  render={({ field }) => (*/}
+            {/*    <FormItem>*/}
+            {/*      <FormLabel>انتخاب برچسپ‌ها</FormLabel>*/}
+            {/*      <FormControl>*/}
+            {/*        <MultiSelect*/}
+            {/*          options={tags.map((tag) => ({*/}
+            {/*            label: tag.name,*/}
+            {/*            value: tag.id.toString(),*/}
+            {/*          }))}*/}
+            {/*          onValueChange={(values) =>*/}
+            {/*            field.onChange(values.map((v) => parseInt(v)))*/}
+            {/*          }*/}
+            {/*          defaultValue={field.value?.map((v) => v.toString())}*/}
+            {/*          placeholder="انتخاب برپسپ"*/}
+            {/*          variant="inverted"*/}
+            {/*          animation={2}*/}
+            {/*          maxCount={1}*/}
+            {/*        />*/}
+            {/*      </FormControl>*/}
+            {/*      <FormMessage />*/}
+            {/*    </FormItem>*/}
+            {/*  )}*/}
+            {/*/>*/}
             {/*<FormField*/}
             {/*  control={form.control}*/}
             {/*  name="tags"*/}
